@@ -1,0 +1,1126 @@
+<title>Annale psy JUIN 2024</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout : copie d'examen — énoncé à gauche, question à droite ; correction en 2 colonnes avec cours collant */
+:root{
+  --bg:#f6f7f9; --paper:#ffffff; --ink:#18212b; --muted:#5d6876; --line:#dfe3e8; --soft:#eef1f5;
+  --accent:#1f4e8c; --accent-soft:#e6eef9;
+  --ok:#1d7a46; --ok-soft:#e3f4ea; --ko:#b42318; --ko-soft:#fdeceb; --mid:#a15c00; --mid-soft:#fdf1df;
+  --rkA:#c62828; --rkB:#d9822b;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+header.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:800;font-size:17px}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.steps{display:flex;gap:4px;flex-wrap:wrap}
+.steps span{font:700 11px var(--f-mono);padding:3px 7px;border-radius:5px;background:var(--soft);color:var(--muted)}
+.steps span.on{background:var(--accent);color:var(--paper)}
+.steps span.done{background:var(--accent-soft);color:var(--accent)}
+.timer{font:700 18px var(--f-mono);font-variant-numeric:tabular-nums;padding:4px 10px;border-radius:8px;background:var(--soft)}
+.timer.low{background:var(--ko-soft);color:var(--ko)}
+.btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:9px 16px;font-weight:700}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn.ghost{background:transparent}
+.btn.small{padding:5px 10px;font-size:13px}
+main{padding-block:24px 64px}
+[hidden]{display:none!important}
+
+/* start */
+.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(26px,4vw,36px)}
+.hero p{margin:0;color:var(--muted)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.rule{background:var(--soft);border-radius:10px;padding:12px 14px;font-size:14px}
+.rule b{display:block;font-family:var(--f-display);font-size:15px;margin-bottom:2px}
+.dplist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.dplist li{display:flex;gap:10px;align-items:baseline;font-size:15px}
+.dplist .id{font:700 12px var(--f-mono);color:var(--accent);min-width:34px}
+.dplist .n{color:var(--muted);font-size:13px;margin-left:auto;white-space:nowrap}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* exam */
+.exam{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:start}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:20px}
+.panel .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.enonce{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto}
+.enonce p{margin:.6em 0}
+.enonce .add{border-left:3px solid var(--accent);padding-left:12px;margin-top:14px}
+.imgs{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.imgs img{max-height:320px;width:auto;max-width:100%;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;background:#000}
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.qnum{font:700 13px var(--f-mono);color:var(--accent)}
+.tag{font:700 11px var(--f-mono);padding:2px 7px;border-radius:5px;background:var(--soft);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.rk{display:inline-grid;place-items:center;width:20px;height:20px;border:2px solid;border-radius:4px;font:700 11px var(--f-mono);vertical-align:middle}
+.rk.a{color:var(--rkA)} .rk.b{color:var(--rkB)}
+.ctx{background:var(--soft);border-radius:10px;padding:2px 14px;margin-bottom:12px}
+.ctx p{margin:.6em 0}
+.qtext{font-size:18px;font-weight:700;margin:6px 0 14px}
+.opts{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.opt label{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--paper)}
+.opt label:hover{border-color:var(--accent)}
+.opt input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.opt .L{font:700 14px var(--f-mono);color:var(--muted);min-width:16px}
+.opt input:checked ~ .L{color:var(--accent)}
+.opt label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.qroc input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit}
+.zonebox{position:relative;display:inline-block;max-width:100%;cursor:crosshair}
+.zonebox img{display:block;max-width:100%;border-radius:8px}
+.zonebox .pin{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:3px solid #fff;background:#e5484d;box-shadow:0 0 0 2px #e5484d;pointer-events:none}
+.zonebox svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--mid-soft);border-radius:10px;padding:10px 12px;font-size:14px}
+.note{font-size:13px;color:var(--muted)}
+
+/* results */
+.score{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.big{font:800 64px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.big small{font-size:24px;color:var(--muted)}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:44px 1fr 70px;gap:10px;align-items:center;font-size:14px}
+.barrow .track{height:10px;border-radius:5px;background:var(--soft);overflow:hidden}
+.barrow .fill{height:100%;background:var(--accent)}
+.barrow .v{font:700 13px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.grid-q{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.grid-q button{font:700 12px var(--f-mono);border:0;border-radius:6px;padding:6px 8px;min-width:58px}
+.s1{background:var(--ok-soft);color:var(--ok)} .s0{background:var(--ko-soft);color:var(--ko)} .sp{background:var(--mid-soft);color:var(--mid)}
+
+/* correction */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:7px 12px;font-weight:700;font-size:14px}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.corr{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.course{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto;font-size:14.5px}
+.course h3{font-size:18px;margin-bottom:6px}
+.course h4{font-size:15px;margin:16px 0 4px;display:flex;gap:8px;align-items:center}
+.course ul{padding-left:18px;margin:4px 0}
+.course li{margin:3px 0}
+.course .small,.small{font-size:13px;color:var(--muted)}
+table.mini{border-collapse:collapse;width:100%;font-size:13px;margin:6px 0}
+table.mini th,table.mini td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+table.mini th{background:var(--soft)}
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}
+.figs figure{margin:0}
+.figs img{width:100%;height:100px;object-fit:cover;border-radius:6px;cursor:zoom-in}
+.figs figcaption{font-size:11.5px;color:var(--muted)}
+.cq{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}
+.cq:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.pts{margin-left:auto;font:700 13px var(--f-mono);padding:3px 8px;border-radius:6px}
+.copt{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:22px 22px 1fr;gap:4px 10px;align-items:start}
+.copt + .copt{margin-top:6px}
+.copt .mk{font:700 14px var(--f-mono)}
+.copt .tx{font-weight:700}
+.copt .ex{grid-column:3;font-size:14.5px;color:var(--ink)}
+.copt.good{border-color:var(--ok);background:var(--ok-soft)}
+.copt.miss{border-color:var(--mid);background:var(--mid-soft)}
+.copt.bad{border-color:var(--ko);background:var(--ko-soft)}
+.mine{font:700 11px var(--f-mono);color:var(--muted)}
+.retenir{margin-top:12px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:14.5px}
+.retenir b.h{display:block;font-family:var(--f-display);color:var(--accent);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.free{border-radius:10px;padding:10px 14px;font-size:14.5px}
+.coursebtn{display:none}
+details.enon{background:var(--soft);border-radius:10px;padding:8px 14px;margin-bottom:16px}
+details.enon summary{cursor:pointer;font-weight:700}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.zoom img{max-width:100%;max-height:100%;border-radius:8px}
+.tblwrap{overflow-x:auto}
+table.abg{border-collapse:collapse;font:13px var(--f-mono);margin:8px 0}
+table.abg td{padding:3px 10px;border-bottom:1px dotted var(--line)}
+table.abg td:last-child{font-weight:700;text-align:center}
+table.abg .R{color:var(--ko)} table.abg .S{color:var(--ok)}
+
+@media (max-width:860px){
+  .exam,.corr{grid-template-columns:1fr}
+  .enonce,.course{position:static;max-height:none}
+  .corr .course{order:-1}
+  .course.collapsed .cbody{display:none}
+  .coursebtn{display:inline-block}
+  .score{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.qnav{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}.qnav-dp{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.qnav-id{font:700 11px var(--f-mono);color:var(--muted);margin-right:3px}.qn{min-width:26px;height:26px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;font:700 11px var(--f-mono);padding:0 4px}.qn.done{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft)}.qn.cur{outline:2px solid var(--accent)}.qn:disabled{opacity:.35;cursor:not-allowed}.navrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.navrow .spacer{flex:1}.lockmsg{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:14px}.savedmsg{color:var(--ok);font-size:14px}
+.offi{background:var(--soft);border-left:3px solid var(--accent);border-radius:8px;padding:8px 12px;margin:6px 0 10px}.offi p{margin:4px 0}.tcs{background:var(--soft);border-radius:10px;padding:10px 14px;margin-bottom:10px}.tcs p{margin:4px 0}
+</style>
+
+<header class="bar"><div class="wrap">
+  <div class="brand">Annale psy · UE3 · juin 2024<small>DFA1 · Bobigny · corrigé officiel + explications d'après les Collèges</small></div>
+  <div class="spacer"></div>
+  <div class="steps" id="steps"></div>
+  <div class="timer" id="timer" hidden>40:00</div>
+  <button class="btn small ghost" id="btnPause" hidden>Pause</button>
+</div></header>
+
+<main class="wrap">
+  <!-- Accueil -->
+  <section id="vStart">
+    <div class="hero">
+      <div>
+        <h1>5 épreuves, 36 questions</h1>
+        <p>Sujet de l'UE3 Psychiatrie-addictologie de juin 2024 : 4 TCS, 2 DP (trouble panique, TDAH), 1 KFP et 6 questions isolées d'addicto. Conditions d'examen type LUNESS, notation EDN (QRP : bonnes réponses ÷ réponses attendues ; TCS : 1 point si ta réponse fait partie de celles validées par le panel). Les erreurs probables du corrigé officiel sont signalées par ⚠️.</p>
+      </div>
+      <ul class="dplist" id="dpList"></ul><p class="note" style="margin-top:6px">Clique sur un dossier pour commencer par lui. Pendant l'épreuve, les étiquettes en haut à droite (QI, DP1…) et la grille de numéros permettent de changer de dossier à tout moment.</p>
+      <div class="rules">
+        <div class="rule"><b>60 minutes</b>Le chrono tourne pendant l'épreuve. À zéro, la copie est rendue.</div>
+        <div class="rule"><b>Navigation type LUNESS</b>Questions isolées et TCS : navigation libre, réponses modifiables jusqu'à la fin. DP et KFP (🔒) : on peut revenir relire, mais une réponse validée est verrouillée, et la question suivante s'ouvre une fois la précédente validée.</div>
+        <div class="rule"><b>Notation EDN</b>QRM : 1 / 0,5 / 0,2 / 0 selon 0, 1, 2 ou ≥ 3 erreurs ; indispensable oubliée ou inacceptable cochée : 0. QRP : bonnes réponses cochées ÷ réponses attendues. QROC : barème officiel.</div>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="btnStart">Commencer l'épreuve</button>
+        <button class="btn" id="btnResume" hidden>Reprendre</button>
+        <button class="btn ghost" id="btnDirect">Voir directement la correction</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Épreuve -->
+  <section id="vExam" hidden>
+    <div class="exam">
+      <div class="panel enonce" id="enonce"></div>
+      <div class="panel" id="qpanel"></div>
+    </div>
+  </section>
+
+  <!-- Résultats -->
+  <section id="vRes" hidden>
+    <div class="panel">
+      <div class="score">
+        <div><div class="big" id="sBig">0</div><div class="note" id="sSub"></div></div>
+        <div class="bars" id="sBars"></div>
+      </div>
+      <div class="grid-q" id="sGrid"></div>
+      <div class="actions"><button class="btn primary" id="btnCorr">Voir la correction détaillée</button><button class="btn" id="btnAgain">Repasser l'épreuve</button></div>
+    </div>
+  </section>
+
+  <!-- Correction -->
+  <section id="vCorr" hidden>
+    <div class="row" style="margin-bottom:12px"><h2 style="font-size:22px">Correction</h2><div class="spacer"></div><button class="btn small" id="btnBackRes">Résultats</button><button class="btn small" id="btnHome">Accueil</button></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="corr">
+      <div class="panel" id="corrMain"></div>
+      <aside class="panel course" id="course"></aside>
+    </div>
+  </section>
+</main>
+<div class="zoom" id="zoom" hidden><img alt="Image agrandie" id="zoomImg"></div>
+
+<script>
+const IMGS={};
+var img=function(k,alt){return `<img src="${IMGS[k]}" alt="${alt||""}" data-zoom>`};
+const EXAM = {
+"title": "Annale psy JUIN 2024",
+"dps": [
+{
+"id": "TCS1",
+"titre": "TCS · mutisme du sujet âgé",
+"items": "Items 61, 64, 66a",
+"free": true,
+"intro": "<p>Un patient âgé 65 été amené aux urgences pour un mutisme complet depuis 45 jours.Tous les examens cliniques et paracliniques sont normaux.</p>",
+"qs": [
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensez poser le diagnostic de catatonie</p><p><b>Nouvelle information :</b> Et que vous constatez un négativisme et une immobilité motrice</p></div><p>Vous pensez pertinente votre proposition</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+3,
+4
+],
+"w": [
+0,
+0,
+0,
+1,
+1
+],
+"expl": "<p>Négativisme et immobilité (stupeur) sont deux critères de catatonie. Le DSM-5 en demande 3 parmi 12, avec le mutisme déjà présent : le diagnostic devient très probable.</p>",
+"retenir": "Catatonie : stupeur, mutisme, négativisme, catalepsie, flexibilité cireuse… (≥ 3/12) → test au lorazépam."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Au bout de 2 heures le patient rapporte avec une prosodie faible et un discours très lent une angoisse importante par rapport à des idées délirantes de persécution. Si vous pensez poser le diagnostic de trouble délirant</p><p><b>Nouvelle information :</b> Et que vous constatez une absence d’hallucination auditives ou autres</p></div><p>Vous pensez pertinente votre proposition :</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+3,
+4
+],
+"w": [
+0,
+0,
+0,
+1,
+1
+],
+"expl": "<p>Le trouble délirant (ex-paranoïa) se caractérise par un délire systématisé, <b>sans hallucinations au premier plan</b> et sans désorganisation. L'absence d'hallucinations va donc dans son sens.</p>",
+"retenir": "Trouble délirant : délire systématisé, crédible, sans hallucinations marquées ni déficit."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensez poser le diagnostic de schizophrénie</p><p><b>Nouvelle information :</b> Et que la famille vous révèle que ce tableau a fait suite à un licenciement, que les premiers symptômes étaient une tristesse, une anhédonie, une fatigabilité et une anorexie</p></div><p>Vous pensez pertinente votre proposition</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+0,
+1
+],
+"w": [
+1,
+1,
+0,
+0,
+0
+],
+"expl": "<p>Une entrée dans le tableau par tristesse, anhédonie, fatigue et anorexie après un licenciement oriente vers un <b>épisode dépressif</b> (catatonie / mutisme d'origine dépressive), pas vers l'hypothèse évaluée ici, qui devient peu probable.</p>",
+"retenir": "Catatonie : chercher la cause, souvent thymique (dépression, manie) avant la schizophrénie."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Vous pensez poser le diagnostic de dépression</p><p><b>Nouvelle information :</b> Et que vous constatez un délire de persécution en rapport avec un délire de culpabilité (responsable de tous les conflits armés mondiaux)</p></div><p>Vous pensez pertinente votre proposition</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+3,
+4
+],
+"w": [
+0,
+0,
+0,
+1,
+1
+],
+"expl": "<p>Des idées délirantes de culpabilité et de persécution congruentes à l'humeur (se sentir responsable de tous les malheurs) = dépression avec caractéristiques psychotiques (mélancolie délirante). Elles renforcent l'hypothèse.</p>",
+"retenir": "Mélancolie délirante : idées de culpabilité, ruine, indignité, congruentes à l'humeur."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Catatonie : stupeur, mutisme, négativisme, catalepsie, flexibilité cireuse… (≥ 3/12) → test au lorazépam.</li><li>Trouble délirant : délire systématisé, crédible, sans hallucinations marquées ni déficit.</li><li>Catatonie : chercher la cause, souvent thymique (dépression, manie) avant la schizophrénie.</li><li>Mélancolie délirante : idées de culpabilité, ruine, indignité, congruentes à l'humeur.</li></ul>"
+},
+{
+"id": "DP1",
+"titre": "Crises d'angoisse aux urgences : trouble panique",
+"items": "Item 66c",
+"free": false,
+"intro": "<p>Interne de garde aux urgences, vous êtes sollicités par votre collègue urgentiste pour un avis psychiatrique concernant Madame S., une patiente âgée de 36 ans qui a été amenée par les pompiers qu’elle a elle-même appelés étant persuadée qu’elle était « en train de mourir ». Vous trouvez une patiente en pleurs, elle vous dit qu’elle se sent fatiguée après des</p><p>manifestations éprouvantes qui ont duré environ une trentaine de minutes. Vous essayez d’en savoir plus, la patiente vous informe que tout a commencé brutalement pendant qu’elle était en train de faire le ménage avec une sensation d’étouffement et d’oppression thoracique suivie d’une douleur au niveau du membre supérieur gauche. Elle sentait alors les battements de son cœur s’emballer et elle était en sueurs. Elle avait l’impression de quitter son propre corps et de s’évanouir avant même de pouvoir appeler les pompiers. Elle affirme que ses symptômes ont atteint une intensité maximale en quelques minutes pendant lesquelles elle était sidérée.</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Quelle sera votre démarche diagnostique aux urgences ?</p>",
+"opts": [
+"Installer la patiente dans un endroit calme et bien éclairé.",
+"Indiquer une hospitalisation en psychiatrie en urgence.",
+"Demander des examens complémentaires pour écarter une urgence organique.",
+"Rechercher une consommation de toxique.",
+"Renvoyer la patiente chez elle"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<p>Devant une crise d'angoisse aiguë aux urgences : la mettre au calme, rassurer, <b>éliminer une cause organique</b> (ECG, glycémie, SpO2, selon la clinique : EP, SCA, hypoglycémie, hyperthyroïdie) et chercher un toxique (cannabis, cocaïne, sevrage). Ni hospitalisation d'emblée ni retour sans évaluation.</p>",
+"retenir": "Attaque de panique = diagnostic d'élimination aux urgences : ECG ± bilan selon la clinique, toxiques."
+},
+{
+"type": "qrm",
+"q": "<p>Votre démarche ne retient pas les éléments recherchés. Quels éléments sémiologiques retenez-vous ?</p>",
+"opts": [
+"Une symptomatologie à début brutal avec une durée limitée dans le temps",
+"Les symptômes présentent la même intensité du début jusqu’à la fin",
+"Une asthénie post critique",
+"Une dépersonnalisation",
+"Des pensées catastrophiques et une sensation de mort imminente"
+],
+"ok": [
+0,
+2,
+3,
+4
+],
+"expl": "<p>Attaque de panique : début brutal, pic en <b>quelques minutes</b> puis décroissance (l'intensité n'est pas constante), symptômes somatiques (étouffement, palpitations), dépersonnalisation / déréalisation, peur de mourir ou de devenir fou, asthénie après la crise.</p>",
+"retenir": "AP : pic en < 10 min, ≥ 4 symptômes, peur de mourir, durée < 1 h, asthénie post-critique."
+},
+{
+"type": "qru",
+"q": "<p>Quel diagnostic psychiatrique évoquez-vous ?</p>",
+"opts": [
+"Un épisode dépressif caractérisé",
+"Un trouble de la personnalité borderline",
+"Une attaque de panique",
+"Un accès maniaque",
+"Un trouble anxieux généralisé"
+],
+"ok": [
+2
+],
+"expl": "<p>Crise brutale, paroxystique, limitée dans le temps, avec peur de mourir : <b>attaque de panique</b>.</p>",
+"retenir": "Attaque de panique ≠ trouble panique (répétition + anxiété anticipatoire)."
+},
+{
+"type": "qrm",
+"q": "<p>Vous retournez voir Madame S., vous la retrouvez plus calme et détendue après avoir reçu un traitement anxiolytique. Vous reprenez l’entretien et vous retenez les éléments suivants : Madame S. est célibataire, elle vit seule et travaille</p><p>comme secrétaire, jusqu’alors sans antécédent psychiatrique. Elle vous explique que tout a commencé il y a environ deux ans lors d’une soirée « bien arrosée » durant laquelle elle a pris quelques rails de cocaïne. Soudainement, elle a senti son cœur battre de plus en plus vite et elle était persuadée que quelque chose n’allait pas. Elle était prise d’une forte angoisse et d’une peur de mourir. Elle s’est présentée aux urgences les plus proches, aucun diagnostic n’a été retenu. Elle a présenté un épisode similaire quelques semaines plus tard après une deuxième consommation de cocaïne. Votre patiente vous affirme qu’elle n’a plus consommé de cocaïne mais que ces crises sont devenues de plus en plus fréquentes et récurrentes jusqu’à deux à trois crises par semaines, de manière inopinée. Elle n’identifie pas un facteur déclenchant mais elle décrit une peur et une forte appréhension de voir réapparaitre ses symptômes juste avant le début de la crise. Ces troubles deviennent handicapants. Quels éléments sémiologiques vous semblent pertinents ?</p>",
+"opts": [
+"La répétition des crises",
+"L’évolution chronique",
+"La présence d’une anxiété anticipatoire",
+"Le caractère imprévisible des crises",
+"Un retentissement important sur la qualité de vie"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4
+],
+"expl": "<p>Crises récurrentes et imprévisibles, anxiété anticipatoire (peur de la prochaine crise), évolution chronique, retentissement : tous les éléments du <b>trouble panique</b>.</p>",
+"retenir": "Trouble panique = AP récurrentes inattendues + ≥ 1 mois de peur d'en refaire / évitement."
+},
+{
+"type": "qru",
+"q": "<p>Quel diagnostic longitudinal retenez-vous ?</p>",
+"opts": [
+"Un trouble psychotique chronique",
+"Un trouble dépressif persistant",
+"Un trouble de la personnalité borderline",
+"Un trouble panique",
+"Un état de stress post traumatique"
+],
+"ok": [
+3
+],
+"expl": "<p>Diagnostic longitudinal : <b>trouble panique</b>.</p>",
+"retenir": "Trouble panique : diagnostic sur l'histoire évolutive."
+},
+{
+"type": "qru",
+"q": "<p>Quelle manifestation pourrait venir compliquer ce trouble et qui est à rechercher ?</p>",
+"opts": [
+"Des hallucinations auditives",
+"Des scarifications",
+"Un trouble du comportement alimentaire",
+"L’agoraphobie",
+"Des idées délirantes de grandeur"
+],
+"ok": [
+3
+],
+"expl": "<p>La complication classique est l'<b>agoraphobie</b> : peur et évitement des lieux d'où il serait difficile de s'échapper ou d'être secouru en cas de crise.</p>",
+"retenir": "Trouble panique → agoraphobie, dépression, addictions (alcool, BZD)."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant le Trouble Panique :</p>",
+"opts": [
+"Il est plus fréquent en population masculine",
+"Son diagnostic se base sur l’histoire de l’évolution du trouble",
+"Il se déclare généralement entre 20 et 30 ans",
+"Son origine est multifactorielle",
+"Il touche 10% de la population générale"
+],
+"ok": [
+1,
+2,
+3
+],
+"expl": "<p>Trouble panique : prévalence vie entière d'environ 2-4 % (pas 10 %), <b>prédominance féminine</b> (sex-ratio ~2/1), début entre 20 et 30 ans, origine multifactorielle, diagnostic sur l'évolution.</p>",
+"retenir": "Trouble panique : ~2-4 %, femmes ×2, début 20-30 ans."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant l’agoraphobie :</p>",
+"opts": [
+"Il s’agit d’une peur de se retrouver dans des grands espaces",
+"Il s’agit d’une peur de se retrouver dans un espace duquel il serait difficile de s’échapper ou d’être secouru en cas de survenue d’une attaque de panique.",
+"Elle peut contraindre le patient à éviter certaines situations sociales",
+"Elle peut passer inaperçue",
+"Elle peut être isolée"
+],
+"ok": [
+1,
+2,
+4
+],
+"expl": "<p>L'agoraphobie n'est pas la peur des grands espaces en soi, c'est la peur des situations d'où on ne pourrait pas s'échapper ou être secouru (transports, foule, magasins, être seul hors de chez soi). Elle peut exister sans trouble panique et entraîne des évitements.</p><p>« Peut passer inaperçue » n'est pas retenu par le corrigé : les évitements sont en général bien visibles.</p>",
+"retenir": "Agoraphobie = peur de ne pas pouvoir s'échapper / être secouru, pas des « grands espaces »."
+},
+{
+"type": "qrm",
+"q": "<p>Votre patiente est maintenant rassurée. Quelle sera votre conduite à tenir ?</p>",
+"opts": [
+"Rechercher une comorbidité psychiatrique",
+"Evaluation du risque suicidaire",
+"Indiquer une hospitalisation en psychiatrie d’emblée",
+"Adresser la patiente au Centre Médico Psychologique de votre secteur",
+"Instaurer un traitement médicamenteux de fond"
+],
+"ok": [
+0,
+1,
+3
+],
+"expl": "<p>Après la crise : chercher les comorbidités (dépression, addictions), évaluer le risque suicidaire, orienter vers le CMP. Pas d'hospitalisation d'emblée, et on ne démarre pas un traitement de fond aux urgences après une seule crise.</p>",
+"retenir": "AP aux urgences : comorbidités + risque suicidaire + orientation (CMP / MT), pas de traitement de fond aux urgences."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les complications du Trouble Panique on retrouve :</p>",
+"opts": [
+"Un épisode dépressif caractérisé",
+"Le suicide",
+"L’évolution vers un trouble psychotique chronique",
+"Un trouble de l’usage des substances",
+"L’isolement social."
+],
+"ok": [
+0,
+1,
+3,
+4
+],
+"expl": "<p>Complications : EDC, suicide, troubles de l'usage (alcool, BZD), isolement, agoraphobie. Le trouble panique n'évolue pas vers une psychose chronique.</p>",
+"retenir": "Complications des troubles anxieux : dépression, suicide, addictions, isolement."
+},
+{
+"type": "qrm",
+"q": "<p>Quels seraient les grands axes de la prise en charge de ce trouble ?</p>",
+"opts": [
+"La psychoéducation",
+"L’électroconvulsivothérapie",
+"La prise en charge des comorbidités et des complications",
+"Une psychothérapie",
+"Un traitement pharmacologique"
+],
+"ok": [
+0,
+2,
+3,
+4
+],
+"expl": "<p>Prise en charge : psychoéducation, TCC, ISRS en traitement de fond si besoin, comorbidités. Pas d'ECT.</p>",
+"retenir": "Trouble panique : psychoéducation + TCC ± ISRS."
+},
+{
+"type": "qru",
+"q": "<p>Votre patiente vous interroge sur l’éventualité de démarrer un traitement médicamenteux. Quelle classe pharmacologique est indiquée en première intention dans le traitement de fond du Trouble Panique ?</p>",
+"opts": [
+"Les anxiolytiques de la famille des Benzodiazépines",
+"Les antidépresseurs tricycliques",
+"Les antidépresseurs inhibiteurs sélectifs de la recapture de la sérotonine (ISRS).",
+"Les antipsychotiques de deuxième génération",
+"Les thymorégulateurs"
+],
+"ok": [
+2
+],
+"expl": "<p>Traitement de fond de 1re intention : <b>ISRS</b> (ou IRSNA comme la venlafaxine), en commençant à faible dose (hypersensibilité anxieuse en début de traitement). Les BZD sont seulement ponctuelles, au risque de dépendance.</p>",
+"retenir": "Troubles anxieux : traitement de fond = ISRS ; BZD < 12 semaines, ponctuelles."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant la prise en charge non pharmacologique du Trouble Panique quelles sont les propositions justes ?</p>",
+"opts": [
+"L’hygiène de vie est primordiale",
+"Les thérapies comportementales et cognitives n’ont pas montré d’efficacité",
+"L’exposition et la désensibilisation aux sensations physiques des attaques de panique sont au centre de la prise en charge.",
+"Elle n’est pas nécessaire dans les formes sévères",
+"Elle se met en place durant l’hospitalisation en psychiatrie"
+],
+"ok": [
+0,
+2
+],
+"expl": "<p>La TCC est efficace et centrale : exposition intéroceptive (aux sensations des crises), restructuration cognitive. L'hygiène de vie (caféine, alcool, sommeil, sport) compte. La prise en charge est <b>ambulatoire</b>, y compris dans les formes sévères.</p>",
+"retenir": "TCC du trouble panique : exposition intéroceptive + restructuration cognitive."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Attaque de panique = diagnostic d'élimination aux urgences : ECG ± bilan selon la clinique, toxiques.</li><li>AP : pic en < 10 min, ≥ 4 symptômes, peur de mourir, durée < 1 h, asthénie post-critique.</li><li>Attaque de panique ≠ trouble panique (répétition + anxiété anticipatoire).</li><li>Trouble panique = AP récurrentes inattendues + ≥ 1 mois de peur d'en refaire / évitement.</li><li>Trouble panique : diagnostic sur l'histoire évolutive.</li><li>Trouble panique → agoraphobie, dépression, addictions (alcool, BZD).</li><li>Trouble panique : ~2-4 %, femmes ×2, début 20-30 ans.</li><li>Agoraphobie = peur de ne pas pouvoir s'échapper / être secouru, pas des « grands espaces ».</li><li>AP aux urgences : comorbidités + risque suicidaire + orientation (CMP / MT), pas de traitement de fond aux urgences.</li><li>Complications des troubles anxieux : dépression, suicide, addictions, isolement.</li><li>Trouble panique : psychoéducation + TCC ± ISRS.</li><li>Troubles anxieux : traitement de fond = ISRS ; BZD < 12 semaines, ponctuelles.</li><li>TCC du trouble panique : exposition intéroceptive + restructuration cognitive.</li></ul>"
+},
+{
+"id": "DP2",
+"titre": "Félix, 7 ans, inattentif : TDAH",
+"items": "Items 55, 67",
+"free": false,
+"intro": "<p>Interne en pédopsychiatrie dans un service hospitalo-universitaire non-sectorisé, vous accueillez Félix, 7 ans, accompagné par ses deux parents.Les parents vous consultent pour leur fils après avoir été orientés par l’enseignant de l’école primaire dans laquelle Félix est scolarisé en classe de CE1.</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>D’une façon générale, chez un enfant de deux ans et demi, on peut s’attendre à :</p>",
+"opts": [
+"ce qu’il s’habille sans aide",
+"ce qu’il puisse tenir sur un pied pendant plus de 10 secondes",
+"ce qu’il joue à plusieurs, comme à « chat » par exemple",
+"ce qu’il puisse comprendre des ordres et nommer des images",
+"ce qu’il mange seul"
+],
+"ok": [
+2,
+3,
+4
+],
+"expl": "<p>À 2 ans et demi : il mange seul, comprend des ordres simples, nomme des images, commence les jeux à plusieurs. S'habiller seul (vers 3-4 ans) et tenir sur un pied plus de 10 s (vers 4-5 ans), c'est plus tard.</p>",
+"retenir": "Repères : marche 12-18 mois, phrases 2 ans, propreté diurne 2-3 ans, unipodal ~4 ans, s'habille seul 4 ans."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les propositions suivantes, quelles sont les situations anormales dans le développement psychomoteur d’un enfant ?</p>",
+"opts": [
+"Absence de périodicité jour/nuit à 6 mois",
+"Absence de capacité à mastiquer des aliments solides à 6 mois",
+"Propreté diurne non acquise à 30 mois (urines + selles)",
+"Absence du sourire-réponse à 3 mois",
+"Ne peut s’assoir sans support à 9 mois"
+],
+"ok": [
+0,
+2,
+3,
+4
+],
+"expl": "<p>Anormal : pas de rythme jour / nuit à 6 mois, pas de sourire-réponse à 3 mois (normal vers 6 semaines - 2 mois), pas de position assise sans appui à 9 mois. Pour la propreté diurne non acquise à 30 mois, le corrigé la compte comme anormale. La mastication des solides n'est pas attendue à 6 mois.</p>",
+"retenir": "Alertes : pas de sourire à 3 mois, pas de tenue assise à 9 mois, pas de marche à 18 mois."
+},
+{
+"type": "qrm",
+"q": "<p>Les parents qui ont rencontré récemment l’enseignant vous rapportent que ce dernier a remarqué des difficultés de Félix en classe à se concentrer, des oublis fréquents ainsi qu’une certaine lenteur dans l’exécution des tâches qui lui sont demandées. Parallèlement à cela, Félix est décrit comme calme, sans agitation particulière.Face à cette description, à quelles pathologies devez-vous penser?</p>",
+"opts": [
+"le trouble déficit de l’attention avec hyperactivité",
+"le trouble déficit de l’attention sans hyperactivité",
+"la dépression chez l’enfant",
+"un trouble métabolique",
+"un retard intellectuel léger"
+],
+"ok": [
+1,
+2,
+3,
+4
+],
+"expl": "<p>Enfant calme mais lent et inattentif : TDA <b>sans</b> hyperactivité, dépression de l'enfant, déficience intellectuelle légère, cause organique (métabolique, thyroïde, absences épileptiques, troubles sensoriels). Pas de TDAH avec hyperactivité puisqu'il est calme.</p>",
+"retenir": "Inattention de l'enfant : éliminer surdité / vision, absences, dépression, déficience intellectuelle."
+},
+{
+"type": "qrm",
+"q": "<p>Vous évoquez un trouble déficit de l’attention sans hyperactivité. Quels sont les symptômes que l’on peut retrouver?</p>",
+"opts": [
+"une difficulté à se concentrer",
+"des comportements ou des actes mentaux répétitifs que le sujet se sent forcé d’accomplir et qui doivent être appliqués de manière inflexible",
+"une tendance à la procrastination (c’est-à-dire, une tendance à remettre systématiquement à plus tard)",
+"des difficultés pour comprendre et suivre les règles et consignes",
+"une impulsivité se manifestant par de la précipitation, une incapacité à attendre son tour et des prises de risques"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<p>Inattention : difficultés de concentration, procrastination, oublis, difficulté à suivre les consignes. Les comportements répétitifs forcés, c'est le TOC. L'impulsivité relève du versant hyperactif / impulsif, absent ici.</p>",
+"retenir": "TDAH : inattention ± hyperactivité / impulsivité, avant 12 ans, dans ≥ 2 contextes."
+},
+{
+"type": "qrm",
+"q": "<p>Le trouble déficit de l’attention sans hyperactivité s’intègre dans les troubles neuro-développementaux comme cinq autres catégories diagnostiques suivantes. Lesquelles ?</p>",
+"opts": [
+"le trouble du développement intellectuel",
+"les troubles des acquisitions (langage et parole, coordinations motrices)",
+"les troubles des apprentissages (langage écrit, calcul, graphisme)",
+"la schizophrénie précoce",
+"le trouble du spectre autistique"
+],
+"ok": [
+0,
+1,
+2,
+4
+],
+"expl": "<p>Troubles du neurodéveloppement (DSM-5) : TDI, troubles de la communication / du langage, TSA, TDAH, troubles spécifiques des apprentissages, troubles moteurs (TDC, tics). La schizophrénie n'en fait pas partie.</p>",
+"retenir": "TND : TDI, TSA, TDAH, troubles des apprentissages, du langage, moteurs."
+},
+{
+"type": "qrm",
+"q": "<p>Les parents de Félix vous interrogent sur le TDAH. A propos du TDAH, quelles sont les réponses correctes ?</p>",
+"opts": [
+"les symptômes débutent dans l’enfance et sont durables",
+"la prévalence du TDAH est de 5 % et le sex-ratio est de 3/1 en faveur des filles",
+"l’expression des symptômes peut varier selon le contexte",
+"les autres troubles neurodéveloppementaux devront être activement recherchés car ils sont fréquemment associés entre eux",
+"pour poser le diagnostic, il faut un nombre suffisant de symptômes présents dans au moins deux contextes et associés à un retentissement social, scolaire ou professionnel"
+],
+"ok": [
+0,
+2,
+3,
+4
+],
+"expl": "<p>TDAH : prévalence d'environ 5 % chez l'enfant, sex-ratio ~3/1 en faveur des <b>garçons</b> (d'où B fausse). Les symptômes débutent avant 12 ans, sont présents dans au moins 2 contextes, et leur expression varie selon le contexte. Les comorbidités TND sont fréquentes.</p>",
+"retenir": "TDAH : ~5 %, garçons ×3, ≥ 2 contextes, comorbidités TND / troubles oppositionnels."
+},
+{
+"type": "qrm",
+"q": "<p>Les parents de Félix vous demandent quel traitement médicamenteux pourrait éventuellement être proposé si les aménagements de l’environnement qui seront proposés apportent peu de résultats ? Cochez la ou les réponses vraies :</p>",
+"opts": [
+"mélatonine",
+"antidépresseurs inhibiteurs de la recapture de la sérotonine",
+"méthylphénidate",
+"antipsychotiques de deuxième génération",
+"anxiolytiques non-benzodiazépiniques"
+],
+"ok": [
+2
+],
+"expl": "<p>Si les mesures psychoéducatives et environnementales ne suffisent pas : <b>méthylphénidate</b> (seul traitement médicamenteux du TDAH en France chez l'enfant).</p>",
+"retenir": "TDAH : méthylphénidate en 2e intention, après les mesures non médicamenteuses."
+},
+{
+"type": "qrm",
+"q": "<p>Les parents vous demandent des précisions sur le méthylphénidate. Cochez les réponses vraies :</p>",
+"opts": [
+"Le méthylphénidate fait partie de la classe des « psychostimulants »",
+"Le méthylphénidate est un inhibiteur de la recapture de la dopamine",
+"Le méthylphénidate existe sous forme à libération immédiate et à libération prolongée",
+"Le méthylphénidate est un dérivé des amphétamines",
+"Le méthylphénidate peut-être prescrit à partir de 3 ans"
+],
+"ok": [
+0,
+1,
+2,
+3
+],
+"expl": "<p>Méthylphénidate : psychostimulant, dérivé amphétaminique, inhibiteur de la recapture de la dopamine (et de la noradrénaline), formes LI et LP. Prescription à partir de <b>6 ans</b>, initiale hospitalière, ordonnance sécurisée (stupéfiant).</p>",
+"retenir": "Méthylphénidate : ≥ 6 ans, stupéfiant, prescription initiale hospitalière, renouvellement annuel."
+},
+{
+"type": "qrm",
+"q": "<p>Par rapport au méthylphénidate, quel bilan pré-thérapeutique est indiqué ?</p>",
+"opts": [
+"Un ECG et éventuellement un bilan cardiologique pour éliminer toute cardiopathie (insuffisance cardiaque, troubles du rythme cardiaque…)",
+"Une imagerie cérébrale pour éliminer une hypertension intracrânienne (HTIC)",
+"Un bilan thyroïdien",
+"Un fond d’œil",
+"Un bilan métabolique -"
+],
+"ok": [
+0
+],
+"expl": "<p>Avant le méthylphénidate : examen cardiovasculaire (FC, PA, ATCD personnels et familiaux de mort subite), ECG selon les cas, poids et taille. Pas d'imagerie cérébrale, de FO ou de bilan thyroïdien systématique.</p>",
+"retenir": "Bilan pré-méthylphénidate : cardiovasculaire (PA, FC, ± ECG) + courbe staturo-pondérale."
+},
+{
+"type": "qrm",
+"q": "<p>Dans le cas de l’instauration du méthylphénidate, quelle surveillance et à quels effets indésirables devez-vous veillez ?</p>",
+"opts": [
+"surveillance du poids et de la taille",
+"surveillance de la fréquence cardiaque et de la tension artérielle",
+"recherche de difficultés d’endormissement",
+"recherche des douleurs abdominales, nausées ou céphalées",
+"un hirsutisme"
+],
+"ok": [
+0,
+1,
+2,
+3
+],
+"expl": "<p>Effets indésirables : anorexie / perte de poids, ralentissement de la croissance, insomnie, tachycardie / HTA, céphalées, douleurs abdominales, irritabilité. L'hirsutisme n'en fait pas partie.</p>",
+"retenir": "Méthylphénidate : surveiller poids, taille, PA, FC, sommeil, appétit."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Repères : marche 12-18 mois, phrases 2 ans, propreté diurne 2-3 ans, unipodal ~4 ans, s'habille seul 4 ans.</li><li>Alertes : pas de sourire à 3 mois, pas de tenue assise à 9 mois, pas de marche à 18 mois.</li><li>Inattention de l'enfant : éliminer surdité / vision, absences, dépression, déficience intellectuelle.</li><li>TDAH : inattention ± hyperactivité / impulsivité, avant 12 ans, dans ≥ 2 contextes.</li><li>TND : TDI, TSA, TDAH, troubles des apprentissages, du langage, moteurs.</li><li>TDAH : ~5 %, garçons ×3, ≥ 2 contextes, comorbidités TND / troubles oppositionnels.</li><li>TDAH : méthylphénidate en 2e intention, après les mesures non médicamenteuses.</li><li>Méthylphénidate : ≥ 6 ans, stupéfiant, prescription initiale hospitalière, renouvellement annuel.</li><li>Bilan pré-méthylphénidate : cardiovasculaire (PA, FC, ± ECG) + courbe staturo-pondérale.</li><li>Méthylphénidate : surveiller poids, taille, PA, FC, sommeil, appétit.</li></ul>"
+},
+{
+"id": "KFP1",
+"titre": "Agitation et logorrhée : manie",
+"items": "Item 66b",
+"free": false,
+"intro": "<p>Madame Y, âgée de 40 ans, présente des dépressions récurrentes depuis 5 ans. Elle vient accompagnée de son mari aux urgences, amenée par les pompiers. Elle présentait une agitation et une logorrhée. L'examen somatique est sans particularité. Les examens paracliniques sont normaux.</p>",
+"qs": [
+{
+"type": "qroc",
+"q": "<p>Quel est le diagnostic qui correspond au tableau clinique présenté par la patiente aux urgences ?</p>",
+"keys": [
+"maniaque",
+"manie"
+],
+"attendu": "Épisode maniaque",
+"expl": "<p>Agitation + logorrhée chez une patiente aux dépressions récurrentes, bilan somatique normal : <b>épisode maniaque</b>.</p>",
+"retenir": "Manie : euphorie / irritabilité, logorrhée, tachypsychie, ↓ sommeil, ≥ 7 jours."
+},
+{
+"type": "qroc",
+"q": "<p>Quel est le diagnostic de la patiente ?</p>",
+"keys": [
+"bipolaire",
+"bipolarité"
+],
+"attendu": "Trouble bipolaire (type I)",
+"expl": "<p>Un seul épisode maniaque suffit pour poser le diagnostic de <b>trouble bipolaire de type I</b>.</p>",
+"retenir": "1 épisode maniaque = trouble bipolaire de type I."
+},
+{
+"type": "qroc",
+"q": "<p>Quel est le traitement de référence ?</p>",
+"keys": [
+"lithium",
+"téralithe",
+"teralithe"
+],
+"attendu": "Lithium",
+"expl": "<p>Thymorégulateur de référence : <b>lithium</b> (bilan pré-thérapeutique : rein, thyroïde, calcémie, ECG, β-hCG). En phase aiguë, on associe souvent un antipsychotique.</p>",
+"retenir": "BP : lithium = référence (bilan rénal, thyroïde, ECG, β-hCG ; lithiémie 0,5-0,8)."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Manie : euphorie / irritabilité, logorrhée, tachypsychie, ↓ sommeil, ≥ 7 jours.</li><li>1 épisode maniaque = trouble bipolaire de type I.</li><li>BP : lithium = référence (bilan rénal, thyroïde, ECG, β-hCG ; lithiémie 0,5-0,8).</li></ul>"
+},
+{
+"id": "SQI1",
+"titre": "6 questions isolées d'addictologie",
+"items": "Items 78, 80",
+"free": true,
+"intro": "<p>Questions isolées</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Concernant le cannabis, quelles sont les propositions justes ?</p>",
+"opts": [
+"Le cannabis est issu de plante cannabis Sativa",
+"Le principe actif est le tetra-hydrocannabinol (THC) delta9 -THC",
+"Les troubles induits par la substance : troubles psychotiques, syndrome confusionnel , syndrome de sevrage",
+"Le delta9-tetra hydrocannabinoide agit sur les récepteurs CB1 et CB2",
+"Il est le plus souvent fumé sous forme de cigarette avec le tabac"
+],
+"ok": [
+0,
+1,
+3,
+4
+],
+"expl": "<p>Cannabis sativa, Δ9-THC, récepteurs CB1 (SNC) et CB2 (immunité), le plus souvent fumé avec du tabac. C est fausse pour le corrigé : le syndrome confusionnel n'est pas un trouble induit classique (on retient surtout les troubles psychotiques, anxieux et le sevrage).</p>",
+"retenir": "Cannabis : Δ9-THC → CB1 / CB2 ; complications psychotiques ++ chez le jeune."
+},
+{
+"type": "qrm",
+"q": "<p>Dans le cadre d'une consommation de cannabis, quelles sont les propositions correctes ?</p>",
+"opts": [
+"Le syndrome amotivationnel comprend : indifférence affective, baisse des performances scolaires ou du travail, désinvestissement des relations sociales",
+"Le syndrome de sevrage est présent dans 90 % des cas",
+"Le syndrome de sevrage comprend: Irritabilité, agressivité, anxiété nervosité , impatience, trouble du sommeil",
+"Les signes somatiques du syndrome de sevrage sont : douleurs abdominales, fièvre, céphalées",
+"Les premiers symptômes: 1 à 3 jours après arrêt du traitement et peuvent durer jusqu’à 2 mois"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>B. 40% des cas</p><p>E. 1 à 2 semaines</p></div><p>Syndrome amotivationnel : indifférence, baisse des performances, repli. Sevrage : chez environ 40 % des usagers réguliers (pas 90 %), irritabilité, anxiété, insomnie, et signes physiques (douleurs abdominales, sueurs, céphalées). Il débute 1 à 3 jours après l'arrêt et dure <b>1 à 2 semaines</b>, pas 2 mois.</p>",
+"retenir": "Sevrage cannabis : ~40 %, début J1-J3, dure 1-2 semaines, irritabilité + insomnie."
+},
+{
+"type": "qrm",
+"q": "<p>Cocher la ou les réponses vraies concernant la cocaine</p>",
+"opts": [
+"Elle existe sous forme de poudre blanche, ou de base (cailloux )",
+"Elle a une action sédative",
+"Il n'y a pas d’antidote en cas d’overdose à la cocaïne",
+"Il existe un traitement préventif en cas de mésusage",
+"Elle est extraite des feuilles de coca en Amérique du Sud, Indonésie et Est de l’Afrique"
+],
+"ok": [
+0,
+2,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>B. Action stimulante</p></div><p>Cocaïne : poudre (chlorhydrate) ou base (crack / free-base, « cailloux »), action <b>stimulante</b>. Il n'y a ni antidote en cas d'overdose, ni traitement de substitution ou préventif validé.</p>",
+"retenir": "Cocaïne : pas d'antidote, pas de substitution ; complications CV (SCA, AVC) ++."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant la cocaïne, cocher la ou les réponses vraies</p>",
+"opts": [
+"Associée avec du bicarbonate de soude il s'agit de crack ; Associée avec de l'ammoniaque il s'agit de freebase",
+"Âge moyen de consommation en Europe 35 ans",
+"Les hommes consomment 10 fois plus que les femmes",
+"Il y a 400000 consommateurs en France",
+"Ses effets varient en fonction du mode d’administration"
+],
+"ok": [
+0,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>B. 22 ans</p><p>C. 4 fois plus</p></div><p>Crack = cocaïne + bicarbonate ; free-base = + ammoniaque. Environ 600 000 usagers dans l'année en France (le corrigé retient 400 000). Âge moyen ~22 ans en Europe, hommes ~4 fois plus que les femmes. Les effets dépendent de la voie (fumée et IV : rapides et brefs).</p>",
+"retenir": "Cocaïne : crack = bicarbonate ; effets selon la voie (fumée / IV > nasale)."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant le syndrome de sevrage à la cocaïne, cocher la ou les réponses vraies :</p>",
+"opts": [
+"Les symptômes apparaissent dès l’arrêt de la cocaïne jusqu’à plusieurs semaines",
+"On retrouve : hypersomnie ralentissement psychomoteur, augmentation de l’appétit",
+"On retrouve : paranoia, dépression, tentative de suicide, attaque de panique induite, épisode délirant aigu, recherche compulsive du produit",
+"Il n’existe pas de complications somatiques",
+"La prise en charge est en ambulatoire le plus souvent"
+],
+"ok": [
+1,
+2,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>A. Quelques jours après l’arrêt de la cocaïne</p></div><p>Sevrage de cocaïne (« descente ») : apparaît quelques heures à jours après l'arrêt : hypersomnie, hyperphagie, ralentissement, dysphorie, risque suicidaire, parfois symptômes psychotiques. Il peut y avoir des complications somatiques. La prise en charge est le plus souvent ambulatoire.</p>",
+"retenir": "Descente de cocaïne : dysphorie, hypersomnie, hyperphagie, risque suicidaire."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant l'intoxication aigue aux amphétamines, quelles sont les propositions vraies ?</p>",
+"opts": [
+"début des effets en fonction du type d’administration et de la dose et de l’individu",
+"Intoxication aigue : euphorie , bien être, augmentation de l’attention et concentration",
+"Augmentation du désir sexuel",
+"Baisse de la pression artérielle et du rythme cardiaque (tachycardie hypertension hyperthermie maligne)",
+"Augmentation de la fréquence respiratoire"
+],
+"ok": [
+0,
+1,
+2,
+4
+],
+"expl": "<p>Amphétamines (sympathomimétiques) : euphorie, éveil, ↑ concentration, ↑ libido, et sur le plan somatique <b>tachycardie, HTA, hyperthermie</b>, polypnée, mydriase. D est donc fausse.</p>",
+"retenir": "Psychostimulants : toxidrome sympathomimétique (tachycardie, HTA, hyperthermie, mydriase)."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Cannabis : Δ9-THC → CB1 / CB2 ; complications psychotiques ++ chez le jeune.</li><li>Sevrage cannabis : ~40 %, début J1-J3, dure 1-2 semaines, irritabilité + insomnie.</li><li>Cocaïne : pas d'antidote, pas de substitution ; complications CV (SCA, AVC) ++.</li><li>Cocaïne : crack = bicarbonate ; effets selon la voie (fumée / IV > nasale).</li><li>Descente de cocaïne : dysphorie, hypersomnie, hyperphagie, risque suicidaire.</li><li>Psychostimulants : toxidrome sympathomimétique (tachycardie, HTA, hyperthermie, mydriase).</li></ul>"
+}
+]
+};
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const L="ABCDEFGHIJKLMNOPQRST";
+const KEY="annale-psy-juin24-v1";
+const TOTAL=60*60;
+const store={get(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}},clear(){try{localStorage.removeItem(KEY)}catch(e){}}};
+const Q=[];EXAM.dps.forEach((dp,d)=>dp.qs.forEach((q,i)=>Q.push({d,i,q,dp})));
+let S=null, tick=null, paused=false;
+function fresh(){return{pos:0,ans:{},left:TOTAL,done:false,override:{}}}
+function img(k,alt){return `<img src="${IMGS[k]}" alt="${alt||''}" data-zoom>`}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function fmt(t){t=Math.max(0,t|0);return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+function show(id){["vStart","vExam","vRes","vCorr"].forEach(v=>$("#"+v).hidden=v!==id);window.scrollTo(0,0)}
+function antibio(){const r=[["Amoxicilline","S"],["Imipénème","S"],["Gentamicine","S"],["Vancomycine","S"],["Cotrimoxazole","R"],["Teicoplanine","S"],["Linézolide","S"],["Lévofloxacine","R"],["Nitrofurantoïne","R"]];
+ return `<div class="tblwrap"><table class="abg"><tr><td colspan="2"><b>ECBU</b> · urines 2e jet</td></tr><tr><td>Hématies</td><td>50/mm³</td></tr><tr><td>Cellules épithéliales</td><td>absence</td></tr><tr><td>Leucocytes</td><td>150/mm³</td></tr><tr><td>CGP en courtes chaînettes</td><td>quelques</td></tr><tr><td>Culture : <i>Enterococcus faecalis</i></td><td>10⁵/mL</td></tr><tr><td colspan="2"><b>Antibiogramme</b></td></tr>${r.map(([a,b])=>`<tr><td>${a}</td><td class="${b}">${b}</td></tr>`).join("")}</table></div>`}
+
+/* ---------- accueil ---------- */
+$("#dpList").innerHTML=EXAM.dps.map((dp,d)=>`<li data-jd="${d}" style="cursor:pointer" title="Commencer par ce dossier"><span class="id">${dp.id}</span><span>${dp.titre}</span><span class="n">${dp.qs.length} Q</span></li>`).join("");
+const saved=store.get();
+if(saved&&!saved.done&&Object.keys(saved.ans).length){$("#btnResume").hidden=false}
+if(saved&&saved.done){$("#btnResume").hidden=false;$("#btnResume").textContent="Voir mes résultats"}
+$("#btnStart").onclick=()=>{S=fresh();store.set(S);startExam()};
+$("#btnResume").onclick=()=>{S=saved;if(S.done)results();else startExam()};
+$("#btnDirect").onclick=()=>{S=S||saved||fresh();openCorr(0)};
+
+/* ---------- épreuve ---------- */
+function steps(){const el=$("#steps");if(!S||$("#vExam").hidden&&!S.done){el.innerHTML="";return}
+ const cur=Q[S.pos]?Q[S.pos].d:-1;
+ el.innerHTML=EXAM.dps.map((dp,d)=>{const qs=Q.filter(x=>x.d===d);const done=qs.every(x=>S.ans[x.d+"-"+x.i]!==undefined);return `<span data-jd="${d}" style="cursor:pointer" title="Aller à ${dp.titre}" class="${d===cur&&!S.done?'on':done?'done':''}">${dp.id}</span>`}).join("")}
+function startExam(){show("vExam");$("#timer").hidden=false;$("#btnPause").hidden=false;paused=false;$("#btnPause").textContent="Pause";renderQ();runTimer()}
+function runTimer(){clearInterval(tick);tick=setInterval(()=>{if(paused||!S||S.done)return;S.left--;drawTimer();if(S.left%5===0)store.set(S);if(S.left<=0){finish()}},1000);drawTimer()}
+function drawTimer(){const t=$("#timer");t.textContent=fmt(S.left);t.classList.toggle("low",S.left<=300)}
+$("#btnPause").onclick=()=>{paused=!paused;$("#btnPause").textContent=paused?"Reprendre":"Pause";$("#qpanel").style.filter=paused?"blur(6px)":"";$("#enonce").style.filter=paused?"blur(6px)":""};
+
+function enonceHTML(d,upto){const dp=EXAM.dps[d];let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div>${dp.intro}`;
+ if(dp.introImg)h+=`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`;
+ dp.qs.forEach((q,i)=>{if(i<upto&&q.ctx){h+=`<div class="add"><div class="note">Ajouté en Q${i+1}</div>${q.ctx}${q.img?`<div class="imgs">${q.img.map(k=>img(k)).join("")}</div>`:""}${q.table==="antibio"?antibio():""}</div>`}});return h}
+
+function isFree(dp){return dp.free||/^(QI|SQI|TCS)/.test(dp.id)}
+function opened(n){const {d,i,dp}=Q[n];if(isFree(dp))return true;for(let k=0;k<i;k++){if(S.ans[d+"-"+k]===undefined)return false}return true}
+function navHTML(){return `<div class="qnav">`+EXAM.dps.map((dp,d)=>`<div class="qnav-dp"><span class="qnav-id">${dp.id}${isFree(dp)?"":" 🔒"}</span>`+Q.map((x,n)=>({x,n})).filter(o=>o.x.d===d).map(({x,n})=>{const k=x.d+"-"+x.i;const done=S.ans[k]!==undefined;const ok=opened(n);return `<button class="qn${n===S.pos?" cur":""}${done?" done":""}" data-n="${n}" ${ok?"":"disabled"} title="${ok?"":"Validez les questions précédentes du dossier"}">${x.i+1}</button>`}).join("")+`</div>`).join("")+`</div>`}
+function renderQ(){
+ if(S.pos>=Q.length)S.pos=Q.length-1;
+ const {d,i,q,dp}=Q[S.pos];steps();
+ const k=d+"-"+i, prev=S.ans[k], answered=prev!==undefined, free=isFree(dp), locked=answered&&!free;
+ $("#enonce").innerHTML=enonceHTML(d,i);
+ const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+ let h=navHTML();
+ h+=`<div class="qhead"><span class="qnum">${dp.id} · Q${i+1}/${dp.qs.length}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}<span class="spacer"></span><span class="note">${S.pos+1} / ${Q.length}</span></div>`;
+ if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+ if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+ if(q.table==="antibio")h+=antibio();
+ h+=`<div class="qtext">${q.q}</div>`;
+ const pa=Array.isArray(prev)?prev:[];
+ if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const t=q.type==="qrm"?"checkbox":"radio";
+  h+=`<ul class="opts">${q.opts.map((o,j)=>`<li class="opt"><label for="o${j}"><input type="${t}" name="opt" id="o${j}" value="${j}" ${pa.includes(j)?"checked":""} ${locked?"disabled":""}><span class="L">${L[j]}</span><span>${o}</span></label></li>`).join("")}</ul>`}
+ else if(q.type==="qroc"){h+=`<div class="qroc"><label class="note" for="qroc">Réponse courte (quelques mots)</label><input id="qroc" autocomplete="off" placeholder="Votre réponse" value="${answered&&prev?esc(prev):""}" ${locked?"disabled":""}></div>`}
+ else if(q.type==="self"){h+=`<p class="note">Question d'image : la seule copie du sujet est annotée, l'image est donc donnée en correction. Réfléchis à ta réponse, puis valide ; tu t'auto-noteras en correction.</p>`}
+
+ else if(q.type==="info"){h+=`<p class="note">Question neutralisée à l'épreuve : validez pour continuer (1 point pour tous).</p>`}
+ let st="";
+ if(locked)st=`<p class="lockmsg">🔒 Réponse validée : dans un dossier progressif, elle n'est plus modifiable. Vous pouvez la relire.</p>`;
+ else if(answered&&free)st=`<p class="savedmsg">✓ Réponse enregistrée. Vous pouvez la modifier jusqu'à la fin de l'épreuve.</p>`;
+ else if(!free)st=`<p class="note">Dossier progressif : une fois validée, la réponse ne pourra plus être modifiée.</p>`;
+ h+=st;
+ const nAns=Object.keys(S.ans).length;
+ h+=`<div class="actions navrow"><button class="btn" id="bPrev" ${S.pos===0?"disabled":""}>◀ Précédente</button>${locked?"":`<button class="btn primary" id="btnVal">${answered?"Enregistrer la modification":"Valider"}</button>`}<button class="btn" id="bNext" ${S.pos>=Q.length-1||!opened(S.pos+1)?"disabled":""}>Suivante ▶</button><span class="spacer"></span><button class="btn ghost" id="bEnd">Terminer l'épreuve (${nAns}/${Q.length})</button></div>`;
+ h+=`<div class="confirm" id="conf" hidden><span id="confTxt">Réponse définitive ?</span><button class="btn primary small" id="ok">Confirmer</button><button class="btn small" id="no">Modifier</button></div>`;
+ $("#qpanel").innerHTML=h;
+ $("#qpanel").querySelectorAll(".qn").forEach(b=>b.onclick=()=>{S.pos=+b.dataset.n;store.set(S);renderQ();window.scrollTo(0,0)});
+ $("#bPrev").onclick=()=>{S.pos--;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bNext").onclick=()=>{S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bEnd").onclick=()=>{const left=Q.length-Object.keys(S.ans).length;if(confirmEnd(left))finish()};
+ if(locked)return;
+ let a=null,empty=true;
+ const read=()=>{if(q.type==="qrm")a=[...document.querySelectorAll("input[name=opt]:checked")].map(x=>+x.value);
+  else if(q.type==="qru"||q.type==="tcs"){const c=document.querySelector("input[name=opt]:checked");a=c?[+c.value]:[]}
+  else if(q.type==="qroc")a=$("#qroc").value.trim();
+  else a=true;
+  empty=(Array.isArray(a)&&!a.length)||a===""||a==null};
+ const save=()=>{S.ans[k]=empty?null:a;if(S.pos<Q.length-1&&opened(S.pos+1))S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#btnVal").onclick=()=>{read();
+  if(free){save();return}
+  $("#confTxt").textContent=(empty?"Aucune réponse : la question vaudra 0. ":"")+"Réponse définitive (non modifiable ensuite) ?";
+  $("#btnVal").hidden=true;$("#conf").hidden=false;$("#ok").focus()};
+ $("#no").onclick=()=>{$("#conf").hidden=true;$("#btnVal").hidden=false};
+ $("#ok").onclick=save;
+}
+function confirmEnd(left){const box=$("#conf");$("#confTxt").textContent=(left?left+" question(s) sans réponse. ":"")+"Rendre la copie et voir la note ?";box.hidden=false;const v=$("#btnVal");if(v)v.hidden=true;$("#ok").onclick=()=>finish();$("#no").onclick=()=>{box.hidden=true;if(v)v.hidden=false};return false}
+function jumpDp(d){const n=Q.findIndex(x=>x.d===d);if(n<0)return;let m=n;while(m+1<Q.length&&Q[m+1].d===d&&S.ans[Q[m].d+"-"+Q[m].i]!==undefined)m++;S.pos=m;store.set(S);if($("#vExam").hidden)startExam();else{renderQ();window.scrollTo(0,0)}}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-jd]");if(!t)return;if(!S||S.done){S=fresh();store.set(S)}jumpDp(+t.dataset.jd)});
+
+/* ---------- notation ---------- */
+function inPoly(x,y,pts){let c=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const[xi,yi]=pts[i],[xj,yj]=pts[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
+function norm(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim()}
+function grade(d,i){const q=EXAM.dps[d].qs[i];let a=S.ans[d+"-"+i];const k=d+"-"+i;
+ if(S.override&&S.override[k]!==undefined)return S.override[k];
+ if(a==null)return 0;
+ if(q.type==="qru")return a.length===1&&a[0]===q.ok[0]?1:0;
+ if(q.type==="tcs")return a.length===1?q.w[a[0]]:0;
+ if(q.type==="qrm"){if(q.neut)a=a.filter(x=>!q.neut.includes(x));if(!a.length)return 0;
+  if((q.inacc||[]).some(x=>a.includes(x)))return 0;
+  if((q.indisp||[]).some(x=>!a.includes(x)))return 0;
+  let n=0;for(let k2=0;k2<q.opts.length;k2++){if(a.includes(k2)!==q.ok.includes(k2))n++}
+  if(/QRP/i.test((q.label||'')+' '+(q.q||'')+' '+(q.tag||''))||q.qrp||q.opts.length>5){const g=a.filter(x=>q.ok.includes(x)).length,ex=Math.max(0,a.length-q.ok.length);return Math.max(0,(g-ex)/q.ok.length)}return n===0?1:n===1?.5:n===2?.2:0}
+ if(q.type==="info")return 1;
+ if(q.type==="self")return 0;
+ if(q.type==="qroc"){const s=norm(a);if(q.kw){let m=0;q.kw.forEach(([kk,v])=>{if(s.includes(norm(kk)))m=Math.max(m,v)});return m}return q.keys.some(kk=>s.includes(norm(kk)))?1:0}
+ if(q.type==="qzone"){return inPoly(a.x*q.zoneW,a.y*q.zoneH,q.zone)?1:0}
+ return 0}
+function f1(x){return (Math.round(x*100)/100).toString().replace(".",",")}
+
+function finish(){clearInterval(tick);S.done=true;store.set(S);$("#timer").hidden=true;$("#btnPause").hidden=true;results()}
+function results(){show("vRes");steps();let tot=0,max=Q.length;const byDp=EXAM.dps.map(()=>[0,0]),byR={A:[0,0],B:[0,0]};
+ Q.forEach(({d,i,q})=>{const g=grade(d,i);tot+=g;byDp[d][0]+=g;byDp[d][1]++;if(q.rang){byR[q.rang][0]+=g;byR[q.rang][1]++}});
+ $("#sBig").innerHTML=`${f1(tot/max*20)}<small> / 20</small>`;
+ const used=TOTAL-S.left;
+ $("#sSub").textContent=`${f1(tot)} points sur ${max} · temps utilisé ${fmt(used)}`;
+ $("#sBars").innerHTML=EXAM.dps.map((dp,d)=>`<div class="barrow"><span class="mono">${dp.id}</span><div class="track"><div class="fill" style="width:${byDp[d][0]/byDp[d][1]*100}%"></div></div><span class="v">${f1(byDp[d][0])}/${byDp[d][1]}</span></div>`).join("")+
+  ["A","B"].filter(r=>byR[r][1]).map(r=>`<div class="barrow"><span><span class="rk ${r.toLowerCase()}">${r}</span></span><div class="track"><div class="fill" style="width:${byR[r][0]/byR[r][1]*100}%;background:var(--rk${r})"></div></div><span class="v">${f1(byR[r][0])}/${byR[r][1]}</span></div>`).join("");
+ $("#sGrid").innerHTML=Q.map(({d,i,dp},n)=>{const g=grade(d,i);return `<button class="${g===1?'s1':g===0?'s0':'sp'}" data-go="${d}-${i}">${dp.id.replace("DP","")}.${i+1} · ${f1(g)}</button>`}).join("");
+ $("#sGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{const[d,i]=b.dataset.go.split("-").map(Number);openCorr(d,i)});
+}
+$("#btnCorr").onclick=()=>openCorr(0);
+$("#btnAgain").onclick=()=>{store.clear();S=fresh();store.set(S);startExam()};
+$("#btnBackRes").onclick=()=>{if(S&&S.done)results();else show("vStart")};
+$("#btnHome").onclick=()=>{show("vStart")};
+
+/* ---------- correction ---------- */
+let curD=0;
+function openCorr(d,i){show("vCorr");steps();curD=d;
+ $("#tabs").innerHTML=EXAM.dps.map((dp,k)=>`<button role="tab" aria-selected="${k===d}" data-d="${k}">${dp.id}</button>`).join("");
+ $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCorr(+b.dataset.d));
+ drawCorr(d);
+ if(i!==undefined){const el=document.getElementById("cq-"+d+"-"+i);if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),30)}
+}
+function drawCorr(d){const dp=EXAM.dps[d];const answered=S&&Object.keys(S.ans).length>0;
+ let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div><details class="enon"><summary>Énoncé initial</summary>${dp.intro}${dp.introImg?`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`:""}</details>`;
+ dp.qs.forEach((q,i)=>{const k=d+"-"+i;const a=S?S.ans[k]:undefined;const has=a!==undefined;const g=has?grade(d,i):null;
+  const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+  h+=`<div class="cq" id="cq-${k}"><div class="qhead"><span class="qnum">Q${i+1}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}${has?`<span class="pts ${g===1?'s1':g===0?'s0':'sp'}">${f1(g)} pt</span>`:""}</div>`;
+  if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+  if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+  if(q.table==="antibio")h+=antibio();
+  h+=`<div class="qtext">${q.q}</div>`;
+  if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const mine=Array.isArray(a)?a:[];
+   q.opts.forEach((o,j)=>{const ok=q.ok.includes(j),me=mine.includes(j);
+    let cls=has?(ok&&me?"good":ok&&!me?"miss":!ok&&me?"bad":""):(ok?"good":"");
+    let tagx=(q.indisp||[]).includes(j)?" · indispensable":(q.inacc||[]).includes(j)?" · inacceptable":"";
+    h+=`<div class="copt ${cls}"><span class="mk">${ok?"✓":"✗"}</span><span class="mk">${L[j]}</span><span class="tx">${o}${has&&me?` <span class="mine">· coché${tagx}</span>`:tagx?`<span class="mine">${tagx}</span>`:""}</span>${Array.isArray(q.expl)?`<div class="ex">${q.expl[j]}</div>`:""}</div>`});if(!Array.isArray(q.expl))h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="qroc"){
+   h+=`<div class="free ${has?(g===1?'s1':g?'sp':'s0'):''}" style="background:${has?'':'var(--soft)'}"><b>Votre réponse :</b> ${has&&a?esc(a):"<i>aucune</i>"}<br><b>Attendu :</b> ${q.attendu}</div>`;
+   if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Correction automatique par mots-clés.</span><button class="btn small" data-ov="${k}" data-v="${g?0:1}">${g?"Compter faux":"Ma réponse est juste"}</button></div>`;
+   h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="self"){
+   h+=`${q.cimg?`<div class="imgs">${img(q.cimg)}</div>`:""}<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Auto-évaluation :</span><button class="btn small" data-ov="${k}" data-v="1">J'avais juste</button><button class="btn small" data-ov="${k}" data-v="0.5">À moitié</button><button class="btn small" data-ov="${k}" data-v="0">J'avais faux</button></div>`;
+  } else if(q.type==="info"){
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  } else if(q.type==="qzone"){
+   const pts=q.zone.map(p=>`${p[0]/q.zoneW*100},${p[1]/q.zoneH*100}`).join(" ");
+   h+=`<div class="zonebox" style="cursor:default"><img src="${IMGS[q.img[0]]}" alt="Scanner abdominal"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="${pts}" fill="rgba(46,160,90,.35)" stroke="#2ea05a" stroke-width=".6"/></svg>${has&&a?`<div class="pin" style="left:${a.x*100}%;top:${a.y*100}%"></div>`:""}</div>`;
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  }
+  if(q.fig)h+=`<div class="imgs" style="align-items:flex-end">${img(q.fig[0],q.fig[1])}<span class="note" style="max-width:260px">${q.fig[1]}</span></div>`;
+  h+=(q.retenir?`<div class="retenir"><b class="h">À retenir</b>${q.retenir}</div>`:"")+`</div>`;
+ });
+ if(!answered)h=`<p class="note" style="margin-top:0">Mode correction seule : les bonnes réponses sont en vert.</p>`+h;
+ $("#corrMain").innerHTML=h;
+ $("#corrMain").querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{S.override=S.override||{};S.override[b.dataset.ov]=+b.dataset.v;store.set(S);drawCorr(d)});
+ $("#course").innerHTML=`<div class="row"><h3>Cours résumé · ${dp.id}</h3><span class="spacer"></span><button class="btn small coursebtn" id="cToggle">Afficher</button></div><div class="cbody">${dp.cours.replace(/data-img="(\w+)"/g,(m,k)=>`src="${IMGS[k]}" data-zoom`)}</div><p class="small" style="margin-top:14px">Sources : corrigé officiel de l'épreuve ; explications d'après le référentiel de psychiatrie et d'addictologie (CNUP, CUNEA) et le Collège de santé publique.</p>`;
+ const c=$("#course");if(matchMedia("(max-width:860px)").matches){c.classList.add("collapsed");const t=$("#cToggle");t.onclick=()=>{c.classList.toggle("collapsed");t.textContent=c.classList.contains("collapsed")?"Afficher":"Masquer"}}
+}
+
+/* ---------- zoom ---------- */
+document.addEventListener("click",e=>{const t=e.target;if(t.matches&&t.matches("img[data-zoom]")){$("#zoomImg").src=t.src;$("#zoom").hidden=false}});
+$("#zoom").onclick=()=>{$("#zoom").hidden=true};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#zoom").hidden=true});
+})();
+</script>
+
+<a id="backhome" href="index.html" style="position:fixed;left:12px;bottom:12px;z-index:9999;background:#1c1c1a;color:#fff;padding:8px 12px;border-radius:99px;font:600 13px system-ui;text-decoration:none;opacity:.85">← Toutes les annales</a>

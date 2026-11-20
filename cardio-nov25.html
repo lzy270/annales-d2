@@ -1,0 +1,667 @@
+<title>Annale cardio NOV25</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout : copie d'examen — énoncé à gauche, question à droite ; correction en 2 colonnes avec cours collant */
+:root{
+  --bg:#f6f7f9; --paper:#ffffff; --ink:#18212b; --muted:#5d6876; --line:#dfe3e8; --soft:#eef1f5;
+  --accent:#1f4e8c; --accent-soft:#e6eef9;
+  --ok:#1d7a46; --ok-soft:#e3f4ea; --ko:#b42318; --ko-soft:#fdeceb; --mid:#a15c00; --mid-soft:#fdf1df;
+  --rkA:#c62828; --rkB:#d9822b;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+header.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:800;font-size:17px}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.steps{display:flex;gap:4px;flex-wrap:wrap}
+.steps span{font:700 11px var(--f-mono);padding:3px 7px;border-radius:5px;background:var(--soft);color:var(--muted)}
+.steps span.on{background:var(--accent);color:var(--paper)}
+.steps span.done{background:var(--accent-soft);color:var(--accent)}
+.timer{font:700 18px var(--f-mono);font-variant-numeric:tabular-nums;padding:4px 10px;border-radius:8px;background:var(--soft)}
+.timer.low{background:var(--ko-soft);color:var(--ko)}
+.btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:9px 16px;font-weight:700}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn.ghost{background:transparent}
+.btn.small{padding:5px 10px;font-size:13px}
+main{padding-block:24px 64px}
+[hidden]{display:none!important}
+
+/* start */
+.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(26px,4vw,36px)}
+.hero p{margin:0;color:var(--muted)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.rule{background:var(--soft);border-radius:10px;padding:12px 14px;font-size:14px}
+.rule b{display:block;font-family:var(--f-display);font-size:15px;margin-bottom:2px}
+.dplist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.dplist li{display:flex;gap:10px;align-items:baseline;font-size:15px}
+.dplist .id{font:700 12px var(--f-mono);color:var(--accent);min-width:34px}
+.dplist .n{color:var(--muted);font-size:13px;margin-left:auto;white-space:nowrap}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* exam */
+.exam{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:start}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:20px}
+.panel .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.enonce{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto}
+.enonce p{margin:.6em 0}
+.enonce .add{border-left:3px solid var(--accent);padding-left:12px;margin-top:14px}
+.imgs{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.imgs img{max-height:320px;width:auto;max-width:100%;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;background:#000}
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.qnum{font:700 13px var(--f-mono);color:var(--accent)}
+.tag{font:700 11px var(--f-mono);padding:2px 7px;border-radius:5px;background:var(--soft);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.rk{display:inline-grid;place-items:center;width:20px;height:20px;border:2px solid;border-radius:4px;font:700 11px var(--f-mono);vertical-align:middle}
+.rk.a{color:var(--rkA)} .rk.b{color:var(--rkB)}
+.ctx{background:var(--soft);border-radius:10px;padding:2px 14px;margin-bottom:12px}
+.ctx p{margin:.6em 0}
+.qtext{font-size:18px;font-weight:700;margin:6px 0 14px}
+.opts{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.opt label{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--paper)}
+.opt label:hover{border-color:var(--accent)}
+.opt input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.opt .L{font:700 14px var(--f-mono);color:var(--muted);min-width:16px}
+.opt input:checked ~ .L{color:var(--accent)}
+.opt label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.qroc input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit}
+.zonebox{position:relative;display:inline-block;max-width:100%;cursor:crosshair}
+.zonebox img{display:block;max-width:100%;border-radius:8px}
+.zonebox .pin{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:3px solid #fff;background:#e5484d;box-shadow:0 0 0 2px #e5484d;pointer-events:none}
+.zonebox svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--mid-soft);border-radius:10px;padding:10px 12px;font-size:14px}
+.note{font-size:13px;color:var(--muted)}
+
+/* results */
+.score{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.big{font:800 64px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.big small{font-size:24px;color:var(--muted)}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:44px 1fr 70px;gap:10px;align-items:center;font-size:14px}
+.barrow .track{height:10px;border-radius:5px;background:var(--soft);overflow:hidden}
+.barrow .fill{height:100%;background:var(--accent)}
+.barrow .v{font:700 13px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.grid-q{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.grid-q button{font:700 12px var(--f-mono);border:0;border-radius:6px;padding:6px 8px;min-width:58px}
+.s1{background:var(--ok-soft);color:var(--ok)} .s0{background:var(--ko-soft);color:var(--ko)} .sp{background:var(--mid-soft);color:var(--mid)}
+
+/* correction */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:7px 12px;font-weight:700;font-size:14px}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.corr{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.course{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto;font-size:14.5px}
+.course h3{font-size:18px;margin-bottom:6px}
+.course h4{font-size:15px;margin:16px 0 4px;display:flex;gap:8px;align-items:center}
+.course ul{padding-left:18px;margin:4px 0}
+.course li{margin:3px 0}
+.course .small,.small{font-size:13px;color:var(--muted)}
+table.mini{border-collapse:collapse;width:100%;font-size:13px;margin:6px 0}
+table.mini th,table.mini td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+table.mini th{background:var(--soft)}
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}
+.figs figure{margin:0}
+.figs img{width:100%;height:100px;object-fit:cover;border-radius:6px;cursor:zoom-in}
+.figs figcaption{font-size:11.5px;color:var(--muted)}
+.cq{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}
+.cq:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.pts{margin-left:auto;font:700 13px var(--f-mono);padding:3px 8px;border-radius:6px}
+.copt{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:22px 22px 1fr;gap:4px 10px;align-items:start}
+.copt + .copt{margin-top:6px}
+.copt .mk{font:700 14px var(--f-mono)}
+.copt .tx{font-weight:700}
+.copt .ex{grid-column:3;font-size:14.5px;color:var(--ink)}
+.copt.good{border-color:var(--ok);background:var(--ok-soft)}
+.copt.miss{border-color:var(--mid);background:var(--mid-soft)}
+.copt.bad{border-color:var(--ko);background:var(--ko-soft)}
+.mine{font:700 11px var(--f-mono);color:var(--muted)}
+.retenir{margin-top:12px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:14.5px}
+.retenir b.h{display:block;font-family:var(--f-display);color:var(--accent);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.free{border-radius:10px;padding:10px 14px;font-size:14.5px}
+.coursebtn{display:none}
+details.enon{background:var(--soft);border-radius:10px;padding:8px 14px;margin-bottom:16px}
+details.enon summary{cursor:pointer;font-weight:700}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.zoom img{max-width:100%;max-height:100%;border-radius:8px}
+.tblwrap{overflow-x:auto}
+table.abg{border-collapse:collapse;font:13px var(--f-mono);margin:8px 0}
+table.abg td{padding:3px 10px;border-bottom:1px dotted var(--line)}
+table.abg td:last-child{font-weight:700;text-align:center}
+table.abg .R{color:var(--ko)} table.abg .S{color:var(--ok)}
+
+@media (max-width:860px){
+  .exam,.corr{grid-template-columns:1fr}
+  .enonce,.course{position:static;max-height:none}
+  .corr .course{order:-1}
+  .course.collapsed .cbody{display:none}
+  .coursebtn{display:inline-block}
+  .score{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.qnav{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}.qnav-dp{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.qnav-id{font:700 11px var(--f-mono);color:var(--muted);margin-right:3px}.qn{min-width:26px;height:26px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;font:700 11px var(--f-mono);padding:0 4px}.qn.done{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft)}.qn.cur{outline:2px solid var(--accent)}.qn:disabled{opacity:.35;cursor:not-allowed}.navrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.navrow .spacer{flex:1}.lockmsg{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:14px}.savedmsg{color:var(--ok);font-size:14px}
+</style>
+
+<header class="bar"><div class="wrap">
+  <div class="brand">Annale cardio · UE8.2 · novembre 2025<small>DFA1 · Bobigny · corrigé officiel + explications d'après le Collège</small></div>
+  <div class="spacer"></div>
+  <div class="steps" id="steps"></div>
+  <div class="timer" id="timer" hidden>40:00</div>
+  <button class="btn small ghost" id="btnPause" hidden>Pause</button>
+</div></header>
+
+<main class="wrap">
+  <!-- Accueil -->
+  <section id="vStart">
+    <div class="hero">
+      <div>
+        <h1>4 épreuves, 42 questions</h1>
+        <p>Sujet de l'UE8.2 Cardiologie du 19 novembre 2025 (l'an dernier), tel quel : 1 KFP, 2 mini-DP et 29 questions isolées. Conditions d'examen type LUNESS, notation EDN (QRP : bonnes réponses ÷ réponses attendues). Correction détaillée et cours résumé par dossier à la fin.</p>
+      </div>
+      <ul class="dplist" id="dpList"></ul><p class="note" style="margin-top:6px">Clique sur un dossier pour commencer par lui. Pendant l'épreuve, les étiquettes en haut à droite (QI, DP1…) et la grille de numéros permettent de changer de dossier à tout moment.</p>
+      <div class="rules">
+        <div class="rule"><b>60 minutes</b>Le chrono tourne pendant l'épreuve. À zéro, la copie est rendue.</div>
+        <div class="rule"><b>Navigation type LUNESS</b>Questions isolées et TCS : navigation libre, réponses modifiables jusqu'à la fin. DP et KFP (🔒) : on peut revenir relire, mais une réponse validée est verrouillée, et la question suivante s'ouvre une fois la précédente validée.</div>
+        <div class="rule"><b>Notation EDN</b>QRM : 1 / 0,5 / 0,2 / 0 selon 0, 1, 2 ou ≥ 3 erreurs ; indispensable oubliée ou inacceptable cochée : 0. QRP : bonnes réponses cochées ÷ réponses attendues. QROC : barème officiel.</div>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="btnStart">Commencer l'épreuve</button>
+        <button class="btn" id="btnResume" hidden>Reprendre</button>
+        <button class="btn ghost" id="btnDirect">Voir directement la correction</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Épreuve -->
+  <section id="vExam" hidden>
+    <div class="exam">
+      <div class="panel enonce" id="enonce"></div>
+      <div class="panel" id="qpanel"></div>
+    </div>
+  </section>
+
+  <!-- Résultats -->
+  <section id="vRes" hidden>
+    <div class="panel">
+      <div class="score">
+        <div><div class="big" id="sBig">0</div><div class="note" id="sSub"></div></div>
+        <div class="bars" id="sBars"></div>
+      </div>
+      <div class="grid-q" id="sGrid"></div>
+      <div class="actions"><button class="btn primary" id="btnCorr">Voir la correction détaillée</button><button class="btn" id="btnAgain">Repasser l'épreuve</button></div>
+    </div>
+  </section>
+
+  <!-- Correction -->
+  <section id="vCorr" hidden>
+    <div class="row" style="margin-bottom:12px"><h2 style="font-size:22px">Correction</h2><div class="spacer"></div><button class="btn small" id="btnBackRes">Résultats</button><button class="btn small" id="btnHome">Accueil</button></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="corr">
+      <div class="panel" id="corrMain"></div>
+      <aside class="panel course" id="course"></aside>
+    </div>
+  </section>
+</main>
+<div class="zoom" id="zoom" hidden><img alt="Image agrandie" id="zoomImg"></div>
+
+<script>
+const IMGS={};
+var img=function(k,alt){return `<img src="${IMGS[k]}" alt="${alt||""}" data-zoom>`};
+const EXAM = {
+title: "Annale cardio · UE8.2 · novembre 2025",
+dps: [
+{ id:"KFP1", titre:"Palpitations du sujet jeune", items:"Items 234, 235",
+  intro:`<p>Un homme de 25 ans consulte en urgence pour des palpitations.</p>`,
+  qs:[
+{ type:"qroc", q:"Quel examen paraclinique est prioritaire en urgence ?",
+  keys:["ECG","électrocardiogramme","electrocardiogramme"],
+  expl:"<b>ECG 12 dérivations</b>, si possible pendant les palpitations : c'est lui qui fait le diagnostic du trouble du rythme.",
+  retenir:"Palpitations : ECG 12 dérivations en crise, avant toute autre chose." },
+{ type:"qrm", qrp:true, label:"QRP (2)", ctx:`<p>L'ECG montre une tachycardie régulière à QRS fins à 180/min.</p>`, q:"Quels diagnostics évoquer devant une tachycardie régulière à QRS fins à 180/min ? (2 réponses attendues)",
+  opts:["Tachycardie ventriculaire","Fibrillation auriculaire","Bloc auriculo-ventriculaire du 3e degré","Tachycardie jonctionnelle","Tachycardie atriale","Extrasystoles auriculaires","Extrasystoles ventriculaires"],
+  ok:[3,4],
+  expl:["<b>Faux.</b> Une TV donne des QRS larges.","<b>Faux.</b> La FA est <b>irrégulière</b>.","<b>Faux.</b> Le BAV 3 donne une bradycardie.","<b>Vrai.</b> Tachycardie jonctionnelle (maladie de Bouveret) : la plus fréquente chez le sujet jeune.","<b>Vrai.</b> Tachycardie atriale (le flutter 2:1 à 150/min est l'autre piège classique).","<b>Faux.</b> Ce sont des battements isolés, pas une tachycardie.","<b>Faux.</b> QRS larges, battements isolés."],
+  retenir:"Tachycardie régulière à QRS fins : jonctionnelle (Bouveret), flutter, tachycardie atriale. Irrégulière : FA. QRS larges : TV jusqu'à preuve du contraire." },
+{ type:"qrm", qrp:true, label:"QRP (3)", q:"Quels sont les critères de gravité imposant une cardioversion électrique immédiate pour cette tachycardie à 180/min ?",
+  opts:["Il s'agit d'une tachycardie ventriculaire","Présence d'un état de choc","Présence d'un OAP grave","Syncopes récidivantes","Sueurs profuses","Anxiété","Le patient est déjà traité par anticoagulant"],
+  ok:[1,2,3],
+  expl:["<b>Faux.</b> Une TV <i>bien tolérée</i> peut d'abord être réduite par voie médicamenteuse ; c'est la <b>mauvaise tolérance</b> qui impose le choc.","<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b> Signe adrénergique non spécifique.","<b>Faux.</b>","<b>Faux.</b> Ce n'est pas un critère de gravité (ça facilite seulement la cardioversion d'une FA)."],
+  retenir:"Choc électrique immédiat si mauvaise tolérance hémodynamique : choc, OAP, syncope, angor sévère, trouble de conscience." }
+  ],
+  cours:`<h4>Tachycardies : le raisonnement</h4><ul>
+<li><b>QRS larges</b> : TV jusqu'à preuve du contraire.</li>
+<li><b>QRS fins réguliers</b> : jonctionnelle (manœuvres vagales, Striadyne®), flutter, tachycardie atriale.</li>
+<li><b>QRS fins irréguliers</b> : FA.</li>
+<li><b>Mal tolérée</b> (choc, OAP, syncope, angor) → <b>cardioversion électrique immédiate</b>, quel que soit le mécanisme.</li></ul>` },
+
+{ id:"DP1", titre:"Dyspnée aiguë chez une femme de 72 ans", items:"Items 203, 234",
+  intro:`<p>Vous êtes de garde aux urgences et recevez une femme de 72 ans adressée par son médecin traitant pour dyspnée.</p>`,
+  qs:[
+{ type:"qru", q:"Devant une dyspnée aiguë avec crépitants bilatéraux, quel diagnostic est le plus probable ?",
+  opts:["Œdème aigu pulmonaire cardiogénique","Exacerbation de BPCO","Pneumothorax bilatéral","Embolie pulmonaire massive","Tamponnade péricardique"],
+  ok:[0],
+  expl:["<b>Vrai.</b> Crépitants bilatéraux = œdème alvéolaire.","<b>Faux.</b> Sibilants, freinage expiratoire.","<b>Faux.</b> Abolition du murmure vésiculaire, tympanisme.","<b>Faux.</b> Auscultation souvent normale ; signes droits.","<b>Faux.</b> Signes droits, poumons clairs."],
+  retenir:"Dyspnée + crépitants bilatéraux = OAP jusqu'à preuve du contraire." },
+{ type:"qrm", q:"Quels éléments cliniques suggèrent une insuffisance cardiaque gauche ? (3 réponses vraies)",
+  opts:["Orthopnée","Crépitants aux bases","Turgescence jugulaire","Reflux hépato-jugulaire","Dyspnée d'effort"],
+  ok:[0,1,4],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b> Signe droit.","<b>Faux.</b> Signe droit.","<b>Vrai.</b>"],
+  retenir:"Gauche = poumon (dyspnée, orthopnée, crépitants). Droite = veines et foie (TJ, RHJ, hépatomégalie, œdèmes)." },
+{ type:"qrm", q:"Vous suspectez une insuffisance cardiaque. Quels examens complémentaires sont indiqués ? (4 réponses vraies)",
+  opts:["ECG","Ionogramme sanguin, créatinémie","BNP ou NT-proBNP","Scanner thoracique","Échocardiographie"],
+  ok:[0,1,2,4],
+  expl:["<b>Vrai.</b> Cause (ischémie, FA) et complications.","<b>Vrai.</b> Avant diurétiques et IEC.","<b>Vrai.</b> Un BNP normal élimine presque l'IC (forte valeur prédictive négative).","<b>Faux.</b> Pas en première intention ; radio de thorax suffit.","<b>Vrai.</b> Examen clé : FEVG, valves, pressions."],
+  retenir:"Bilan d'IC : ECG, radio de thorax, BNP/NT-proBNP, iono-créat, NFS, troponine, bilan hépatique, ETT." },
+{ type:"qrm", q:"Le diagnostic est un OAP cardiogénique. Quels traitements initiaux proposez-vous ? (4 réponses vraies)",
+  opts:["Oxygénothérapie","Diurétiques de l'anse IV","Trinitrine IV si la PAS est > 100 mmHg","Inhibiteur de l'enzyme de conversion per os immédiat","Ventilation non invasive"],
+  ok:[0,1,2,4],
+  expl:["<b>Vrai.</b> Si SpO₂ < 90 %.","<b>Vrai.</b> Furosémide IV.","<b>Vrai.</b> Vasodilatateur, si la pression le permet.","<b>Faux.</b> Pas en aigu (risque d'hypotension, d'insuffisance rénale) ; introduit après stabilisation.","<b>Vrai.</b> Si détresse respiratoire ou acidose respiratoire."],
+  retenir:"OAP : position assise, O₂ ± VNI, furosémide IV, trinitrine si PAS > 100. IEC plus tard." }
+  ],
+  cours:`<h4>OAP cardiogénique</h4><ul>
+<li><b>Clinique</b> : dyspnée brutale, orthopnée, crépitants bilatéraux, grésillement laryngé, expectoration mousseuse.</li>
+<li><b>Bilan</b> : ECG, radio (opacités alvéolaires hilifuges en ailes de papillon), BNP, troponine, GDS, iono-créat, ETT.</li>
+<li><b>Traitement</b> : assis, O₂ ± VNI, <b>furosémide IV</b>, <b>trinitrine IV si PAS > 100</b>, traiter la cause (SCA, FA, poussée hypertensive).</li></ul>` },
+
+{ id:"DP2", titre:"Douleur thoracique chez un fumeur de 58 ans", items:"Items 232, 334, 336",
+  intro:`<p>Vous recevez un homme de 58 ans pour une douleur thoracique constrictive qui évolue depuis 30 minutes. Il sent une forte odeur de tabac.</p>`,
+  qs:[
+{ type:"qrm", q:"Devant une douleur médio-thoracique brutale constrictive, quels diagnostics évoquez-vous en priorité ? (3 réponses vraies)",
+  opts:["Syndrome coronarien aigu","Dissection aortique","Péricardite aiguë","Reflux gastro-œsophagien","Pneumothorax spontané"],
+  ok:[0,1,2],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b> Pas un diagnostic à évoquer « en priorité ».","<b>Faux.</b> Douleur latérale, pleurale."],
+  retenir:"Douleur thoracique, les urgences vitales : SCA, dissection aortique, EP, tamponnade (péricardite), pneumothorax compressif." },
+{ type:"qrm", q:"Vous suspectez une origine cardiaque chez ce patient qui a de nombreux facteurs de risque. Quels examens sont prioritaires en urgence ? (2 réponses vraies)",
+  opts:["ECG 12 dérivations","Troponine ultrasensible (en l'absence de sus-décalage du ST)","Radiographie thoracique","Angioscanner pulmonaire","Coronarographie immédiate"],
+  ok:[0,1],
+  expl:["<b>Vrai.</b> Dans les 10 minutes.","<b>Vrai.</b> Si sus-décalage, on ne l'attend pas.","<b>Faux.</b> Utile, mais pas prioritaire.","<b>Faux.</b> Pas d'argument pour une EP.","<b>Faux.</b> Seulement si STEMI ou NSTEMI à très haut risque."],
+  retenir:"Douleur thoracique : ECG dans les 10 min. Sus-décalage = reperfusion sans attendre la troponine." },
+{ type:"qrm", q:"Quels signes ECG orienteraient vers un STEMI (SCA ST+) ? (2 réponses vraies)",
+  opts:["Sus-décalage persistant du ST ≥ 1 mm","Onde Q de nécrose","Sous-décalage du ST diffus","Inversion symétrique des ondes T","Tachycardie sinusale isolée"],
+  ok:[0,1],
+  expl:["<b>Vrai.</b> Dans au moins 2 dérivations contiguës (seuils plus hauts en V2-V3).","<b>Vrai.</b> Signe de nécrose constituée ; fait partie du tableau de STEMI évolué.","<b>Faux.</b> Ischémie sous-endocardique : NSTEMI (ou miroir).","<b>Faux.</b> Ischémie sous-épicardique, oriente vers un NSTEMI.","<b>Faux.</b>"],
+  retenir:"STEMI : sus-décalage persistant du ST ≥ 1 mm dans 2 dérivations contiguës (ou BBG nouveau), avec miroir ; onde Q = nécrose." },
+{ type:"qrm", ctx:`<p>L'ECG retrouve une inversion des ondes T en D2-D3-aVF. La troponine est à 70 ng/L, recontrôlée à 90 ng/L à la 2e heure.</p>`, q:"Quelles réponses sont vraies ? (4 réponses vraies)",
+  opts:["Le diagnostic est un SCA ST négatif","On peut conclure à un infarctus du myocarde","Le territoire concerné est latéral","Le territoire concerné est inférieur","L'ECG peut servir à détecter des complications"],
+  ok:[0,1,3,4],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b> Troponine élevée avec cinétique + contexte ischémique = IDM (NSTEMI).","<b>Faux.</b> Latéral = D1, aVL, V5-V6.","<b>Vrai.</b> D2, D3, aVF = inférieur.","<b>Vrai.</b> Troubles du rythme, de conduction, extension."],
+  retenir:"Territoires : inférieur D2-D3-aVF ; antérieur V1-V4 ; latéral D1-aVL-V5-V6 ; postérieur V7-V9." },
+{ type:"qrm", q:"Le diagnostic final était un NSTEMI. Quelles réponses sont vraies concernant sa prise en charge ? (3 réponses vraies)",
+  opts:["Il faut remesurer la troponine pour rechercher des complications","Le patient doit être hospitalisé en USIC","Un traitement par 2 antiagrégants plaquettaires doit être introduit","Un traitement anticoagulant doit être introduit","Il faut surveiller le rythme cardiaque (monitoring)"],
+  ok:[1,3,4],
+  expl:["<b>Faux.</b> La troponine sert au diagnostic, pas à la surveillance des complications.","<b>Vrai.</b>","<b>Faux selon le corrigé.</b> En pratique, la double antiagrégation est bien le traitement du SCA ; mais le <i>prétraitement</i> par inhibiteur de P2Y12 n'est plus systématique avant une coronarographie précoce. C'est sûrement ce que vise le corrigé.","<b>Vrai.</b> Anticoagulation jusqu'à la coronarographie (HNF, énoxaparine ou fondaparinux).","<b>Vrai.</b>"],
+  retenir:"NSTEMI : USIC, scope, aspirine, anticoagulant, coronarographie < 24 h (ou immédiate si très haut risque) ; P2Y12 souvent donné en salle de cathétérisme." },
+{ type:"qrm", q:"Vous avez prévu une coronarographie dans les 24 heures. Quels nouveaux éléments pourraient vous décider à la réaliser immédiatement ? (3 réponses vraies)",
+  opts:["La douleur persiste","Il apparaît un sous-décalage du segment ST","Le patient présente un BAV du 1er degré","Le patient présente des accès de tachycardie ventriculaire soutenue","Le patient a un rendez-vous important demain"],
+  ok:[0,1,3],
+  expl:["<b>Vrai.</b> Douleur réfractaire = très haut risque.","<b>Vrai.</b> Modifications dynamiques du ST (critère retenu par le corrigé).","<b>Faux.</b> Bénin.","<b>Vrai.</b> Arythmie ventriculaire grave.","<b>Faux.</b>"],
+  retenir:"Coronarographie immédiate (< 2 h) dans le NSTEMI : instabilité hémodynamique ou choc, douleur réfractaire, arythmie grave ou arrêt cardiaque, complication mécanique, IC aiguë, modifications récurrentes du ST." }
+  ],
+  cours:`<h4>SCA : ce qu'il faut savoir</h4><ul>
+<li><b>ECG dans les 10 min.</b> Sus-décalage → reperfusion (angioplastie primaire &lt; 120 min sinon fibrinolyse).</li>
+<li><b>NSTEMI</b> : troponine us à H0-H1/H2 ; USIC, scope ; aspirine + anticoagulant ; coronarographie &lt; 24 h, immédiate si très haut risque.</li>
+<li><b>Territoires</b> : inférieur D2-D3-aVF ; antérieur V1-V4 ; latéral D1-aVL-V5-V6.</li>
+<li><b>Prévention secondaire</b> : BASIC (β-bloquant, antiagrégants, statine forte dose, IEC, contrôle des facteurs de risque).</li></ul>` },
+
+{ id:"SQI", titre:"Questions isolées", items:"Items 221-238, 339",
+  intro:`<p>29 questions isolées, sans lien entre elles. La question 28 a été annulée à l'épreuve.</p>`,
+  qs:[
+{ type:"qrm", q:"Quels sont les facteurs de risque cardiovasculaire ? (4 réponses vraies)",
+  opts:["HTA","Tabac","Dyslipidémie","Diabète","Alcool < 10 g/jour"],
+  ok:[0,1,2,3],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b>"],
+  retenir:"FDR modifiables : tabac, HTA, dyslipidémie, diabète, obésité abdominale, sédentarité. Non modifiables : âge, sexe masculin, hérédité." },
+{ type:"qrm", q:"Citer les complications précoces de l'infarctus du myocarde. (4 réponses vraies)",
+  opts:["Fibrillation ventriculaire","Rupture septale","Péricardite de Dressler","Choc cardiogénique","Insuffisance mitrale aiguë"],
+  ok:[0,1,3,4],
+  expl:["<b>Vrai.</b> 1re cause de mort précoce.","<b>Vrai.</b> CIV : souffle holosystolique nouveau.","<b>Faux.</b> Dressler = <b>tardive</b> (semaines). La péricardite précoce, elle, survient dans les premiers jours.","<b>Vrai.</b>","<b>Vrai.</b> Rupture de pilier."],
+  retenir:"Précoces : troubles du rythme (FV), BAV, choc, complications mécaniques (IM, CIV, rupture de paroi). Tardives : Dressler, anévrisme, IC." },
+{ type:"qrm", q:"Citer les causes d'insuffisance cardiaque gauche chronique.",
+  opts:["Cardiopathie ischémique","Cardiomyopathie dilatée","Valvulopathie mitrale","HTA chronique","Asthme sévère"],
+  ok:[0,1,2,3],
+  expl:["<b>Vrai.</b> 1re cause.","<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b> Pathologie pulmonaire."],
+  retenir:"IC gauche : ischémique, HTA, valvulopathies, cardiomyopathies (dilatée, hypertrophique), toxiques (alcool, anthracyclines)." },
+{ type:"qrm", q:"Quels sont les signes cliniques ou paracliniques de la péricardite aiguë ? (3 réponses vraies)",
+  opts:["Douleur thoracique calmée en antéflexion","Crépitants pulmonaires","Frottement péricardique","Sus-décalage diffus du segment ST","Onde Q de nécrose"],
+  ok:[0,2,3],
+  expl:["<b>Vrai.</b>","<b>Faux.</b>","<b>Vrai.</b> Pathognomonique mais fugace.","<b>Vrai.</b> Concave, sans miroir.","<b>Faux.</b> Pas d'onde Q dans la péricardite."],
+  retenir:"Péricardite : douleur calmée par l'antéflexion, aggravée en inspiration ; frottement ; sus-ST diffus concave sans miroir ; sous-décalage du PQ." },
+{ type:"qrm", q:"Quels examens sont utiles au diagnostic d'hypertension artérielle essentielle ? (3 réponses vraies)",
+  opts:["Mesures répétées en consultation","Mesure ambulatoire de la PA (MAPA)","Automesure tensionnelle (AMT)","ECG 12 dérivations","Échocardiographie cardiaque"],
+  ok:[0,1,2],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b> L'ECG fait partie du bilan initial (retentissement), pas du <i>diagnostic</i> de l'HTA.","<b>Faux.</b> Pas systématique."],
+  retenir:"Diagnostic d'HTA : confirmer hors du cabinet (AMT ≥ 135/85 ou MAPA de jour ≥ 135/85) avant de traiter." },
+{ type:"qrm", q:"Quels sont les signes de gravité d'une embolie pulmonaire aiguë ? (4 réponses vraies)",
+  opts:["État de choc","Syncope","Fièvre modérée","Hypotension artérielle persistante","Tachycardie extrême"],
+  ok:[0,1,3,4],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b>","<b>Vrai.</b> PAS < 90 mmHg = EP grave (haut risque).","<b>Vrai.</b>"],
+  retenir:"EP à haut risque : choc ou hypotension persistante → thrombolyse. Sinon : sPESI, dysfonction VD, troponine." },
+{ type:"qrm", q:"Quels signes cliniques orientent vers une insuffisance cardiaque droite ? (4 réponses vraies)",
+  opts:["Turgescence jugulaire","Œdèmes des membres inférieurs","Ascite","Hépatomégalie douloureuse","Orthopnée"],
+  ok:[0,1,2,3],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b> Signe gauche."],
+  retenir:"IC droite : TJ, RHJ, hépatomégalie douloureuse, OMI, ascite. Orthopnée = gauche." },
+{ type:"qrm", q:"Quels examens doivent être effectués en urgence devant une suspicion de tamponnade ? (2 réponses vraies)",
+  opts:["ECG","Échocardiographie transthoracique","Radiographie thoracique","Coronarographie","IRM cardiaque"],
+  ok:[0,1],
+  expl:["<b>Vrai.</b> Microvoltage, alternance électrique.","<b>Vrai.</b> Examen clé : épanchement et compression des cavités droites.","<b>Faux.</b> Ne doit pas retarder l'échographie.","<b>Faux.</b>","<b>Faux.</b>"],
+  retenir:"Tamponnade : diagnostic clinique (pouls paradoxal, signes droits, hypotension) et ETT ; drainage en urgence." },
+{ type:"qrm", q:"Quelles mesures font partie de la prévention secondaire après un SCA avec sus-décalage du ST étendu ? (4 réponses vraies)",
+  opts:["Traitement antiagrégant plaquettaire","Statine à forte dose","IEC","Bêta-bloquant","Vitamines antioxydantes"],
+  ok:[0,1,2,3],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b> D'autant plus que l'infarctus est étendu (dysfonction VG).","<b>Vrai.</b>","<b>Faux.</b> Aucune efficacité prouvée."],
+  retenir:"BASIC : β-bloquant, antiagrégants (aspirine + P2Y12 12 mois), statine forte dose, IEC, contrôle des FDR et réadaptation." },
+{ type:"qrm", q:"Quels sont les signes ECG évocateurs de péricardite aiguë ? (3 réponses vraies)",
+  opts:["Sus-décalage du ST diffus","Sous-décalage du PQ","Évolution typique en 4 phases","Onde Q de nécrose","Microvoltage"],
+  ok:[0,1,2],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b> Sus-ST, normalisation, ondes T négatives, normalisation.","<b>Faux.</b>","<b>Faux.</b> Microvoltage = épanchement abondant, pas la péricardite elle-même."],
+  retenir:"Péricardite : sus-ST diffus concave sans miroir, sous-PQ, 4 phases de Holzmann." },
+{ type:"qrm", q:"Quelles mesures de première intention sont requises devant une syncope ? (4 réponses vraies)",
+  opts:["Interrogatoire détaillé","Examen clinique complet","ECG 12 dérivations","Mesure de la PA couché et debout","IRM cérébrale"],
+  ok:[0,1,2,3],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b> Hypotension orthostatique.","<b>Faux.</b>"],
+  retenir:"Syncope : interrogatoire + examen + ECG + PA couché-debout = trépied du bilan initial." },
+{ type:"qrm", q:"Quelle est la conduite devant une HTA sévère sans retentissement aigu ? (3 réponses vraies)",
+  opts:["Repos","Prise tensionnelle répétée","Ajustement du traitement oral","Hospitalisation systématique","Diminution rapide par traitement IV"],
+  ok:[0,1,2],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b>","<b>Faux.</b> Une baisse brutale est dangereuse (ischémie cérébrale, coronaire)."],
+  retenir:"HTA sévère sans atteinte d'organe = pas une urgence : repos, recontrôle, ajustement oral. Urgence hypertensive (avec atteinte d'organe) → IV." },
+{ type:"qrm", q:"Quelle(s) est(sont) la(les) indication(s) de revascularisation coronaire chez un patient avec angor d'effort (syndrome coronarien chronique) ?",
+  opts:["Angor sévère malgré traitement médical optimal","Sténose coronarienne tritronculaire","Sténose du tronc commun gauche > 50 %","FEVG < 35 % avec ischémie réversible","Toute sténose > 50 % chez un patient asymptomatique"],
+  ok:[0,1,2,3],
+  expl:["<b>Vrai.</b> Indication symptomatique.","<b>Vrai.</b> Indication pronostique.","<b>Vrai.</b> Indication pronostique.","<b>Vrai.</b>","<b>Faux.</b> Il faut une ischémie démontrée ou une lésion pronostique."],
+  retenir:"Revasculariser si symptômes malgré traitement optimal, ou lésion pronostique (tronc commun, tritronculaire, IVA proximale, FEVG basse avec ischémie)." },
+{ type:"qrm", q:"Quelle est la conduite initiale devant un flutter auriculaire bien toléré ?",
+  opts:["ECG 12 dérivations","Anticoagulation adaptée au risque thromboembolique","Cardioversion électrique immédiate","Ralentisseur de la conduction AV (bêta-bloquant, vérapamil) selon la FC","Orientation vers une consultation de rythmologie"],
+  ok:[0,1,3,4],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b> Mêmes règles que la FA (CHA₂DS₂-VASc).","<b>Faux.</b> Seulement si mal toléré.","<b>Vrai.</b>","<b>Vrai.</b> L'ablation de l'isthme cavo-tricuspide est très efficace."],
+  retenir:"Flutter = même prise en charge que la FA (anticoagulation, ralentissement), mais traitement de choix : ablation de l'isthme." },
+{ type:"qrm", q:"Quels médicaments sont contre-indiqués dans l'insuffisance cardiaque à FEVG altérée ?",
+  opts:["Vérapamil","Diltiazem","IEC","AINS","Corticothérapie à faible dose"],
+  ok:[0,1,3],
+  expl:["<b>Vrai.</b> Inhibiteur calcique bradycardisant, inotrope négatif.","<b>Vrai.</b> Idem.","<b>Faux.</b> Traitement de fond.","<b>Vrai.</b> Rétention hydrosodée, insuffisance rénale.","<b>Faux.</b>"],
+  retenir:"IC à FEVG altérée : CI vérapamil, diltiazem, AINS, glitazones, antiarythmiques de classe I." },
+{ type:"qrm", q:"Quels sont les facteurs déclenchants ou favorisants de la fibrillation auriculaire ?",
+  opts:["Hypertension artérielle","Consommation excessive d'alcool","Hyperthyroïdie","Valvulopathie mitrale","Asthme isolé"],
+  ok:[0,1,2,3],
+  expl:["<b>Vrai.</b> 1re cause.","<b>Vrai.</b> « Holiday heart ».","<b>Vrai.</b> Doser la TSH.","<b>Vrai.</b> Dilatation de l'OG.","<b>Faux.</b>"],
+  retenir:"FA : HTA, valvulopathie mitrale, IC, ischémie, alcool, hyperthyroïdie, SAOS, obésité, âge." },
+{ type:"qrm", q:"Quels examens font partie du bilan initial d'une cardiopathie dilatée ?",
+  opts:["ECG","Échocardiographie cardiaque","IRM cardiaque","Coronarographie","Examens biologiques spécifiques"],
+  ok:[0,1,2,3,4],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b> Caractérise la cardiomyopathie (fibrose, myocardite).","<b>Vrai.</b> Éliminer une cause ischémique (ou coroscanner).","<b>Vrai.</b> TSH, ferritine, bilan selon le contexte."],
+  retenir:"Cardiopathie dilatée : toujours chercher une cause ischémique ; IRM cardiaque ; bilan étiologique (alcool, toxiques, génétique, myocardite)." },
+{ type:"qrm", q:"Quels diagnostics évoquer devant un bloc de branche gauche complet ?",
+  opts:["Infarctus antérieur ancien","Cardiomyopathie dilatée","Valvulopathie aortique","Hypertension artérielle","BPCO"],
+  ok:[0,1,2],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b> RA (calcifications du septum).","<b>Faux selon le corrigé.</b> L'HTA avec HVG est pourtant une cause classique de BBG ; à cocher seulement si le reste est sûr.","<b>Faux.</b> Pathologie droite : plutôt BBD."],
+  retenir:"BBG = toujours une cardiopathie sous-jacente (ischémique, dilatée, RA, HVG). BBD : peut être isolé, ou cœur droit (EP, BPCO)." },
+{ type:"qrm", q:"Quels sont les critères de gravité de l'endocardite infectieuse ? (4 réponses vraies)",
+  opts:["Insuffisance cardiaque aiguë","Abcès périvalvulaire","Embolie cérébrale","Fièvre élevée","Insuffisance rénale aiguë"],
+  ok:[0,1,2,4],
+  expl:["<b>Vrai.</b> 1re cause de mortalité.","<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b> La fièvre n'est pas un critère de gravité.","<b>Vrai.</b>"],
+  retenir:"EI grave : IC, abcès, embols (cérébraux), sepsis, IRA, germe virulent (staph, champignon)." },
+{ type:"qrm", q:"Quelles sont les principales indications chirurgicales de l'endocardite infectieuse ?",
+  opts:["Insuffisance cardiaque sévère liée à la valvulopathie","Abcès périvalvulaire","Endocardite fongique","Embolies répétées malgré antibiothérapie adaptée","Toute endocardite infectieuse"],
+  ok:[0,1,2,3],
+  expl:["<b>Vrai.</b> Indication hémodynamique, la plus urgente.","<b>Vrai.</b> Infection non contrôlée.","<b>Vrai.</b> Infection non contrôlée.","<b>Vrai.</b> Prévention embolique (aussi végétation > 10 mm).","<b>Faux.</b>"],
+  retenir:"Chirurgie de l'EI : 3 indications : hémodynamique (IC), infectieuse (abcès, champignon, bactériémie persistante), embolique (végétation > 10 mm, embols)." },
+{ type:"qrm", q:"Quelles sont les causes cardiaques possibles de syncope ? (4 réponses vraies)",
+  opts:["Trouble du rythme ventriculaire","BAV complet","Sténose aortique serrée","Réaction vagale","Ictus amnésique"],
+  ok:[0,1,2,3],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b> Syncope d'Adams-Stokes.","<b>Vrai.</b> Syncope d'effort.","<b>Vrai selon le corrigé.</b> Discutable : la syncope vagale est réflexe (cardio-inhibitrice), pas due à une cardiopathie. Ici, 4 réponses étaient attendues.","<b>Faux.</b> Ni une syncope, ni cardiaque."],
+  retenir:"Syncopes cardiaques : rythmiques (TV, BAV, dysfonction sinusale) et obstructives (RA, CMH, EP, myxome). Vagale = réflexe." },
+{ type:"qrm", q:"Vous suspectez un rétrécissement aortique. Quels examens peuvent être utiles ?",
+  opts:["ECG","Radiographie thoracique","Échocardiographie cardiaque","Coronarographie","IRM cérébrale"],
+  ok:[0,1,2],
+  expl:["<b>Vrai.</b> HVG.","<b>Vrai.</b> Calcifications, cardiomégalie.","<b>Vrai.</b> Diagnostic et sévérité (surface < 1 cm², gradient moyen > 40 mmHg).","<b>Faux selon le corrigé.</b> Elle est faite dans le bilan préopératoire, pas pour le diagnostic.","<b>Faux.</b>"],
+  retenir:"RA : ETT pour le diagnostic ; coronarographie seulement en bilan préopératoire." },
+{ type:"qrm", q:"Quels signes cliniques orientent vers une sténose aortique serrée symptomatique ? (4 réponses vraies)",
+  opts:["Syncope","Angor d'effort","Dyspnée d'effort","OAP","Toux sèche isolée"],
+  ok:[0,1,2,3],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b>"],
+  retenir:"RA serré symptomatique (angor, syncope, dyspnée) = indication de remplacement valvulaire." },
+{ type:"qrm", q:"Quels traitements médicamenteux sont indiqués dans l'insuffisance cardiaque chronique à FEVG altérée ? (4 réponses vraies)",
+  opts:["Trinitrine","Bêta-bloquant","Spironolactone","Inhibiteurs de SGLT2","Sacubitril/valsartan (Entresto)"],
+  ok:[1,2,3,4],
+  expl:["<b>Faux.</b> Aucun bénéfice au long cours.","<b>Vrai.</b>","<b>Vrai.</b> Antagoniste des minéralocorticoïdes.","<b>Vrai.</b> Dapagliflozine, empagliflozine.","<b>Vrai.</b> ARNI, à la place de l'IEC."],
+  retenir:"Les 4 piliers de l'IC à FEVG altérée : IEC/ARNI, β-bloquant, antialdostérone, iSGLT2. + diurétiques pour les symptômes." },
+{ type:"qrm", q:"Dans l'insuffisance cardiaque, laquelle ou lesquelles de ces propositions est/sont correcte(s) ?",
+  opts:["Le débit cardiaque dépend du volume télédiastolique et de la fréquence cardiaque","Selon la loi de Starling, l'étirement des fibres lié à l'augmentation de la précharge s'accompagne d'une augmentation de l'inotropie quel que soit le degré de dilatation","La vasoconstriction liée à l'activation sympathique est délétère pour la fonction cardiaque","La rétention hydrosodée liée à la baisse de perfusion rénale contribue à augmenter la précharge","En cas de BBG, l'asynchronisme cardiaque peut aggraver une IC"],
+  ok:[0,2,3,4],
+  expl:["<b>Vrai.</b> Débit = VES × FC.","<b>Faux.</b> Au-delà d'un certain degré de dilatation, la courbe s'aplatit : plus de gain d'inotropie.","<b>Vrai.</b> Elle augmente la postcharge.","<b>Vrai.</b> Activation du SRAA.","<b>Vrai.</b> D'où la resynchronisation."],
+  retenir:"Les mécanismes compensateurs (sympathique, SRAA) aident au début puis aggravent l'IC : c'est la cible des traitements." },
+{ type:"qrm", q:"Concernant l'anticoagulation dans la fibrillation atriale, citer les réponses vraies. (2 réponses vraies)",
+  opts:["Elle est indiquée quel que soit le CHA₂DS₂-VASc dans le rétrécissement mitral serré","L'aspirine est indiquée si CHA₂DS₂-VASc = 0","Les AOD sont indiqués quelle que soit la cardiopathie sous-jacente si le score est ≥ 2","Un ATCD d'AVC ischémique est une indication d'anticoagulation s'il est secondaire à la FA","Un HAS-BLED > 3 contre-indique formellement la poursuite de l'anticoagulation"],
+  ok:[0,3],
+  expl:["<b>Vrai.</b> FA valvulaire : AVK.","<b>Faux.</b> Aucun antithrombotique si score 0.","<b>Faux.</b> AOD contre-indiqués si RM serré ou valve mécanique.","<b>Vrai.</b>","<b>Faux.</b> Le HAS-BLED sert à corriger les facteurs de saignement."],
+  retenir:"Même question qu'en mars 2024. FA valvulaire → AVK ; HAS-BLED ≠ contre-indication." },
+{ type:"qrm", q:"Le traitement de la phlébite des membres inférieurs est : (2 réponses vraies)",
+  opts:["Repos au lit strict","Fibrinolytiques","Anticoagulants","Bas de contention","AINS"],
+  ok:[2,3],
+  expl:["<b>Faux.</b> Lever précoce.","<b>Faux.</b>","<b>Vrai.</b> AOD en première intention le plus souvent.","<b>Vrai.</b> Pour les symptômes.","<b>Faux.</b>"],
+  retenir:"TVP : anticoagulation (AOD) au moins 3 mois, lever précoce, contention si symptômes." },
+{ type:"info", q:"(Question annulée à l'épreuve) En cas d'embolie pulmonaire, citer les réponses vraies.",
+  expl:"Question annulée, 1 point pour tous. Pour info : le <b>sPESI</b> prédit la mortalité à J30 (vrai) ; une <b>troponine élevée est un facteur de mauvais pronostic</b> ; les <b>AOD sont recommandés en 1re intention</b> dans l'EP non grave. Le bilan de thrombophilie se discute surtout pour une MTEV proximale <b>non provoquée</b> chez le sujet jeune (< 50 ans) : les deux propositions sur la thrombophilie étaient mal posées, d'où l'annulation.",
+  retenir:"EP : sPESI = mortalité à 30 jours ; troponine et dysfonction VD = risque intermédiaire ; AOD en 1re intention." },
+{ type:"qrm", q:"Chez un patient hypertendu, quels signes font suspecter une sténose de l'artère rénale ?",
+  opts:["Activité rénine plasmatique effondrée","Palpation d'un gros rein","Hypokaliémie","HTA résistante","Natriurèse élevée"],
+  ok:[2,3],
+  expl:["<b>Faux.</b> Rénine <b>élevée</b> (hyperaldostéronisme secondaire). Rénine basse = hyperaldostéronisme primaire.","<b>Faux.</b> Le rein en aval est plutôt <b>petit</b>.","<b>Vrai.</b> Hyperaldostéronisme secondaire.","<b>Vrai.</b>","<b>Faux.</b>"],
+  retenir:"Sténose de l'artère rénale : HTA résistante, hypokaliémie avec rénine élevée, asymétrie de taille des reins, OAP flash, insuffisance rénale sous IEC, souffle abdominal." }
+  ],
+  cours:`<h4>Questions isolées : les points clés</h4><ul>
+<li><b>IDM</b> : complications précoces (FV, choc, IM, CIV) vs tardives (Dressler, anévrisme).</li>
+<li><b>Péricardite</b> : antéflexion, frottement, sus-ST diffus sans miroir, sous-PQ.</li>
+<li><b>IC</b> : gauche = poumon ; droite = veines-foie. 4 piliers : IEC/ARNI, β-bloquant, antialdostérone, iSGLT2. CI : vérapamil, diltiazem, AINS.</li>
+<li><b>Endocardite</b> : chirurgie si IC, abcès/champignon, embols.</li>
+<li><b>RA serré</b> : angor, syncope, dyspnée → remplacement valvulaire.</li>
+<li><b>FA</b> : RM serré ou valve mécanique → AVK ; HAS-BLED ≠ CI.</li>
+<li><b>Sténose de l'artère rénale</b> : rénine haute, hypokaliémie, HTA résistante.</li></ul>` }
+]
+};
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const L="ABCDEFGHIJKLMNOPQRST";
+const KEY="annale-cardio-nov25-v1";
+const TOTAL=60*60;
+const store={get(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}},clear(){try{localStorage.removeItem(KEY)}catch(e){}}};
+const Q=[];EXAM.dps.forEach((dp,d)=>dp.qs.forEach((q,i)=>Q.push({d,i,q,dp})));
+let S=null, tick=null, paused=false;
+function fresh(){return{pos:0,ans:{},left:TOTAL,done:false,override:{}}}
+function img(k,alt){return `<img src="${IMGS[k]}" alt="${alt||''}" data-zoom>`}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function fmt(t){t=Math.max(0,t|0);return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+function show(id){["vStart","vExam","vRes","vCorr"].forEach(v=>$("#"+v).hidden=v!==id);window.scrollTo(0,0)}
+function antibio(){const r=[["Amoxicilline","S"],["Imipénème","S"],["Gentamicine","S"],["Vancomycine","S"],["Cotrimoxazole","R"],["Teicoplanine","S"],["Linézolide","S"],["Lévofloxacine","R"],["Nitrofurantoïne","R"]];
+ return `<div class="tblwrap"><table class="abg"><tr><td colspan="2"><b>ECBU</b> · urines 2e jet</td></tr><tr><td>Hématies</td><td>50/mm³</td></tr><tr><td>Cellules épithéliales</td><td>absence</td></tr><tr><td>Leucocytes</td><td>150/mm³</td></tr><tr><td>CGP en courtes chaînettes</td><td>quelques</td></tr><tr><td>Culture : <i>Enterococcus faecalis</i></td><td>10⁵/mL</td></tr><tr><td colspan="2"><b>Antibiogramme</b></td></tr>${r.map(([a,b])=>`<tr><td>${a}</td><td class="${b}">${b}</td></tr>`).join("")}</table></div>`}
+
+/* ---------- accueil ---------- */
+$("#dpList").innerHTML=EXAM.dps.map((dp,d)=>`<li data-jd="${d}" style="cursor:pointer" title="Commencer par ce dossier"><span class="id">${dp.id}</span><span>${dp.titre}</span><span class="n">${dp.qs.length} Q</span></li>`).join("");
+const saved=store.get();
+if(saved&&!saved.done&&Object.keys(saved.ans).length){$("#btnResume").hidden=false}
+if(saved&&saved.done){$("#btnResume").hidden=false;$("#btnResume").textContent="Voir mes résultats"}
+$("#btnStart").onclick=()=>{S=fresh();store.set(S);startExam()};
+$("#btnResume").onclick=()=>{S=saved;if(S.done)results();else startExam()};
+$("#btnDirect").onclick=()=>{S=S||saved||fresh();openCorr(0)};
+
+/* ---------- épreuve ---------- */
+function steps(){const el=$("#steps");if(!S||$("#vExam").hidden&&!S.done){el.innerHTML="";return}
+ const cur=Q[S.pos]?Q[S.pos].d:-1;
+ el.innerHTML=EXAM.dps.map((dp,d)=>{const qs=Q.filter(x=>x.d===d);const done=qs.every(x=>S.ans[x.d+"-"+x.i]!==undefined);return `<span data-jd="${d}" style="cursor:pointer" title="Aller à ${dp.titre}" class="${d===cur&&!S.done?'on':done?'done':''}">${dp.id}</span>`}).join("")}
+function startExam(){show("vExam");$("#timer").hidden=false;$("#btnPause").hidden=false;paused=false;$("#btnPause").textContent="Pause";renderQ();runTimer()}
+function runTimer(){clearInterval(tick);tick=setInterval(()=>{if(paused||!S||S.done)return;S.left--;drawTimer();if(S.left%5===0)store.set(S);if(S.left<=0){finish()}},1000);drawTimer()}
+function drawTimer(){const t=$("#timer");t.textContent=fmt(S.left);t.classList.toggle("low",S.left<=300)}
+$("#btnPause").onclick=()=>{paused=!paused;$("#btnPause").textContent=paused?"Reprendre":"Pause";$("#qpanel").style.filter=paused?"blur(6px)":"";$("#enonce").style.filter=paused?"blur(6px)":""};
+
+function enonceHTML(d,upto){const dp=EXAM.dps[d];let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div>${dp.intro}`;
+ if(dp.introImg)h+=`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`;
+ dp.qs.forEach((q,i)=>{if(i<upto&&q.ctx){h+=`<div class="add"><div class="note">Ajouté en Q${i+1}</div>${q.ctx}${q.img?`<div class="imgs">${q.img.map(k=>img(k)).join("")}</div>`:""}${q.table==="antibio"?antibio():""}</div>`}});return h}
+
+function isFree(dp){return dp.free||/^(QI|SQI|TCS)/.test(dp.id)}
+function opened(n){const {d,i,dp}=Q[n];if(isFree(dp))return true;for(let k=0;k<i;k++){if(S.ans[d+"-"+k]===undefined)return false}return true}
+function navHTML(){return `<div class="qnav">`+EXAM.dps.map((dp,d)=>`<div class="qnav-dp"><span class="qnav-id">${dp.id}${isFree(dp)?"":" 🔒"}</span>`+Q.map((x,n)=>({x,n})).filter(o=>o.x.d===d).map(({x,n})=>{const k=x.d+"-"+x.i;const done=S.ans[k]!==undefined;const ok=opened(n);return `<button class="qn${n===S.pos?" cur":""}${done?" done":""}" data-n="${n}" ${ok?"":"disabled"} title="${ok?"":"Validez les questions précédentes du dossier"}">${x.i+1}</button>`}).join("")+`</div>`).join("")+`</div>`}
+function renderQ(){
+ if(S.pos>=Q.length)S.pos=Q.length-1;
+ const {d,i,q,dp}=Q[S.pos];steps();
+ const k=d+"-"+i, prev=S.ans[k], answered=prev!==undefined, free=isFree(dp), locked=answered&&!free;
+ $("#enonce").innerHTML=enonceHTML(d,i);
+ const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+ let h=navHTML();
+ h+=`<div class="qhead"><span class="qnum">${dp.id} · Q${i+1}/${dp.qs.length}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}<span class="spacer"></span><span class="note">${S.pos+1} / ${Q.length}</span></div>`;
+ if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+ if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+ if(q.table==="antibio")h+=antibio();
+ h+=`<div class="qtext">${q.q}</div>`;
+ const pa=Array.isArray(prev)?prev:[];
+ if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const t=q.type==="qrm"?"checkbox":"radio";
+  h+=`<ul class="opts">${q.opts.map((o,j)=>`<li class="opt"><label for="o${j}"><input type="${t}" name="opt" id="o${j}" value="${j}" ${pa.includes(j)?"checked":""} ${locked?"disabled":""}><span class="L">${L[j]}</span><span>${o}</span></label></li>`).join("")}</ul>`}
+ else if(q.type==="qroc"){h+=`<div class="qroc"><label class="note" for="qroc">Réponse courte (quelques mots)</label><input id="qroc" autocomplete="off" placeholder="Votre réponse" value="${answered&&prev?esc(prev):""}" ${locked?"disabled":""}></div>`}
+ else if(q.type==="self"){h+=`<p class="note">Question d'image : la seule copie du sujet est annotée, l'image est donc donnée en correction. Réfléchis à ta réponse, puis valide ; tu t'auto-noteras en correction.</p>`}
+
+ else if(q.type==="info"){h+=`<p class="note">Question neutralisée à l'épreuve : validez pour continuer (1 point pour tous).</p>`}
+ let st="";
+ if(locked)st=`<p class="lockmsg">🔒 Réponse validée : dans un dossier progressif, elle n'est plus modifiable. Vous pouvez la relire.</p>`;
+ else if(answered&&free)st=`<p class="savedmsg">✓ Réponse enregistrée. Vous pouvez la modifier jusqu'à la fin de l'épreuve.</p>`;
+ else if(!free)st=`<p class="note">Dossier progressif : une fois validée, la réponse ne pourra plus être modifiée.</p>`;
+ h+=st;
+ const nAns=Object.keys(S.ans).length;
+ h+=`<div class="actions navrow"><button class="btn" id="bPrev" ${S.pos===0?"disabled":""}>◀ Précédente</button>${locked?"":`<button class="btn primary" id="btnVal">${answered?"Enregistrer la modification":"Valider"}</button>`}<button class="btn" id="bNext" ${S.pos>=Q.length-1||!opened(S.pos+1)?"disabled":""}>Suivante ▶</button><span class="spacer"></span><button class="btn ghost" id="bEnd">Terminer l'épreuve (${nAns}/${Q.length})</button></div>`;
+ h+=`<div class="confirm" id="conf" hidden><span id="confTxt">Réponse définitive ?</span><button class="btn primary small" id="ok">Confirmer</button><button class="btn small" id="no">Modifier</button></div>`;
+ $("#qpanel").innerHTML=h;
+ $("#qpanel").querySelectorAll(".qn").forEach(b=>b.onclick=()=>{S.pos=+b.dataset.n;store.set(S);renderQ();window.scrollTo(0,0)});
+ $("#bPrev").onclick=()=>{S.pos--;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bNext").onclick=()=>{S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bEnd").onclick=()=>{const left=Q.length-Object.keys(S.ans).length;if(confirmEnd(left))finish()};
+ if(locked)return;
+ let a=null,empty=true;
+ const read=()=>{if(q.type==="qrm")a=[...document.querySelectorAll("input[name=opt]:checked")].map(x=>+x.value);
+  else if(q.type==="qru"||q.type==="tcs"){const c=document.querySelector("input[name=opt]:checked");a=c?[+c.value]:[]}
+  else if(q.type==="qroc")a=$("#qroc").value.trim();
+  else a=true;
+  empty=(Array.isArray(a)&&!a.length)||a===""||a==null};
+ const save=()=>{S.ans[k]=empty?null:a;if(S.pos<Q.length-1&&opened(S.pos+1))S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#btnVal").onclick=()=>{read();
+  if(free){save();return}
+  $("#confTxt").textContent=(empty?"Aucune réponse : la question vaudra 0. ":"")+"Réponse définitive (non modifiable ensuite) ?";
+  $("#btnVal").hidden=true;$("#conf").hidden=false;$("#ok").focus()};
+ $("#no").onclick=()=>{$("#conf").hidden=true;$("#btnVal").hidden=false};
+ $("#ok").onclick=save;
+}
+function confirmEnd(left){const box=$("#conf");$("#confTxt").textContent=(left?left+" question(s) sans réponse. ":"")+"Rendre la copie et voir la note ?";box.hidden=false;const v=$("#btnVal");if(v)v.hidden=true;$("#ok").onclick=()=>finish();$("#no").onclick=()=>{box.hidden=true;if(v)v.hidden=false};return false}
+function jumpDp(d){const n=Q.findIndex(x=>x.d===d);if(n<0)return;let m=n;while(m+1<Q.length&&Q[m+1].d===d&&S.ans[Q[m].d+"-"+Q[m].i]!==undefined)m++;S.pos=m;store.set(S);if($("#vExam").hidden)startExam();else{renderQ();window.scrollTo(0,0)}}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-jd]");if(!t)return;if(!S||S.done){S=fresh();store.set(S)}jumpDp(+t.dataset.jd)});
+
+/* ---------- notation ---------- */
+function inPoly(x,y,pts){let c=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const[xi,yi]=pts[i],[xj,yj]=pts[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
+function norm(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim()}
+function grade(d,i){const q=EXAM.dps[d].qs[i];let a=S.ans[d+"-"+i];const k=d+"-"+i;
+ if(S.override&&S.override[k]!==undefined)return S.override[k];
+ if(a==null)return 0;
+ if(q.type==="qru")return a.length===1&&a[0]===q.ok[0]?1:0;
+ if(q.type==="tcs")return a.length===1?q.w[a[0]]:0;
+ if(q.type==="qrm"){if(q.neut)a=a.filter(x=>!q.neut.includes(x));if(!a.length)return 0;
+  if((q.inacc||[]).some(x=>a.includes(x)))return 0;
+  if((q.indisp||[]).some(x=>!a.includes(x)))return 0;
+  let n=0;for(let k2=0;k2<q.opts.length;k2++){if(a.includes(k2)!==q.ok.includes(k2))n++}
+  if(/QRP/i.test((q.label||'')+' '+(q.q||'')+' '+(q.tag||''))||q.qrp||q.opts.length>5){const g=a.filter(x=>q.ok.includes(x)).length,ex=Math.max(0,a.length-q.ok.length);return Math.max(0,(g-ex)/q.ok.length)}return n===0?1:n===1?.5:n===2?.2:0}
+ if(q.type==="info")return 1;
+ if(q.type==="self")return 0;
+ if(q.type==="qroc"){const s=norm(a);if(q.kw){let m=0;q.kw.forEach(([kk,v])=>{if(s.includes(norm(kk)))m=Math.max(m,v)});return m}return q.keys.some(kk=>s.includes(norm(kk)))?1:0}
+ if(q.type==="qzone"){return inPoly(a.x*q.zoneW,a.y*q.zoneH,q.zone)?1:0}
+ return 0}
+function f1(x){return (Math.round(x*100)/100).toString().replace(".",",")}
+
+function finish(){clearInterval(tick);S.done=true;store.set(S);$("#timer").hidden=true;$("#btnPause").hidden=true;results()}
+function results(){show("vRes");steps();let tot=0,max=Q.length;const byDp=EXAM.dps.map(()=>[0,0]),byR={A:[0,0],B:[0,0]};
+ Q.forEach(({d,i,q})=>{const g=grade(d,i);tot+=g;byDp[d][0]+=g;byDp[d][1]++;if(q.rang){byR[q.rang][0]+=g;byR[q.rang][1]++}});
+ $("#sBig").innerHTML=`${f1(tot/max*20)}<small> / 20</small>`;
+ const used=TOTAL-S.left;
+ $("#sSub").textContent=`${f1(tot)} points sur ${max} · temps utilisé ${fmt(used)}`;
+ $("#sBars").innerHTML=EXAM.dps.map((dp,d)=>`<div class="barrow"><span class="mono">${dp.id}</span><div class="track"><div class="fill" style="width:${byDp[d][0]/byDp[d][1]*100}%"></div></div><span class="v">${f1(byDp[d][0])}/${byDp[d][1]}</span></div>`).join("")+
+  ["A","B"].filter(r=>byR[r][1]).map(r=>`<div class="barrow"><span><span class="rk ${r.toLowerCase()}">${r}</span></span><div class="track"><div class="fill" style="width:${byR[r][0]/byR[r][1]*100}%;background:var(--rk${r})"></div></div><span class="v">${f1(byR[r][0])}/${byR[r][1]}</span></div>`).join("");
+ $("#sGrid").innerHTML=Q.map(({d,i,dp},n)=>{const g=grade(d,i);return `<button class="${g===1?'s1':g===0?'s0':'sp'}" data-go="${d}-${i}">${dp.id.replace("DP","")}.${i+1} · ${f1(g)}</button>`}).join("");
+ $("#sGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{const[d,i]=b.dataset.go.split("-").map(Number);openCorr(d,i)});
+}
+$("#btnCorr").onclick=()=>openCorr(0);
+$("#btnAgain").onclick=()=>{store.clear();S=fresh();store.set(S);startExam()};
+$("#btnBackRes").onclick=()=>{if(S&&S.done)results();else show("vStart")};
+$("#btnHome").onclick=()=>{show("vStart")};
+
+/* ---------- correction ---------- */
+let curD=0;
+function openCorr(d,i){show("vCorr");steps();curD=d;
+ $("#tabs").innerHTML=EXAM.dps.map((dp,k)=>`<button role="tab" aria-selected="${k===d}" data-d="${k}">${dp.id}</button>`).join("");
+ $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCorr(+b.dataset.d));
+ drawCorr(d);
+ if(i!==undefined){const el=document.getElementById("cq-"+d+"-"+i);if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),30)}
+}
+function drawCorr(d){const dp=EXAM.dps[d];const answered=S&&Object.keys(S.ans).length>0;
+ let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div><details class="enon"><summary>Énoncé initial</summary>${dp.intro}${dp.introImg?`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`:""}</details>`;
+ dp.qs.forEach((q,i)=>{const k=d+"-"+i;const a=S?S.ans[k]:undefined;const has=a!==undefined;const g=has?grade(d,i):null;
+  const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+  h+=`<div class="cq" id="cq-${k}"><div class="qhead"><span class="qnum">Q${i+1}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}${has?`<span class="pts ${g===1?'s1':g===0?'s0':'sp'}">${f1(g)} pt</span>`:""}</div>`;
+  if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+  if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+  if(q.table==="antibio")h+=antibio();
+  h+=`<div class="qtext">${q.q}</div>`;
+  if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const mine=Array.isArray(a)?a:[];
+   q.opts.forEach((o,j)=>{const ok=q.ok.includes(j),me=mine.includes(j);
+    let cls=has?(ok&&me?"good":ok&&!me?"miss":!ok&&me?"bad":""):(ok?"good":"");
+    let tagx=(q.indisp||[]).includes(j)?" · indispensable":(q.inacc||[]).includes(j)?" · inacceptable":"";
+    h+=`<div class="copt ${cls}"><span class="mk">${ok?"✓":"✗"}</span><span class="mk">${L[j]}</span><span class="tx">${o}${has&&me?` <span class="mine">· coché${tagx}</span>`:tagx?`<span class="mine">${tagx}</span>`:""}</span><div class="ex">${q.expl[j]}</div></div>`});
+  } else if(q.type==="qroc"){
+   h+=`<div class="free ${has?(g===1?'s1':g?'sp':'s0'):''}" style="background:${has?'':'var(--soft)'}"><b>Votre réponse :</b> ${has&&a?esc(a):"<i>aucune</i>"}<br><b>Attendu :</b> ${q.attendu}</div>`;
+   if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Correction automatique par mots-clés.</span><button class="btn small" data-ov="${k}" data-v="${g?0:1}">${g?"Compter faux":"Ma réponse est juste"}</button></div>`;
+   h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="self"){
+   h+=`${q.cimg?`<div class="imgs">${img(q.cimg)}</div>`:""}<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Auto-évaluation :</span><button class="btn small" data-ov="${k}" data-v="1">J'avais juste</button><button class="btn small" data-ov="${k}" data-v="0.5">À moitié</button><button class="btn small" data-ov="${k}" data-v="0">J'avais faux</button></div>`;
+  } else if(q.type==="info"){
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  } else if(q.type==="qzone"){
+   const pts=q.zone.map(p=>`${p[0]/q.zoneW*100},${p[1]/q.zoneH*100}`).join(" ");
+   h+=`<div class="zonebox" style="cursor:default"><img src="${IMGS[q.img[0]]}" alt="Scanner abdominal"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="${pts}" fill="rgba(46,160,90,.35)" stroke="#2ea05a" stroke-width=".6"/></svg>${has&&a?`<div class="pin" style="left:${a.x*100}%;top:${a.y*100}%"></div>`:""}</div>`;
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  }
+  if(q.fig)h+=`<div class="imgs" style="align-items:flex-end">${img(q.fig[0],q.fig[1])}<span class="note" style="max-width:260px">${q.fig[1]}</span></div>`;
+  h+=`<div class="retenir"><b class="h">À retenir</b>${q.retenir}</div></div>`;
+ });
+ if(!answered)h=`<p class="note" style="margin-top:0">Mode correction seule : les bonnes réponses sont en vert.</p>`+h;
+ $("#corrMain").innerHTML=h;
+ $("#corrMain").querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{S.override=S.override||{};S.override[b.dataset.ov]=+b.dataset.v;store.set(S);drawCorr(d)});
+ $("#course").innerHTML=`<div class="row"><h3>Cours résumé · ${dp.id}</h3><span class="spacer"></span><button class="btn small coursebtn" id="cToggle">Afficher</button></div><div class="cbody">${dp.cours.replace(/data-img="(\w+)"/g,(m,k)=>`src="${IMGS[k]}" data-zoom`)}</div><p class="small" style="margin-top:14px">Sources : corrigé officiel de l'épreuve (UE8.2, 19 novembre 2025) ; explications rédigées d'après le Collège de cardiologie.</p>`;
+ const c=$("#course");if(matchMedia("(max-width:860px)").matches){c.classList.add("collapsed");const t=$("#cToggle");t.onclick=()=>{c.classList.toggle("collapsed");t.textContent=c.classList.contains("collapsed")?"Afficher":"Masquer"}}
+}
+
+/* ---------- zoom ---------- */
+document.addEventListener("click",e=>{const t=e.target;if(t.matches&&t.matches("img[data-zoom]")){$("#zoomImg").src=t.src;$("#zoom").hidden=false}});
+$("#zoom").onclick=()=>{$("#zoom").hidden=true};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#zoom").hidden=true});
+})();
+</script>
+
+<a id="backhome" href="index.html" style="position:fixed;left:12px;bottom:12px;z-index:9999;background:#1c1c1a;color:#fff;padding:8px 12px;border-radius:99px;font:600 13px system-ui;text-decoration:none;opacity:.85">← Toutes les annales</a>

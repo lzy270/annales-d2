@@ -1,0 +1,997 @@
+<title>Annale psy JUILLET 2024</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout : copie d'examen — énoncé à gauche, question à droite ; correction en 2 colonnes avec cours collant */
+:root{
+  --bg:#f6f7f9; --paper:#ffffff; --ink:#18212b; --muted:#5d6876; --line:#dfe3e8; --soft:#eef1f5;
+  --accent:#1f4e8c; --accent-soft:#e6eef9;
+  --ok:#1d7a46; --ok-soft:#e3f4ea; --ko:#b42318; --ko-soft:#fdeceb; --mid:#a15c00; --mid-soft:#fdf1df;
+  --rkA:#c62828; --rkB:#d9822b;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+header.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:800;font-size:17px}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.steps{display:flex;gap:4px;flex-wrap:wrap}
+.steps span{font:700 11px var(--f-mono);padding:3px 7px;border-radius:5px;background:var(--soft);color:var(--muted)}
+.steps span.on{background:var(--accent);color:var(--paper)}
+.steps span.done{background:var(--accent-soft);color:var(--accent)}
+.timer{font:700 18px var(--f-mono);font-variant-numeric:tabular-nums;padding:4px 10px;border-radius:8px;background:var(--soft)}
+.timer.low{background:var(--ko-soft);color:var(--ko)}
+.btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:9px 16px;font-weight:700}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn.ghost{background:transparent}
+.btn.small{padding:5px 10px;font-size:13px}
+main{padding-block:24px 64px}
+[hidden]{display:none!important}
+
+/* start */
+.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(26px,4vw,36px)}
+.hero p{margin:0;color:var(--muted)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.rule{background:var(--soft);border-radius:10px;padding:12px 14px;font-size:14px}
+.rule b{display:block;font-family:var(--f-display);font-size:15px;margin-bottom:2px}
+.dplist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.dplist li{display:flex;gap:10px;align-items:baseline;font-size:15px}
+.dplist .id{font:700 12px var(--f-mono);color:var(--accent);min-width:34px}
+.dplist .n{color:var(--muted);font-size:13px;margin-left:auto;white-space:nowrap}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* exam */
+.exam{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:start}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:20px}
+.panel .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.enonce{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto}
+.enonce p{margin:.6em 0}
+.enonce .add{border-left:3px solid var(--accent);padding-left:12px;margin-top:14px}
+.imgs{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.imgs img{max-height:320px;width:auto;max-width:100%;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;background:#000}
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.qnum{font:700 13px var(--f-mono);color:var(--accent)}
+.tag{font:700 11px var(--f-mono);padding:2px 7px;border-radius:5px;background:var(--soft);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.rk{display:inline-grid;place-items:center;width:20px;height:20px;border:2px solid;border-radius:4px;font:700 11px var(--f-mono);vertical-align:middle}
+.rk.a{color:var(--rkA)} .rk.b{color:var(--rkB)}
+.ctx{background:var(--soft);border-radius:10px;padding:2px 14px;margin-bottom:12px}
+.ctx p{margin:.6em 0}
+.qtext{font-size:18px;font-weight:700;margin:6px 0 14px}
+.opts{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.opt label{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--paper)}
+.opt label:hover{border-color:var(--accent)}
+.opt input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.opt .L{font:700 14px var(--f-mono);color:var(--muted);min-width:16px}
+.opt input:checked ~ .L{color:var(--accent)}
+.opt label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.qroc input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit}
+.zonebox{position:relative;display:inline-block;max-width:100%;cursor:crosshair}
+.zonebox img{display:block;max-width:100%;border-radius:8px}
+.zonebox .pin{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:3px solid #fff;background:#e5484d;box-shadow:0 0 0 2px #e5484d;pointer-events:none}
+.zonebox svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--mid-soft);border-radius:10px;padding:10px 12px;font-size:14px}
+.note{font-size:13px;color:var(--muted)}
+
+/* results */
+.score{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.big{font:800 64px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.big small{font-size:24px;color:var(--muted)}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:44px 1fr 70px;gap:10px;align-items:center;font-size:14px}
+.barrow .track{height:10px;border-radius:5px;background:var(--soft);overflow:hidden}
+.barrow .fill{height:100%;background:var(--accent)}
+.barrow .v{font:700 13px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.grid-q{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.grid-q button{font:700 12px var(--f-mono);border:0;border-radius:6px;padding:6px 8px;min-width:58px}
+.s1{background:var(--ok-soft);color:var(--ok)} .s0{background:var(--ko-soft);color:var(--ko)} .sp{background:var(--mid-soft);color:var(--mid)}
+
+/* correction */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:7px 12px;font-weight:700;font-size:14px}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.corr{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.course{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto;font-size:14.5px}
+.course h3{font-size:18px;margin-bottom:6px}
+.course h4{font-size:15px;margin:16px 0 4px;display:flex;gap:8px;align-items:center}
+.course ul{padding-left:18px;margin:4px 0}
+.course li{margin:3px 0}
+.course .small,.small{font-size:13px;color:var(--muted)}
+table.mini{border-collapse:collapse;width:100%;font-size:13px;margin:6px 0}
+table.mini th,table.mini td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+table.mini th{background:var(--soft)}
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}
+.figs figure{margin:0}
+.figs img{width:100%;height:100px;object-fit:cover;border-radius:6px;cursor:zoom-in}
+.figs figcaption{font-size:11.5px;color:var(--muted)}
+.cq{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}
+.cq:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.pts{margin-left:auto;font:700 13px var(--f-mono);padding:3px 8px;border-radius:6px}
+.copt{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:22px 22px 1fr;gap:4px 10px;align-items:start}
+.copt + .copt{margin-top:6px}
+.copt .mk{font:700 14px var(--f-mono)}
+.copt .tx{font-weight:700}
+.copt .ex{grid-column:3;font-size:14.5px;color:var(--ink)}
+.copt.good{border-color:var(--ok);background:var(--ok-soft)}
+.copt.miss{border-color:var(--mid);background:var(--mid-soft)}
+.copt.bad{border-color:var(--ko);background:var(--ko-soft)}
+.mine{font:700 11px var(--f-mono);color:var(--muted)}
+.retenir{margin-top:12px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:14.5px}
+.retenir b.h{display:block;font-family:var(--f-display);color:var(--accent);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.free{border-radius:10px;padding:10px 14px;font-size:14.5px}
+.coursebtn{display:none}
+details.enon{background:var(--soft);border-radius:10px;padding:8px 14px;margin-bottom:16px}
+details.enon summary{cursor:pointer;font-weight:700}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.zoom img{max-width:100%;max-height:100%;border-radius:8px}
+.tblwrap{overflow-x:auto}
+table.abg{border-collapse:collapse;font:13px var(--f-mono);margin:8px 0}
+table.abg td{padding:3px 10px;border-bottom:1px dotted var(--line)}
+table.abg td:last-child{font-weight:700;text-align:center}
+table.abg .R{color:var(--ko)} table.abg .S{color:var(--ok)}
+
+@media (max-width:860px){
+  .exam,.corr{grid-template-columns:1fr}
+  .enonce,.course{position:static;max-height:none}
+  .corr .course{order:-1}
+  .course.collapsed .cbody{display:none}
+  .coursebtn{display:inline-block}
+  .score{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.qnav{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}.qnav-dp{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.qnav-id{font:700 11px var(--f-mono);color:var(--muted);margin-right:3px}.qn{min-width:26px;height:26px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;font:700 11px var(--f-mono);padding:0 4px}.qn.done{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft)}.qn.cur{outline:2px solid var(--accent)}.qn:disabled{opacity:.35;cursor:not-allowed}.navrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.navrow .spacer{flex:1}.lockmsg{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:14px}.savedmsg{color:var(--ok);font-size:14px}
+.offi{background:var(--soft);border-left:3px solid var(--accent);border-radius:8px;padding:8px 12px;margin:6px 0 10px}.offi p{margin:4px 0}.tcs{background:var(--soft);border-radius:10px;padding:10px 14px;margin-bottom:10px}.tcs p{margin:4px 0}
+</style>
+
+<header class="bar"><div class="wrap">
+  <div class="brand">Annale psy · UE3 · juillet 2024 (rattrapage)<small>DFA1 · Bobigny · corrigé officiel + explications d'après les Collèges</small></div>
+  <div class="spacer"></div>
+  <div class="steps" id="steps"></div>
+  <div class="timer" id="timer" hidden>40:00</div>
+  <button class="btn small ghost" id="btnPause" hidden>Pause</button>
+</div></header>
+
+<main class="wrap">
+  <!-- Accueil -->
+  <section id="vStart">
+    <div class="hero">
+      <div>
+        <h1>5 épreuves, 30 questions</h1>
+        <p>Sujet de rattrapage de l'UE3 Psychiatrie-addictologie de juillet 2024 : 2 DP, 1 KFP, 16 questions isolées et 1 TCS. (Le sujet de janvier 2024 est quasi identique : 28 questions sur 30 en commun.) Conditions d'examen type LUNESS, notation EDN (QRP : bonnes réponses ÷ réponses attendues ; TCS : 1 point si ta réponse fait partie de celles validées par le panel). Les erreurs probables du corrigé officiel sont signalées par ⚠️.</p>
+      </div>
+      <ul class="dplist" id="dpList"></ul><p class="note" style="margin-top:6px">Clique sur un dossier pour commencer par lui. Pendant l'épreuve, les étiquettes en haut à droite (QI, DP1…) et la grille de numéros permettent de changer de dossier à tout moment.</p>
+      <div class="rules">
+        <div class="rule"><b>60 minutes</b>Le chrono tourne pendant l'épreuve. À zéro, la copie est rendue.</div>
+        <div class="rule"><b>Navigation type LUNESS</b>Questions isolées et TCS : navigation libre, réponses modifiables jusqu'à la fin. DP et KFP (🔒) : on peut revenir relire, mais une réponse validée est verrouillée, et la question suivante s'ouvre une fois la précédente validée.</div>
+        <div class="rule"><b>Notation EDN</b>QRM : 1 / 0,5 / 0,2 / 0 selon 0, 1, 2 ou ≥ 3 erreurs ; indispensable oubliée ou inacceptable cochée : 0. QRP : bonnes réponses cochées ÷ réponses attendues. QROC : barème officiel.</div>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="btnStart">Commencer l'épreuve</button>
+        <button class="btn" id="btnResume" hidden>Reprendre</button>
+        <button class="btn ghost" id="btnDirect">Voir directement la correction</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Épreuve -->
+  <section id="vExam" hidden>
+    <div class="exam">
+      <div class="panel enonce" id="enonce"></div>
+      <div class="panel" id="qpanel"></div>
+    </div>
+  </section>
+
+  <!-- Résultats -->
+  <section id="vRes" hidden>
+    <div class="panel">
+      <div class="score">
+        <div><div class="big" id="sBig">0</div><div class="note" id="sSub"></div></div>
+        <div class="bars" id="sBars"></div>
+      </div>
+      <div class="grid-q" id="sGrid"></div>
+      <div class="actions"><button class="btn primary" id="btnCorr">Voir la correction détaillée</button><button class="btn" id="btnAgain">Repasser l'épreuve</button></div>
+    </div>
+  </section>
+
+  <!-- Correction -->
+  <section id="vCorr" hidden>
+    <div class="row" style="margin-bottom:12px"><h2 style="font-size:22px">Correction</h2><div class="spacer"></div><button class="btn small" id="btnBackRes">Résultats</button><button class="btn small" id="btnHome">Accueil</button></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="corr">
+      <div class="panel" id="corrMain"></div>
+      <aside class="panel course" id="course"></aside>
+    </div>
+  </section>
+</main>
+<div class="zoom" id="zoom" hidden><img alt="Image agrandie" id="zoomImg"></div>
+
+<script>
+const IMGS={};
+var img=function(k,alt){return `<img src="${IMGS[k]}" alt="${alt||""}" data-zoom>`};
+const EXAM = {
+"title": "Annale psy JUILLET 2024",
+"dps": [
+{
+"id": "DP1",
+"titre": "Lavages et rituels de ménage : TOC",
+"items": "Item 66d",
+"free": false,
+"intro": "<p>Vous recevez Mme D., 32 ans en consultation au centre médico-psychologique. Vivement encouragée par son mari à consulter, elle vient vous voir car elle est « fatiguée de passer sa journée à tout nettoyer ».Mme D. vous explique qu’elle passe 4 à 5 heures par jour à nettoyer toutes les pièces de son appartement de manière rigoureuse et ritualisée. En effet, elle ne peut s’empêcher de nettoyer chaque pièce selon un ordre précis. De plus, de peur d’être contaminée par des germes, elle se lave les mains au gel hydroalcoolique à chaque fois qu’elle touche un objet n’ayant pas été préalablement nettoyé.Ces symptômes auraient commencé il y a une dizaine d’années mais se seraient aggravés depuis la pandémie du Covid.Épuisée par les lavages de mains très fréquents, Mme D. vous rapporte qu’elle a arrêté de prendre les transports en commun et qu’elle a demandé à son employeur de faire uniquement du télétravail. Son compagnon, bien que très soutenant, serait également impacté par cette situation.Mme D. déclare : « Je ne sais pas pourquoi je fais tout cela. Je n’arrive pas à arrêter. Pourtant je sais que c’est ridicule et que je ne devrais pas nettoyer et laver autant. »</p>",
+"qs": [
+{
+"type": "qru",
+"q": "<p>Quel diagnostic évoquez-vous ?</p>",
+"opts": [
+"Troubles de anxieux généralisé",
+"Troubles phobique",
+"Hypocondrie",
+"Troubles obsessionnel compulsif",
+"Schizophrénie"
+],
+"ok": [
+3
+],
+"expl": "<p>Obsessions (peur de la contamination) + compulsions (lavages, nettoyage ritualisé) qui prennent plus d'une heure par jour et retentissent : c'est un <b>TOC</b>. Pas de TAG (soucis diffus), pas de phobie (peur d'une situation précise), pas d'hypocondrie (peur d'avoir une maladie), pas de délire.</p>",
+"retenir": "TOC = obsessions + compulsions, > 1 h/j ou retentissement, critique conservée."
+},
+{
+"type": "qrm",
+"q": "<p>Quels sont les symptômes retrouvés chez Mme D</p>",
+"opts": [
+"Des obsessions",
+"Des idées délirantes hypocondriaques",
+"Des compulsions",
+"Des évitements",
+"Des ruminations anxieuses"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<p>Obsessions (contamination), compulsions (lavages, rituels de ménage), évitements (transports, télétravail). Ce ne sont pas des idées délirantes : elle reconnaît le caractère excessif. Les ruminations anxieuses, c'est plutôt le TAG.</p>",
+"retenir": "TOC : obsessions, compulsions et évitements, avec insight le plus souvent conservé."
+},
+{
+"type": "qrm",
+"q": "<p>Quel(s) traitement(s) pharmacologique(s) de fond prescrivez-vous en première intention à cette patiente ?</p>",
+"opts": [
+"Un antipsychotique atypique",
+"Un anxiolytique type benzodiazépine",
+"Un antidépresseur type inhibiteur sélectif de la recapture de la sérotonine",
+"Un thymorégulateur",
+"Un antidépresseur tricyclique"
+],
+"ok": [
+2
+],
+"expl": "<p>1re intention dans le TOC : <b>ISRS</b>, souvent à doses plus élevées que dans la dépression. La clomipramine (tricyclique) vient en 2e intention. Pas de BZD au long cours.</p>",
+"retenir": "TOC : ISRS à forte dose + TCC (exposition avec prévention de la réponse)."
+},
+{
+"type": "qrm",
+"q": "<p>Quelle(s) autre(s) prise(s) en charge lui proposez-vous en première intention ?</p>",
+"opts": [
+"Une hospitalisation",
+"Une thérapie comportementale et cognitive",
+"Une thérapie d’inspiration analytique",
+"Une électroconvulsivothérapie",
+"Une stimulation cérébrale profonde"
+],
+"ok": [
+1
+],
+"expl": "<p><b>TCC</b> avec exposition et prévention de la réponse = psychothérapie de référence. L'hospitalisation est réservée aux formes sévères ou au risque suicidaire. La stimulation cérébrale profonde se discute seulement dans les formes très résistantes.</p>",
+"retenir": "Psychothérapie de référence du TOC = TCC (exposition + prévention de la réponse)."
+},
+{
+"type": "qrm",
+"q": "<p>4 semaines plus tard, Mme D. revient vous voir en consultation. Elle est inquiète car ne remarque aucune amélioration malgré la prise du traitement antidépresseur à forte dose de manière régulière. Elle vous signale également qu’elle a démarré une thérapie comportementale et cognitive il y a une semaine. Que faites-vous ?</p>",
+"opts": [
+"Hospitalisation",
+"Changement d’antidépresseur",
+"Ajout d’un antipsychotique pour potentialiser l’effet de l’antidépresseur",
+"Attendre car efficacité observée au bout de 6 à 12 semaines de traitement antidépresseur",
+"Éducation thérapeutique"
+],
+"ok": [
+3,
+4
+],
+"expl": "<p>Dans le TOC, l'effet des ISRS est <b>plus lent</b> que dans la dépression : on évalue à 8-12 semaines à dose efficace. Une semaine de TCC, c'est trop tôt pour juger. On rassure et on éduque.</p>",
+"retenir": "ISRS dans le TOC : évaluer l'efficacité à 8-12 semaines à forte dose."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>TOC = obsessions + compulsions, > 1 h/j ou retentissement, critique conservée.</li><li>TOC : obsessions, compulsions et évitements, avec insight le plus souvent conservé.</li><li>TOC : ISRS à forte dose + TCC (exposition avec prévention de la réponse).</li><li>Psychothérapie de référence du TOC = TCC (exposition + prévention de la réponse).</li><li>ISRS dans le TOC : évaluer l'efficacité à 8-12 semaines à forte dose.</li></ul>"
+},
+{
+"id": "DP2",
+"titre": "Dépression du post-partum puis bipolarité",
+"items": "Items 66a, 66b, 31",
+"free": false,
+"intro": "<p>Deux mois après son accouchement une patiente vous consulte pour une fatigue importante associée à une insomnie sévère.Elle rapporte, que bien qu’elle était très contente d’avoir récupéré son enfant en très bonne santé, elle est sujette à des pleurs incessants et une manque de la confiance en sa capacité à en prendre soin.Elle a perdu tout goût pour la nourriture, avec un amaigrissement chiffré à 4 Kg , et n’arrive plus à prendre la moindre décision, se sent « indigne et incapable ».Son mari vous rapporte que cela dure depuis 3 semaines avec une aggravation progressive et constante.</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Quel(s) diagnostic(s) évoquez-vous à ce stade?</p>",
+"opts": [
+"Déficit en vitamines B",
+"Hypothyroïdie",
+"Hypopituitarisme",
+"Baby blues",
+"Épisode dépressifs caractérisé"
+],
+"ok": [
+0,
+1,
+2,
+4
+],
+"expl": "<p>Tableau de 3 semaines, 2 mois après l'accouchement : épisode dépressif caractérisé du post-partum. Il faut toujours éliminer une cause organique : hypothyroïdie (thyroïdite du post-partum), syndrome de Sheehan (hypopituitarisme), carences.</p><p>Le baby blues dure quelques jours (J3-J10) et cède spontanément : ce n'est pas ça ici.</p>",
+"retenir": "Dépression du post-partum : éliminer thyroïdite, Sheehan, anémie / carences."
+},
+{
+"type": "qru",
+"q": "<p>Vous retenez le diagnostic de dépression. Quel prise en charge proposez-vous?</p>",
+"opts": [
+"Prescrire un inhibiteur sélectif de la recapture de la sérotonine pendant 1 mois",
+"Mettre en place en psychothérapie intensive",
+"Prescrire un somnifère",
+"Prescrire un inhibiteur sélectif de la recapture de la sérotonine jusqu'à la disparition des symptômes",
+"Prescrire un inhibiteur sélectif de la recapture de la sérotonine jusqu’à 6 mois après la rémission complète"
+],
+"ok": [
+4
+],
+"expl": "<p>EDC : antidépresseur (ISRS en 1re intention) poursuivi <b>6 mois à 1 an après la rémission</b> complète, puis arrêt progressif. Un mois, c'est beaucoup trop court, et « jusqu'à la disparition des symptômes » expose à la rechute.</p>",
+"retenir": "Antidépresseur : jusqu'à 6-12 mois après la rémission, arrêt progressif."
+},
+{
+"type": "qrm",
+"q": "<p>1 semaine plus tard, la patiente revient avec son mari qui vous informe que son épouse a refusé de prendre son traitement car elle ne voulait pas devenir dépendante au traitement.Il vous rapporte également qu’elle a commencé a présenter des bizarreries, qu’elle a arrêté de prendre soin de son bébé, qu’elle passe toute la journée à pleurer et à parler seule.A l’entretien, la patiente vous fait part de sa crainte que son bébé serait habité par le diable et qu’il lui aurait été envoyé par une sorcière pour la punir de ses erreurs passées. Elle vous dit qu’elle n’a pas besoin de vous ni de votre traitement et qu’elle entend des voix divines qui vont lui montrer le chemin à suivre. Que faites vous devant cette situation?cocher les réponses vraies</p>",
+"opts": [
+"Consultation ambulatoire avec le psychiatre du centre médico-psychologique",
+"Hospitalisation en psychiatrie sous le mode « soins psychiatriques libres »",
+"Association d’un traitement antidépresseur et antipsychotique",
+"Hospitalisation en psychiatrie sous le mode « soins psychiatriques à la demande d’un tiers »",
+"Retour au domicile"
+],
+"ok": [
+2,
+3
+],
+"expl": "<p>Idées délirantes (sorcière, punition) et hallucinations : dépression avec caractéristiques psychotiques. Elle refuse les soins et le risque suicidaire / d'infanticide est élevé : <b>SPDT</b> (soins à la demande d'un tiers, le mari). Traitement : antidépresseur + antipsychotique (l'ECT se discute).</p>",
+"retenir": "Dépression psychotique du post-partum = urgence : hospitalisation (SPDT si refus), AD + AP ± ECT."
+},
+{
+"type": "qru",
+"q": "<p>Après une évolution très favorable, vous recevez la patiente deux mois plus tard : elle est de nouveau triste, vous rapporte qu’elle se sent désespérée, mais semble en colère et très irritable. Elle est très tendue, ne tient pas en place, avec un discours intarissable et une gestuelle démonstrative. Elle vous rapporte un excès d’énergie malgré son sentiment de désespoir et malgré un sommeil nettement réduit, et ce depuis 15 jours.Son mari vous fait part de son désarroi, vous rapporte que sa femme est devenue inhabituellement très conflictuelle voire agressive quand il essaie de la dissuader d ‘entreprendre la multitude des projets que toute la famille trouve aberrants et irréalistes. Quel diagnostic évoquez-vous à ce stade ?</p>",
+"opts": [
+"Dépression avec caractéristiques psychotiques",
+"Dépression avec caractéristiques mixtes",
+"Caractéristiques atypiques",
+"Dépression avec début en péri-partum",
+"Épisode maniaque"
+],
+"ok": [
+1
+],
+"expl": "<p>Épisode dépressif + éléments hypomaniaques ou maniaques (irritabilité, agressivité, projets multiples et irréalistes) : on parle de <b>caractéristiques mixtes</b>. Ce n'est pas encore un épisode maniaque franc et c'est un signal d'alerte pour une bipolarité.</p>",
+"retenir": "Dépression avec caractéristiques mixtes = risque de bipolarité, risque suicidaire majoré."
+},
+{
+"type": "qrm",
+"q": "<p>La patiente présente 6 mois plus tard un épisode ayant duré 10 jours caractérisé par une humeur euphorique, une augmentation de l’estime de soi avec une énergie débordante. cet épisode a été très agréable pour elle et aussi pour son entourage. Quel(s) diagnostic(s) posez-vous à ce stade</p>",
+"opts": [
+"Un épisode maniaque",
+"Un trouble bipolaire type I",
+"Un trouble bipolaire type II",
+"Un Dépression avec caractéristiques atypiques",
+"Un épisode hypomaniaque"
+],
+"ok": [
+1,
+4
+],
+"expl": "<p>⚠️ Le corrigé officiel est discutable. 10 jours d'euphorie, de mégalomanie et d'énergie débordante sans retentissement dépasse les 4 jours minimum de l'hypomanie. Mais un épisode maniaque demande au moins 7 jours <b>avec</b> une altération du fonctionnement (ou une hospitalisation, ou des signes psychotiques).</p><p>Le corrigé retient « épisode hypomaniaque » + « bipolaire type I ». Le type I se justifie par l'épisode précédent : une dépression psychotique avec caractéristiques mixtes, et les épisodes psychotiques comptent comme maniaques ou très sévères. Retiens surtout les durées.</p>",
+"retenir": "Manie ≥ 7 j (ou hospitalisation) avec retentissement → BP I ; hypomanie ≥ 4 j sans retentissement majeur → BP II si EDC associé."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Dépression du post-partum : éliminer thyroïdite, Sheehan, anémie / carences.</li><li>Antidépresseur : jusqu'à 6-12 mois après la rémission, arrêt progressif.</li><li>Dépression psychotique du post-partum = urgence : hospitalisation (SPDT si refus), AD + AP ± ECT.</li><li>Dépression avec caractéristiques mixtes = risque de bipolarité, risque suicidaire majoré.</li><li>Manie ≥ 7 j (ou hospitalisation) avec retentissement → BP I ; hypomanie ≥ 4 j sans retentissement majeur → BP II si EDC associé.</li></ul>"
+},
+{
+"id": "KFP1",
+"titre": "Fièvre et confusion sous antipsychotique retard",
+"items": "Items 72, 66",
+"free": false,
+"intro": "<p>Madame X âgée de 30 ans présentant une schizophrénie depuis 5 ans, vient accompagnée de son mari aux urgences amenée par les pompiers . Elle présentait des troubles de la conscience au domicile et aurait reçu le traitement antipsychotique retard en IM, il y a quelques jours, une température à 38,5°C une tackycardie (fc : 115 /mn).</p>",
+"qs": [
+{
+"type": "qroc",
+"q": "<p>Quel est le diagnostic que vous envisagez ?</p>",
+"keys": [
+"syndrome malin",
+"SMN",
+"malin des neuroleptiques"
+],
+"attendu": "Syndrome malin des neuroleptiques",
+"expl": "<p>Fièvre + troubles de conscience + tachycardie quelques jours après un antipsychotique retard : <b>syndrome malin des neuroleptiques</b>. C'est une urgence vitale : arrêt de l'antipsychotique, réanimation.</p>",
+"retenir": "Fièvre + rigidité + confusion + dysautonomie sous antipsychotique = SMN → stop AP, réa, CPK."
+},
+{
+"type": "qroc",
+"q": "<p>Quels signes cliniques recherchez-vous à l’examen clinique?</p>",
+"keys": [
+"extrapyramidal",
+"rigidité",
+"déshydratation",
+"dysautonomie"
+],
+"attendu": "Syndrome extrapyramidal (rigidité) et signes de déshydratation",
+"expl": "<p>On cherche la <b>rigidité extrapyramidale</b> (en tuyau de plomb), la dysautonomie (sueurs, PA instable, tachycardie) et les signes de déshydratation (risque d'IRA).</p>",
+"retenir": "SMN : rigidité extrapyramidale + hyperthermie + dysautonomie + troubles de conscience."
+},
+{
+"type": "qrm",
+"q": "<p>Quels éléments paracliniques peuvent étayer votre hypothèse diagnostic`</p>",
+"opts": [
+"Cytolyse hépatique",
+"Insuffisance rénale aigue",
+"Hyperleucocytose",
+"Hémodilution",
+"Insuffisance rénale chronique"
+],
+"ok": [
+0
+],
+"expl": "<p>Biologie du SMN : <b>CPK très élevées</b> (rhabdomyolyse), hyperleucocytose, cytolyse hépatique, insuffisance rénale aiguë (rhabdo + déshydratation), hémoconcentration.</p><p>⚠️ Le corrigé ne valide que la cytolyse. D'après le Collège, l'hyperleucocytose et l'IRA font aussi partie du tableau classique. L'IRA chronique et l'hémodilution sont fausses.</p>",
+"retenir": "SMN : CPK ↑↑, hyperleucocytose, cytolyse, IRA (rhabdomyolyse)."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Fièvre + rigidité + confusion + dysautonomie sous antipsychotique = SMN → stop AP, réa, CPK.</li><li>SMN : rigidité extrapyramidale + hyperthermie + dysautonomie + troubles de conscience.</li><li>SMN : CPK ↑↑, hyperleucocytose, cytolyse, IRA (rhabdomyolyse).</li></ul>"
+},
+{
+"id": "SQI1",
+"titre": "16 questions isolées (psy, précarité, addicto)",
+"items": "Items 57, 59, 66, 72, 75",
+"free": true,
+"intro": "<p>Questions isolées</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Quelle(s) est (sont) le(s) affirmation(s) vraie(s) concernant le trouble bipolaire ?</p>",
+"opts": [
+"Un épisode hypomaniaque présente des symptômes persistants au moins 4 jours",
+"Un épisode maniaque présente des symptômes persistants au moins 15 jours",
+"Un trouble bipolaire avec cycles rapides est défini par la présence sur les 12 derniers mois d’au moins 4 épisodes de l’humeur",
+"Il existe 3 types de trouble bipolaire",
+"Un syndrome dépressif survenu dans le post-partum peut être évocateur un trouble bipolaire"
+],
+"ok": [
+0,
+2,
+4
+],
+"expl": "<p>Hypomanie ≥ 4 jours, manie ≥ 7 jours (pas 15). Cycles rapides : ≥ 4 épisodes thymiques en 12 mois. Le DSM-5 décrit le type I, le type II et la cyclothymie : on parle de « 3 types » dans certains cours, mais le corrigé compte la proposition fausse. Une dépression du post-partum (surtout précoce, sévère, psychotique) est un signe d'alerte de bipolarité.</p>",
+"retenir": "Hypomanie ≥ 4 j, manie ≥ 7 j, cycles rapides ≥ 4 épisodes/an."
+},
+{
+"type": "qrm",
+"q": "<p>Quel trouble de la personnalité appartient au cluster A ?</p>",
+"opts": [
+"Personnalité antisocial",
+"Personnalité paranoïaque",
+"Personnalité obsessionnelle-compulsive",
+"Personnalité schizoïde",
+"Personnalité passif-agressive"
+],
+"ok": [
+1,
+3
+],
+"expl": "<p>Cluster A (bizarres, excentriques) : <b>paranoïaque, schizoïde, schizotypique</b>. B (émotionnels, théâtraux) : antisociale, borderline, histrionique, narcissique. C (anxieux) : évitante, dépendante, obsessionnelle-compulsive.</p>",
+"retenir": "A = « Bizarre » (paranoïaque, schizoïde, schizotypique) ; B = « Bruyant » ; C = « Craintif »."
+},
+{
+"type": "qrm",
+"q": "<p>Le Trouble de la personnalité borderline est caractérisé par :</p>",
+"opts": [
+"Une instabilité de l’identité",
+"Des transgressions répétées",
+"Un taux de suicide de 8 à 10%",
+"Un sentiment chronique de vide",
+"Une quête affective excessive"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<p>Borderline : instabilité de l'identité, des relations, des affects, impulsivité, sentiment chronique de vide, peur de l'abandon, automutilations. La mortalité par suicide est d'environ 8-10 %. Les transgressions répétées, c'est plutôt l'antisociale.</p>",
+"retenir": "Borderline = instabilité (identité, affects, relations) + impulsivité + vide + suicide 10 %."
+},
+{
+"type": "qrm",
+"q": "<p>Quelle(s) est (sont) le(s) affirmation(s) vraie(s) ?</p>",
+"opts": [
+"La relation sexuelle se déroule en 5 phases",
+"La phase de plateau se caractérise chez l’homme par l’établissement de l’érection",
+"La phase de réfractaire nécessite le maintien d’une stimulation",
+"Chez l’homme, orgasme et éjaculation coïncident généralement",
+"Une période réfractaire peut apparaitre entre la phase de plateau et de l’orgasme"
+],
+"ok": [
+3
+],
+"expl": "<p>Masters et Johnson : 4 phases (excitation, plateau, orgasme, résolution). L'érection s'installe dès l'excitation. La période réfractaire suit l'orgasme (pendant la résolution), et elle ne nécessite pas de stimulation. Chez l'homme, orgasme et éjaculation coïncident généralement.</p>",
+"retenir": "Réponse sexuelle : excitation → plateau → orgasme → résolution (+ réfractaire chez l'homme)."
+},
+{
+"type": "qrm",
+"q": "<p>Quelle(s) est (sont) le(s) affirmation(s) vraie(s) ?</p>",
+"opts": [
+"La nicotine est considérée comme cancérigène.",
+"La nicotine est le principal agent responsable de la dépendance.",
+"Les goudrons sont responsables des modifications des cellules épithéliales.",
+"Les radicaux libres de la fumée stimulent la dégradation de la paroi alvéolaire et inhibent les enzymes responsables de sa protection.",
+"Les signes de sevrage apparaissent lentement après l’arrêt brutal ou diminution significative de la quantité fumée."
+],
+"ok": [
+1,
+2,
+3
+],
+"expl": "<p>La <b>nicotine</b> crée la dépendance mais n'est pas cancérigène (ce sont les goudrons). Les goudrons modifient l'épithélium (cancers), les radicaux libres participent à l'emphysème, le CO à l'hypoxie et à l'athérome. Le sevrage commence vite, en quelques heures.</p>",
+"retenir": "Nicotine = dépendance ; goudrons = cancer ; CO = CV ; oxydants = BPCO."
+},
+{
+"type": "qrm",
+"q": "<p>Précarité. Cocher la ou les réponses vraies</p>",
+"opts": [
+"La notion de pauvreté est plus large que la notion de précarité.",
+"Un sujet en situation de précarité est forcément pauvre",
+"La pauvreté est un concept uniquement économique basé sur des définitions statistiques relatives",
+"Le seuil de pauvreté monétaire correspond à des ressources inférieures à 40 % du revenu médian national",
+"Le seuil de grande pauvreté correspond à des ressources inférieures à 20 % du revenu médian"
+],
+"ok": [
+2,
+3
+],
+"expl": "<p>La <b>précarité</b> est plus large que la pauvreté : on peut être précaire sans être pauvre. La pauvreté monétaire est définie statistiquement (seuil en % du revenu médian).</p><p>⚠️ Le corrigé valide « 40 % ». En France, l'INSEE fixe le seuil de pauvreté à <b>60 %</b> du revenu médian, et 40 % correspond à la grande pauvreté. Retiens la version du Collège.</p>",
+"retenir": "Précarité > pauvreté ; seuil de pauvreté = 60 % du revenu médian (40 % = grande pauvreté)."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant l’état de stress post-traumatique, Quelle(s) est (sont) le(s) affirmation(s) vraie(s) ? :</p>",
+"opts": [
+"Un diagnostic de stress post-traumatique repose sur une exposition directe ou indirecte à un événement traumatique",
+"Un diagnostic de stress post-traumatique repose sur une évolution de plus de 15 jours des symptômes",
+"Un diagnostic de stress post-traumatique repose sur un carré symptomatique : symptôme de répétition, syndrome d’évitement et idées délirantes de persécution",
+"Il existe une altération négative des cognitions et de l’humeur",
+"Il existe des formes à expression retardées"
+],
+"ok": [
+0,
+3,
+4
+],
+"expl": "<p>ESPT : exposition directe ou indirecte à un traumatisme, symptômes > <b>1 mois</b> (avant, c'est un trouble de stress aigu). Quatre groupes de symptômes : reviviscences, évitement, altérations négatives des cognitions et de l'humeur, hyperactivation neurovégétative. Pas d'idées délirantes. Les formes retardées existent.</p>",
+"retenir": "ESPT : > 1 mois ; reviviscences + évitement + cognitions / humeur négatives + hypervigilance."
+},
+{
+"type": "qrm",
+"q": "<p>Précarité ? Cocher la ou les réponses vraies</p>",
+"opts": [
+"L’exclusion est caractérisée par l’absence, pendant une période de la possibilité de bénéficier des mêmes droits sociaux qu’un autre individu",
+"La vulnérabilité sociale représente un état de fragilité matérielle ou morale",
+"La vulnérabilité confère un risque d’exclusion sociale.",
+"Les facteurs de risque sont les habitudes de vie associées à des comportements de santé à risque ;",
+"Les difficultés d’accès aux soins de santé et à la prévention sont des facteurs de risques"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4
+],
+"expl": "<p>Toutes les propositions sont des définitions du Collège : exclusion, vulnérabilité, facteurs de risque comportementaux et difficultés d'accès aux soins.</p>",
+"retenir": "Vulnérabilité → risque d'exclusion ; accès aux soins = déterminant de santé."
+},
+{
+"type": "qrm",
+"q": "<p>Cocher la ou les réponses vraies Les sécurités indispensables à la santé, identifiées par l’OMS sont :</p>",
+"opts": [
+"Se loger et accéder à l’éducation et à l’information",
+"Se nourrir convenablement en quantité et qualité",
+"Disposer d’un revenu suffisant, certain et stable",
+"Compter sur un apport durable de ressources",
+"Avoir droit à la justice sociale et à un traitement équitable"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4
+],
+"expl": "<p>La charte d'Ottawa (OMS) cite les conditions préalables à la santé : se loger, accéder à l'éducation, se nourrir, disposer d'un revenu, d'un écosystème stable, de ressources durables, de justice sociale et d'équité. Tout est vrai.</p>",
+"retenir": "Prérequis à la santé (OMS) : logement, éducation, nourriture, revenu, ressources durables, justice sociale."
+},
+{
+"type": "qrm",
+"q": "<p>Addiction comportementale . Cocher la ou les réponses vraies</p>",
+"opts": [
+"Comportements pour avoir du plaisir d’origine multiple",
+"Afin de soulager un malaise intérieur",
+"Envie répressible de réaliser ce comportement",
+"Fréquence décroissante mais incontrôlée de ce comportement au dépend d’autres activités",
+"Poursuite du comportement malgré les conséquences négatives"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4
+],
+"expl": "<p>Addiction comportementale : comportement initialement source de plaisir ou de soulagement, envie <b>irrépressible</b> (craving), perte de contrôle, poursuite malgré les conséquences négatives.</p><p>⚠️ Le corrigé valide « répressible » et « fréquence décroissante » : ce sont très probablement des coquilles (irrépressible, croissante). Ne retiens pas ces formulations.</p>",
+"retenir": "Addiction = craving irrépressible + perte de contrôle + poursuite malgré les dommages."
+},
+{
+"type": "qrm",
+"q": "<p>Un patient âgé de 45 ans , en situation de précarité arrive à votre cabinet , en tant que le médecin que devez-vous évaluer ? Cocher la ou les réponses vraies :</p>",
+"opts": [
+"Le statut social",
+"Les conditions de vie",
+"Les conditions de logement",
+"La couverture maladie",
+"Les ressources actuelles"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>D. Couverture maladie (assurance maladie et complémentaire)</p></div><p>Devant une personne en précarité : statut social, conditions de vie et de logement, couverture maladie (PUMa, C2S, AME), ressources. Tout est à évaluer, et l'assistante sociale est un relais clé.</p>",
+"retenir": "Précarité : vérifier logement, ressources, couverture (PUMa / C2S / AME) et orienter vers l'AS / la PASS."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant l’état de stress post-traumatique, Quelle(s) est (sont) le(s) affirmation(s) vraie(s) ? :</p>",
+"opts": [
+"Un diagnostic de stress post-traumatique repose sur une exposition directe ou indirecte à un événement traumatique",
+"Un diagnostic de stress post-traumatique repose sur une évolution de plus de 15 jours des symptômes",
+"Un diagnostic de stress post-traumatique repose sur un carré symptomatique : symptôme de répétition, syndrome d’évitement et idées délirantes de persécution",
+"Il existe une altération négative des cognitions et de l’humeur",
+"Il existe des formes à expression retardées"
+],
+"ok": [
+0,
+3,
+4
+],
+"expl": "<p>Même question que la 7 (doublon dans le sujet officiel). ESPT : durée > 1 mois, pas d'idées délirantes, formes retardées possibles.</p>",
+"retenir": "ESPT : > 1 mois, formes retardées possibles."
+},
+{
+"type": "qrm",
+"q": "<p>Le patient présente un diabète non équilibré et une HTA non traitée selon vous son statut de précarité est associée cocher la ou les réponses vraies :</p>",
+"opts": [
+"Des retards de prise en charge",
+"Une continuité de soins",
+"Une mauvaise observance",
+"Des renoncements ou abandons des soins curatifs et préventifs",
+"La prise en charge des personnes en situation de précarité repose sur les mêmes principes que la prise en charge de toute autre personne."
+],
+"ok": [
+0,
+2,
+3,
+4
+],
+"expl": "<p>La précarité entraîne retards de prise en charge, mauvaise observance, renoncement aux soins et ruptures, donc <b>pas</b> de continuité de soins. La prise en charge suit les mêmes principes que pour tout patient, en adaptant (PASS, AS, ordonnances simples, génériques).</p>",
+"retenir": "Précarité = retards, renoncement, ruptures de soins ; mêmes standards de soins, en adaptant."
+},
+{
+"type": "qrm",
+"q": "<p>Les équipes mobiles psychiatrie-précarité (EMPP). Cocher la ou les réponses vraies</p>",
+"opts": [
+"Sont composées d’infirmiers, psychiatres et psychologues et assistants sociaux.",
+"Interviennent à l’extérieur des établissements, au plus près des lieux de vie des personnes en situation de précarité",
+"Peuvent ainsi accompagner ces personnes dans leur parcours de soins",
+"Ne peuvent former les acteurs sociaux.",
+"Les associations à but non lucratif ont un rôle accessoire"
+],
+"ok": [
+0,
+1,
+2,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>D. Ne peuvent pas former les acteurs sociaux F au contraire rôle de formation et de conseil leur permettre de mieux appréhender les troubles psychiatriques.</p></div><p>EMPP : équipes pluriprofessionnelles qui vont vers les personnes précaires (rue, foyers), les accompagnent vers les soins, et <b>forment</b> les acteurs sociaux.</p><p>⚠️ Le corrigé valide E (« rôle accessoire ») alors que son propre commentaire dit que les associations jouent un rôle <b>important</b>. E est donc fausse en réalité.</p>",
+"retenir": "EMPP : aller vers, accompagner, former les acteurs sociaux ; associations = rôle majeur."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant les traitements de la famille des antipsychotiques, quelle(s) est (sont) le(s) affirmation(s) vraie(s) ?</p>",
+"opts": [
+"Ils peuvent être utilisé dans la schizophrénie",
+"Ils peuvent être utilisé dans le trouble bipolaire",
+"Les hypotensions orthostatiques sont dû à des effets anticholinergiques",
+"Le syndrome malin des neuroleptiques est un effet indésirable rare mais grave",
+"Il existe quatre générations d’antipsychotique"
+],
+"ok": [
+0,
+1,
+3
+],
+"expl": "<p>Antipsychotiques : schizophrénie, trouble bipolaire (manie, prévention), dépression résistante, etc. L'hypotension orthostatique est due à l'effet <b>alpha-1 adrénolytique</b>, pas anticholinergique. On parle de 2 générations (typiques et atypiques). Le SMN est rare mais grave.</p>",
+"retenir": "AP : HTO = α1-bloquant ; anticholinergique = bouche sèche, constipation, rétention, confusion."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant les traitements de la famille des antidépresseurs, quelle(s) est (sont) le(s) affirmation(s) vraie(s) ?</p>",
+"opts": [
+"Il est recommandé de prescrire en première intention un ISRS ou un ISRNA",
+"Après un premier épisode dépressif caractérisé, il est recommandé de poursuivre le traitement au moins 6 mois après rémission des symptômes",
+"La bithérapie est recommandée en deuxième intention",
+"Le délai d’action d’un antidépresseur est de 3 à 4 jours",
+"Certains antidépresseurs sont disponibles par voie intraveineuse"
+],
+"ok": [
+0,
+1,
+4
+],
+"expl": "<p>1re intention : ISRS ou IRSNA (ou autres sans tricycliques). Après un premier EDC : poursuivre 6 mois à 1 an après la rémission. En cas d'échec, on change d'abord de molécule. Le délai d'action est de 2 à 4 <b>semaines</b>. Certains antidépresseurs existent en IV (clomipramine).</p>",
+"retenir": "AD : ISRS / IRSNA, délai 2-4 semaines, durée 6-12 mois après la rémission."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Hypomanie ≥ 4 j, manie ≥ 7 j, cycles rapides ≥ 4 épisodes/an.</li><li>A = « Bizarre » (paranoïaque, schizoïde, schizotypique) ; B = « Bruyant » ; C = « Craintif ».</li><li>Borderline = instabilité (identité, affects, relations) + impulsivité + vide + suicide 10 %.</li><li>Réponse sexuelle : excitation → plateau → orgasme → résolution (+ réfractaire chez l'homme).</li><li>Nicotine = dépendance ; goudrons = cancer ; CO = CV ; oxydants = BPCO.</li><li>Précarité > pauvreté ; seuil de pauvreté = 60 % du revenu médian (40 % = grande pauvreté).</li><li>ESPT : > 1 mois ; reviviscences + évitement + cognitions / humeur négatives + hypervigilance.</li><li>Vulnérabilité → risque d'exclusion ; accès aux soins = déterminant de santé.</li><li>Prérequis à la santé (OMS) : logement, éducation, nourriture, revenu, ressources durables, justice sociale.</li><li>Addiction = craving irrépressible + perte de contrôle + poursuite malgré les dommages.</li><li>Précarité : vérifier logement, ressources, couverture (PUMa / C2S / AME) et orienter vers l'AS / la PASS.</li><li>ESPT : > 1 mois, formes retardées possibles.</li><li>Précarité = retards, renoncement, ruptures de soins ; mêmes standards de soins, en adaptant.</li><li>EMPP : aller vers, accompagner, former les acteurs sociaux ; associations = rôle majeur.</li><li>AP : HTO = α1-bloquant ; anticholinergique = bouche sèche, constipation, rétention, confusion.</li><li>AD : ISRS / IRSNA, délai 2-4 semaines, durée 6-12 mois après la rémission.</li></ul>"
+},
+{
+"id": "TCS1",
+"titre": "TCS · dépression et deuil",
+"items": "Item 66a",
+"free": true,
+"intro": "<p>Mr. G. 35 ans, a perdu son père il y a 6 mois d’une longue maladie. Depuis, il a perdu 10 kg, présente des troubles du sommeil à type de réveil précoce, a des difficultés à se concentrer et prendre des décisions ce qui l’entrave dans son travail. Vous le trouvez très ralenti sur le plan psychomoteur. « Je ne prends plus plaisir à rien, rien ne m’intéresse plus ».</p>",
+"qs": [
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Vous ne retrouvez pas d’idées suicidaires à l’entretien. Vous faîtes le diagnostic d’épisode dépressif caractérisé</p><p><b>Nouvelle information :</b> concomitant à son deuil. Cet épisode dépressif étant concomitant d’un deuil, sa prise en charge doit être plus intensive qu’un épisode dépressif isolé</p></div><p>Vous décidez donc, en plus de l’introduction d’un ISRS, de commencer des séances d’ECT</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+0
+],
+"w": [
+1,
+0,
+0,
+0,
+0
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Explication : La prise en charge d’un trouble psychiatrique est similaire que l’épisode survienne en dehors ou à l’occasion d’un deuil.</p></div><p>Un EDC pendant un deuil se traite <b>comme un EDC classique</b> : antidépresseur ± psychothérapie. L'ECT est réservée aux formes sévères (mélancolie, psychotique, résistance, urgence vitale), pas indiquée ici d'emblée.</p>",
+"retenir": "EDC + deuil = même prise en charge qu'un EDC ; ECT seulement si forme sévère / résistante."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>EDC + deuil = même prise en charge qu'un EDC ; ECT seulement si forme sévère / résistante.</li></ul>"
+}
+]
+};
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const L="ABCDEFGHIJKLMNOPQRST";
+const KEY="annale-psy-juil24-v1";
+const TOTAL=60*60;
+const store={get(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}},clear(){try{localStorage.removeItem(KEY)}catch(e){}}};
+const Q=[];EXAM.dps.forEach((dp,d)=>dp.qs.forEach((q,i)=>Q.push({d,i,q,dp})));
+let S=null, tick=null, paused=false;
+function fresh(){return{pos:0,ans:{},left:TOTAL,done:false,override:{}}}
+function img(k,alt){return `<img src="${IMGS[k]}" alt="${alt||''}" data-zoom>`}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function fmt(t){t=Math.max(0,t|0);return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+function show(id){["vStart","vExam","vRes","vCorr"].forEach(v=>$("#"+v).hidden=v!==id);window.scrollTo(0,0)}
+function antibio(){const r=[["Amoxicilline","S"],["Imipénème","S"],["Gentamicine","S"],["Vancomycine","S"],["Cotrimoxazole","R"],["Teicoplanine","S"],["Linézolide","S"],["Lévofloxacine","R"],["Nitrofurantoïne","R"]];
+ return `<div class="tblwrap"><table class="abg"><tr><td colspan="2"><b>ECBU</b> · urines 2e jet</td></tr><tr><td>Hématies</td><td>50/mm³</td></tr><tr><td>Cellules épithéliales</td><td>absence</td></tr><tr><td>Leucocytes</td><td>150/mm³</td></tr><tr><td>CGP en courtes chaînettes</td><td>quelques</td></tr><tr><td>Culture : <i>Enterococcus faecalis</i></td><td>10⁵/mL</td></tr><tr><td colspan="2"><b>Antibiogramme</b></td></tr>${r.map(([a,b])=>`<tr><td>${a}</td><td class="${b}">${b}</td></tr>`).join("")}</table></div>`}
+
+/* ---------- accueil ---------- */
+$("#dpList").innerHTML=EXAM.dps.map((dp,d)=>`<li data-jd="${d}" style="cursor:pointer" title="Commencer par ce dossier"><span class="id">${dp.id}</span><span>${dp.titre}</span><span class="n">${dp.qs.length} Q</span></li>`).join("");
+const saved=store.get();
+if(saved&&!saved.done&&Object.keys(saved.ans).length){$("#btnResume").hidden=false}
+if(saved&&saved.done){$("#btnResume").hidden=false;$("#btnResume").textContent="Voir mes résultats"}
+$("#btnStart").onclick=()=>{S=fresh();store.set(S);startExam()};
+$("#btnResume").onclick=()=>{S=saved;if(S.done)results();else startExam()};
+$("#btnDirect").onclick=()=>{S=S||saved||fresh();openCorr(0)};
+
+/* ---------- épreuve ---------- */
+function steps(){const el=$("#steps");if(!S||$("#vExam").hidden&&!S.done){el.innerHTML="";return}
+ const cur=Q[S.pos]?Q[S.pos].d:-1;
+ el.innerHTML=EXAM.dps.map((dp,d)=>{const qs=Q.filter(x=>x.d===d);const done=qs.every(x=>S.ans[x.d+"-"+x.i]!==undefined);return `<span data-jd="${d}" style="cursor:pointer" title="Aller à ${dp.titre}" class="${d===cur&&!S.done?'on':done?'done':''}">${dp.id}</span>`}).join("")}
+function startExam(){show("vExam");$("#timer").hidden=false;$("#btnPause").hidden=false;paused=false;$("#btnPause").textContent="Pause";renderQ();runTimer()}
+function runTimer(){clearInterval(tick);tick=setInterval(()=>{if(paused||!S||S.done)return;S.left--;drawTimer();if(S.left%5===0)store.set(S);if(S.left<=0){finish()}},1000);drawTimer()}
+function drawTimer(){const t=$("#timer");t.textContent=fmt(S.left);t.classList.toggle("low",S.left<=300)}
+$("#btnPause").onclick=()=>{paused=!paused;$("#btnPause").textContent=paused?"Reprendre":"Pause";$("#qpanel").style.filter=paused?"blur(6px)":"";$("#enonce").style.filter=paused?"blur(6px)":""};
+
+function enonceHTML(d,upto){const dp=EXAM.dps[d];let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div>${dp.intro}`;
+ if(dp.introImg)h+=`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`;
+ dp.qs.forEach((q,i)=>{if(i<upto&&q.ctx){h+=`<div class="add"><div class="note">Ajouté en Q${i+1}</div>${q.ctx}${q.img?`<div class="imgs">${q.img.map(k=>img(k)).join("")}</div>`:""}${q.table==="antibio"?antibio():""}</div>`}});return h}
+
+function isFree(dp){return dp.free||/^(QI|SQI|TCS)/.test(dp.id)}
+function opened(n){const {d,i,dp}=Q[n];if(isFree(dp))return true;for(let k=0;k<i;k++){if(S.ans[d+"-"+k]===undefined)return false}return true}
+function navHTML(){return `<div class="qnav">`+EXAM.dps.map((dp,d)=>`<div class="qnav-dp"><span class="qnav-id">${dp.id}${isFree(dp)?"":" 🔒"}</span>`+Q.map((x,n)=>({x,n})).filter(o=>o.x.d===d).map(({x,n})=>{const k=x.d+"-"+x.i;const done=S.ans[k]!==undefined;const ok=opened(n);return `<button class="qn${n===S.pos?" cur":""}${done?" done":""}" data-n="${n}" ${ok?"":"disabled"} title="${ok?"":"Validez les questions précédentes du dossier"}">${x.i+1}</button>`}).join("")+`</div>`).join("")+`</div>`}
+function renderQ(){
+ if(S.pos>=Q.length)S.pos=Q.length-1;
+ const {d,i,q,dp}=Q[S.pos];steps();
+ const k=d+"-"+i, prev=S.ans[k], answered=prev!==undefined, free=isFree(dp), locked=answered&&!free;
+ $("#enonce").innerHTML=enonceHTML(d,i);
+ const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+ let h=navHTML();
+ h+=`<div class="qhead"><span class="qnum">${dp.id} · Q${i+1}/${dp.qs.length}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}<span class="spacer"></span><span class="note">${S.pos+1} / ${Q.length}</span></div>`;
+ if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+ if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+ if(q.table==="antibio")h+=antibio();
+ h+=`<div class="qtext">${q.q}</div>`;
+ const pa=Array.isArray(prev)?prev:[];
+ if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const t=q.type==="qrm"?"checkbox":"radio";
+  h+=`<ul class="opts">${q.opts.map((o,j)=>`<li class="opt"><label for="o${j}"><input type="${t}" name="opt" id="o${j}" value="${j}" ${pa.includes(j)?"checked":""} ${locked?"disabled":""}><span class="L">${L[j]}</span><span>${o}</span></label></li>`).join("")}</ul>`}
+ else if(q.type==="qroc"){h+=`<div class="qroc"><label class="note" for="qroc">Réponse courte (quelques mots)</label><input id="qroc" autocomplete="off" placeholder="Votre réponse" value="${answered&&prev?esc(prev):""}" ${locked?"disabled":""}></div>`}
+ else if(q.type==="self"){h+=`<p class="note">Question d'image : la seule copie du sujet est annotée, l'image est donc donnée en correction. Réfléchis à ta réponse, puis valide ; tu t'auto-noteras en correction.</p>`}
+
+ else if(q.type==="info"){h+=`<p class="note">Question neutralisée à l'épreuve : validez pour continuer (1 point pour tous).</p>`}
+ let st="";
+ if(locked)st=`<p class="lockmsg">🔒 Réponse validée : dans un dossier progressif, elle n'est plus modifiable. Vous pouvez la relire.</p>`;
+ else if(answered&&free)st=`<p class="savedmsg">✓ Réponse enregistrée. Vous pouvez la modifier jusqu'à la fin de l'épreuve.</p>`;
+ else if(!free)st=`<p class="note">Dossier progressif : une fois validée, la réponse ne pourra plus être modifiée.</p>`;
+ h+=st;
+ const nAns=Object.keys(S.ans).length;
+ h+=`<div class="actions navrow"><button class="btn" id="bPrev" ${S.pos===0?"disabled":""}>◀ Précédente</button>${locked?"":`<button class="btn primary" id="btnVal">${answered?"Enregistrer la modification":"Valider"}</button>`}<button class="btn" id="bNext" ${S.pos>=Q.length-1||!opened(S.pos+1)?"disabled":""}>Suivante ▶</button><span class="spacer"></span><button class="btn ghost" id="bEnd">Terminer l'épreuve (${nAns}/${Q.length})</button></div>`;
+ h+=`<div class="confirm" id="conf" hidden><span id="confTxt">Réponse définitive ?</span><button class="btn primary small" id="ok">Confirmer</button><button class="btn small" id="no">Modifier</button></div>`;
+ $("#qpanel").innerHTML=h;
+ $("#qpanel").querySelectorAll(".qn").forEach(b=>b.onclick=()=>{S.pos=+b.dataset.n;store.set(S);renderQ();window.scrollTo(0,0)});
+ $("#bPrev").onclick=()=>{S.pos--;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bNext").onclick=()=>{S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bEnd").onclick=()=>{const left=Q.length-Object.keys(S.ans).length;if(confirmEnd(left))finish()};
+ if(locked)return;
+ let a=null,empty=true;
+ const read=()=>{if(q.type==="qrm")a=[...document.querySelectorAll("input[name=opt]:checked")].map(x=>+x.value);
+  else if(q.type==="qru"||q.type==="tcs"){const c=document.querySelector("input[name=opt]:checked");a=c?[+c.value]:[]}
+  else if(q.type==="qroc")a=$("#qroc").value.trim();
+  else a=true;
+  empty=(Array.isArray(a)&&!a.length)||a===""||a==null};
+ const save=()=>{S.ans[k]=empty?null:a;if(S.pos<Q.length-1&&opened(S.pos+1))S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#btnVal").onclick=()=>{read();
+  if(free){save();return}
+  $("#confTxt").textContent=(empty?"Aucune réponse : la question vaudra 0. ":"")+"Réponse définitive (non modifiable ensuite) ?";
+  $("#btnVal").hidden=true;$("#conf").hidden=false;$("#ok").focus()};
+ $("#no").onclick=()=>{$("#conf").hidden=true;$("#btnVal").hidden=false};
+ $("#ok").onclick=save;
+}
+function confirmEnd(left){const box=$("#conf");$("#confTxt").textContent=(left?left+" question(s) sans réponse. ":"")+"Rendre la copie et voir la note ?";box.hidden=false;const v=$("#btnVal");if(v)v.hidden=true;$("#ok").onclick=()=>finish();$("#no").onclick=()=>{box.hidden=true;if(v)v.hidden=false};return false}
+function jumpDp(d){const n=Q.findIndex(x=>x.d===d);if(n<0)return;let m=n;while(m+1<Q.length&&Q[m+1].d===d&&S.ans[Q[m].d+"-"+Q[m].i]!==undefined)m++;S.pos=m;store.set(S);if($("#vExam").hidden)startExam();else{renderQ();window.scrollTo(0,0)}}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-jd]");if(!t)return;if(!S||S.done){S=fresh();store.set(S)}jumpDp(+t.dataset.jd)});
+
+/* ---------- notation ---------- */
+function inPoly(x,y,pts){let c=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const[xi,yi]=pts[i],[xj,yj]=pts[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
+function norm(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim()}
+function grade(d,i){const q=EXAM.dps[d].qs[i];let a=S.ans[d+"-"+i];const k=d+"-"+i;
+ if(S.override&&S.override[k]!==undefined)return S.override[k];
+ if(a==null)return 0;
+ if(q.type==="qru")return a.length===1&&a[0]===q.ok[0]?1:0;
+ if(q.type==="tcs")return a.length===1?q.w[a[0]]:0;
+ if(q.type==="qrm"){if(q.neut)a=a.filter(x=>!q.neut.includes(x));if(!a.length)return 0;
+  if((q.inacc||[]).some(x=>a.includes(x)))return 0;
+  if((q.indisp||[]).some(x=>!a.includes(x)))return 0;
+  let n=0;for(let k2=0;k2<q.opts.length;k2++){if(a.includes(k2)!==q.ok.includes(k2))n++}
+  if(/QRP/i.test((q.label||'')+' '+(q.q||'')+' '+(q.tag||''))||q.qrp||q.opts.length>5){const g=a.filter(x=>q.ok.includes(x)).length,ex=Math.max(0,a.length-q.ok.length);return Math.max(0,(g-ex)/q.ok.length)}return n===0?1:n===1?.5:n===2?.2:0}
+ if(q.type==="info")return 1;
+ if(q.type==="self")return 0;
+ if(q.type==="qroc"){const s=norm(a);if(q.kw){let m=0;q.kw.forEach(([kk,v])=>{if(s.includes(norm(kk)))m=Math.max(m,v)});return m}return q.keys.some(kk=>s.includes(norm(kk)))?1:0}
+ if(q.type==="qzone"){return inPoly(a.x*q.zoneW,a.y*q.zoneH,q.zone)?1:0}
+ return 0}
+function f1(x){return (Math.round(x*100)/100).toString().replace(".",",")}
+
+function finish(){clearInterval(tick);S.done=true;store.set(S);$("#timer").hidden=true;$("#btnPause").hidden=true;results()}
+function results(){show("vRes");steps();let tot=0,max=Q.length;const byDp=EXAM.dps.map(()=>[0,0]),byR={A:[0,0],B:[0,0]};
+ Q.forEach(({d,i,q})=>{const g=grade(d,i);tot+=g;byDp[d][0]+=g;byDp[d][1]++;if(q.rang){byR[q.rang][0]+=g;byR[q.rang][1]++}});
+ $("#sBig").innerHTML=`${f1(tot/max*20)}<small> / 20</small>`;
+ const used=TOTAL-S.left;
+ $("#sSub").textContent=`${f1(tot)} points sur ${max} · temps utilisé ${fmt(used)}`;
+ $("#sBars").innerHTML=EXAM.dps.map((dp,d)=>`<div class="barrow"><span class="mono">${dp.id}</span><div class="track"><div class="fill" style="width:${byDp[d][0]/byDp[d][1]*100}%"></div></div><span class="v">${f1(byDp[d][0])}/${byDp[d][1]}</span></div>`).join("")+
+  ["A","B"].filter(r=>byR[r][1]).map(r=>`<div class="barrow"><span><span class="rk ${r.toLowerCase()}">${r}</span></span><div class="track"><div class="fill" style="width:${byR[r][0]/byR[r][1]*100}%;background:var(--rk${r})"></div></div><span class="v">${f1(byR[r][0])}/${byR[r][1]}</span></div>`).join("");
+ $("#sGrid").innerHTML=Q.map(({d,i,dp},n)=>{const g=grade(d,i);return `<button class="${g===1?'s1':g===0?'s0':'sp'}" data-go="${d}-${i}">${dp.id.replace("DP","")}.${i+1} · ${f1(g)}</button>`}).join("");
+ $("#sGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{const[d,i]=b.dataset.go.split("-").map(Number);openCorr(d,i)});
+}
+$("#btnCorr").onclick=()=>openCorr(0);
+$("#btnAgain").onclick=()=>{store.clear();S=fresh();store.set(S);startExam()};
+$("#btnBackRes").onclick=()=>{if(S&&S.done)results();else show("vStart")};
+$("#btnHome").onclick=()=>{show("vStart")};
+
+/* ---------- correction ---------- */
+let curD=0;
+function openCorr(d,i){show("vCorr");steps();curD=d;
+ $("#tabs").innerHTML=EXAM.dps.map((dp,k)=>`<button role="tab" aria-selected="${k===d}" data-d="${k}">${dp.id}</button>`).join("");
+ $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCorr(+b.dataset.d));
+ drawCorr(d);
+ if(i!==undefined){const el=document.getElementById("cq-"+d+"-"+i);if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),30)}
+}
+function drawCorr(d){const dp=EXAM.dps[d];const answered=S&&Object.keys(S.ans).length>0;
+ let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div><details class="enon"><summary>Énoncé initial</summary>${dp.intro}${dp.introImg?`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`:""}</details>`;
+ dp.qs.forEach((q,i)=>{const k=d+"-"+i;const a=S?S.ans[k]:undefined;const has=a!==undefined;const g=has?grade(d,i):null;
+  const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+  h+=`<div class="cq" id="cq-${k}"><div class="qhead"><span class="qnum">Q${i+1}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}${has?`<span class="pts ${g===1?'s1':g===0?'s0':'sp'}">${f1(g)} pt</span>`:""}</div>`;
+  if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+  if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+  if(q.table==="antibio")h+=antibio();
+  h+=`<div class="qtext">${q.q}</div>`;
+  if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const mine=Array.isArray(a)?a:[];
+   q.opts.forEach((o,j)=>{const ok=q.ok.includes(j),me=mine.includes(j);
+    let cls=has?(ok&&me?"good":ok&&!me?"miss":!ok&&me?"bad":""):(ok?"good":"");
+    let tagx=(q.indisp||[]).includes(j)?" · indispensable":(q.inacc||[]).includes(j)?" · inacceptable":"";
+    h+=`<div class="copt ${cls}"><span class="mk">${ok?"✓":"✗"}</span><span class="mk">${L[j]}</span><span class="tx">${o}${has&&me?` <span class="mine">· coché${tagx}</span>`:tagx?`<span class="mine">${tagx}</span>`:""}</span>${Array.isArray(q.expl)?`<div class="ex">${q.expl[j]}</div>`:""}</div>`});if(!Array.isArray(q.expl))h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="qroc"){
+   h+=`<div class="free ${has?(g===1?'s1':g?'sp':'s0'):''}" style="background:${has?'':'var(--soft)'}"><b>Votre réponse :</b> ${has&&a?esc(a):"<i>aucune</i>"}<br><b>Attendu :</b> ${q.attendu}</div>`;
+   if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Correction automatique par mots-clés.</span><button class="btn small" data-ov="${k}" data-v="${g?0:1}">${g?"Compter faux":"Ma réponse est juste"}</button></div>`;
+   h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="self"){
+   h+=`${q.cimg?`<div class="imgs">${img(q.cimg)}</div>`:""}<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Auto-évaluation :</span><button class="btn small" data-ov="${k}" data-v="1">J'avais juste</button><button class="btn small" data-ov="${k}" data-v="0.5">À moitié</button><button class="btn small" data-ov="${k}" data-v="0">J'avais faux</button></div>`;
+  } else if(q.type==="info"){
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  } else if(q.type==="qzone"){
+   const pts=q.zone.map(p=>`${p[0]/q.zoneW*100},${p[1]/q.zoneH*100}`).join(" ");
+   h+=`<div class="zonebox" style="cursor:default"><img src="${IMGS[q.img[0]]}" alt="Scanner abdominal"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="${pts}" fill="rgba(46,160,90,.35)" stroke="#2ea05a" stroke-width=".6"/></svg>${has&&a?`<div class="pin" style="left:${a.x*100}%;top:${a.y*100}%"></div>`:""}</div>`;
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  }
+  if(q.fig)h+=`<div class="imgs" style="align-items:flex-end">${img(q.fig[0],q.fig[1])}<span class="note" style="max-width:260px">${q.fig[1]}</span></div>`;
+  h+=(q.retenir?`<div class="retenir"><b class="h">À retenir</b>${q.retenir}</div>`:"")+`</div>`;
+ });
+ if(!answered)h=`<p class="note" style="margin-top:0">Mode correction seule : les bonnes réponses sont en vert.</p>`+h;
+ $("#corrMain").innerHTML=h;
+ $("#corrMain").querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{S.override=S.override||{};S.override[b.dataset.ov]=+b.dataset.v;store.set(S);drawCorr(d)});
+ $("#course").innerHTML=`<div class="row"><h3>Cours résumé · ${dp.id}</h3><span class="spacer"></span><button class="btn small coursebtn" id="cToggle">Afficher</button></div><div class="cbody">${dp.cours.replace(/data-img="(\w+)"/g,(m,k)=>`src="${IMGS[k]}" data-zoom`)}</div><p class="small" style="margin-top:14px">Sources : corrigé officiel de l'épreuve ; explications d'après le référentiel de psychiatrie et d'addictologie (CNUP, CUNEA) et le Collège de santé publique.</p>`;
+ const c=$("#course");if(matchMedia("(max-width:860px)").matches){c.classList.add("collapsed");const t=$("#cToggle");t.onclick=()=>{c.classList.toggle("collapsed");t.textContent=c.classList.contains("collapsed")?"Afficher":"Masquer"}}
+}
+
+/* ---------- zoom ---------- */
+document.addEventListener("click",e=>{const t=e.target;if(t.matches&&t.matches("img[data-zoom]")){$("#zoomImg").src=t.src;$("#zoom").hidden=false}});
+$("#zoom").onclick=()=>{$("#zoom").hidden=true};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#zoom").hidden=true});
+})();
+</script>
+
+<a id="backhome" href="index.html" style="position:fixed;left:12px;bottom:12px;z-index:9999;background:#1c1c1a;color:#fff;padding:8px 12px;border-radius:99px;font:600 13px system-ui;text-decoration:none;opacity:.85">← Toutes les annales</a>

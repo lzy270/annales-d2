@@ -1,0 +1,641 @@
+<title>Annale infectio DEC23</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout : copie d'examen — énoncé à gauche, question à droite ; correction en 2 colonnes avec cours collant */
+:root{
+  --bg:#f6f7f9; --paper:#ffffff; --ink:#18212b; --muted:#5d6876; --line:#dfe3e8; --soft:#eef1f5;
+  --accent:#1f4e8c; --accent-soft:#e6eef9;
+  --ok:#1d7a46; --ok-soft:#e3f4ea; --ko:#b42318; --ko-soft:#fdeceb; --mid:#a15c00; --mid-soft:#fdf1df;
+  --rkA:#c62828; --rkB:#d9822b;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+header.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:800;font-size:17px}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.steps{display:flex;gap:4px;flex-wrap:wrap}
+.steps span{font:700 11px var(--f-mono);padding:3px 7px;border-radius:5px;background:var(--soft);color:var(--muted)}
+.steps span.on{background:var(--accent);color:var(--paper)}
+.steps span.done{background:var(--accent-soft);color:var(--accent)}
+.timer{font:700 18px var(--f-mono);font-variant-numeric:tabular-nums;padding:4px 10px;border-radius:8px;background:var(--soft)}
+.timer.low{background:var(--ko-soft);color:var(--ko)}
+.btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:9px 16px;font-weight:700}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn.ghost{background:transparent}
+.btn.small{padding:5px 10px;font-size:13px}
+main{padding-block:24px 64px}
+[hidden]{display:none!important}
+
+/* start */
+.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(26px,4vw,36px)}
+.hero p{margin:0;color:var(--muted)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.rule{background:var(--soft);border-radius:10px;padding:12px 14px;font-size:14px}
+.rule b{display:block;font-family:var(--f-display);font-size:15px;margin-bottom:2px}
+.dplist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.dplist li{display:flex;gap:10px;align-items:baseline;font-size:15px}
+.dplist .id{font:700 12px var(--f-mono);color:var(--accent);min-width:34px}
+.dplist .n{color:var(--muted);font-size:13px;margin-left:auto;white-space:nowrap}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* exam */
+.exam{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:start}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:20px}
+.panel .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.enonce{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto}
+.enonce p{margin:.6em 0}
+.enonce .add{border-left:3px solid var(--accent);padding-left:12px;margin-top:14px}
+.imgs{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.imgs img{max-height:320px;width:auto;max-width:100%;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;background:#000}
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.qnum{font:700 13px var(--f-mono);color:var(--accent)}
+.tag{font:700 11px var(--f-mono);padding:2px 7px;border-radius:5px;background:var(--soft);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.rk{display:inline-grid;place-items:center;width:20px;height:20px;border:2px solid;border-radius:4px;font:700 11px var(--f-mono);vertical-align:middle}
+.rk.a{color:var(--rkA)} .rk.b{color:var(--rkB)}
+.ctx{background:var(--soft);border-radius:10px;padding:2px 14px;margin-bottom:12px}
+.ctx p{margin:.6em 0}
+.qtext{font-size:18px;font-weight:700;margin:6px 0 14px}
+.opts{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.opt label{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--paper)}
+.opt label:hover{border-color:var(--accent)}
+.opt input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.opt .L{font:700 14px var(--f-mono);color:var(--muted);min-width:16px}
+.opt input:checked ~ .L{color:var(--accent)}
+.opt label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.qroc input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit}
+.zonebox{position:relative;display:inline-block;max-width:100%;cursor:crosshair}
+.zonebox img{display:block;max-width:100%;border-radius:8px}
+.zonebox .pin{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:3px solid #fff;background:#e5484d;box-shadow:0 0 0 2px #e5484d;pointer-events:none}
+.zonebox svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--mid-soft);border-radius:10px;padding:10px 12px;font-size:14px}
+.note{font-size:13px;color:var(--muted)}
+
+/* results */
+.score{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.big{font:800 64px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.big small{font-size:24px;color:var(--muted)}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:44px 1fr 70px;gap:10px;align-items:center;font-size:14px}
+.barrow .track{height:10px;border-radius:5px;background:var(--soft);overflow:hidden}
+.barrow .fill{height:100%;background:var(--accent)}
+.barrow .v{font:700 13px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.grid-q{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.grid-q button{font:700 12px var(--f-mono);border:0;border-radius:6px;padding:6px 8px;min-width:58px}
+.s1{background:var(--ok-soft);color:var(--ok)} .s0{background:var(--ko-soft);color:var(--ko)} .sp{background:var(--mid-soft);color:var(--mid)}
+
+/* correction */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:7px 12px;font-weight:700;font-size:14px}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.corr{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.course{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto;font-size:14.5px}
+.course h3{font-size:18px;margin-bottom:6px}
+.course h4{font-size:15px;margin:16px 0 4px;display:flex;gap:8px;align-items:center}
+.course ul{padding-left:18px;margin:4px 0}
+.course li{margin:3px 0}
+.course .small,.small{font-size:13px;color:var(--muted)}
+table.mini{border-collapse:collapse;width:100%;font-size:13px;margin:6px 0}
+table.mini th,table.mini td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+table.mini th{background:var(--soft)}
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}
+.figs figure{margin:0}
+.figs img{width:100%;height:100px;object-fit:cover;border-radius:6px;cursor:zoom-in}
+.figs figcaption{font-size:11.5px;color:var(--muted)}
+.cq{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}
+.cq:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.pts{margin-left:auto;font:700 13px var(--f-mono);padding:3px 8px;border-radius:6px}
+.copt{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:22px 22px 1fr;gap:4px 10px;align-items:start}
+.copt + .copt{margin-top:6px}
+.copt .mk{font:700 14px var(--f-mono)}
+.copt .tx{font-weight:700}
+.copt .ex{grid-column:3;font-size:14.5px;color:var(--ink)}
+.copt.good{border-color:var(--ok);background:var(--ok-soft)}
+.copt.miss{border-color:var(--mid);background:var(--mid-soft)}
+.copt.bad{border-color:var(--ko);background:var(--ko-soft)}
+.mine{font:700 11px var(--f-mono);color:var(--muted)}
+.retenir{margin-top:12px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:14.5px}
+.retenir b.h{display:block;font-family:var(--f-display);color:var(--accent);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.free{border-radius:10px;padding:10px 14px;font-size:14.5px}
+.coursebtn{display:none}
+details.enon{background:var(--soft);border-radius:10px;padding:8px 14px;margin-bottom:16px}
+details.enon summary{cursor:pointer;font-weight:700}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.zoom img{max-width:100%;max-height:100%;border-radius:8px}
+.tblwrap{overflow-x:auto}
+table.abg{border-collapse:collapse;font:13px var(--f-mono);margin:8px 0}
+table.abg td{padding:3px 10px;border-bottom:1px dotted var(--line)}
+table.abg td:last-child{font-weight:700;text-align:center}
+table.abg .R{color:var(--ko)} table.abg .S{color:var(--ok)}
+
+@media (max-width:860px){
+  .exam,.corr{grid-template-columns:1fr}
+  .enonce,.course{position:static;max-height:none}
+  .corr .course{order:-1}
+  .course.collapsed .cbody{display:none}
+  .coursebtn{display:inline-block}
+  .score{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.qnav{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}.qnav-dp{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.qnav-id{font:700 11px var(--f-mono);color:var(--muted);margin-right:3px}.qn{min-width:26px;height:26px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;font:700 11px var(--f-mono);padding:0 4px}.qn.done{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft)}.qn.cur{outline:2px solid var(--accent)}.qn:disabled{opacity:.35;cursor:not-allowed}.navrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.navrow .spacer{flex:1}.lockmsg{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:14px}.savedmsg{color:var(--ok);font-size:14px}
+</style>
+
+<header class="bar"><div class="wrap">
+  <div class="brand">Annale infectio · UE6 · décembre 2023<small>DFA1 · Bobigny · corrigé officiel + explications d'après le Pilly</small></div>
+  <div class="spacer"></div>
+  <div class="steps" id="steps"></div>
+  <div class="timer" id="timer" hidden>40:00</div>
+  <button class="btn small ghost" id="btnPause" hidden>Pause</button>
+</div></header>
+
+<main class="wrap">
+  <!-- Accueil -->
+  <section id="vStart">
+    <div class="hero">
+      <div>
+        <h1>4 épreuves, 38 questions</h1>
+        <p>Sujet de l'UE6 Maladies infectieuses de décembre 2023 (session 1 de 2023-2024), tel quel : 14 questions isolées, 2 DP et 1 KFP. Conditions d'examen type LUNESS, notation EDN avec le barème officiel des QROC. Correction détaillée et cours résumé par dossier à la fin. Note : certaines recommandations ont évolué depuis (vaccin pneumococcique VPC20), c'est signalé dans la correction.</p>
+      </div>
+      <ul class="dplist" id="dpList"></ul><p class="note" style="margin-top:6px">Clique sur un dossier pour commencer par lui. Pendant l'épreuve, les étiquettes en haut à droite (QI, DP1…) et la grille de numéros permettent de changer de dossier à tout moment.</p>
+      <div class="rules">
+        <div class="rule"><b>60 minutes</b>Le chrono tourne pendant l'épreuve. À zéro, la copie est rendue.</div>
+        <div class="rule"><b>Navigation type LUNESS</b>Questions isolées et TCS : navigation libre, réponses modifiables jusqu'à la fin. DP et KFP (🔒) : on peut revenir relire, mais une réponse validée est verrouillée, et la question suivante s'ouvre une fois la précédente validée.</div>
+        <div class="rule"><b>Notation EDN</b>QRM : 1 / 0,5 / 0,2 / 0 selon 0, 1, 2 ou ≥ 3 erreurs ; indispensable oubliée ou inacceptable cochée : 0. QRP : bonnes réponses cochées ÷ réponses attendues. QROC : barème officiel.</div>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="btnStart">Commencer l'épreuve</button>
+        <button class="btn" id="btnResume" hidden>Reprendre</button>
+        <button class="btn ghost" id="btnDirect">Voir directement la correction</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Épreuve -->
+  <section id="vExam" hidden>
+    <div class="exam">
+      <div class="panel enonce" id="enonce"></div>
+      <div class="panel" id="qpanel"></div>
+    </div>
+  </section>
+
+  <!-- Résultats -->
+  <section id="vRes" hidden>
+    <div class="panel">
+      <div class="score">
+        <div><div class="big" id="sBig">0</div><div class="note" id="sSub"></div></div>
+        <div class="bars" id="sBars"></div>
+      </div>
+      <div class="grid-q" id="sGrid"></div>
+      <div class="actions"><button class="btn primary" id="btnCorr">Voir la correction détaillée</button><button class="btn" id="btnAgain">Repasser l'épreuve</button></div>
+    </div>
+  </section>
+
+  <!-- Correction -->
+  <section id="vCorr" hidden>
+    <div class="row" style="margin-bottom:12px"><h2 style="font-size:22px">Correction</h2><div class="spacer"></div><button class="btn small" id="btnBackRes">Résultats</button><button class="btn small" id="btnHome">Accueil</button></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="corr">
+      <div class="panel" id="corrMain"></div>
+      <aside class="panel course" id="course"></aside>
+    </div>
+  </section>
+</main>
+<div class="zoom" id="zoom" hidden><img alt="Image agrandie" id="zoomImg"></div>
+
+<script>
+const IMGS={};
+var img=function(k,alt){return `<img src="${IMGS[k]}" alt="${alt||""}" data-zoom>`};
+const EXAM = {
+title: "Annale infectio · UE6 · décembre 2023",
+dps: [
+{ id:"QI", titre:"Questions isolées", items:"Items 148, 152, 155, 160, 162, 165, 167, 173",
+  intro:`<p>14 questions isolées, sans lien entre elles.</p>`,
+  qs:[
+{ type:"qrm", q:"Les dermatophytes peuvent être responsables :",
+  opts:["D'infections cutanées","D'infections des muqueuses","D'infections des ongles","D'infections pulmonaires","D'infections invasives"],
+  ok:[0,2],
+  expl:["<b>Vrai.</b> Intertrigo des pieds, herpès circiné.","<b>Faux.</b> Les dermatophytes sont kératinophiles : peau, ongles, poils, jamais les muqueuses (ça, c'est Candida).","<b>Vrai.</b> Onychomycoses.","<b>Faux.</b>","<b>Faux.</b> Exceptionnel ; ce n'est pas leur profil."],
+  retenir:"Dermatophytes : kératine (peau, ongles, cheveux). Candida : muqueuses + plis. Dermatophyte = jamais muqueux." },
+{ type:"qrm", q:"Concernant les poux de tête, quelles propositions sont justes ?",
+  opts:["Ils peuvent survivre plusieurs jours sur des vêtements","Ce sont des insectes hématophages","Ils parasitent les enfants et les adultes","Leurs repas sanguins sont responsables du prurit du cuir chevelu","Ils peuvent sauter d'une tête à une autre"],
+  ok:[1,2,3],
+  expl:["<b>Faux.</b> Quelques heures seulement hors du cuir chevelu.","<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b> Ils ne sautent pas : transmission par contact tête à tête."],
+  retenir:"Pédiculose : contact direct tête à tête ; traitement local (diméticone), peigne fin, à répéter à J7-J10." },
+{ type:"qrm", q:"Concernant les sinusites, quelles propositions sont vraies ?",
+  opts:["La sinusite sphénoïdale est la première cause de sinusite du nourrisson","La sinusite maxillaire est la plus à risque de complication neurologique par diffusion de proximité","La méningite et la thrombophlébite septique du sinus caverneux sont deux complications possibles des sinusites bactériennes","Un scanner est recommandé d'emblée devant les formes frontales, ethmoïdales et sphénoïdales","Une sinusite maxillaire bactérienne est évoquée devant une douleur et une rhinorrhée unilatérales persistant plus de 48 h sous traitement symptomatique"],
+  ok:[2,3,4],
+  expl:["<b>Faux.</b> Chez le nourrisson, c'est l'<b>ethmoïdite</b> (les autres sinus ne sont pas encore développés).","<b>Faux.</b> Ce sont les sinusites frontales, ethmoïdales et sphénoïdales qui menacent l'orbite et l'encéphale.","<b>Vrai.</b>","<b>Vrai.</b> Formes à risque de complication.","<b>Vrai.</b> Critère de sinusite maxillaire bactérienne."],
+  retenir:"Sinusites à risque : frontale, ethmoïdale, sphénoïdale → scanner. Ethmoïdite = sinusite du nourrisson (risque orbitaire)." },
+{ type:"qru", q:"Concernant la gale, quelle est la proposition <b>fausse</b> ?",
+  opts:["La gale donne habituellement un prurit","Les espaces interdigitaux sont souvent touchés","La gale n'est pas sexuellement transmissible","La gale est responsable d'épidémies en établissements pour personnes âgées","La gale peut être une affection nosocomiale"],
+  ok:[2],
+  expl:["<b>Vrai.</b> Prurit à recrudescence nocturne.","<b>Vrai.</b> Sillons interdigitaux.","<b>Fausse : c'est la réponse.</b> La gale est une IST (contact cutané prolongé).","<b>Vrai.</b>","<b>Vrai.</b>"],
+  retenir:"Gale : prurit nocturne familial, sillons interdigitaux, IST ; ivermectine + perméthrine, traitement des contacts et du linge." },
+{ type:"qrm", q:"Concernant la présentation clinique des angines virales de l'enfant et de l'adulte, quelles propositions sont vraies ?",
+  opts:["Odynophagie","Douleur pharyngée uni- ou bilatérale","Jamais de fièvre","Jamais d'adénopathies satellites","Jamais d'atteinte ORL associée (toux, rhinite, otalgie)"],
+  ok:[0,1],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b> La fièvre est fréquente.","<b>Faux.</b>","<b>Faux.</b> Au contraire, toux et rhinite orientent vers une origine virale."],
+  retenir:"Clinique seule ne distingue pas angine virale et streptococcique : score de McIsaac puis TDR." },
+{ type:"qrm", q:"Concernant le traitement antigrippal spécifique, quelles propositions sont exactes ?",
+  opts:["La durée du traitement curatif est de 10 jours","La confirmation microbiologique n'est pas nécessaire avant de débuter","Il est contre-indiqué chez la femme enceinte","Il peut être prescrit en post-exposition chez les sujets à risque de complications","Il peut être prescrit en post-exposition chez les résidents d'EHPAD"],
+  ok:[1,3,4],
+  expl:["<b>Faux.</b> Oseltamivir 5 jours en curatif (10 jours en prophylaxie).","<b>Vrai.</b> On le débute le plus tôt possible (< 48 h) sur la clinique en période épidémique.","<b>Faux.</b> La grossesse est au contraire une indication.","<b>Vrai.</b>","<b>Vrai.</b> En collectivité de personnes à risque."],
+  retenir:"Oseltamivir : curatif 5 j (sujets à risque, formes graves, grossesse), préventif 10 j après contact ; sans attendre la confirmation." },
+{ type:"qru", q:"Un patient de 19 ans présente un syndrome méningé brutal. L'examen direct du LCS montre des diplocoques Gram négatif encapsulés. Quel est l'agent en cause ?",
+  opts:["Méningocoque","Pneumocoque","Listeria","Bacille de Koch","Entérovirus"],
+  ok:[0],
+  expl:["<b>Vrai.</b> Neisseria meningitidis = diplocoque Gram −.","<b>Faux.</b> Diplocoque Gram <b>positif</b>.","<b>Faux.</b> Bacille Gram +.","<b>Faux.</b>","<b>Faux.</b> Virus."],
+  retenir:"Diplocoque Gram − = méningocoque ; diplocoque Gram + = pneumocoque ; bacille Gram + = Listeria." },
+{ type:"qrm", q:"Concernant la phtiriose, quelles propositions sont vraies ?",
+  opts:["Le prurit est le principal symptôme","C'est une parasitose fréquente","C'est une infection sexuellement transmissible","C'est une affection grave","Les cils et les cheveux peuvent être parasités"],
+  ok:[0,2,4],
+  expl:["<b>Vrai.</b> Prurit pubien.","<b>Faux.</b> Elle est rare.","<b>Vrai.</b> Morpion (Phthirus pubis).","<b>Faux.</b> Bénigne (mais rechercher d'autres IST).","<b>Vrai.</b> Aussi les cils, sourcils, aisselles."],
+  retenir:"Phtiriose = IST : dépister les autres IST et traiter le partenaire." },
+{ type:"qru", q:"Un patient gros fumeur a une BPCO connue. Depuis plusieurs mois il est essoufflé au moindre effort (en faisant sa toilette). À quel stade GOLD situez-vous sa BPCO ?",
+  opts:["Stade 1","Stade 2","Stade 3","Stade 4","Stade 5"],
+  ok:[3],
+  expl:["<b>Faux.</b>","<b>Faux.</b>","<b>Faux.</b>","<b>Réponse attendue.</b> Dyspnée au moindre effort = BPCO très sévère.","<b>Faux.</b> Il n'existe pas de stade 5."],
+  retenir:"Attention : stricto sensu le stade GOLD 1-4 se définit sur le VEMS (≥ 80 / 50-79 / 30-49 / < 30 %), pas sur la dyspnée ; ici le corrigé raisonne sur la clinique." },
+{ type:"qru", q:"Concernant Candida albicans, une seule proposition est <b>fausse</b>, laquelle ?",
+  opts:["C'est un commensal de la peau","Il est responsable d'infections fongiques superficielles","Il est responsable d'infections fongiques invasives","Il peut émettre des pseudofilaments en conditions pathologiques","C'est un pathogène opportuniste"],
+  ok:[0],
+  expl:["<b>Fausse : c'est la réponse.</b> C. albicans est un commensal des muqueuses digestives et génitales, pas de la peau saine.","<b>Vrai.</b>","<b>Vrai.</b> Candidémies.","<b>Vrai.</b> Forme pathogène.","<b>Vrai.</b>"],
+  retenir:"Candida albicans : commensal digestif et génital ; infections superficielles (muguet, intertrigo, vulvovaginite) et invasives (candidémie)." },
+{ type:"qrm", q:"Une femme de 75 ans est hospitalisée pour un Covid. Antécédents : diabète mal contrôlé, obésité (IMC > 30), cancer du sein il y a 15 ans en rémission complète, prothèse totale de hanche il y a 6 mois. Quels sont ses facteurs de risque de forme grave ?",
+  opts:["Âge","Diabète","Obésité IMC > 30","Antécédent de cancer du sein","Intervention chirurgicale 6 mois auparavant"],
+  ok:[0,1,2],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b> Seul un cancer évolutif compte.","<b>Faux.</b>"],
+  retenir:"Covid grave : âge, obésité, diabète, maladies cardio-respiratoires, IRC, immunodépression, cancer évolutif." },
+{ type:"qrm", q:"Un homme de 23 ans consulte 2 jours après une morsure de chat à la main. Une zone inflammatoire, douloureuse et congestive est apparue quelques heures après la morsure, malgré la désinfection. Vous évoquez une pasteurellose. Quels éléments sont en faveur de ce diagnostic ?",
+  opts:["L'animal mordeur est un chat","La survenue très rapide des lésions après la morsure","La localisation à la main","Le caractère très inflammatoire de la lésion","L'absence d'amélioration malgré la désinfection locale"],
+  ok:[0,1,3],
+  expl:["<b>Vrai.</b> Pasteurella multocida est présente dans la gueule des chats et des chiens.","<b>Vrai.</b> Incubation très courte (< 24 h), argument majeur.","<b>Faux.</b> Ce n'est pas spécifique.","<b>Vrai.</b> Inflammation intense, douleur, écoulement.","<b>Faux.</b> Aspécifique."],
+  retenir:"Pasteurellose : < 24 h après morsure/griffure, très inflammatoire. Amoxicilline-acide clavulanique. Penser tétanos et rage." },
+{ type:"qru", q:"Quelle proposition <b>ne s'applique pas</b> au diagnostic de l'infection VIH ?",
+  opts:["Les anticorps anti-VIH apparaissent en moyenne 3 semaines après la contamination","En France, le dépistage utilise un test ELISA combiné (Ac anti-VIH-1, anti-VIH-2 et Ag p24)","La confirmation de la séropositivité se fait par Western Blot","L'ARN VIH plasmatique est le meilleur marqueur de la réplication virale","Chez le nouveau-né, le diagnostic repose sur les anticorps anti-VIH"],
+  ok:[4],
+  expl:["<b>S'applique.</b>","<b>S'applique.</b> Test de 4e génération.","<b>S'applique.</b> (ou immunoblot).","<b>S'applique.</b> Charge virale.","<b>Ne s'applique pas : c'est la réponse.</b> Les anticorps maternels passent la barrière placentaire et persistent jusqu'à 18 mois : diagnostic par PCR (ARN/ADN viral)."],
+  retenir:"Nouveau-né de mère VIH + : diagnostic par PCR, pas par sérologie (anticorps maternels jusqu'à 18 mois)." },
+{ type:"qrm", q:"Une patiente de 62 ans (retard mental, obésité, diabète mal équilibré, insuffisance veineuse) a une dermohypodermite bactérienne de jambe et refuse l'hospitalisation. Quels éléments de surveillance transmettez-vous à l'infirmière pour alerter précocement d'une évolution vers une fasciite nécrosante ?",
+  opts:["Apparition d'un érythème controlatéral","Majoration des douleurs malgré les antalgiques de palier 2","Apparition de zones noirâtres au sein de l'érythème","Décompensation du diabète","Induration des tissus autour du placard"],
+  ok:[1,2,4],
+  expl:["<b>Faux.</b>","<b>Vrai.</b> Douleur intense, disproportionnée.","<b>Vrai.</b> Nécrose cutanée.","<b>Faux.</b> Possible mais non spécifique d'une nécrose.","<b>Vrai.</b> Œdème induré dépassant l'érythème."],
+  retenir:"Signes de DHBN-FN : douleur intense, nécrose, bulles hémorragiques, hypoesthésie, crépitation, induration extensive, sepsis → chirurgie urgente." }
+  ],
+  cours:`<h4>Questions isolées : les points clés</h4><ul>
+<li><b>Mycoses</b> : dermatophytes = kératine ; Candida = muqueuses, commensal digestif.</li>
+<li><b>Ectoparasitoses</b> : poux (contact tête à tête), phtiriose et gale = IST.</li>
+<li><b>Sinusites à risque</b> : frontale, ethmoïdale, sphénoïdale → scanner.</li>
+<li><b>Grippe</b> : oseltamivir 5 j curatif, 10 j préventif.</li>
+<li><b>Pasteurellose</b> : < 24 h, amox-clav.</li>
+<li><b>VIH du nouveau-né</b> : PCR.</li>
+<li><b>Fasciite nécrosante</b> : douleur intense, nécrose, induration → chirurgie.</li></ul>` },
+
+{ id:"DP1", titre:"Pneumonie du sujet âgé", items:"Items 151, 154, 177, 178",
+  intro:`<p>Fin octobre, vous intervenez à domicile pour une femme de 78 ans en assez bon état général, qui tousse et a de la fièvre. Depuis 6 mois, activité très réduite à cause d'une arthrose évoluée des hanches et des genoux. Elle vit avec son mari de 75 ans, autonome. Elle <b>sort d'une hospitalisation de 8 jours en clinique</b> pour une prothèse de hanche.</p><p>T° 38,2 °C, toux, douleur thoracique droite modérée, examen neurologique normal. Diabète équilibré (régime + 2 antidiabétiques oraux). Pas d'autre antécédent, pas d'allergie.</p>`,
+  qs:[
+{ type:"qroc", q:"En dehors des causes infectieuses possibles, quelle étiologie devez-vous évoquer de principe ?",
+  kw:[["embolie",1]], attendu:"Embolie pulmonaire",
+  expl:`<p>Sortie récente de chirurgie orthopédique (prothèse de hanche), mobilité réduite, douleur thoracique et fièvre modérée : l'EP doit être évoquée systématiquement.</p>`,
+  retenir:"Fièvre + douleur thoracique après chirurgie orthopédique : toujours évoquer l'EP." },
+{ type:"tcs", q:"Si vous évoquez une <b>pneumopathie</b> et que vous entendez un <b>foyer de crépitants à la base droite</b>, cet élément rend votre hypothèse :",
+  opts:["Improbable","Peu probable","Ni plus ni moins probable","Probable","Certaine"], w:[0,0,0,1,0.5], ok:[3],
+  expl:["<b>0 pt.</b>","<b>0 pt.</b>","<b>0 pt.</b>","<b>Réponse attendue.</b> Les crépitants en foyer confortent la pneumonie sans la rendre certaine (EP, IC possibles).","<b>Points partiels.</b>"],
+  retenir:"Un signe clinique conforte une hypothèse ; la certitude demande l'imagerie." },
+{ type:"qru", q:"Lequel de ces autres éléments sémiologiques conforterait l'hypothèse d'une pneumopathie basale droite ?",
+  opts:["Souffle tubaire au sommet droit","Diminution du murmure vésiculaire de la base droite","Sonorité tympanique de la base droite","Diminution des vibrations vocales de la base droite","Sifflement expiratoire"],
+  ok:[1],
+  expl:["<b>Faux.</b> Mauvaise localisation.","<b>Vrai.</b>","<b>Faux.</b> Une condensation donne une <b>matité</b>.","<b>Faux.</b> Une condensation <b>augmente</b> les vibrations vocales (la diminution évoque un épanchement).","<b>Faux.</b>"],
+  retenir:"Condensation : matité, VV augmentées, souffle tubaire, crépitants. Épanchement : matité, VV abolies, MV aboli." },
+{ type:"qru", ctx:`<p>PA 140/70 mmHg, pouls 100/min, FR 20/min. Ni tirage, ni cyanose, ni marbrures.</p>`, q:"Y a-t-il une indication à hospitaliser la patiente ?",
+  opts:["Oui","Non"], ok:[0],
+  expl:["<b>Vrai.</b> Âge > 65 ans + hospitalisation récente (comorbidité, risque de germe nosocomial) + perte d'autonomie.","<b>Faux.</b>"],
+  retenir:"Pas de signe de gravité ne veut pas dire ambulatoire : le terrain compte (âge, comorbidités, hospitalisation récente, isolement)." },
+{ type:"qroc", q:"En dehors de l'âge, indiquez en 3 à 4 mots le deuxième critère de terrain justifiant l'hospitalisation.",
+  kw:[["hospitalisation",1],["clinique",1]], attendu:"Hospitalisation récente (dans l'année / séjour en clinique)",
+  expl:`<p>Une hospitalisation récente (< 1 an, ici 8 jours) est un critère de terrain : risque de germes résistants, comorbidités. « Perte d'autonomie » n'était pas accepté.</p>`,
+  retenir:"Critères de terrain pour une PAC : âge > 65 ans, comorbidités, immunodépression, hospitalisation dans l'année, conditions socio-économiques." },
+{ type:"qru", q:"Vous recommandez l'hospitalisation, mais la patiente et son mari refusent absolument et demandent un traitement à domicile. Quelle attitude est la plus adaptée ?",
+  opts:["Vous appelez quand même une ambulance","Vous faites signer une décharge et quittez le domicile","Vous partez sans rien prescrire","Vous réitérez votre conseil d'hospitalisation et prescrivez le traitement","Vous prescrivez le traitement mais refusez de les soigner à l'avenir"],
+  ok:[3],
+  expl:["<b>Faux.</b> Pas de soins sans consentement chez une patiente capable.","<b>Faux.</b> Une décharge ne dispense pas d'assurer les soins.","<b>Faux.</b> Non-assistance.","<b>Vrai.</b> Respect de l'autonomie + continuité des soins, réévaluation rapprochée.","<b>Faux.</b>"],
+  retenir:"Refus de soins d'un patient capable : informer, réitérer, tracer, proposer la meilleure alternative et assurer la continuité des soins." },
+{ type:"qrm", q:"Vous traitez cette pneumopathie probable à domicile, en accord avec le couple. Quel antibiotique vous paraît le plus adapté ?",
+  opts:["Cotrimoxazole","Fluoroquinolone antipneumococcique","Amoxicilline","Amoxicilline-acide clavulanique","Azithromycine"],
+  ok:[3], indisp:[3],
+  expl:["<b>Faux.</b>","<b>Faux.</b> Réservée aux allergies.","<b>Faux.</b> Insuffisante chez une patiente âgée avec comorbidité et hospitalisation récente.","<b>Vrai (indispensable).</b> PAC avec comorbidités / sujet âgé : amoxicilline-acide clavulanique.","<b>Faux.</b>"],
+  retenir:"PAC ambulatoire : sans comorbidité = amoxicilline ; avec comorbidités ou sujet âgé = amoxicilline-acide clavulanique." },
+{ type:"qrm", ctx:`<p>8 jours plus tard, elle n'a presque plus de symptômes pulmonaires et est apyrétique, mais elle a depuis la veille 3 à 4 selles molles à liquides par jour. Son mari n'a aucun trouble digestif.</p>`, q:"Quelles sont vos hypothèses ?",
+  opts:["Diarrhée d'une légionellose","Diarrhée aux antibiotiques","Infection à Clostridioides difficile","Infection à E. coli entérotoxinogène","Toxi-infection alimentaire"],
+  ok:[1,2], indisp:[2],
+  expl:["<b>Faux.</b> La pneumonie est guérie.","<b>Vrai.</b> Effet secondaire fréquent de l'amox-clav.","<b>Vrai (indispensable).</b> Antibiotique + hospitalisation récente : à rechercher systématiquement (toxines dans les selles).","<b>Faux.</b> Diarrhée du voyageur.","<b>Faux.</b> Le mari n'est pas atteint."],
+  retenir:"Diarrhée sous ou après antibiotiques : rechercher C. difficile (toxines/PCR). Traitement : fidaxomicine ou vancomycine orale." },
+{ type:"qrm", q:"Elle est à jour uniquement pour le dTcaP et a reçu 1 dose de vaccin Covid en 2021. Quels vaccins lui proposez-vous ?",
+  opts:["Vaccin antigrippal","Vaccin anti-SARS-CoV-2","Vaccin anti-hépatite B","Vaccin conjugué antipneumococcique 13-valent","Vaccin non conjugué antipneumococcique 23-valent"],
+  ok:[0,1,3,4],
+  expl:["<b>Vrai.</b> ≥ 65 ans.","<b>Vrai.</b> ≥ 65 ans, rappel annuel.","<b>Faux.</b> Pas d'indication.","<b>Vrai.</b> Diabète = indication à la vaccination antipneumococcique.","<b>Vrai.</b> (schéma VPC13 puis VPP23 à l'époque ; aujourd'hui VPC20 seul)."],
+  retenir:"≥ 65 ans : grippe, Covid, (VRS dès 75 ans ou 65 ans à risque), zona. Diabète : pneumocoque (VPC20 aujourd'hui)." },
+{ type:"qroc", q:"Délai minimum entre le vaccin conjugué 13-valent et le non conjugué 23-valent (en semaines) ?",
+  kw:[["8",1],["huit",1]], attendu:"8 semaines",
+  expl:`<p>Schéma séquentiel de l'époque : VPC13 puis VPP23 au moins 8 semaines plus tard. Depuis 2023-2024, le VPC20 en dose unique le remplace.</p>`,
+  retenir:"Ancien schéma pneumocoque : VPC13 → 8 semaines → VPP23. Nouveau : VPC20 dose unique." },
+{ type:"qru", q:"Faut-il faire d'abord le vaccin conjugué 13-valent, puis le non conjugué 23-valent ?",
+  opts:["Oui","Non"], ok:[0],
+  expl:["<b>Vrai.</b> Le conjugué d'abord, pour obtenir une mémoire immunitaire T-dépendante.","<b>Faux.</b>"],
+  retenir:"Toujours le conjugué en premier." },
+{ type:"qrm", q:"Le mari part dans 1 mois en Chine, 15 jours chez sa fille expatriée. Quelles préventions recommandez-vous ?",
+  opts:["Vaccination contre la fièvre jaune","Vaccination contre la typhoïde","Chimioprophylaxie antipaludique par atovaquone-proguanil","Lavage des mains avant les repas en prévention de la diarrhée du voyageur","Fluoroquinolone préventive contre la diarrhée du voyageur pendant tout le séjour"],
+  ok:[3], indisp:[3],
+  expl:["<b>Faux.</b> Pas de fièvre jaune en Asie.","<b>Faux.</b> Séjour court en conditions correctes.","<b>Faux.</b> Pas d'indication pour un séjour urbain en Chine.","<b>Vrai (indispensable).</b> Hygiène des mains et alimentaire.","<b>Faux.</b> Pas d'antibioprophylaxie de la diarrhée du voyageur."],
+  retenir:"Conseils au voyageur : hygiène, mise à jour vaccinale de base, vaccins et prophylaxies selon la destination réelle." }
+  ],
+  cours:`<h4>PAC du sujet âgé</h4><ul>
+<li><b>Différentiels</b> : EP (post-opératoire), IC.</li>
+<li><b>Hospitalisation</b> : gravité, terrain (âge, comorbidités, hospitalisation récente), contexte social.</li>
+<li><b>ATB</b> : amox-clav si comorbidités.</li>
+<li><b>Refus</b> : respecter, informer, assurer les soins.</li>
+<li><b>Diarrhée post-ATB</b> : C. difficile.</li>
+<li><b>Vaccins ≥ 65 ans</b> : grippe, Covid, pneumocoque si FDR, VRS, zona.</li></ul>` },
+
+{ id:"DP2", titre:"Pyélonéphrite", items:"Items 161, 157",
+  intro:`<p>Une femme de 74 ans, diabétique sous metformine, consulte aux urgences pour fièvre et brûlures urinaires. Fièvre brutale à 38,5 °C depuis 48 h, asthénie, douleurs sus-pubiennes. Elle a du mal à se lever mais bouge ses 4 membres. Glycémie capillaire 2,5 g/L, cétonémie 0,4 mmol/L.</p>`,
+  qs:[
+{ type:"qrm", q:"Quels signes de gravité recherchez-vous immédiatement pour calculer le score quickSOFA ?",
+  opts:["Confusion","PA systolique < 100 mmHg","Syndrome méningé","Tachypnée > 22/min","Anurie"],
+  ok:[0,1,3], indisp:[1],
+  expl:["<b>Vrai.</b>","<b>Vrai (indispensable).</b>","<b>Faux.</b>","<b>Vrai.</b>","<b>Faux.</b> Pas un critère du qSOFA."],
+  retenir:"qSOFA (≥ 2 = gravité) : PAS ≤ 100, FR ≥ 22, confusion." },
+{ type:"qrm", ctx:`<p>Examen normal en dehors des douleurs sus-pubiennes.</p>`, q:"Quels examens complémentaires prescrivez-vous ?",
+  opts:["Bandelette urinaire","ECBU","NFS","Gaz du sang avec lactates","Aucun"],
+  ok:[0,1,2], indisp:[1],
+  expl:["<b>Vrai.</b>","<b>Vrai (indispensable).</b> Toute IU fébrile ou à risque.","<b>Vrai.</b>","<b>Faux.</b> Pas de signe de gravité.","<b>Faux.</b>"],
+  retenir:"IU fébrile : BU + ECBU avant antibiotique, NFS-CRP-créat, hémocultures si signes de gravité ou doute." },
+{ type:"qru", ctx:`<p>BU : leucocytes et nitrites positifs, pas d'hématurie. PNN 19 G/L, CRP 137 mg/L, créatinine 110 µmol/L (DFG 65 mL/min).</p>`, q:"Quel est votre diagnostic ?",
+  opts:["Cystite aiguë simple","Cystite aiguë à risque de complication","Endométrite aiguë","Pyélonéphrite aiguë simple","Pyélonéphrite aiguë à risque de complication"],
+  ok:[4],
+  expl:["<b>Faux.</b> La fièvre signe une atteinte parenchymateuse.","<b>Faux.</b>","<b>Faux.</b>","<b>Faux.</b> Elle a un facteur de risque de complication.","<b>Vrai.</b> Âge > 65 ans avec fragilité (> 3 critères de Fried) ou > 75 ans : facteur de risque de complication. Selon le corrigé, le terrain (74 ans, fragile) la classe ainsi."],
+  retenir:"FDR de complication : anomalie urologique, homme, grossesse, > 75 ans ou > 65 ans fragile, immunodépression, IRC sévère (DFG < 30). Le diabète seul n'en est plus un." },
+{ type:"qrm", q:"Quelle est votre attitude thérapeutique immédiate ?",
+  opts:["Amoxicilline-acide clavulanique per os","C3G IV en probabiliste","Hospitalisation","Retour à domicile sans antibiotique et reconsulter à 48-72 h","Retour à domicile sous antibiotique et reconsulter à 48-72 h"],
+  ok:[1,2],
+  expl:["<b>Faux.</b> Pas en probabiliste (résistances).","<b>Vrai.</b> C3G (ou FQ si pas d'exposition récente).","<b>Vrai.</b> Patiente fragile, hyperglycémie, difficulté à se lever.","<b>Faux.</b>","<b>Faux.</b> Selon le corrigé : hospitalisation."],
+  retenir:"PNA à risque de complication sans gravité : C3G ou FQ ; hospitalisation selon le terrain ; uro-TDM ou échographie dans les 24 h." },
+{ type:"qrm", q:"Vous avez hospitalisé la patiente sous céfotaxime. Quelles mesures associées ?",
+  opts:["Hydratation IV par glucosé 5 %","Hydratation IV par sérum salé isotonique","Poursuite de la metformine","Protocole d'insuline basal-bolus","Paracétamol"],
+  ok:[1,3,4],
+  expl:["<b>Faux.</b> Glycémie à 2,5 g/L.","<b>Vrai.</b>","<b>Faux.</b> À suspendre en infection aiguë (risque d'acidose lactique, injection de produit de contraste).","<b>Vrai.</b> Déséquilibre glycémique.","<b>Vrai.</b>"],
+  retenir:"Diabétique infecté : suspendre la metformine, insuline, hydratation au sérum salé." },
+{ type:"qrm", ctx:`<p>ECBU : leucocyturie 10⁵/mL, Citrobacter koseri (entérobactérie) 10⁵/mL ; résistant à l'amoxicilline, sensible au cotrimoxazole, aux FQ et au céfotaxime.</p>`, q:"Quelles propositions sont exactes ?",
+  opts:["Absence de leucocyturie significative","Leucocyturie significative","Absence de bactériurie significative","Bactériurie significative","Présence d'une entérobactérie productrice de BLSE"],
+  ok:[1,3],
+  expl:["<b>Faux.</b> Seuil 10⁴/mL.","<b>Vrai.</b>","<b>Faux.</b>","<b>Vrai.</b> Seuil 10³ chez la femme pour une entérobactérie.","<b>Faux.</b> Sensible au céfotaxime : pas de BLSE (résistance naturelle à l'amoxicilline)."],
+  retenir:"ECBU : leucocyturie ≥ 10⁴/mL ; bactériurie ≥ 10³ (E. coli, S. saprophyticus) ou ≥ 10⁴ chez l'homme / autres germes chez la femme." },
+{ type:"qrm", q:"Vous concluez à une pyélonéphrite à Citrobacter koseri. Quelle conduite ?",
+  opts:["Poursuite de la C3G à l'identique","Relais oral par amoxicilline","Relais oral par cotrimoxazole","Relais oral par fluoroquinolone","ECBU de contrôle"],
+  ok:[2], inacc:[1],
+  expl:["<b>Faux.</b> Relais oral dès que possible.","<b>Inacceptable.</b> La souche est résistante à l'amoxicilline.","<b>Vrai.</b> Moindre impact écologique.","<b>Faux.</b> Possible mais impact écologique supérieur.","<b>Faux.</b> Pas d'ECBU de contrôle si évolution favorable."],
+  retenir:"Relais oral adapté à l'antibiogramme, en privilégiant la molécule à moindre impact écologique." },
+{ type:"qroc", q:"Relais par cotrimoxazole : quelle durée totale d'antibiothérapie recommandez-vous ?",
+  kw:[["10",1],["dix",1]], attendu:"10 jours",
+  expl:`<p>PNA à risque de complication : 10 jours (7 jours si FQ ou β-lactamine injectable dans les PNA simples).</p>`,
+  retenir:"PNA simple : 7 j (FQ, β-lactamine) ; PNA à risque de complication : 10 j ; IU masculine : 14 j (selon molécule)." },
+{ type:"qrm", q:"La patiente n'a pas vu de gynécologue ni de sage-femme depuis plus de 10 ans. Que lui proposez-vous ?",
+  opts:["Une consultation de gynécologie","Un frottis cervico-utérin","Une recherche d'HPV sur auto-prélèvement vaginal","Une mammographie de dépistage","Une échographie mammaire de dépistage"],
+  ok:[0,3],
+  expl:["<b>Vrai.</b>","<b>Faux.</b> Le dépistage organisé du col s'arrête à 65 ans.","<b>Faux.</b> Idem.","<b>Vrai.</b> Dépistage organisé du sein de 50 à 74 ans (elle a 74 ans).","<b>Faux.</b> Pas un examen de dépistage."],
+  retenir:"Dépistages organisés : col 25-65 ans (cytologie puis test HPV dès 30 ans), sein 50-74 ans (mammographie/2 ans), colorectal 50-74 ans." }
+  ],
+  cours:`<h4>Infections urinaires</h4><ul>
+<li><b>FDR de complication</b> : anomalie urologique, homme, grossesse, sujet âgé fragile ou > 75 ans, immunodépression, DFG < 30.</li>
+<li><b>Gravité</b> : qSOFA, choc, geste urologique urgent.</li>
+<li><b>ECBU</b> : leucocyturie ≥ 10⁴ ; bactériurie selon germe/sexe.</li>
+<li><b>PNA à risque</b> : C3G ou FQ, relais selon ATBgramme, 10 j ; imagerie dans les 24 h.</li>
+<li><b>Diabétique</b> : stop metformine, insuline, hydratation.</li></ul>` },
+
+{ id:"KFP1", titre:"Cervicite", items:"Item 162",
+  intro:`<p>Une femme de 25 ans consulte au CeGIDD pour des pertes vaginales plus abondantes que d'habitude, d'aspect purulent, depuis quelques jours. Rapports non protégés avec un nouveau partenaire.</p>`,
+  qs:[
+{ type:"qrm", qrp:true, label:"QRP (2)", q:"Quels sont les 2 signes cliniques les plus importants à rechercher ?",
+  opts:["Des ulcérations génitales","Un prurit vulvaire","Une inflammation cervicale au spéculum","De la fièvre","Des métrorragies","Des douleurs pelviennes","Des douleurs latéralisées au toucher vaginal","Des brûlures urinaires","Une hépatalgie"],
+  ok:[3,6],
+  expl:["<b>Faux.</b>","<b>Faux.</b>","<b>Faux selon le corrigé</b> (utile pour le diagnostic, mais ce ne sont pas les signes de gravité attendus).","<b>Vrai.</b> Signe d'infection haute (salpingite).","<b>Faux.</b>","<b>Faux.</b>","<b>Vrai.</b> Douleur annexielle = infection génitale haute.","<b>Faux.</b>","<b>Faux.</b>"],
+  retenir:"Devant une cervicite, chercher d'abord une infection génitale haute : fièvre, douleur annexielle/à la mobilisation utérine." },
+{ type:"qroc", ctx:`<p>Apyrétique, pas de douleur pelvienne ni latéralisée. Au spéculum, col érythémateux et œdématié.</p>`, q:"Quel est votre diagnostic ?",
+  kw:[["cervicite",1],["col",1],["cervico",1]], attendu:"Cervicite",
+  expl:`<p>Leucorrhées purulentes + col inflammatoire, sans signe d'infection haute : cervicite (Chlamydia, gonocoque, M. genitalium).</p>`,
+  retenir:"Cervicite = équivalent féminin de l'urétrite." },
+{ type:"qrm", qrp:true, label:"QRP (6)", q:"Quels sont les 6 examens complémentaires les plus pertinents ?",
+  opts:["NFS","CRP","Ionogramme et créatinine","Prélèvement vaginal pour analyse bactériologique","Prélèvement du col pour analyse microbiologique","PCR Chlamydia trachomatis","PCR Neisseria gonorrhoeae","PCR HSV-2","Sérologie Chlamydia","Sérologie VIH","Sérologie hépatite B","Sérologie hépatite C","Sérologie hépatite A"],
+  ok:[3,4,5,6,9,10], indisp:[9],
+  expl:["<b>Faux.</b>","<b>Faux.</b>","<b>Faux.</b>","<b>Vrai.</b>","<b>Vrai.</b> Culture du gonocoque (antibiogramme).","<b>Vrai.</b>","<b>Vrai.</b>","<b>Faux.</b> Pas d'ulcération.","<b>Faux.</b> Sans intérêt.","<b>Vrai (indispensable).</b>","<b>Vrai.</b>","<b>Faux selon le corrigé</b> (la syphilis aurait aussi été pertinente).","<b>Faux.</b>"],
+  retenir:"IST : prélèvements locaux + PCR CT/NG + sérologies VIH, VHB, syphilis (± VHC selon le risque). Traiter les partenaires." }
+  ],
+  cours:`<h4>Cervicite et IST</h4><ul>
+<li><b>Germes</b> : C. trachomatis, gonocoque, M. genitalium.</li>
+<li><b>Rechercher une infection haute</b> : fièvre, douleur pelvienne, douleur annexielle.</li>
+<li><b>Bilan</b> : prélèvements, PCR CT/NG (auto-prélèvement vaginal possible), sérologies VIH, VHB, VHC, syphilis.</li>
+<li><b>Traitement</b> : ceftriaxone 1 g IM + doxycycline 7 j ; partenaires ; préservatifs.</li></ul>` }
+]
+};
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const L="ABCDEFGHIJKLMNOPQRST";
+const KEY="annale-infectio-dec23-v1";
+const TOTAL=60*60;
+const store={get(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}},clear(){try{localStorage.removeItem(KEY)}catch(e){}}};
+const Q=[];EXAM.dps.forEach((dp,d)=>dp.qs.forEach((q,i)=>Q.push({d,i,q,dp})));
+let S=null, tick=null, paused=false;
+function fresh(){return{pos:0,ans:{},left:TOTAL,done:false,override:{}}}
+function img(k,alt){return `<img src="${IMGS[k]}" alt="${alt||''}" data-zoom>`}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function fmt(t){t=Math.max(0,t|0);return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+function show(id){["vStart","vExam","vRes","vCorr"].forEach(v=>$("#"+v).hidden=v!==id);window.scrollTo(0,0)}
+function antibio(){const r=[["Amoxicilline","S"],["Imipénème","S"],["Gentamicine","S"],["Vancomycine","S"],["Cotrimoxazole","R"],["Teicoplanine","S"],["Linézolide","S"],["Lévofloxacine","R"],["Nitrofurantoïne","R"]];
+ return `<div class="tblwrap"><table class="abg"><tr><td colspan="2"><b>ECBU</b> · urines 2e jet</td></tr><tr><td>Hématies</td><td>50/mm³</td></tr><tr><td>Cellules épithéliales</td><td>absence</td></tr><tr><td>Leucocytes</td><td>150/mm³</td></tr><tr><td>CGP en courtes chaînettes</td><td>quelques</td></tr><tr><td>Culture : <i>Enterococcus faecalis</i></td><td>10⁵/mL</td></tr><tr><td colspan="2"><b>Antibiogramme</b></td></tr>${r.map(([a,b])=>`<tr><td>${a}</td><td class="${b}">${b}</td></tr>`).join("")}</table></div>`}
+
+/* ---------- accueil ---------- */
+$("#dpList").innerHTML=EXAM.dps.map((dp,d)=>`<li data-jd="${d}" style="cursor:pointer" title="Commencer par ce dossier"><span class="id">${dp.id}</span><span>${dp.titre}</span><span class="n">${dp.qs.length} Q</span></li>`).join("");
+const saved=store.get();
+if(saved&&!saved.done&&Object.keys(saved.ans).length){$("#btnResume").hidden=false}
+if(saved&&saved.done){$("#btnResume").hidden=false;$("#btnResume").textContent="Voir mes résultats"}
+$("#btnStart").onclick=()=>{S=fresh();store.set(S);startExam()};
+$("#btnResume").onclick=()=>{S=saved;if(S.done)results();else startExam()};
+$("#btnDirect").onclick=()=>{S=S||saved||fresh();openCorr(0)};
+
+/* ---------- épreuve ---------- */
+function steps(){const el=$("#steps");if(!S||$("#vExam").hidden&&!S.done){el.innerHTML="";return}
+ const cur=Q[S.pos]?Q[S.pos].d:-1;
+ el.innerHTML=EXAM.dps.map((dp,d)=>{const qs=Q.filter(x=>x.d===d);const done=qs.every(x=>S.ans[x.d+"-"+x.i]!==undefined);return `<span data-jd="${d}" style="cursor:pointer" title="Aller à ${dp.titre}" class="${d===cur&&!S.done?'on':done?'done':''}">${dp.id}</span>`}).join("")}
+function startExam(){show("vExam");$("#timer").hidden=false;$("#btnPause").hidden=false;paused=false;$("#btnPause").textContent="Pause";renderQ();runTimer()}
+function runTimer(){clearInterval(tick);tick=setInterval(()=>{if(paused||!S||S.done)return;S.left--;drawTimer();if(S.left%5===0)store.set(S);if(S.left<=0){finish()}},1000);drawTimer()}
+function drawTimer(){const t=$("#timer");t.textContent=fmt(S.left);t.classList.toggle("low",S.left<=300)}
+$("#btnPause").onclick=()=>{paused=!paused;$("#btnPause").textContent=paused?"Reprendre":"Pause";$("#qpanel").style.filter=paused?"blur(6px)":"";$("#enonce").style.filter=paused?"blur(6px)":""};
+
+function enonceHTML(d,upto){const dp=EXAM.dps[d];let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div>${dp.intro}`;
+ if(dp.introImg)h+=`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`;
+ dp.qs.forEach((q,i)=>{if(i<upto&&q.ctx){h+=`<div class="add"><div class="note">Ajouté en Q${i+1}</div>${q.ctx}${q.img?`<div class="imgs">${q.img.map(k=>img(k)).join("")}</div>`:""}${q.table==="antibio"?antibio():""}</div>`}});return h}
+
+function isFree(dp){return dp.free||/^(QI|SQI|TCS)/.test(dp.id)}
+function opened(n){const {d,i,dp}=Q[n];if(isFree(dp))return true;for(let k=0;k<i;k++){if(S.ans[d+"-"+k]===undefined)return false}return true}
+function navHTML(){return `<div class="qnav">`+EXAM.dps.map((dp,d)=>`<div class="qnav-dp"><span class="qnav-id">${dp.id}${isFree(dp)?"":" 🔒"}</span>`+Q.map((x,n)=>({x,n})).filter(o=>o.x.d===d).map(({x,n})=>{const k=x.d+"-"+x.i;const done=S.ans[k]!==undefined;const ok=opened(n);return `<button class="qn${n===S.pos?" cur":""}${done?" done":""}" data-n="${n}" ${ok?"":"disabled"} title="${ok?"":"Validez les questions précédentes du dossier"}">${x.i+1}</button>`}).join("")+`</div>`).join("")+`</div>`}
+function renderQ(){
+ if(S.pos>=Q.length)S.pos=Q.length-1;
+ const {d,i,q,dp}=Q[S.pos];steps();
+ const k=d+"-"+i, prev=S.ans[k], answered=prev!==undefined, free=isFree(dp), locked=answered&&!free;
+ $("#enonce").innerHTML=enonceHTML(d,i);
+ const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+ let h=navHTML();
+ h+=`<div class="qhead"><span class="qnum">${dp.id} · Q${i+1}/${dp.qs.length}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}<span class="spacer"></span><span class="note">${S.pos+1} / ${Q.length}</span></div>`;
+ if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+ if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+ if(q.table==="antibio")h+=antibio();
+ h+=`<div class="qtext">${q.q}</div>`;
+ const pa=Array.isArray(prev)?prev:[];
+ if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const t=q.type==="qrm"?"checkbox":"radio";
+  h+=`<ul class="opts">${q.opts.map((o,j)=>`<li class="opt"><label for="o${j}"><input type="${t}" name="opt" id="o${j}" value="${j}" ${pa.includes(j)?"checked":""} ${locked?"disabled":""}><span class="L">${L[j]}</span><span>${o}</span></label></li>`).join("")}</ul>`}
+ else if(q.type==="qroc"){h+=`<div class="qroc"><label class="note" for="qroc">Réponse courte (quelques mots)</label><input id="qroc" autocomplete="off" placeholder="Votre réponse" value="${answered&&prev?esc(prev):""}" ${locked?"disabled":""}></div>`}
+ else if(q.type==="info"){h+=`<p class="note">Question neutralisée à l'épreuve : validez pour continuer (1 point pour tous).</p>`}
+ let st="";
+ if(locked)st=`<p class="lockmsg">🔒 Réponse validée : dans un dossier progressif, elle n'est plus modifiable. Vous pouvez la relire.</p>`;
+ else if(answered&&free)st=`<p class="savedmsg">✓ Réponse enregistrée. Vous pouvez la modifier jusqu'à la fin de l'épreuve.</p>`;
+ else if(!free)st=`<p class="note">Dossier progressif : une fois validée, la réponse ne pourra plus être modifiée.</p>`;
+ h+=st;
+ const nAns=Object.keys(S.ans).length;
+ h+=`<div class="actions navrow"><button class="btn" id="bPrev" ${S.pos===0?"disabled":""}>◀ Précédente</button>${locked?"":`<button class="btn primary" id="btnVal">${answered?"Enregistrer la modification":"Valider"}</button>`}<button class="btn" id="bNext" ${S.pos>=Q.length-1||!opened(S.pos+1)?"disabled":""}>Suivante ▶</button><span class="spacer"></span><button class="btn ghost" id="bEnd">Terminer l'épreuve (${nAns}/${Q.length})</button></div>`;
+ h+=`<div class="confirm" id="conf" hidden><span id="confTxt">Réponse définitive ?</span><button class="btn primary small" id="ok">Confirmer</button><button class="btn small" id="no">Modifier</button></div>`;
+ $("#qpanel").innerHTML=h;
+ $("#qpanel").querySelectorAll(".qn").forEach(b=>b.onclick=()=>{S.pos=+b.dataset.n;store.set(S);renderQ();window.scrollTo(0,0)});
+ $("#bPrev").onclick=()=>{S.pos--;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bNext").onclick=()=>{S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bEnd").onclick=()=>{const left=Q.length-Object.keys(S.ans).length;if(confirmEnd(left))finish()};
+ if(locked)return;
+ let a=null,empty=true;
+ const read=()=>{if(q.type==="qrm")a=[...document.querySelectorAll("input[name=opt]:checked")].map(x=>+x.value);
+  else if(q.type==="qru"||q.type==="tcs"){const c=document.querySelector("input[name=opt]:checked");a=c?[+c.value]:[]}
+  else if(q.type==="qroc")a=$("#qroc").value.trim();
+  else a=true;
+  empty=(Array.isArray(a)&&!a.length)||a===""||a==null};
+ const save=()=>{S.ans[k]=empty?null:a;if(S.pos<Q.length-1&&opened(S.pos+1))S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#btnVal").onclick=()=>{read();
+  if(free){save();return}
+  $("#confTxt").textContent=(empty?"Aucune réponse : la question vaudra 0. ":"")+"Réponse définitive (non modifiable ensuite) ?";
+  $("#btnVal").hidden=true;$("#conf").hidden=false;$("#ok").focus()};
+ $("#no").onclick=()=>{$("#conf").hidden=true;$("#btnVal").hidden=false};
+ $("#ok").onclick=save;
+}
+function confirmEnd(left){const box=$("#conf");$("#confTxt").textContent=(left?left+" question(s) sans réponse. ":"")+"Rendre la copie et voir la note ?";box.hidden=false;const v=$("#btnVal");if(v)v.hidden=true;$("#ok").onclick=()=>finish();$("#no").onclick=()=>{box.hidden=true;if(v)v.hidden=false};return false}
+function jumpDp(d){const n=Q.findIndex(x=>x.d===d);if(n<0)return;let m=n;while(m+1<Q.length&&Q[m+1].d===d&&S.ans[Q[m].d+"-"+Q[m].i]!==undefined)m++;S.pos=m;store.set(S);if($("#vExam").hidden)startExam();else{renderQ();window.scrollTo(0,0)}}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-jd]");if(!t)return;if(!S||S.done){S=fresh();store.set(S)}jumpDp(+t.dataset.jd)});
+
+/* ---------- notation ---------- */
+function inPoly(x,y,pts){let c=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const[xi,yi]=pts[i],[xj,yj]=pts[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
+function norm(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim()}
+function grade(d,i){const q=EXAM.dps[d].qs[i];let a=S.ans[d+"-"+i];const k=d+"-"+i;
+ if(S.override&&S.override[k]!==undefined)return S.override[k];
+ if(a==null)return 0;
+ if(q.type==="qru")return a.length===1&&a[0]===q.ok[0]?1:0;
+ if(q.type==="tcs")return a.length===1?q.w[a[0]]:0;
+ if(q.type==="qrm"){if(q.neut)a=a.filter(x=>!q.neut.includes(x));if(!a.length)return 0;
+  if((q.inacc||[]).some(x=>a.includes(x)))return 0;
+  if((q.indisp||[]).some(x=>!a.includes(x)))return 0;
+  let n=0;for(let k2=0;k2<q.opts.length;k2++){if(a.includes(k2)!==q.ok.includes(k2))n++}
+  if(/QRP/i.test((q.label||'')+' '+(q.q||'')+' '+(q.tag||''))||q.qrp||q.opts.length>5){const g=a.filter(x=>q.ok.includes(x)).length,ex=Math.max(0,a.length-q.ok.length);return Math.max(0,(g-ex)/q.ok.length)}return n===0?1:n===1?.5:n===2?.2:0}
+ if(q.type==="info")return 1;
+ if(q.type==="qroc"){const s=norm(a);if(q.kw){let m=0;q.kw.forEach(([kk,v])=>{if(s.includes(norm(kk)))m=Math.max(m,v)});return m}return q.keys.some(kk=>s.includes(norm(kk)))?1:0}
+ if(q.type==="qzone"){return inPoly(a.x*q.zoneW,a.y*q.zoneH,q.zone)?1:0}
+ return 0}
+function f1(x){return (Math.round(x*100)/100).toString().replace(".",",")}
+
+function finish(){clearInterval(tick);S.done=true;store.set(S);$("#timer").hidden=true;$("#btnPause").hidden=true;results()}
+function results(){show("vRes");steps();let tot=0,max=Q.length;const byDp=EXAM.dps.map(()=>[0,0]),byR={A:[0,0],B:[0,0]};
+ Q.forEach(({d,i,q})=>{const g=grade(d,i);tot+=g;byDp[d][0]+=g;byDp[d][1]++;if(q.rang){byR[q.rang][0]+=g;byR[q.rang][1]++}});
+ $("#sBig").innerHTML=`${f1(tot/max*20)}<small> / 20</small>`;
+ const used=TOTAL-S.left;
+ $("#sSub").textContent=`${f1(tot)} points sur ${max} · temps utilisé ${fmt(used)}`;
+ $("#sBars").innerHTML=EXAM.dps.map((dp,d)=>`<div class="barrow"><span class="mono">${dp.id}</span><div class="track"><div class="fill" style="width:${byDp[d][0]/byDp[d][1]*100}%"></div></div><span class="v">${f1(byDp[d][0])}/${byDp[d][1]}</span></div>`).join("")+
+  ["A","B"].filter(r=>byR[r][1]).map(r=>`<div class="barrow"><span><span class="rk ${r.toLowerCase()}">${r}</span></span><div class="track"><div class="fill" style="width:${byR[r][0]/byR[r][1]*100}%;background:var(--rk${r})"></div></div><span class="v">${f1(byR[r][0])}/${byR[r][1]}</span></div>`).join("");
+ $("#sGrid").innerHTML=Q.map(({d,i,dp},n)=>{const g=grade(d,i);return `<button class="${g===1?'s1':g===0?'s0':'sp'}" data-go="${d}-${i}">${dp.id.replace("DP","")}.${i+1} · ${f1(g)}</button>`}).join("");
+ $("#sGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{const[d,i]=b.dataset.go.split("-").map(Number);openCorr(d,i)});
+}
+$("#btnCorr").onclick=()=>openCorr(0);
+$("#btnAgain").onclick=()=>{store.clear();S=fresh();store.set(S);startExam()};
+$("#btnBackRes").onclick=()=>{if(S&&S.done)results();else show("vStart")};
+$("#btnHome").onclick=()=>{show("vStart")};
+
+/* ---------- correction ---------- */
+let curD=0;
+function openCorr(d,i){show("vCorr");steps();curD=d;
+ $("#tabs").innerHTML=EXAM.dps.map((dp,k)=>`<button role="tab" aria-selected="${k===d}" data-d="${k}">${dp.id}</button>`).join("");
+ $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCorr(+b.dataset.d));
+ drawCorr(d);
+ if(i!==undefined){const el=document.getElementById("cq-"+d+"-"+i);if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),30)}
+}
+function drawCorr(d){const dp=EXAM.dps[d];const answered=S&&Object.keys(S.ans).length>0;
+ let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div><details class="enon"><summary>Énoncé initial</summary>${dp.intro}${dp.introImg?`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`:""}</details>`;
+ dp.qs.forEach((q,i)=>{const k=d+"-"+i;const a=S?S.ans[k]:undefined;const has=a!==undefined;const g=has?grade(d,i):null;
+  const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+  h+=`<div class="cq" id="cq-${k}"><div class="qhead"><span class="qnum">Q${i+1}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}${has?`<span class="pts ${g===1?'s1':g===0?'s0':'sp'}">${f1(g)} pt</span>`:""}</div>`;
+  if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+  if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+  if(q.table==="antibio")h+=antibio();
+  h+=`<div class="qtext">${q.q}</div>`;
+  if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const mine=Array.isArray(a)?a:[];
+   q.opts.forEach((o,j)=>{const ok=q.ok.includes(j),me=mine.includes(j);
+    let cls=has?(ok&&me?"good":ok&&!me?"miss":!ok&&me?"bad":""):(ok?"good":"");
+    let tagx=(q.indisp||[]).includes(j)?" · indispensable":(q.inacc||[]).includes(j)?" · inacceptable":"";
+    h+=`<div class="copt ${cls}"><span class="mk">${ok?"✓":"✗"}</span><span class="mk">${L[j]}</span><span class="tx">${o}${has&&me?` <span class="mine">· coché${tagx}</span>`:tagx?`<span class="mine">${tagx}</span>`:""}</span><div class="ex">${q.expl[j]}</div></div>`});
+  } else if(q.type==="qroc"){
+   h+=`<div class="free ${has?(g===1?'s1':g?'sp':'s0'):''}" style="background:${has?'':'var(--soft)'}"><b>Votre réponse :</b> ${has&&a?esc(a):"<i>aucune</i>"}<br><b>Attendu :</b> ${q.attendu}</div>`;
+   if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Correction automatique par mots-clés.</span><button class="btn small" data-ov="${k}" data-v="${g?0:1}">${g?"Compter faux":"Ma réponse est juste"}</button></div>`;
+   h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="info"){
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  } else if(q.type==="qzone"){
+   const pts=q.zone.map(p=>`${p[0]/q.zoneW*100},${p[1]/q.zoneH*100}`).join(" ");
+   h+=`<div class="zonebox" style="cursor:default"><img src="${IMGS[q.img[0]]}" alt="Scanner abdominal"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="${pts}" fill="rgba(46,160,90,.35)" stroke="#2ea05a" stroke-width=".6"/></svg>${has&&a?`<div class="pin" style="left:${a.x*100}%;top:${a.y*100}%"></div>`:""}</div>`;
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  }
+  if(q.fig)h+=`<div class="imgs" style="align-items:flex-end">${img(q.fig[0],q.fig[1])}<span class="note" style="max-width:260px">${q.fig[1]}</span></div>`;
+  h+=`<div class="retenir"><b class="h">À retenir</b>${q.retenir}</div></div>`;
+ });
+ if(!answered)h=`<p class="note" style="margin-top:0">Mode correction seule : les bonnes réponses sont en vert.</p>`+h;
+ $("#corrMain").innerHTML=h;
+ $("#corrMain").querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{S.override=S.override||{};S.override[b.dataset.ov]=+b.dataset.v;store.set(S);drawCorr(d)});
+ $("#course").innerHTML=`<div class="row"><h3>Cours résumé · ${dp.id}</h3><span class="spacer"></span><button class="btn small coursebtn" id="cToggle">Afficher</button></div><div class="cbody">${dp.cours.replace(/data-img="(\w+)"/g,(m,k)=>`src="${IMGS[k]}" data-zoom`)}</div><p class="small" style="margin-top:14px">Sources : corrigé officiel de l'épreuve (UE6, décembre 2023) ; explications rédigées d'après le Pilly et le Collège.</p>`;
+ const c=$("#course");if(matchMedia("(max-width:860px)").matches){c.classList.add("collapsed");const t=$("#cToggle");t.onclick=()=>{c.classList.toggle("collapsed");t.textContent=c.classList.contains("collapsed")?"Afficher":"Masquer"}}
+}
+
+/* ---------- zoom ---------- */
+document.addEventListener("click",e=>{const t=e.target;if(t.matches&&t.matches("img[data-zoom]")){$("#zoomImg").src=t.src;$("#zoom").hidden=false}});
+$("#zoom").onclick=()=>{$("#zoom").hidden=true};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#zoom").hidden=true});
+})();
+</script>
+
+<a id="backhome" href="index.html" style="position:fixed;left:12px;bottom:12px;z-index:9999;background:#1c1c1a;color:#fff;padding:8px 12px;border-radius:99px;font:600 13px system-ui;text-decoration:none;opacity:.85">← Toutes les annales</a>

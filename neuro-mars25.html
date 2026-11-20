@@ -1,0 +1,1165 @@
+<title>Annale neuro MARS 2025</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout : copie d'examen — énoncé à gauche, question à droite ; correction en 2 colonnes avec cours collant */
+:root{
+  --bg:#f6f7f9; --paper:#ffffff; --ink:#18212b; --muted:#5d6876; --line:#dfe3e8; --soft:#eef1f5;
+  --accent:#1f4e8c; --accent-soft:#e6eef9;
+  --ok:#1d7a46; --ok-soft:#e3f4ea; --ko:#b42318; --ko-soft:#fdeceb; --mid:#a15c00; --mid-soft:#fdf1df;
+  --rkA:#c62828; --rkB:#d9822b;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+header.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:800;font-size:17px}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.steps{display:flex;gap:4px;flex-wrap:wrap}
+.steps span{font:700 11px var(--f-mono);padding:3px 7px;border-radius:5px;background:var(--soft);color:var(--muted)}
+.steps span.on{background:var(--accent);color:var(--paper)}
+.steps span.done{background:var(--accent-soft);color:var(--accent)}
+.timer{font:700 18px var(--f-mono);font-variant-numeric:tabular-nums;padding:4px 10px;border-radius:8px;background:var(--soft)}
+.timer.low{background:var(--ko-soft);color:var(--ko)}
+.btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:9px 16px;font-weight:700}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn.ghost{background:transparent}
+.btn.small{padding:5px 10px;font-size:13px}
+main{padding-block:24px 64px}
+[hidden]{display:none!important}
+
+/* start */
+.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(26px,4vw,36px)}
+.hero p{margin:0;color:var(--muted)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.rule{background:var(--soft);border-radius:10px;padding:12px 14px;font-size:14px}
+.rule b{display:block;font-family:var(--f-display);font-size:15px;margin-bottom:2px}
+.dplist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.dplist li{display:flex;gap:10px;align-items:baseline;font-size:15px}
+.dplist .id{font:700 12px var(--f-mono);color:var(--accent);min-width:34px}
+.dplist .n{color:var(--muted);font-size:13px;margin-left:auto;white-space:nowrap}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* exam */
+.exam{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:start}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:20px}
+.panel .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.enonce{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto}
+.enonce p{margin:.6em 0}
+.enonce .add{border-left:3px solid var(--accent);padding-left:12px;margin-top:14px}
+.imgs{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.imgs img{max-height:320px;width:auto;max-width:100%;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;background:#000}
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.qnum{font:700 13px var(--f-mono);color:var(--accent)}
+.tag{font:700 11px var(--f-mono);padding:2px 7px;border-radius:5px;background:var(--soft);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.rk{display:inline-grid;place-items:center;width:20px;height:20px;border:2px solid;border-radius:4px;font:700 11px var(--f-mono);vertical-align:middle}
+.rk.a{color:var(--rkA)} .rk.b{color:var(--rkB)}
+.ctx{background:var(--soft);border-radius:10px;padding:2px 14px;margin-bottom:12px}
+.ctx p{margin:.6em 0}
+.qtext{font-size:18px;font-weight:700;margin:6px 0 14px}
+.opts{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.opt label{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--paper)}
+.opt label:hover{border-color:var(--accent)}
+.opt input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.opt .L{font:700 14px var(--f-mono);color:var(--muted);min-width:16px}
+.opt input:checked ~ .L{color:var(--accent)}
+.opt label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.qroc input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit}
+.zonebox{position:relative;display:inline-block;max-width:100%;cursor:crosshair}
+.zonebox img{display:block;max-width:100%;border-radius:8px}
+.zonebox .pin{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:3px solid #fff;background:#e5484d;box-shadow:0 0 0 2px #e5484d;pointer-events:none}
+.zonebox svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--mid-soft);border-radius:10px;padding:10px 12px;font-size:14px}
+.note{font-size:13px;color:var(--muted)}
+
+/* results */
+.score{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.big{font:800 64px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.big small{font-size:24px;color:var(--muted)}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:44px 1fr 70px;gap:10px;align-items:center;font-size:14px}
+.barrow .track{height:10px;border-radius:5px;background:var(--soft);overflow:hidden}
+.barrow .fill{height:100%;background:var(--accent)}
+.barrow .v{font:700 13px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.grid-q{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.grid-q button{font:700 12px var(--f-mono);border:0;border-radius:6px;padding:6px 8px;min-width:58px}
+.s1{background:var(--ok-soft);color:var(--ok)} .s0{background:var(--ko-soft);color:var(--ko)} .sp{background:var(--mid-soft);color:var(--mid)}
+
+/* correction */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:7px 12px;font-weight:700;font-size:14px}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.corr{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.course{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto;font-size:14.5px}
+.course h3{font-size:18px;margin-bottom:6px}
+.course h4{font-size:15px;margin:16px 0 4px;display:flex;gap:8px;align-items:center}
+.course ul{padding-left:18px;margin:4px 0}
+.course li{margin:3px 0}
+.course .small,.small{font-size:13px;color:var(--muted)}
+table.mini{border-collapse:collapse;width:100%;font-size:13px;margin:6px 0}
+table.mini th,table.mini td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+table.mini th{background:var(--soft)}
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}
+.figs figure{margin:0}
+.figs img{width:100%;height:100px;object-fit:cover;border-radius:6px;cursor:zoom-in}
+.figs figcaption{font-size:11.5px;color:var(--muted)}
+.cq{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}
+.cq:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.pts{margin-left:auto;font:700 13px var(--f-mono);padding:3px 8px;border-radius:6px}
+.copt{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:22px 22px 1fr;gap:4px 10px;align-items:start}
+.copt + .copt{margin-top:6px}
+.copt .mk{font:700 14px var(--f-mono)}
+.copt .tx{font-weight:700}
+.copt .ex{grid-column:3;font-size:14.5px;color:var(--ink)}
+.copt.good{border-color:var(--ok);background:var(--ok-soft)}
+.copt.miss{border-color:var(--mid);background:var(--mid-soft)}
+.copt.bad{border-color:var(--ko);background:var(--ko-soft)}
+.mine{font:700 11px var(--f-mono);color:var(--muted)}
+.retenir{margin-top:12px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:14.5px}
+.retenir b.h{display:block;font-family:var(--f-display);color:var(--accent);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.free{border-radius:10px;padding:10px 14px;font-size:14.5px}
+.coursebtn{display:none}
+details.enon{background:var(--soft);border-radius:10px;padding:8px 14px;margin-bottom:16px}
+details.enon summary{cursor:pointer;font-weight:700}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.zoom img{max-width:100%;max-height:100%;border-radius:8px}
+.tblwrap{overflow-x:auto}
+table.abg{border-collapse:collapse;font:13px var(--f-mono);margin:8px 0}
+table.abg td{padding:3px 10px;border-bottom:1px dotted var(--line)}
+table.abg td:last-child{font-weight:700;text-align:center}
+table.abg .R{color:var(--ko)} table.abg .S{color:var(--ok)}
+
+@media (max-width:860px){
+  .exam,.corr{grid-template-columns:1fr}
+  .enonce,.course{position:static;max-height:none}
+  .corr .course{order:-1}
+  .course.collapsed .cbody{display:none}
+  .coursebtn{display:inline-block}
+  .score{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.qnav{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}.qnav-dp{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.qnav-id{font:700 11px var(--f-mono);color:var(--muted);margin-right:3px}.qn{min-width:26px;height:26px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;font:700 11px var(--f-mono);padding:0 4px}.qn.done{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft)}.qn.cur{outline:2px solid var(--accent)}.qn:disabled{opacity:.35;cursor:not-allowed}.navrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.navrow .spacer{flex:1}.lockmsg{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:14px}.savedmsg{color:var(--ok);font-size:14px}
+.offi{background:var(--soft);border-left:3px solid var(--accent);border-radius:8px;padding:8px 12px;margin:6px 0 10px}.offi p{margin:4px 0}.tcs{background:var(--soft);border-radius:10px;padding:10px 14px;margin-bottom:10px}.tcs p{margin:4px 0}
+</style>
+
+<header class="bar"><div class="wrap">
+  <div class="brand">Annale neuro · UE4.1 · mars 2025<small>DFA1 · Bobigny · corrigé officiel + explications d'après les Collèges</small></div>
+  <div class="spacer"></div>
+  <div class="steps" id="steps"></div>
+  <div class="timer" id="timer" hidden>40:00</div>
+  <button class="btn small ghost" id="btnPause" hidden>Pause</button>
+</div></header>
+
+<main class="wrap">
+  <!-- Accueil -->
+  <section id="vStart">
+    <div class="hero">
+      <div>
+        <h1>5 épreuves, 37 questions</h1>
+        <p>Sujet de l'UE4.1 Neurologie de mars 2025, tel quel : 1 TCS, 1 KFP, 2 mini-DP et 15 questions isolées. Conditions d'examen type LUNESS, notation EDN (QRP : bonnes réponses ÷ réponses attendues ; TCS : 1 point si ta réponse fait partie de celles validées par le panel). Les erreurs probables du corrigé officiel sont signalées par ⚠️.</p>
+      </div>
+      <ul class="dplist" id="dpList"></ul><p class="note" style="margin-top:6px">Clique sur un dossier pour commencer par lui. Pendant l'épreuve, les étiquettes en haut à droite (QI, DP1…) et la grille de numéros permettent de changer de dossier à tout moment.</p>
+      <div class="rules">
+        <div class="rule"><b>60 minutes</b>Le chrono tourne pendant l'épreuve. À zéro, la copie est rendue.</div>
+        <div class="rule"><b>Navigation type LUNESS</b>Questions isolées et TCS : navigation libre, réponses modifiables jusqu'à la fin. DP et KFP (🔒) : on peut revenir relire, mais une réponse validée est verrouillée, et la question suivante s'ouvre une fois la précédente validée.</div>
+        <div class="rule"><b>Notation EDN</b>QRM : 1 / 0,5 / 0,2 / 0 selon 0, 1, 2 ou ≥ 3 erreurs ; indispensable oubliée ou inacceptable cochée : 0. QRP : bonnes réponses cochées ÷ réponses attendues. QROC : barème officiel.</div>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="btnStart">Commencer l'épreuve</button>
+        <button class="btn" id="btnResume" hidden>Reprendre</button>
+        <button class="btn ghost" id="btnDirect">Voir directement la correction</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Épreuve -->
+  <section id="vExam" hidden>
+    <div class="exam">
+      <div class="panel enonce" id="enonce"></div>
+      <div class="panel" id="qpanel"></div>
+    </div>
+  </section>
+
+  <!-- Résultats -->
+  <section id="vRes" hidden>
+    <div class="panel">
+      <div class="score">
+        <div><div class="big" id="sBig">0</div><div class="note" id="sSub"></div></div>
+        <div class="bars" id="sBars"></div>
+      </div>
+      <div class="grid-q" id="sGrid"></div>
+      <div class="actions"><button class="btn primary" id="btnCorr">Voir la correction détaillée</button><button class="btn" id="btnAgain">Repasser l'épreuve</button></div>
+    </div>
+  </section>
+
+  <!-- Correction -->
+  <section id="vCorr" hidden>
+    <div class="row" style="margin-bottom:12px"><h2 style="font-size:22px">Correction</h2><div class="spacer"></div><button class="btn small" id="btnBackRes">Résultats</button><button class="btn small" id="btnHome">Accueil</button></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="corr">
+      <div class="panel" id="corrMain"></div>
+      <aside class="panel course" id="course"></aside>
+    </div>
+  </section>
+</main>
+<div class="zoom" id="zoom" hidden><img alt="Image agrandie" id="zoomImg"></div>
+
+<script>
+const IMGS={};
+var img=function(k,alt){return `<img src="${IMGS[k]}" alt="${alt||""}" data-zoom>`};
+const EXAM = {
+"title": "Annale neuro MARS 2025",
+"dps": [
+{
+"id": "TCS1",
+"titre": "TCS · diplopie du sujet jeune",
+"items": "Items 82, 99",
+"free": true,
+"intro": "<p>Un homme de 31 ans consulte pour vision double présente les deux yeux ouverts.</p>",
+"qs": [
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensiez à une myasthénie</p><p><b>Nouvelle information :</b> Et que le patient ne présente pas de ptosis lors de l'examen clinique</p></div><p>L'impact sur votre hypothèse est?</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+2
+],
+"w": [
+0,
+0,
+1,
+0,
+0
+],
+"expl": "<p>Le ptosis manque souvent, surtout au moment de l'examen : la myasthénie <b>fluctue</b> (pire en fin de journée, à l'effort). Une diplopie isolée suffit pour y penser. Son absence ne fait donc ni monter ni baisser l'hypothèse.</p>",
+"retenir": "Myasthénie = fatigabilité fluctuante : un examen normal à un instant T n'élimine rien."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensiez à une hémorragie méningée par rupture anévrismale</p><p><b>Nouvelle information :</b> et que vous apprenez que le patient a des céphalées d’apparition brutales</p></div><p>L'impact sur votre hypothèse est?</p>",
+"opts": [
+"très peu probable",
+"peu probable",
+"ni plus ni moins probable",
+"probable",
+"très probable"
+],
+"ok": [
+4
+],
+"w": [
+0,
+0,
+0,
+0,
+1
+],
+"expl": "<p>Céphalée <b>brutale</b> (« coup de tonnerre », maximale en moins d'une minute) = hémorragie méningée jusqu'à preuve du contraire. C'est LE signe qui fait grimper l'hypothèse.</p>",
+"retenir": "Céphalée en coup de tonnerre → TDM sans injection ± PL : HSA à éliminer."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensiez à un AVC ischémique</p><p><b>Nouvelle information :</b> et que le patient est diabétique de type 1</p></div><p>L'impact sur votre hypothèse est?</p>",
+"opts": [
+"très peu probable",
+"peu probable",
+"ni plus ni moins probable",
+"probable",
+"très probable"
+],
+"ok": [
+3,
+4
+],
+"w": [
+0,
+0,
+0,
+1,
+1
+],
+"expl": "<p>Le diabète est un facteur de risque cardiovasculaire majeur (athérome, lacunes). Il rend l'AVC ischémique plus probable, d'où la double réponse du panel (probable / très probable).</p>",
+"retenir": "FDR CV (diabète, HTA, tabac…) = arguments en faveur d'un AVC ischémique."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensiez à une sclérose en plaques</p><p><b>Nouvelle information :</b> et que le patient n’a jamais eu d’épisode neurologique antérieur</p></div><p>L'impact sur votre hypothèse est?</p>",
+"opts": [
+"très peu probable",
+"peu probable",
+"ni plus ni moins probable",
+"probable",
+"très probable"
+],
+"ok": [
+1,
+2
+],
+"w": [
+0,
+1,
+1,
+0,
+0
+],
+"expl": "<p>La SEP se définit par la <b>dissémination dans le temps</b> (et l'espace). Un premier épisode n'élimine pas une SEP (syndrome cliniquement isolé, et l'IRM peut déjà montrer une dissémination temporelle) mais l'hypothèse baisse un peu.</p>",
+"retenir": "SEP = dissémination spatiale + temporelle, clinique et/ou IRM."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensiez à une myopathie</p><p><b>Nouvelle information :</b> et que le patient a un déficit moteur distal des membres inférieurs</p></div><p>L'impact sur votre hypothèse est?</p>",
+"opts": [
+"très peu probable",
+"peu probable",
+"ni plus ni moins probable",
+"probable",
+"très probable"
+],
+"ok": [
+2,
+3
+],
+"w": [
+0,
+0,
+1,
+1,
+0
+],
+"expl": "<p>La myopathie donne classiquement un déficit <b>proximal</b> et symétrique. Mais certaines myopathies sont distales (Steinert, myopathies distales…). Un déficit distal ne fait donc pas franchement monter l'hypothèse : le panel est partagé entre neutre et probable.</p>",
+"retenir": "Déficit proximal → myopathie ; déficit distal → pense d'abord neuropathie (sauf Steinert)."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Myasthénie = fatigabilité fluctuante : un examen normal à un instant T n'élimine rien.</li><li>Céphalée en coup de tonnerre → TDM sans injection ± PL : HSA à éliminer.</li><li>FDR CV (diabète, HTA, tabac…) = arguments en faveur d'un AVC ischémique.</li><li>SEP = dissémination spatiale + temporelle, clinique et/ou IRM.</li><li>Déficit proximal → myopathie ; déficit distal → pense d'abord neuropathie (sauf Steinert).</li></ul>"
+},
+{
+"id": "KFP1",
+"titre": "Troubles de la marche et niveau sensitif T6",
+"items": "Item 92",
+"free": false,
+"intro": "<p>Une patiente de 45 ans est adressée aux urgences pour des troubles de la marche d’aggravation progressive depuis 2 semaines plus marqués sur le membre inférieur gauche. Elle a présenté également de façon concomitante une douleur lombaire thoracique lors d’un port de charge. Quand vous reprenez l’interrogatoire, elle semble dire qu’elle sent moins l’eau chaude sur le membre inférieur droit depuis peu. Elle ne présente pas de difficulté pour uriner. Elle ne présente pas d’antécédent particulier. Les paramètres vitaux de la patiente à son arrivée dans le service d’accueil des urgences sont les suivantes : T à 36,8 °C, PA 102/48 mmHg, Fc à 55 bpm, SpO2 99%.A l’examen clinique, la patiente ne présente pas de franc déficit moteur au membre inférieur gauche, mais une hypopallesthésie distale avec des anomalies au sens de position du gros orteil gauche, associé à une hypoesthésie thermoalgique de la jambe droite et des réflexes vifs aux 4 membres prédominant à gauche, avec un signe de Babinski à gauche. Elle présente également des douleurs en ceinture thoracique avec une anesthésie clinique au niveau de T6.</p>",
+"qs": [
+{
+"type": "qru",
+"q": "<p>Parmi les diagnostiques suivants, lequel vous semble le plus probable ?</p>",
+"opts": [
+"méningo-encéphalite",
+"compression médullaire",
+"méningite",
+"méningo-radiculite",
+"encéphalopathie"
+],
+"ok": [
+1
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>La compression médullaire: dans cette situation la patiente présente l’association d’un syndrome lésionnel, un syndrome sous lésionnel et d’un syndrome douloureux rachidien compatible avec une compression médullaire.</p></div>",
+"retenir": "Syndrome lésionnel + sous-lésionnel + rachialgie = compression médullaire → IRM en urgence."
+},
+{
+"type": "qru",
+"q": "<p>Vous suspectez une compression médullaire. Est-il possible de préciser le syndrome neurologique clinique ?</p>",
+"opts": [
+"syndrome de Brown-Séquard",
+"syndrome de Wallenberg",
+"syndrome de la queue de cheval",
+"syndrome de Claude Bernard-Horne",
+"syndrome de Pancoast-Tobias"
+],
+"ok": [
+0
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Le syndrome de Brown-Séquard, qui est une atteinte de l’hémi moelle avec une atteinte proprioceptive et épicritique homolatérale à la lésion et une atteinte thermo algique controlatérale. S’y associe également un syndrome pyramidal homolatéral.</p></div>",
+"retenir": "Brown-Séquard : pyramidal + proprioceptif homolatéraux, thermo-algique controlatéral."
+},
+{
+"type": "qrm",
+"q": "<p>Vous suspectez un syndrome de Brown-Séquard sur un phénomène compressif. En attendant les résultats de l’IRM médullaire réalisée en urgence, vous réfléchissez aux différents étiologies possibles ? Parmi ces étiologies, lesquelles pouvez-vous évoquer (max 4) ?</p>",
+"opts": [
+"métastases vertébrales avec épidurite",
+"hématome épidural",
+"spondylodiscite avec épidurite",
+"accident ischémique médullaire",
+"neurinomes",
+"myélopathie cervico-arthrosique",
+"syringomyélie",
+"hernie cervicale",
+"carence en vitamine B12",
+"canal lombaire étroit"
+],
+"ok": [
+0,
+1,
+2,
+4
+],
+"qrp": true,
+"label": "QRP (4)",
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Dans le cadre de phénomène ischémique, l’atteinte clinique prédomine au niveau des cornes antérieures de la moelle. L'atteinte clinique décrite se situe plutôt en thoracique et non cervicale. La syringomyélie a une présentation plutôt de douleurs (névralgie cervicobrachiale, épaule et bras, à type d'étau ou de brûlures), syndrome suspendu – c'est-à-dire ne touchant qu'une fraction des métamères – au niveau des membres supérieurs le plus souvent avec déficit moteur, amyotrophie, aréflexie, hypoesthésie dissociée (purement thermoalgique suspendue, scoliose dans un tiers des cas. La carence en vitamine B12 est plutôt responsable d'un syndrome cordonnal postérieur.</p></div>",
+"retenir": "Compression médullaire lente ou rapide : métastase / épidurite, hématome, spondylodiscite, tumeur (neurinome, méningiome)."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Syndrome lésionnel + sous-lésionnel + rachialgie = compression médullaire → IRM en urgence.</li><li>Brown-Séquard : pyramidal + proprioceptif homolatéraux, thermo-algique controlatéral.</li><li>Compression médullaire lente ou rapide : métastase / épidurite, hématome, spondylodiscite, tumeur (neurinome, méningiome).</li></ul>"
+},
+{
+"id": "mDP1",
+"titre": "Diplopie fluctuante et ptosis : myasthénie",
+"items": "Item 99",
+"free": false,
+"intro": "<p>Madame L., 42 ans, consulte en neurologie pour une gêne visuelle apparue progressivement il y a quelques semaines, au décours d’une infection respiratoire virale. Elle se plaignait d’une vision double, particulièrement en fin de journée et voyait deux écrans l’un à côté de l’autre, et de difficultés à garder la paupière droite ouverte après une journée de travail. Aucune notion de traumatisme crânien n'est retrouvée.</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>L’examen clinique réalisé ce matin est sans anomalie. En particulier vous ne retrouvez pas de paralysie oculomotrice. Dans l’hypothèse d’une atteinte du nerf abducens (VI) ou du muscle droit latéral qu’auriez-vous constaté cliniquement ?</p>",
+"opts": [
+"une diplopie binoculaire verticale",
+"une diplopie binoculaire horizontale",
+"une mydriase aréactive à la lumière",
+"une limitation de l’abduction",
+"une paralysie de l’élévation"
+],
+"ok": [
+1,
+3
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Dans l’atteinte du nerf abducens (VI) ou du muscle droit latéral on retrouve une diplopie binoculaire horizontale dans le regard au loin et une limitation de l’abduction. La diplopie binoculaire verticale est retrouvée dans l’atteinte du nerf trochléaire (IV) ou du muscle oblique supérieur. On retrouve une mydriase aréactive à la lumière et une paralysie de l’élévation plutôt dans l’atteinte du nerf oculomoteur (III)</p></div>",
+"retenir": "VI = diplopie horizontale + limitation de l'abduction ; IV = verticale ; III = ptosis, mydriase, œil en dehors."
+},
+{
+"type": "qrm",
+"q": "<p>La combinaison des symptômes de ptosis et de diplopie, en particulier fluctuant, vous fait évoquer le diagnostic de myasthénie. Quels éléments cliniques allez-vous rechercher en urgence pour décider du mode de prise en charge ?</p>",
+"opts": [
+"dyspnée",
+"trouble de la déglutition",
+"ptosis bilatéral",
+"orthopnée",
+"trouble de la phonation"
+],
+"ok": [
+0,
+1,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Complications vitales possibles lors des crises myasthéniques, se manifestant par des troubles de la déglutition et respiratoires, avec dyspnée et encombrement. Les crises sévères nécessitent une hospitalisation en réanimation.</p></div>",
+"retenir": "Myasthénie : chercher en urgence troubles de déglutition, de phonation et respiratoires (crise = réa)."
+},
+{
+"type": "qru",
+"q": "<p>Quelle est la physiopathologie sous-jacente à la myasthénie ?</p>",
+"opts": [
+"Dégénérescence des motoneurones.",
+"Anticorps dirigés contre les récepteurs à l'acétylcholine.",
+"Blocage de la libération de l’acétylcholine par les terminaisons nerveuses.",
+"Démyélinisation des nerfs périphériques.",
+"Dégénérescence des fibres musculaires."
+],
+"ok": [
+1
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>La myasthénie est une maladie auto-immune liée à un blocage des récepteurs de la plaque motrice par des anticorps anti-récepteurs de l'acétylcholine ou d'autres types d'anticorps induisant un dysfonctionnement de la transmission neuromusculaire : il s'agit d'un bloc post- synaptique.</p></div>",
+"retenir": "Myasthénie = bloc post-synaptique auto-immun (anti-RACh surtout, anti-MuSK)."
+},
+{
+"type": "qrm",
+"q": "<p>Mme L, inquiète, vous demande s’il est nécessaire de réaliser des examens complémentaires, en plus de la prise de sang à la recherche des anticorps spécifiques, que lui proposez-vous ?</p>",
+"opts": [
+"Electroneuromyogramme (ENMG)",
+"Electroencéphalogramme (EEG)",
+"IRM cérébrale",
+"IRM médullaire",
+"Scanner thoracique"
+],
+"ok": [
+0,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>L'examen électrophysiologique permet de mettre en évidence le bloc neuromusculaire. Le nerf moteur est stimulé à la fréquence de 3 Hz et l'amplitude de la réponse musculaire (potentiel moteur) est enregistrée. Dans le syndrome myasthénique, la perturbation de la transmission</p><p>neuromusculaire entraîne une diminution de l'amplitude du potentiel moteur (décrément) qui est supérieure à 10 %. Le scanner thoracique sans injection doit être systématique devant toute suspicion de myasthénie, afin d'explorer la loge thymique à la recherche d'une hyperplasie thymique ou d'un thymome (bénin ou malin).</p></div>",
+"retenir": "Bilan myasthénie : anticorps, ENMG (décrément > 10 % à 3 Hz), TDM thoracique (thymome)."
+},
+{
+"type": "qru",
+"q": "<p>Quel traitement peut être proposé en première ligne pour soulager les symptômes oculaires isolés ?</p>",
+"opts": [
+"Corticostéroïdes oraux.",
+"Inhibiteurs de l’acétylcholinestérase.",
+"Plasmaphérèse.",
+"Immunoglobulines intraveineuses.",
+"Immunosuppresseurs oraux."
+],
+"ok": [
+1
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Les anticholinestérasiques seront prescrits en première intention, permettant d'améliorer transitoirement les symptômes musculaires. Ils prolongent l'action de l'acétylcholine au niveau de la membrane post-synaptique par blocage réversible de l'acétylcholinestérase. Les traitements immunomodulateurs (corticostéroïdes, plasmaphérèse, immunoglobulines) sont réservés aux formes plus sévères ou résistantes.</p></div>",
+"retenir": "Traitement symptomatique de 1re ligne : anticholinestérasiques (pyridostigmine)."
+},
+{
+"type": "qrm",
+"q": "<p>Devant cette forme oculaire pure à anticorps anti-récepteurs à l'acétylcholine positifs et sans thymome, vous mettez en place uniquement un traitement par anticholinestérasique 3 fois par jour et vous la prévenez des contre-indications médicamenteuses. La patiente semble bien répondre au traitement. Elle se présente aux urgences en fin de journée quelques mois plus tard pour des difficultés respiratoires. Cliniquement : température 37,9 °C, PA 102/45 mmHg, FC 45 bpm, SpO2 96 % en air ambiant, FR 30 cycles/min. La patiente présente des difficultés à faire des phrases complètes, mais vous explique qu’elle a augmenté d’elle-même les doses de son traitement anticholinestérasique devant une plus grande fatigabilité à l’effort. Vous suspectez dans ce contexte une crise cholinergique, quels symptômes sont compatibles avec cette dernière ?</p>",
+"opts": [
+"Crampes musculaires",
+"Constipation",
+"Hypersécrétions bronchiques",
+"Sécheresse buccale",
+"Fasciculations"
+],
+"ok": [
+0,
+2,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Risque de la survenue d'une crise cholinergique en cas de surdosage, en particulier chez les patients dont la myasthénie se décompense : hypersécrétion bronchique, accentuation de la faiblesse musculaire, fasciculations et crampes musculaires.</p></div>",
+"retenir": "Crise cholinergique = surdosage : fasciculations, crampes, hypersécrétion, diarrhée, myosis, bradycardie."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>VI = diplopie horizontale + limitation de l'abduction ; IV = verticale ; III = ptosis, mydriase, œil en dehors.</li><li>Myasthénie : chercher en urgence troubles de déglutition, de phonation et respiratoires (crise = réa).</li><li>Myasthénie = bloc post-synaptique auto-immun (anti-RACh surtout, anti-MuSK).</li><li>Bilan myasthénie : anticorps, ENMG (décrément > 10 % à 3 Hz), TDM thoracique (thymome).</li><li>Traitement symptomatique de 1re ligne : anticholinestérasiques (pyridostigmine).</li><li>Crise cholinergique = surdosage : fasciculations, crampes, hypersécrétion, diarrhée, myosis, bradycardie.</li></ul>"
+},
+{
+"id": "mDP2",
+"titre": "Steppage puis tremblement : fibulaire commun et Parkinson",
+"items": "Items 93, 106",
+"free": false,
+"intro": "<p>M. Z, 67 ans consulte ce jour pour des chutes à répétitions depuis 1 mois. Sa conjointe vous rapporte qu’il semble toujours se prendre le pied droit dans le tapis ou sur des petites marches. Le patient n’a jamais eu besoin de suivi médical, mais a repris une activité physique depuis sa retraite et a perdu du poids dans ce contexte. Il dit aussi beaucoup s’occuper de son jardin à genou. Vous retrouvez à l’examen clinique un steppage du pied droit lors de la marche.</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Devant ce steppage vous suspectez une atteinte tronculaire du nerf fibulaire commun droit, quels en sont les signes cliniques ?</p>",
+"opts": [
+"une douleur de la face latérale de cuisse irradiant jusqu'au dos du pied droit",
+"un déficit sensitif du dos du pied droit",
+"un déficit moteur du jambier antérieur droit",
+"un déficit moteur du triceps sural droit",
+"un déficit sensitif du bord externe du pied droit"
+],
+"ok": [
+1,
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Une atteinte du nerf fibulaire droit se caractérise par déficit sensitif discret intéressant une zone cutanée du dos du pied (cou-de-pied) pouvant s'étendre sur la face antéro-latérale de la jambe et un déficit des muscles de la loge antéro-latérale de jambe (fibulaire, tibial antérieur, long extenseur des orteils, long extenseur de l'hallux, court extenseur des orteils).</p></div>",
+"retenir": "Fibulaire commun : steppage (releveurs) + déficit sensitif du dos du pied, réflexes conservés."
+},
+{
+"type": "qrm",
+"q": "<p>Dans votre interrogatoire et votre examen quels éléments cliniques devez-vous relever rapidement afin d’orienter la prise en charge ?</p>",
+"opts": [
+"un prurit de la jambe droite",
+"un syndrome douloureux aigu de la jambe droite",
+"la présence de lésion cutanée de la jambe droite",
+"une abolition du réflexe achilléen de la jambe droite",
+"une amyotrophie de la loge antérieure de la jambe droite"
+],
+"ok": [
+1,
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>les éléments cliniques à rechercher sont ceux évocateurs d’une mono-neuropathie en lien avec une vascularite dont la prise en charge est une urgence médicale.</p></div>",
+"retenir": "Mononeuropathie : chercher douleur et lésions cutanées (vascularite) avant de conclure à une compression."
+},
+{
+"type": "qrm",
+"q": "<p>Vous retenez finalement le diagnostic de compression externe indolore du nerf fibulaire commun droit en rapport avec l’amaigrissement du patient et la position agenouillée. Vous prévoyez quand même de réaliser une prise de sang pour rechercher des facteurs favorisants. Quels sont les examens de biologie standard qui vous intéressent dans ce contexte ?</p>",
+"opts": [
+"Numération formule sanguine",
+"Bilan hépatique",
+"Glycémie à jeun",
+"Bilan d’hémostase",
+"TSH"
+],
+"ok": [
+0,
+2,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>glycémie à jeun; numération formule sanguine avec vitesse de sédimentation (augmentée en cas de vascularite). Et, selon le contexte, toujours dans un second temps : recherche d'une hypothyroïdie;</p></div>",
+"retenir": "Neuropathie : NFS-VS, glycémie, TSH en 1re intention (± B12, alcool, électrophorèse)."
+},
+{
+"type": "qrm",
+"q": "<p>M. Z a bien récupéré de son steppage avec les conseils positionnels et des séances de kinésithérapie. Il ne présentait pas de facteur favorisant biologique particulier. Il consulte 3 ans plus tard dans votre cabinet dans un contexte de raideur du membre inférieur droit avec plus de difficulté à la marche et se demande si son ancien déficit moteur n’en est pas la cause. Entre temps, il a eu un diagnostic de tendinopathie de l’épaule droite découverte dans un contexte de réduction d’amplitude de cette épaule. Il ne prend pas de traitement. Lors de la consultation, alors que le patient est assis en face de vous, vous constatez un tremblement distal du membre supérieur droit. Vous émettez dans un premier temps l’hypothèse d’un tremblement essentiel, quelles caractéristiques cliniques pourriez-vous retrouver en faveur de ce tremblement ?</p>",
+"opts": [
+"tremblement de repos",
+"tremblement postural",
+"tremblement touchant la voix",
+"tremblement rapide (6-12Hz)",
+"tremblement unilatéral"
+],
+"ok": [
+1,
+2,
+3
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Le tremblement essentiel est un tremblement d'action, à la fois postural et intentionnel qui évolue lentement sur plusieurs années, parfois plusieurs décennies. Il est habituellement bilatéral et symétrique, d'une fréquence de 6 à 12 Hz, touchant les membres supérieurs, le chef, la voix et les membres inférieurs. Il est volontiers amélioré par la prise d'alcool mais aggravé par les émotions et la caféine. Il existe souvent des antécédents familiaux de tremblement d'action.</p></div>",
+"retenir": "Tremblement essentiel : postural / d'action, bilatéral, rapide, touche tête et voix, mieux avec l'alcool."
+},
+{
+"type": "qrm",
+"q": "<p>Cliniquement vous constatez un tremblement de repos, uniquement à droite, et à l’interrogatoire, le patient ne rapporte pas d’antécédent familiaux de tremblement. Il avait d’ailleurs à peine remarqué ce tremblement. Vous avez une nouvelle hypothèse en tête, quels autres arguments cliniques allez-vous rechercher dans ce contexte ?</p>",
+"opts": [
+"une rigidité spastique",
+"une rigidité plastique",
+"une adiadococinésie",
+"une hypokinésie",
+"une hypomimie"
+],
+"ok": [
+1,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Le syndrome parkinsonien de la maladie de Parkinson est défini par l'association d'une bradykinésie (ralentissement à l'exécution d'un mouvement et décrément de la vitesse), associée potentiellement à une réduction d'amplitude – hypokinésie – et à un défaut d'initiation – akinésie –, avec au moins une rigidité dite plastique ou un tremblement de repos.</p></div>",
+"retenir": "Syndrome parkinsonien = akinésie (hypokinésie, hypomimie) + rigidité plastique et/ou tremblement de repos."
+},
+{
+"type": "qrm",
+"q": "<p>En dehors de ces signes moteurs, quels autres éléments à l’interrogatoire pouvez-vous retrouver en faveur d’une maladie de Parkinson ?</p>",
+"opts": [
+"constipation",
+"hyposmie",
+"hypoacousie",
+"trouble du comportement en sommeil paradoxal",
+"présence de tics moteurs"
+],
+"ok": [
+0,
+1,
+3
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>D'autres formes de début ont été rapportées plus récemment sous forme d'un déficit de l'odorat (hyposmie) par atteinte du noyau du nerf olfactif ou de troubles du comportement en sommeil paradoxal (il s'agit de véritables rêves animés et/ou cauchemars qui peuvent être responsables d'actes auto ou hétéro-agressifs). Ces symptômes, ainsi que la constipation, peuvent précéder les troubles moteurs de plusieurs années</p></div>",
+"retenir": "Signes pré-moteurs du Parkinson : hyposmie, constipation, TCSP, dépression."
+},
+{
+"type": "qru",
+"q": "<p>Vous expliquez au patient votre suspicion diagnostique qui est celle d’une maladie de Parkinson. Le patient vous demande s’il est nécessaire de réaliser des examens complémentaires afin de poser le diagnostic. A son âge, quels examens sont nécessaires pour poser le diagnostic ?</p>",
+"opts": [
+"IRM cérébrale",
+"DAT-Scanner",
+"PET à la Fluoro-dopa",
+"Aucun",
+"Angioscanner des troncs supra aortiques"
+],
+"ok": [
+3
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Le diagnostic est clinique. Aucun examen complémentaire n'est justifié, sauf chez les sujets de moins de 40 ans.</p></div>",
+"retenir": "Parkinson typique : diagnostic clinique, aucun examen nécessaire."
+},
+{
+"type": "qrm",
+"q": "<p>Le patient rentre chez lui avec un courrier pour consulter un neurologue, mais dès le lendemain il vous rappelle car il a vu sur internet qu’il existait d’autres syndromes parkinsoniens dit atypiques et veut en savoir plus. Quels sont les éléments cliniques à rechercher, considérés comme « drapeaux rouges » dans le cadre d’une maladie de Parkinson ?</p>",
+"opts": [
+"Chutes précoces",
+"Troubles cognitifs précoces",
+"Syndrome pyramidal",
+"Syndrome cérébelleux",
+"Troubles oculomoteurs"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Les drapeaux rouges en faveur d'un syndrome parkinsonien atypique sont : absence de réponse prolongée au traitement dopaminergique, progression rapide avec chutes précoces, signes précoces d’atteinte cognitive, pseudo-bulbaire, ou de dysautonomie, syndrome cérébelleux, atteinte pyramidale, troubles oculomoteurs et signes corticaux.</p></div>",
+"retenir": "Drapeaux rouges : chutes et troubles cognitifs précoces, signes pyramidaux, cérébelleux, oculomoteurs."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Fibulaire commun : steppage (releveurs) + déficit sensitif du dos du pied, réflexes conservés.</li><li>Mononeuropathie : chercher douleur et lésions cutanées (vascularite) avant de conclure à une compression.</li><li>Neuropathie : NFS-VS, glycémie, TSH en 1re intention (± B12, alcool, électrophorèse).</li><li>Tremblement essentiel : postural / d'action, bilatéral, rapide, touche tête et voix, mieux avec l'alcool.</li><li>Syndrome parkinsonien = akinésie (hypokinésie, hypomimie) + rigidité plastique et/ou tremblement de repos.</li><li>Signes pré-moteurs du Parkinson : hyposmie, constipation, TCSP, dépression.</li><li>Parkinson typique : diagnostic clinique, aucun examen nécessaire.</li><li>Drapeaux rouges : chutes et troubles cognitifs précoces, signes pyramidaux, cérébelleux, oculomoteurs.</li></ul>"
+},
+{
+"id": "SQI1",
+"titre": "15 questions isolées de neuro",
+"items": "Items 91-106, 335, 340",
+"free": true,
+"intro": "<p>Questions isolées</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Vous accueillez aux Urgences Mr A. Vaissé qui a depuis 2h un déficit neurologique de l’hémicorps droit apparu subitement. En cas d’infarctus sylvien superficiel, vous pourriez observer :</p>",
+"opts": [
+"Déficit moteur à prédominance brachiofaciale droite",
+"Hémianopsie latérale homonyme gauche",
+"Ataxie",
+"Aphasie de Wernicke",
+"Apraxie idéomotrice et idéatoire"
+],
+"ok": [
+0,
+3,
+4
+],
+"expl": "<p>Infarctus sylvien superficiel <b>gauche</b> (déficit droit) : déficit moteur brachio-facial controlatéral, aphasie (Wernicke si atteinte postérieure, temporale), apraxie idéomotrice (pariétal gauche).</p><p>HLH <b>gauche</b> : faux, une lésion gauche donne une HLH droite. Ataxie : pas sylvien, plutôt cervelet / tronc.</p>",
+"retenir": "Sylvien superficiel G : brachio-facial D + aphasie + apraxie ± HLH D."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les réponses suivantes, laquelle(lesquelles) est(sont) un(des) diagnostic(s) différentiel(s) d’accident ischémique transitoire ?</p>",
+"opts": [
+"Aura migraineuse",
+"Crise épileptique partielle",
+"Hyperglycémie",
+"Lipothymie",
+"Trouble fonctionnel neurologique"
+],
+"ok": [
+0,
+1,
+3,
+4
+],
+"expl": "<p>Différentiels de l'AIT : aura migraineuse (marche progressive), crise focale (déficit post-critique de Todd), trouble fonctionnel, mais aussi hypoglycémie (pas hyperglycémie !), syncope / lipothymie, vertige périphérique…</p><p>L'hyperglycémie n'est pas un piège classique, c'est l'<b>hypoglycémie</b> qu'il faut éliminer (glycémie capillaire systématique).</p>",
+"retenir": "Devant tout déficit transitoire : glycémie capillaire (hypo, pas hyper)."
+},
+{
+"type": "qrm",
+"q": "<p>En cas de dissection carotidienne, on peut observer cliniquement :</p>",
+"opts": [
+"Scapulalgies",
+"Céphalée",
+"Syndrome de Claude Bernard-Horner",
+"Paralysie des nerfs crâniens oculomoteurs (III, IV, VI)",
+"Vertiges"
+],
+"ok": [
+1,
+2
+],
+"expl": "<p>Dissection carotidienne : douleur cervicale / <b>céphalée</b> homolatérale + <b>Claude Bernard-Horner</b> (fibres sympathiques péri-carotidiennes) ± acouphène pulsatile, paralysie des nerfs crâniens bas (IX-XII), puis signes ischémiques.</p><p>Les nerfs oculomoteurs (III, IV, VI) ne sont pas touchés classiquement. Les vertiges évoquent plutôt une dissection <b>vertébrale</b>.</p>",
+"retenir": "Dissection carotide = douleur + CBH ; dissection vertébrale = cervicalgie postérieure + vertiges / AVC postérieur."
+},
+{
+"type": "qrm",
+"q": "<p>En cas de compression médullaire de niveau C2, quel(s) trouble(s) peu(ven)t être retrouvé(s) ?</p>",
+"opts": [
+"Paraplégie spastique",
+"Paralysie diaphragmatique",
+"Névralgie cervico-brachiale",
+"Paralysie faciale",
+"Hoquet"
+],
+"ok": [
+1,
+4
+],
+"expl": "<p>C2 est au-dessus de C3-C5 (nerf phrénique) : paralysie diaphragmatique, hoquet. L'atteinte haute donne une <b>tétraplégie</b>, pas une paraplégie.</p><p>Névralgie cervico-brachiale : C5-C8, pas C2 (névralgie d'Arnold). Paralysie faciale : VII = tronc cérébral.</p>",
+"retenir": "C3-C4-C5 = nerf phrénique : compression haute = risque respiratoire."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les réponses suivantes, laquelle(lesquelles) est(sont) juste(s) concernant les céphalées de tension ? rang A</p>",
+"opts": [
+"Durent entre 30 minutes et 7 jours",
+"Bilatérales",
+"A type de pression ou de serrement",
+"Présence de nausée et/ou vomissement",
+"Présence possible de phonophobie"
+],
+"ok": [
+0,
+1,
+2,
+4
+],
+"expl": "<p>Céphalée de tension : 30 min à 7 jours, bilatérale, en étau / pression, non pulsatile, intensité légère à modérée, pas aggravée par l'effort. Pas de nausées ni vomissements. Photophobie <b>ou</b> phonophobie possible (une seule des deux).</p>",
+"retenir": "Tension = bilatérale, en étau, 30 min-7 j, pas de nausées."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les réponses suivantes, laquelle(lesquelles) est(sont) juste(s) concernant la douleur de la névralgie du trijumeau ?</p>",
+"opts": [
+"Peu intense",
+"Fulgurante",
+"Durée modérée (plusieurs minutes)",
+"Bilatérale",
+"Affecte moins la branche ophtalmique V1"
+],
+"ok": [
+1,
+4
+],
+"expl": "<p>Névralgie du trijumeau : douleur <b>fulgurante</b> en décharges électriques (quelques secondes), très intense, <b>unilatérale</b>, avec zone gâchette. Elle touche surtout V2 et V3, plus rarement V1.</p>",
+"retenir": "Trijumeau essentiel : décharges brèves, unilatérales, V2-V3, examen normal."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les réponses suivantes, laquelle(lesquelles) peu(ven)t être retrouvé(s) dans la névrite optique rétro-bulbaire dans la Sclérose en plaques (SEP) ?</p>",
+"opts": [
+"Phénomène inaugurale dans 3/4 des SEP",
+"Présence d’une baisse d’acuité visuelle",
+"Installation sur quelques minutes",
+"Fond d’œil montrant souvent un œdème papillaire au début",
+"Présence d’une dyschromatopsie d’axe rouge-vert"
+],
+"ok": [
+1,
+4
+],
+"expl": "<p>NORB : baisse d'acuité visuelle installée en <b>quelques jours</b>, douleur à la mobilisation du globe, dyschromatopsie d'axe rouge-vert, scotome central. Le FO est souvent <b>normal</b> au début (« le patient ne voit rien, le médecin non plus »).</p><p>Inaugurale dans environ 20-30 % des SEP, pas 3/4.</p>",
+"retenir": "NORB : BAV subaiguë + douleur oculaire + dyschromatopsie rouge-vert, FO normal."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les éléments suivants, le(s)quel(s) peu(ven)t être des signes moteurs de crise d’épilepsie généralisée ?</p>",
+"opts": [
+"Crises toniques",
+"Crises cloniques",
+"Crises myocloniques",
+"Crises spastiques",
+"Crises aphasiques"
+],
+"ok": [
+0,
+1,
+2
+],
+"expl": "<p>Crises généralisées motrices : tonico-cloniques, toniques, cloniques, myocloniques, atoniques. « Spastique » n'est pas un type de crise. L'aphasie est un signe <b>focal</b>.</p>",
+"retenir": "Signe focal (aphasie, déficit d'un membre) = crise focale, pas généralisée."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les réponses suivantes, la(s)quelle(s) est(sont) justes concernant la prise en charge d’un état de mal épileptique ? rang B</p>",
+"opts": [
+"En première ligne de traitement : Benzodiazépine en intraveineuse lente, répétée une fois si échec au bout de 5 minutes",
+"En première ligne de traitement : antiépileptique d'action prolongée en IV à la seringue électrique",
+"En deuxième ligne de traitement : en cas d'échec des benzodiazépine, antiépileptique d'action prolongée en IV à la seringue électrique",
+"En troisième ligne de traitement : si persistance de l'état de mal 20 minutes après traitement de deuxième ligne, sédation (propofol ou midazolam ou thiopental) avec intubation orotrachéale",
+"Traitement étiologique"
+],
+"ok": [
+0,
+2,
+4
+],
+"expl": "<p>EME tonico-clonique : 1re ligne = <b>benzodiazépine</b> (clonazépam IVL ou midazolam IM), répétable une fois à 5 min. 2e ligne = antiépileptique d'action prolongée IV (fosphénytoïne, valproate, lévétiracétam). 3e ligne si persistance à 30 min (pas 20) : coma thérapeutique en réa. Toujours le traitement étiologique.</p>",
+"retenir": "EME : BZD (×2) → AE IV longue durée → anesthésie générale à 30 min."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les réponses suivantes, la(s)quelle(s) peu(vent) être retrouvées dans un syndrome de Gayet-Wernicke ?</p>",
+"opts": [
+"Inversion du rythme nycthéméral",
+"Ptosis",
+"Nystagmus",
+"Marche en tandem difficile",
+"Hypertonie plastique"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<p>Gayet-Wernicke (carence B1) : confusion, troubles oculomoteurs (<b>nystagmus</b>, paralysie oculomotrice), syndrome cérébelleux statique (marche en tandem impossible). Troubles de vigilance / du rythme veille-sommeil possibles.</p><p>Hypertonie plastique : syndrome parkinsonien, hors sujet. Le ptosis n'est pas classique.</p>",
+"retenir": "Wernicke = confusion + oculomotricité + ataxie → B1 IV AVANT le glucose."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les réponses suivantes, la(s)quelle(s) peu(vent) être des symptômes ou signes moteurs d’un syndrome du canal carpien ?</p>",
+"opts": [
+"Paresthésies des trois derniers doigts",
+"Hypoesthésies à tous les modes de la face palmaire des trois premiers doigts",
+"Signe de Tinel",
+"Difficulté pour mettre les boutons ou tourner une clé dans une serrure",
+"Amyotrophie thénarienne"
+],
+"ok": [
+1,
+2,
+3,
+4
+],
+"expl": "<p>Canal carpien = nerf médian : paresthésies / hypoesthésie des <b>3 premiers doigts</b> (+ moitié du 4e), Tinel, Phalen, maladresse fine, puis amyotrophie thénarienne (forme évoluée). Les 3 derniers doigts, c'est plutôt le cubital.</p>",
+"retenir": "Médian = 3 premiers doigts + thénar ; cubital = 2 derniers + hypothénar."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les symptômes ou signes suivants, le(s)quel(s) peu(vent) être classiquement retrouvé(s) dans un syndrome de Guillain-Barré ?</p>",
+"opts": [
+"Paresthésies des quatre membres",
+"Troubles sensitifs d’évolution descendante",
+"Parésie débutant aux membres inférieurs",
+"Parésie touchant souvent les nerfs crâniens à la phase initiale",
+"Parésie qui prédomine en distal initialement"
+],
+"ok": [
+0,
+2
+],
+"expl": "<p>Guillain-Barré : paresthésies distales des 4 membres, déficit <b>ascendant</b> débutant aux MI, symétrique, aréflexie. L'atteinte faciale (diplégie) apparaît souvent secondairement, pas à la phase initiale. Le déficit est classiquement proximal et distal (polyradiculonévrite), pas distal pur.</p>",
+"retenir": "GBS : ascendant, symétrique, aréflexique, dissociation albumino-cytologique."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les symptômes ou signes suivants, le(s)quel(s) peu(vent) être classiquement retrouvé(s) dans une paralysie faciale centrale ?</p>",
+"opts": [
+"Prédominance sur la partie inférieure du visage",
+"Impossibilité de siffler ou de gonfler les joues",
+"Attraction de la bouche du côté atteint lors du sourire",
+"Signe de Charles Bell",
+"Agueusie des deux tiers antérieurs de l'hémilangue"
+],
+"ok": [
+0,
+1
+],
+"expl": "<p>PF centrale : atteinte de la partie <b>inférieure</b> du visage (le front est épargné car le contingent supérieur a une innervation bilatérale), avec dissociation automatico-volontaire.</p><p>Signe de Charles Bell et agueusie des 2/3 antérieurs : PF <b>périphérique</b>. Et dans toute PF, la bouche est attirée du côté <b>sain</b>, pas du côté atteint.</p>",
+"retenir": "Centrale = bas du visage, front respecté ; périphérique = tout l'hémiface + Charles Bell."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les éléments suivants, quel(s) est(sont) celui(ceux) qui est(sont) un(des) drapeau(x) roug(e) de la maladie de Parkinson on peut retrouver :</p>",
+"opts": [
+"Pas réponse prolongée au traitement dopaminergique",
+"Evolution rapide de la maladie",
+"Chutes précoces",
+"Hypotension artérielle orthostatique sévère",
+"Syndrome pyramidal"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4
+],
+"expl": "<p>Drapeaux rouges d'un syndrome parkinsonien atypique (AMS, PSP…) : pas de réponse durable à la L-dopa, évolution rapide, chutes précoces, dysautonomie sévère (HTO), syndrome pyramidal ou cérébelleux, troubles oculomoteurs, troubles cognitifs précoces. Les 5 propositions en font partie.</p>",
+"retenir": "Parkinson atypique = mauvaise réponse dopa + chutes, dysautonomie, signes pyramidaux / cérébelleux précoces."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les réponses suivantes, laquelle(lesquelles) est(sont) justes concernant l’atteinte cognitive en lien avec une lésion pariétale inférieure gauche ?</p>",
+"opts": [
+"Présence d’une dysarthrie",
+"Présence d’une acalculie",
+"Présence d’une indistinction entre la droite et la gauche",
+"Présence d’une agnosie digitale",
+"Présence d’une micrographie"
+],
+"ok": [
+1,
+2,
+3
+],
+"expl": "<p>Lésion du gyrus angulaire gauche = <b>syndrome de Gerstmann</b> : acalculie, agraphie, agnosie digitale, indistinction droite-gauche. La dysarthrie est motrice et la micrographie extrapyramidale.</p>",
+"retenir": "Gerstmann (pariétal inférieur G) : acalculie, agraphie, agnosie digitale, confusion D-G."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Sylvien superficiel G : brachio-facial D + aphasie + apraxie ± HLH D.</li><li>Devant tout déficit transitoire : glycémie capillaire (hypo, pas hyper).</li><li>Dissection carotide = douleur + CBH ; dissection vertébrale = cervicalgie postérieure + vertiges / AVC postérieur.</li><li>C3-C4-C5 = nerf phrénique : compression haute = risque respiratoire.</li><li>Tension = bilatérale, en étau, 30 min-7 j, pas de nausées.</li><li>Trijumeau essentiel : décharges brèves, unilatérales, V2-V3, examen normal.</li><li>NORB : BAV subaiguë + douleur oculaire + dyschromatopsie rouge-vert, FO normal.</li><li>Signe focal (aphasie, déficit d'un membre) = crise focale, pas généralisée.</li><li>EME : BZD (×2) → AE IV longue durée → anesthésie générale à 30 min.</li><li>Wernicke = confusion + oculomotricité + ataxie → B1 IV AVANT le glucose.</li><li>Médian = 3 premiers doigts + thénar ; cubital = 2 derniers + hypothénar.</li><li>GBS : ascendant, symétrique, aréflexique, dissociation albumino-cytologique.</li><li>Centrale = bas du visage, front respecté ; périphérique = tout l'hémiface + Charles Bell.</li><li>Parkinson atypique = mauvaise réponse dopa + chutes, dysautonomie, signes pyramidaux / cérébelleux précoces.</li><li>Gerstmann (pariétal inférieur G) : acalculie, agraphie, agnosie digitale, confusion D-G.</li></ul>"
+}
+]
+};
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const L="ABCDEFGHIJKLMNOPQRST";
+const KEY="annale-neuro-mars25-v1";
+const TOTAL=60*60;
+const store={get(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}},clear(){try{localStorage.removeItem(KEY)}catch(e){}}};
+const Q=[];EXAM.dps.forEach((dp,d)=>dp.qs.forEach((q,i)=>Q.push({d,i,q,dp})));
+let S=null, tick=null, paused=false;
+function fresh(){return{pos:0,ans:{},left:TOTAL,done:false,override:{}}}
+function img(k,alt){return `<img src="${IMGS[k]}" alt="${alt||''}" data-zoom>`}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function fmt(t){t=Math.max(0,t|0);return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+function show(id){["vStart","vExam","vRes","vCorr"].forEach(v=>$("#"+v).hidden=v!==id);window.scrollTo(0,0)}
+function antibio(){const r=[["Amoxicilline","S"],["Imipénème","S"],["Gentamicine","S"],["Vancomycine","S"],["Cotrimoxazole","R"],["Teicoplanine","S"],["Linézolide","S"],["Lévofloxacine","R"],["Nitrofurantoïne","R"]];
+ return `<div class="tblwrap"><table class="abg"><tr><td colspan="2"><b>ECBU</b> · urines 2e jet</td></tr><tr><td>Hématies</td><td>50/mm³</td></tr><tr><td>Cellules épithéliales</td><td>absence</td></tr><tr><td>Leucocytes</td><td>150/mm³</td></tr><tr><td>CGP en courtes chaînettes</td><td>quelques</td></tr><tr><td>Culture : <i>Enterococcus faecalis</i></td><td>10⁵/mL</td></tr><tr><td colspan="2"><b>Antibiogramme</b></td></tr>${r.map(([a,b])=>`<tr><td>${a}</td><td class="${b}">${b}</td></tr>`).join("")}</table></div>`}
+
+/* ---------- accueil ---------- */
+$("#dpList").innerHTML=EXAM.dps.map((dp,d)=>`<li data-jd="${d}" style="cursor:pointer" title="Commencer par ce dossier"><span class="id">${dp.id}</span><span>${dp.titre}</span><span class="n">${dp.qs.length} Q</span></li>`).join("");
+const saved=store.get();
+if(saved&&!saved.done&&Object.keys(saved.ans).length){$("#btnResume").hidden=false}
+if(saved&&saved.done){$("#btnResume").hidden=false;$("#btnResume").textContent="Voir mes résultats"}
+$("#btnStart").onclick=()=>{S=fresh();store.set(S);startExam()};
+$("#btnResume").onclick=()=>{S=saved;if(S.done)results();else startExam()};
+$("#btnDirect").onclick=()=>{S=S||saved||fresh();openCorr(0)};
+
+/* ---------- épreuve ---------- */
+function steps(){const el=$("#steps");if(!S||$("#vExam").hidden&&!S.done){el.innerHTML="";return}
+ const cur=Q[S.pos]?Q[S.pos].d:-1;
+ el.innerHTML=EXAM.dps.map((dp,d)=>{const qs=Q.filter(x=>x.d===d);const done=qs.every(x=>S.ans[x.d+"-"+x.i]!==undefined);return `<span data-jd="${d}" style="cursor:pointer" title="Aller à ${dp.titre}" class="${d===cur&&!S.done?'on':done?'done':''}">${dp.id}</span>`}).join("")}
+function startExam(){show("vExam");$("#timer").hidden=false;$("#btnPause").hidden=false;paused=false;$("#btnPause").textContent="Pause";renderQ();runTimer()}
+function runTimer(){clearInterval(tick);tick=setInterval(()=>{if(paused||!S||S.done)return;S.left--;drawTimer();if(S.left%5===0)store.set(S);if(S.left<=0){finish()}},1000);drawTimer()}
+function drawTimer(){const t=$("#timer");t.textContent=fmt(S.left);t.classList.toggle("low",S.left<=300)}
+$("#btnPause").onclick=()=>{paused=!paused;$("#btnPause").textContent=paused?"Reprendre":"Pause";$("#qpanel").style.filter=paused?"blur(6px)":"";$("#enonce").style.filter=paused?"blur(6px)":""};
+
+function enonceHTML(d,upto){const dp=EXAM.dps[d];let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div>${dp.intro}`;
+ if(dp.introImg)h+=`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`;
+ dp.qs.forEach((q,i)=>{if(i<upto&&q.ctx){h+=`<div class="add"><div class="note">Ajouté en Q${i+1}</div>${q.ctx}${q.img?`<div class="imgs">${q.img.map(k=>img(k)).join("")}</div>`:""}${q.table==="antibio"?antibio():""}</div>`}});return h}
+
+function isFree(dp){return dp.free||/^(QI|SQI|TCS)/.test(dp.id)}
+function opened(n){const {d,i,dp}=Q[n];if(isFree(dp))return true;for(let k=0;k<i;k++){if(S.ans[d+"-"+k]===undefined)return false}return true}
+function navHTML(){return `<div class="qnav">`+EXAM.dps.map((dp,d)=>`<div class="qnav-dp"><span class="qnav-id">${dp.id}${isFree(dp)?"":" 🔒"}</span>`+Q.map((x,n)=>({x,n})).filter(o=>o.x.d===d).map(({x,n})=>{const k=x.d+"-"+x.i;const done=S.ans[k]!==undefined;const ok=opened(n);return `<button class="qn${n===S.pos?" cur":""}${done?" done":""}" data-n="${n}" ${ok?"":"disabled"} title="${ok?"":"Validez les questions précédentes du dossier"}">${x.i+1}</button>`}).join("")+`</div>`).join("")+`</div>`}
+function renderQ(){
+ if(S.pos>=Q.length)S.pos=Q.length-1;
+ const {d,i,q,dp}=Q[S.pos];steps();
+ const k=d+"-"+i, prev=S.ans[k], answered=prev!==undefined, free=isFree(dp), locked=answered&&!free;
+ $("#enonce").innerHTML=enonceHTML(d,i);
+ const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+ let h=navHTML();
+ h+=`<div class="qhead"><span class="qnum">${dp.id} · Q${i+1}/${dp.qs.length}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}<span class="spacer"></span><span class="note">${S.pos+1} / ${Q.length}</span></div>`;
+ if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+ if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+ if(q.table==="antibio")h+=antibio();
+ h+=`<div class="qtext">${q.q}</div>`;
+ const pa=Array.isArray(prev)?prev:[];
+ if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const t=q.type==="qrm"?"checkbox":"radio";
+  h+=`<ul class="opts">${q.opts.map((o,j)=>`<li class="opt"><label for="o${j}"><input type="${t}" name="opt" id="o${j}" value="${j}" ${pa.includes(j)?"checked":""} ${locked?"disabled":""}><span class="L">${L[j]}</span><span>${o}</span></label></li>`).join("")}</ul>`}
+ else if(q.type==="qroc"){h+=`<div class="qroc"><label class="note" for="qroc">Réponse courte (quelques mots)</label><input id="qroc" autocomplete="off" placeholder="Votre réponse" value="${answered&&prev?esc(prev):""}" ${locked?"disabled":""}></div>`}
+ else if(q.type==="self"){h+=`<p class="note">Question d'image : la seule copie du sujet est annotée, l'image est donc donnée en correction. Réfléchis à ta réponse, puis valide ; tu t'auto-noteras en correction.</p>`}
+
+ else if(q.type==="info"){h+=`<p class="note">Question neutralisée à l'épreuve : validez pour continuer (1 point pour tous).</p>`}
+ let st="";
+ if(locked)st=`<p class="lockmsg">🔒 Réponse validée : dans un dossier progressif, elle n'est plus modifiable. Vous pouvez la relire.</p>`;
+ else if(answered&&free)st=`<p class="savedmsg">✓ Réponse enregistrée. Vous pouvez la modifier jusqu'à la fin de l'épreuve.</p>`;
+ else if(!free)st=`<p class="note">Dossier progressif : une fois validée, la réponse ne pourra plus être modifiée.</p>`;
+ h+=st;
+ const nAns=Object.keys(S.ans).length;
+ h+=`<div class="actions navrow"><button class="btn" id="bPrev" ${S.pos===0?"disabled":""}>◀ Précédente</button>${locked?"":`<button class="btn primary" id="btnVal">${answered?"Enregistrer la modification":"Valider"}</button>`}<button class="btn" id="bNext" ${S.pos>=Q.length-1||!opened(S.pos+1)?"disabled":""}>Suivante ▶</button><span class="spacer"></span><button class="btn ghost" id="bEnd">Terminer l'épreuve (${nAns}/${Q.length})</button></div>`;
+ h+=`<div class="confirm" id="conf" hidden><span id="confTxt">Réponse définitive ?</span><button class="btn primary small" id="ok">Confirmer</button><button class="btn small" id="no">Modifier</button></div>`;
+ $("#qpanel").innerHTML=h;
+ $("#qpanel").querySelectorAll(".qn").forEach(b=>b.onclick=()=>{S.pos=+b.dataset.n;store.set(S);renderQ();window.scrollTo(0,0)});
+ $("#bPrev").onclick=()=>{S.pos--;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bNext").onclick=()=>{S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bEnd").onclick=()=>{const left=Q.length-Object.keys(S.ans).length;if(confirmEnd(left))finish()};
+ if(locked)return;
+ let a=null,empty=true;
+ const read=()=>{if(q.type==="qrm")a=[...document.querySelectorAll("input[name=opt]:checked")].map(x=>+x.value);
+  else if(q.type==="qru"||q.type==="tcs"){const c=document.querySelector("input[name=opt]:checked");a=c?[+c.value]:[]}
+  else if(q.type==="qroc")a=$("#qroc").value.trim();
+  else a=true;
+  empty=(Array.isArray(a)&&!a.length)||a===""||a==null};
+ const save=()=>{S.ans[k]=empty?null:a;if(S.pos<Q.length-1&&opened(S.pos+1))S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#btnVal").onclick=()=>{read();
+  if(free){save();return}
+  $("#confTxt").textContent=(empty?"Aucune réponse : la question vaudra 0. ":"")+"Réponse définitive (non modifiable ensuite) ?";
+  $("#btnVal").hidden=true;$("#conf").hidden=false;$("#ok").focus()};
+ $("#no").onclick=()=>{$("#conf").hidden=true;$("#btnVal").hidden=false};
+ $("#ok").onclick=save;
+}
+function confirmEnd(left){const box=$("#conf");$("#confTxt").textContent=(left?left+" question(s) sans réponse. ":"")+"Rendre la copie et voir la note ?";box.hidden=false;const v=$("#btnVal");if(v)v.hidden=true;$("#ok").onclick=()=>finish();$("#no").onclick=()=>{box.hidden=true;if(v)v.hidden=false};return false}
+function jumpDp(d){const n=Q.findIndex(x=>x.d===d);if(n<0)return;let m=n;while(m+1<Q.length&&Q[m+1].d===d&&S.ans[Q[m].d+"-"+Q[m].i]!==undefined)m++;S.pos=m;store.set(S);if($("#vExam").hidden)startExam();else{renderQ();window.scrollTo(0,0)}}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-jd]");if(!t)return;if(!S||S.done){S=fresh();store.set(S)}jumpDp(+t.dataset.jd)});
+
+/* ---------- notation ---------- */
+function inPoly(x,y,pts){let c=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const[xi,yi]=pts[i],[xj,yj]=pts[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
+function norm(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim()}
+function grade(d,i){const q=EXAM.dps[d].qs[i];let a=S.ans[d+"-"+i];const k=d+"-"+i;
+ if(S.override&&S.override[k]!==undefined)return S.override[k];
+ if(a==null)return 0;
+ if(q.type==="qru")return a.length===1&&a[0]===q.ok[0]?1:0;
+ if(q.type==="tcs")return a.length===1?q.w[a[0]]:0;
+ if(q.type==="qrm"){if(q.neut)a=a.filter(x=>!q.neut.includes(x));if(!a.length)return 0;
+  if((q.inacc||[]).some(x=>a.includes(x)))return 0;
+  if((q.indisp||[]).some(x=>!a.includes(x)))return 0;
+  let n=0;for(let k2=0;k2<q.opts.length;k2++){if(a.includes(k2)!==q.ok.includes(k2))n++}
+  if(/QRP/i.test((q.label||'')+' '+(q.q||'')+' '+(q.tag||''))||q.qrp||q.opts.length>5){const g=a.filter(x=>q.ok.includes(x)).length,ex=Math.max(0,a.length-q.ok.length);return Math.max(0,(g-ex)/q.ok.length)}return n===0?1:n===1?.5:n===2?.2:0}
+ if(q.type==="info")return 1;
+ if(q.type==="self")return 0;
+ if(q.type==="qroc"){const s=norm(a);if(q.kw){let m=0;q.kw.forEach(([kk,v])=>{if(s.includes(norm(kk)))m=Math.max(m,v)});return m}return q.keys.some(kk=>s.includes(norm(kk)))?1:0}
+ if(q.type==="qzone"){return inPoly(a.x*q.zoneW,a.y*q.zoneH,q.zone)?1:0}
+ return 0}
+function f1(x){return (Math.round(x*100)/100).toString().replace(".",",")}
+
+function finish(){clearInterval(tick);S.done=true;store.set(S);$("#timer").hidden=true;$("#btnPause").hidden=true;results()}
+function results(){show("vRes");steps();let tot=0,max=Q.length;const byDp=EXAM.dps.map(()=>[0,0]),byR={A:[0,0],B:[0,0]};
+ Q.forEach(({d,i,q})=>{const g=grade(d,i);tot+=g;byDp[d][0]+=g;byDp[d][1]++;if(q.rang){byR[q.rang][0]+=g;byR[q.rang][1]++}});
+ $("#sBig").innerHTML=`${f1(tot/max*20)}<small> / 20</small>`;
+ const used=TOTAL-S.left;
+ $("#sSub").textContent=`${f1(tot)} points sur ${max} · temps utilisé ${fmt(used)}`;
+ $("#sBars").innerHTML=EXAM.dps.map((dp,d)=>`<div class="barrow"><span class="mono">${dp.id}</span><div class="track"><div class="fill" style="width:${byDp[d][0]/byDp[d][1]*100}%"></div></div><span class="v">${f1(byDp[d][0])}/${byDp[d][1]}</span></div>`).join("")+
+  ["A","B"].filter(r=>byR[r][1]).map(r=>`<div class="barrow"><span><span class="rk ${r.toLowerCase()}">${r}</span></span><div class="track"><div class="fill" style="width:${byR[r][0]/byR[r][1]*100}%;background:var(--rk${r})"></div></div><span class="v">${f1(byR[r][0])}/${byR[r][1]}</span></div>`).join("");
+ $("#sGrid").innerHTML=Q.map(({d,i,dp},n)=>{const g=grade(d,i);return `<button class="${g===1?'s1':g===0?'s0':'sp'}" data-go="${d}-${i}">${dp.id.replace("DP","")}.${i+1} · ${f1(g)}</button>`}).join("");
+ $("#sGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{const[d,i]=b.dataset.go.split("-").map(Number);openCorr(d,i)});
+}
+$("#btnCorr").onclick=()=>openCorr(0);
+$("#btnAgain").onclick=()=>{store.clear();S=fresh();store.set(S);startExam()};
+$("#btnBackRes").onclick=()=>{if(S&&S.done)results();else show("vStart")};
+$("#btnHome").onclick=()=>{show("vStart")};
+
+/* ---------- correction ---------- */
+let curD=0;
+function openCorr(d,i){show("vCorr");steps();curD=d;
+ $("#tabs").innerHTML=EXAM.dps.map((dp,k)=>`<button role="tab" aria-selected="${k===d}" data-d="${k}">${dp.id}</button>`).join("");
+ $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCorr(+b.dataset.d));
+ drawCorr(d);
+ if(i!==undefined){const el=document.getElementById("cq-"+d+"-"+i);if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),30)}
+}
+function drawCorr(d){const dp=EXAM.dps[d];const answered=S&&Object.keys(S.ans).length>0;
+ let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div><details class="enon"><summary>Énoncé initial</summary>${dp.intro}${dp.introImg?`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`:""}</details>`;
+ dp.qs.forEach((q,i)=>{const k=d+"-"+i;const a=S?S.ans[k]:undefined;const has=a!==undefined;const g=has?grade(d,i):null;
+  const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+  h+=`<div class="cq" id="cq-${k}"><div class="qhead"><span class="qnum">Q${i+1}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}${has?`<span class="pts ${g===1?'s1':g===0?'s0':'sp'}">${f1(g)} pt</span>`:""}</div>`;
+  if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+  if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+  if(q.table==="antibio")h+=antibio();
+  h+=`<div class="qtext">${q.q}</div>`;
+  if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const mine=Array.isArray(a)?a:[];
+   q.opts.forEach((o,j)=>{const ok=q.ok.includes(j),me=mine.includes(j);
+    let cls=has?(ok&&me?"good":ok&&!me?"miss":!ok&&me?"bad":""):(ok?"good":"");
+    let tagx=(q.indisp||[]).includes(j)?" · indispensable":(q.inacc||[]).includes(j)?" · inacceptable":"";
+    h+=`<div class="copt ${cls}"><span class="mk">${ok?"✓":"✗"}</span><span class="mk">${L[j]}</span><span class="tx">${o}${has&&me?` <span class="mine">· coché${tagx}</span>`:tagx?`<span class="mine">${tagx}</span>`:""}</span>${Array.isArray(q.expl)?`<div class="ex">${q.expl[j]}</div>`:""}</div>`});if(!Array.isArray(q.expl))h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="qroc"){
+   h+=`<div class="free ${has?(g===1?'s1':g?'sp':'s0'):''}" style="background:${has?'':'var(--soft)'}"><b>Votre réponse :</b> ${has&&a?esc(a):"<i>aucune</i>"}<br><b>Attendu :</b> ${q.attendu}</div>`;
+   if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Correction automatique par mots-clés.</span><button class="btn small" data-ov="${k}" data-v="${g?0:1}">${g?"Compter faux":"Ma réponse est juste"}</button></div>`;
+   h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="self"){
+   h+=`${q.cimg?`<div class="imgs">${img(q.cimg)}</div>`:""}<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Auto-évaluation :</span><button class="btn small" data-ov="${k}" data-v="1">J'avais juste</button><button class="btn small" data-ov="${k}" data-v="0.5">À moitié</button><button class="btn small" data-ov="${k}" data-v="0">J'avais faux</button></div>`;
+  } else if(q.type==="info"){
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  } else if(q.type==="qzone"){
+   const pts=q.zone.map(p=>`${p[0]/q.zoneW*100},${p[1]/q.zoneH*100}`).join(" ");
+   h+=`<div class="zonebox" style="cursor:default"><img src="${IMGS[q.img[0]]}" alt="Scanner abdominal"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="${pts}" fill="rgba(46,160,90,.35)" stroke="#2ea05a" stroke-width=".6"/></svg>${has&&a?`<div class="pin" style="left:${a.x*100}%;top:${a.y*100}%"></div>`:""}</div>`;
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  }
+  if(q.fig)h+=`<div class="imgs" style="align-items:flex-end">${img(q.fig[0],q.fig[1])}<span class="note" style="max-width:260px">${q.fig[1]}</span></div>`;
+  h+=(q.retenir?`<div class="retenir"><b class="h">À retenir</b>${q.retenir}</div>`:"")+`</div>`;
+ });
+ if(!answered)h=`<p class="note" style="margin-top:0">Mode correction seule : les bonnes réponses sont en vert.</p>`+h;
+ $("#corrMain").innerHTML=h;
+ $("#corrMain").querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{S.override=S.override||{};S.override[b.dataset.ov]=+b.dataset.v;store.set(S);drawCorr(d)});
+ $("#course").innerHTML=`<div class="row"><h3>Cours résumé · ${dp.id}</h3><span class="spacer"></span><button class="btn small coursebtn" id="cToggle">Afficher</button></div><div class="cbody">${dp.cours.replace(/data-img="(\w+)"/g,(m,k)=>`src="${IMGS[k]}" data-zoom`)}</div><p class="small" style="margin-top:14px">Sources : corrigé officiel de l'épreuve ; explications complémentaires d'après le Collège des enseignants de neurologie (CEN).</p>`;
+ const c=$("#course");if(matchMedia("(max-width:860px)").matches){c.classList.add("collapsed");const t=$("#cToggle");t.onclick=()=>{c.classList.toggle("collapsed");t.textContent=c.classList.contains("collapsed")?"Afficher":"Masquer"}}
+}
+
+/* ---------- zoom ---------- */
+document.addEventListener("click",e=>{const t=e.target;if(t.matches&&t.matches("img[data-zoom]")){$("#zoomImg").src=t.src;$("#zoom").hidden=false}});
+$("#zoom").onclick=()=>{$("#zoom").hidden=true};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#zoom").hidden=true});
+})();
+</script>
+
+<a id="backhome" href="index.html" style="position:fixed;left:12px;bottom:12px;z-index:9999;background:#1c1c1a;color:#fff;padding:8px 12px;border-radius:99px;font:600 13px system-ui;text-decoration:none;opacity:.85">← Toutes les annales</a>

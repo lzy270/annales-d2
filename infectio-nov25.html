@@ -1,0 +1,665 @@
+<title>Annale infectio NOV25</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout : copie d'examen — énoncé à gauche, question à droite ; correction en 2 colonnes avec cours collant */
+:root{
+  --bg:#f6f7f9; --paper:#ffffff; --ink:#18212b; --muted:#5d6876; --line:#dfe3e8; --soft:#eef1f5;
+  --accent:#1f4e8c; --accent-soft:#e6eef9;
+  --ok:#1d7a46; --ok-soft:#e3f4ea; --ko:#b42318; --ko-soft:#fdeceb; --mid:#a15c00; --mid-soft:#fdf1df;
+  --rkA:#c62828; --rkB:#d9822b;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+header.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:800;font-size:17px}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.steps{display:flex;gap:4px;flex-wrap:wrap}
+.steps span{font:700 11px var(--f-mono);padding:3px 7px;border-radius:5px;background:var(--soft);color:var(--muted)}
+.steps span.on{background:var(--accent);color:var(--paper)}
+.steps span.done{background:var(--accent-soft);color:var(--accent)}
+.timer{font:700 18px var(--f-mono);font-variant-numeric:tabular-nums;padding:4px 10px;border-radius:8px;background:var(--soft)}
+.timer.low{background:var(--ko-soft);color:var(--ko)}
+.btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:9px 16px;font-weight:700}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn.ghost{background:transparent}
+.btn.small{padding:5px 10px;font-size:13px}
+main{padding-block:24px 64px}
+[hidden]{display:none!important}
+
+/* start */
+.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(26px,4vw,36px)}
+.hero p{margin:0;color:var(--muted)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.rule{background:var(--soft);border-radius:10px;padding:12px 14px;font-size:14px}
+.rule b{display:block;font-family:var(--f-display);font-size:15px;margin-bottom:2px}
+.dplist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.dplist li{display:flex;gap:10px;align-items:baseline;font-size:15px}
+.dplist .id{font:700 12px var(--f-mono);color:var(--accent);min-width:34px}
+.dplist .n{color:var(--muted);font-size:13px;margin-left:auto;white-space:nowrap}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* exam */
+.exam{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:start}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:20px}
+.panel .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.enonce{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto}
+.enonce p{margin:.6em 0}
+.enonce .add{border-left:3px solid var(--accent);padding-left:12px;margin-top:14px}
+.imgs{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.imgs img{max-height:320px;width:auto;max-width:100%;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;background:#000}
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.qnum{font:700 13px var(--f-mono);color:var(--accent)}
+.tag{font:700 11px var(--f-mono);padding:2px 7px;border-radius:5px;background:var(--soft);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.rk{display:inline-grid;place-items:center;width:20px;height:20px;border:2px solid;border-radius:4px;font:700 11px var(--f-mono);vertical-align:middle}
+.rk.a{color:var(--rkA)} .rk.b{color:var(--rkB)}
+.ctx{background:var(--soft);border-radius:10px;padding:2px 14px;margin-bottom:12px}
+.ctx p{margin:.6em 0}
+.qtext{font-size:18px;font-weight:700;margin:6px 0 14px}
+.opts{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.opt label{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--paper)}
+.opt label:hover{border-color:var(--accent)}
+.opt input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.opt .L{font:700 14px var(--f-mono);color:var(--muted);min-width:16px}
+.opt input:checked ~ .L{color:var(--accent)}
+.opt label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.qroc input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit}
+.zonebox{position:relative;display:inline-block;max-width:100%;cursor:crosshair}
+.zonebox img{display:block;max-width:100%;border-radius:8px}
+.zonebox .pin{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:3px solid #fff;background:#e5484d;box-shadow:0 0 0 2px #e5484d;pointer-events:none}
+.zonebox svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--mid-soft);border-radius:10px;padding:10px 12px;font-size:14px}
+.note{font-size:13px;color:var(--muted)}
+
+/* results */
+.score{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.big{font:800 64px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.big small{font-size:24px;color:var(--muted)}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:44px 1fr 70px;gap:10px;align-items:center;font-size:14px}
+.barrow .track{height:10px;border-radius:5px;background:var(--soft);overflow:hidden}
+.barrow .fill{height:100%;background:var(--accent)}
+.barrow .v{font:700 13px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.grid-q{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.grid-q button{font:700 12px var(--f-mono);border:0;border-radius:6px;padding:6px 8px;min-width:58px}
+.s1{background:var(--ok-soft);color:var(--ok)} .s0{background:var(--ko-soft);color:var(--ko)} .sp{background:var(--mid-soft);color:var(--mid)}
+
+/* correction */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:7px 12px;font-weight:700;font-size:14px}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.corr{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.course{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto;font-size:14.5px}
+.course h3{font-size:18px;margin-bottom:6px}
+.course h4{font-size:15px;margin:16px 0 4px;display:flex;gap:8px;align-items:center}
+.course ul{padding-left:18px;margin:4px 0}
+.course li{margin:3px 0}
+.course .small,.small{font-size:13px;color:var(--muted)}
+table.mini{border-collapse:collapse;width:100%;font-size:13px;margin:6px 0}
+table.mini th,table.mini td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+table.mini th{background:var(--soft)}
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}
+.figs figure{margin:0}
+.figs img{width:100%;height:100px;object-fit:cover;border-radius:6px;cursor:zoom-in}
+.figs figcaption{font-size:11.5px;color:var(--muted)}
+.cq{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}
+.cq:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.pts{margin-left:auto;font:700 13px var(--f-mono);padding:3px 8px;border-radius:6px}
+.copt{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:22px 22px 1fr;gap:4px 10px;align-items:start}
+.copt + .copt{margin-top:6px}
+.copt .mk{font:700 14px var(--f-mono)}
+.copt .tx{font-weight:700}
+.copt .ex{grid-column:3;font-size:14.5px;color:var(--ink)}
+.copt.good{border-color:var(--ok);background:var(--ok-soft)}
+.copt.miss{border-color:var(--mid);background:var(--mid-soft)}
+.copt.bad{border-color:var(--ko);background:var(--ko-soft)}
+.mine{font:700 11px var(--f-mono);color:var(--muted)}
+.retenir{margin-top:12px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:14.5px}
+.retenir b.h{display:block;font-family:var(--f-display);color:var(--accent);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.free{border-radius:10px;padding:10px 14px;font-size:14.5px}
+.coursebtn{display:none}
+details.enon{background:var(--soft);border-radius:10px;padding:8px 14px;margin-bottom:16px}
+details.enon summary{cursor:pointer;font-weight:700}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.zoom img{max-width:100%;max-height:100%;border-radius:8px}
+.tblwrap{overflow-x:auto}
+table.abg{border-collapse:collapse;font:13px var(--f-mono);margin:8px 0}
+table.abg td{padding:3px 10px;border-bottom:1px dotted var(--line)}
+table.abg td:last-child{font-weight:700;text-align:center}
+table.abg .R{color:var(--ko)} table.abg .S{color:var(--ok)}
+
+@media (max-width:860px){
+  .exam,.corr{grid-template-columns:1fr}
+  .enonce,.course{position:static;max-height:none}
+  .corr .course{order:-1}
+  .course.collapsed .cbody{display:none}
+  .coursebtn{display:inline-block}
+  .score{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.qnav{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}.qnav-dp{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.qnav-id{font:700 11px var(--f-mono);color:var(--muted);margin-right:3px}.qn{min-width:26px;height:26px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;font:700 11px var(--f-mono);padding:0 4px}.qn.done{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft)}.qn.cur{outline:2px solid var(--accent)}.qn:disabled{opacity:.35;cursor:not-allowed}.navrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.navrow .spacer{flex:1}.lockmsg{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:14px}.savedmsg{color:var(--ok);font-size:14px}
+</style>
+
+<header class="bar"><div class="wrap">
+  <div class="brand">Annale infectio · UE6 · novembre 2025<small>DFA1 · Bobigny · corrigé officiel + explications d'après le Pilly</small></div>
+  <div class="spacer"></div>
+  <div class="steps" id="steps"></div>
+  <div class="timer" id="timer" hidden>40:00</div>
+  <button class="btn small ghost" id="btnPause" hidden>Pause</button>
+</div></header>
+
+<main class="wrap">
+  <!-- Accueil -->
+  <section id="vStart">
+    <div class="hero">
+      <div>
+        <h1>4 épreuves, 42 questions</h1>
+        <p>Sujet de l'UE6 Maladies infectieuses de novembre 2025, tel quel : 2 DP, 1 KFP et 11 questions isolées. Conditions d'examen : chrono, pas de retour en arrière, notation EDN avec le barème officiel des QROC. Les propositions neutralisées à l'épreuve ne comptent ni pour ni contre. Correction détaillée et cours résumé par dossier à la fin.</p>
+      </div>
+      <ul class="dplist" id="dpList"></ul><p class="note" style="margin-top:6px">Clique sur un dossier pour commencer par lui. Pendant l'épreuve, les étiquettes en haut à droite (QI, DP1…) et la grille de numéros permettent de changer de dossier à tout moment.</p>
+      <div class="rules">
+        <div class="rule"><b>60 minutes</b>Le chrono tourne pendant l'épreuve. À zéro, la copie est rendue.</div>
+        <div class="rule"><b>Navigation type LUNESS</b>Questions isolées et TCS : navigation libre, réponses modifiables jusqu'à la fin. DP et KFP (🔒) : on peut revenir relire, mais une réponse validée est verrouillée, et la question suivante s'ouvre une fois la précédente validée.</div>
+        <div class="rule"><b>Notation EDN</b>QRM : 1 / 0,5 / 0,2 / 0 selon 0, 1, 2 ou ≥ 3 erreurs ; indispensable oubliée ou inacceptable cochée : 0. QRP : bonnes réponses cochées ÷ réponses attendues. QROC : barème officiel.</div>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="btnStart">Commencer l'épreuve</button>
+        <button class="btn" id="btnResume" hidden>Reprendre</button>
+        <button class="btn ghost" id="btnDirect">Voir directement la correction</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Épreuve -->
+  <section id="vExam" hidden>
+    <div class="exam">
+      <div class="panel enonce" id="enonce"></div>
+      <div class="panel" id="qpanel"></div>
+    </div>
+  </section>
+
+  <!-- Résultats -->
+  <section id="vRes" hidden>
+    <div class="panel">
+      <div class="score">
+        <div><div class="big" id="sBig">0</div><div class="note" id="sSub"></div></div>
+        <div class="bars" id="sBars"></div>
+      </div>
+      <div class="grid-q" id="sGrid"></div>
+      <div class="actions"><button class="btn primary" id="btnCorr">Voir la correction détaillée</button><button class="btn" id="btnAgain">Repasser l'épreuve</button></div>
+    </div>
+  </section>
+
+  <!-- Correction -->
+  <section id="vCorr" hidden>
+    <div class="row" style="margin-bottom:12px"><h2 style="font-size:22px">Correction</h2><div class="spacer"></div><button class="btn small" id="btnBackRes">Résultats</button><button class="btn small" id="btnHome">Accueil</button></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="corr">
+      <div class="panel" id="corrMain"></div>
+      <aside class="panel course" id="course"></aside>
+    </div>
+  </section>
+</main>
+<div class="zoom" id="zoom" hidden><img alt="Image agrandie" id="zoomImg"></div>
+
+<script>
+const IMGS={};
+var img=function(k,alt){return `<img src="${IMGS[k]}" alt="${alt||""}" data-zoom>`};
+const EXAM = {
+title: "Annale infectio · UE6 · novembre 2025",
+dps: [
+{ id:"DP1", titre:"Toux prolongée et coqueluche", items:"Items 151, 154, 159", 
+  intro:`<p>Vous recevez en consultation de médecine générale un homme de 35 ans, originaire de Tunisie et résidant en France depuis 10 ans, pour une toux évoluant depuis un peu moins de 3 semaines. Température 37,3 °C. Il est comptable dans une grande entreprise et vit avec sa compagne et leur nourrisson de 5 mois. Aucun antécédent.</p>`,
+  qs:[
+{ type:"qrm", q:"Quels sont les deux premiers signes de gravité que vous devez rechercher dans ce contexte ?",
+  opts:["Une confusion","Une hypoxémie","Un purpura","Une tachypnée","Une défense"],
+  ok:[1,3], indisp:[1],
+  expl:["<b>Faux.</b> Pas pertinent en premier devant une toux isolée chez un adulte jeune.","<b>Vrai (indispensable).</b> Devant une toux, le premier signe de gravité respiratoire est l'hypoxémie (SpO₂).","<b>Faux.</b> Signe de gravité d'un sepsis à méningocoque, hors contexte.","<b>Vrai.</b> La fréquence respiratoire est l'autre signe de détresse respiratoire.","<b>Faux.</b> Signe abdominal."],
+  retenir:"Toux / infection respiratoire : chercher d'abord les signes de gravité respiratoire (SpO₂, FR, signes de lutte)." },
+{ type:"qrm", ctx:`<p>SpO₂ 99 %, FR 18/min, PA 140/90 mmHg, pouls 90/min.</p>`, q:"Quels sont les 3 diagnostics à évoquer en priorité devant ce tableau clinique ?",
+  opts:["Une tuberculose","Une infection virale bronchopulmonaire","Une pneumonie à pneumocoque","Une pneumonie à légionelle","Une coqueluche"],
+  ok:[0,1,4],
+  expl:["<b>Vrai.</b> Toux > 2-3 semaines chez un patient originaire d'un pays d'endémie : tuberculose à évoquer systématiquement.","<b>Vrai.</b> Cause la plus fréquente de toux subaiguë (post-virale).","<b>Faux.</b> Tableau trop peu bruyant : pas de fièvre franche, pas de signe de foyer.","<b>Faux.</b> La légionellose est une pneumonie fébrile, souvent sévère.","<b>Vrai.</b> Toux prolongée de l'adulte (et nourrisson dans l'entourage) : coqueluche."],
+  retenir:"Toux subaiguë (3-8 semaines) : post-virale, coqueluche, tuberculose ; puis causes non infectieuses (asthme, RGO, rhinorrhée postérieure)." },
+{ type:"qrm", q:"Quels diagnostics non infectieux devez-vous également évoquer ?",
+  opts:["Une maladie d'Addison","Un asthme allergique","Une pneumopathie interstitielle diffuse","Une paralysie diaphragmatique","Un reflux gastro-œsophagien"],
+  ok:[1,2,4],
+  expl:["<b>Faux.</b>","<b>Vrai.</b> L'asthme (forme « toux équivalent d'asthme ») est une cause majeure de toux chronique.","<b>Vrai.</b> Une PID peut se révéler par une toux sèche.","<b>Faux.</b> Donne une dyspnée (orthopnée), pas une toux.","<b>Vrai.</b> Le RGO fait partie du trio classique de la toux chronique avec l'asthme et la rhinorrhée postérieure."],
+  retenir:"Toux chronique à radio normale : rhinorrhée postérieure, asthme, RGO (+ IEC, tabac)." },
+{ type:"qrm", q:"Quels sont les deux signes cliniques à rechercher pour éliminer une origine sinusienne à cette toux ?",
+  opts:["Un œdème du visage","Une rhinorrhée postérieure","Une douleur à la palpation des sinus maxillaires","Une raideur de nuque","Une hypoacousie"],
+  ok:[1,2],
+  expl:["<b>Faux.</b>","<b>Vrai.</b> L'écoulement postérieur irrite le pharynx et fait tousser.","<b>Vrai.</b> Signe de sinusite maxillaire.","<b>Faux.</b>","<b>Faux.</b>"],
+  retenir:"Origine ORL d'une toux : rhinorrhée postérieure, douleur sinusienne, raclements de gorge." },
+{ type:"qroc", ctx:`<p>Votre patient vous informe que son nourrisson a présenté il y a un mois une infection pulmonaire avec une toux importante à prédominance nocturne accompagnée de vomissements. Il aurait même eu un épisode d'étouffement avec les lèvres bleues, finalement résolutif.</p>`, q:"Quel est le premier diagnostic à évoquer dans ce contexte ?",
+  kw:[["coqueluche",1],["pertussis",1]], attendu:"Coqueluche",
+  expl:`<p>Toux quinteuse nocturne, vomissements après les quintes, épisode de cyanose (apnée) chez un nourrisson non encore protégé : coqueluche, potentiellement grave à cet âge.</p>`,
+  retenir:"Nourrisson : quintes, cyanose, apnées, vomissements = coqueluche (risque de décès < 6 mois)." },
+{ type:"qroc", q:"Vous évoquez une coqueluche. Quel en est l'agent infectieux ?",
+  kw:[["bordetella pertussis",1],["pertussis",1]], attendu:"Bordetella pertussis",
+  expl:`<p>Petit bacille à Gram négatif, strictement humain, transmis par voie aérienne (gouttelettes).</p>`,
+  retenir:"Coqueluche = Bordetella pertussis (parfois B. parapertussis)." },
+{ type:"qrm", q:"Par quel(s) examen(s) confirmez-vous le diagnostic chez votre patient ?",
+  opts:["Numération formule sanguine","PCR multiplex virale","Sérologie coqueluche","PCR Bordetella pertussis nasale","Antigénuries"],
+  ok:[3], indisp:[3],
+  expl:["<b>Faux.</b> L'hyperlymphocytose est inconstante et non spécifique.","<b>Faux.</b> Elle cherche des virus.","<b>Faux.</b> La sérologie n'est plus recommandée.","<b>Vrai (indispensable).</b> PCR sur aspiration ou écouvillonnage nasopharyngé, dans les 3 premières semaines de toux.","<b>Faux.</b> Les antigénuries concernent le pneumocoque et la légionelle."],
+  retenir:"Coqueluche : PCR nasopharyngée si toux < 21 jours ; au-delà, diagnostic clinique ou épidémiologique (cas confirmé dans l'entourage). Pas de sérologie." },
+{ type:"qru", q:"Par quel mode de transmission a-t-il probablement été infecté ?",
+  opts:["Transmission manuportée","Transmission par le péril fécal","Transmission gouttelettes","Transmission par baiser","Transmission zoonotique"],
+  ok:[2],
+  expl:["<b>Faux.</b>","<b>Faux.</b>","<b>Vrai.</b> Gouttelettes émises par la toux, contact proche.","<b>Faux.</b>","<b>Faux.</b> Bactérie strictement humaine."],
+  retenir:"Coqueluche : transmission gouttelettes → isolement + masque chirurgical." },
+{ type:"qroc", q:"Comment votre patient aurait-il pu prévenir cette infection ? Répondez en un à deux mots.",
+  kw:[["vaccin",1]], attendu:"Vaccination (anticoquelucheuse, dTcaP)",
+  expl:`<p>La <b>vaccination</b> des adultes de l'entourage (stratégie du cocooning) est la réponse attendue : « cocooning » seul n'était pas accepté, car c'est la stratégie, pas le moyen.</p>`,
+  retenir:"Prévention de la coqueluche : vaccination (enfant, rappels adultes, femme enceinte, entourage du nourrisson)." },
+{ type:"qrm", q:"Le patient n'a pas été vacciné depuis l'enfance et n'a pas de carnet de vaccination. Quelle(s) vaccination(s) est-il recommandé de mettre à jour ?",
+  opts:["Diphtérie-tétanos-poliomyélite inactivé-coqueluche acellulaire","Diphtérie-tétanos-poliomyélite inactivé-coqueluche acellulaire-Haemophilus influenzae b-hépatite B","Hépatite B si sérologie négative","Rougeole-oreillons-rubéole","Papillomavirus 9-valent"],
+  ok:[0,2,3],
+  expl:["<b>Vrai.</b> dTcaP (doses réduites adulte).","<b>Faux.</b> L'hexavalent est un vaccin du nourrisson.","<b>Vrai.</b> Rattrapage si non immunisé (originaire de zone d'endémie : sérologie avant).","<b>Vrai.</b> Adultes nés après 1980 : 2 doses de ROR au total.","<b>Faux.</b> Le rattrapage HPV s'arrête à 26 ans (hors HSH)."],
+  retenir:"Adulte non à jour : dTcaP, ROR (né après 1980), VHB selon sérologie et risque." },
+{ type:"qru", q:"Quelle mesure de prévention immédiate pouvez-vous proposer à sa femme ?",
+  opts:["Isolement contact","Vaccination dTcaP","Administration d'immunoglobulines anticoquelucheuses","Antibioprophylaxie","Antibiothérapie curative"],
+  ok:[3],
+  expl:["<b>Faux.</b> Isolement gouttelettes, pas contact.","<b>Faux.</b> La vaccination ne protège pas assez vite après un contage.","<b>Faux.</b> N'existe pas en pratique.","<b>Vrai.</b> Antibioprophylaxie par macrolide (azithromycine) des contacts proches.","<b>Faux.</b> Elle n'est pas malade à ce stade."],
+  retenir:"Contacts proches d'une coqueluche : antibioprophylaxie par azithromycine (+ mise à jour vaccinale)." },
+{ type:"qrm", ctx:`<p>Finalement, sa femme présente aussi un catarrhe nasal et sa PCR est positive pour Bordetella pertussis.</p>`, q:"Quel(s) traitement(s) proposez-vous à sa femme ?",
+  opts:["Abstention thérapeutique","Antibiothérapie par amoxicilline-acide clavulanique pendant 7 jours","Antibiothérapie par azithromycine pendant 3 jours","Isolement à domicile","Pas d'isolement mais port du masque chirurgical"],
+  ok:[2,3],
+  expl:["<b>Faux.</b>","<b>Faux.</b> Les β-lactamines ne sont pas actives sur B. pertussis.","<b>Vrai.</b> Azithromycine 3 jours (clarithromycine 7 j ; cotrimoxazole si allergie).","<b>Vrai.</b> Éviction / isolement jusqu'à 3 jours d'antibiotique (5 avec la clarithromycine).","<b>Faux.</b> Il faut l'éviction, le masque seul ne suffit pas."],
+  retenir:"Coqueluche : azithromycine 3 j, éviction jusqu'à 3 j de traitement, prophylaxie des contacts." },
+{ type:"qrm", ctx:`<p>Vous suspectez donc une coqueluche inaugurale chez le nourrisson.</p>`, q:"Comment cette infection du nourrisson aurait-elle pu être prévenue ?",
+  opts:["Vaccination de la mère contre la coqueluche pendant la grossesse","Vaccination des parents, grands-parents et proches du nourrisson contre la coqueluche","Anticorps monoclonal anticoquelucheux à la naissance","Vaccination coqueluche dès 2 mois de vie","Antibioprophylaxie pendant les 2 premiers mois de vie"],
+  ok:[0,1,3],
+  expl:["<b>Vrai.</b> Recommandée à chaque grossesse (à partir de 20 SA) : les anticorps passent au fœtus.","<b>Vrai.</b> Cocooning.","<b>Faux.</b> N'existe pas (ne pas confondre avec le nirsévimab contre le VRS).","<b>Vrai.</b> Primovaccination à 2 et 4 mois, rappel à 11 mois.","<b>Faux.</b>"],
+  retenir:"Protéger le nourrisson : vaccination de la femme enceinte (dès 20 SA) + cocooning + vaccination à 2, 4 et 11 mois." }
+  ],
+  cours:`<h4>Coqueluche</h4><ul>
+<li><b>Agent</b> : Bordetella pertussis, transmission gouttelettes, très contagieuse.</li>
+<li><b>Clinique</b> : toux prolongée quinteuse, surtout nocturne, chant du coq, vomissements ; nourrisson : apnées, cyanose, risque de décès.</li>
+<li><b>Diagnostic</b> : PCR nasopharyngée si toux < 21 j ; sinon clinique/épidémiologique. Pas de sérologie.</li>
+<li><b>Traitement</b> : azithromycine 3 j (ou clarithromycine 7 j ; cotrimoxazole si allergie) ; éviction jusqu'à 3 j de traitement.</li>
+<li><b>Contacts</b> : antibioprophylaxie (même schéma) + mise à jour vaccinale.</li>
+<li><b>Prévention</b> : vaccin à 2, 4, 11 mois, rappels ; femme enceinte dès 20 SA ; cocooning.</li>
+<li><b>Toux chronique</b> : radio ; causes = rhinorrhée postérieure, asthme, RGO, IEC, tabac, BK.</li></ul>` },
+
+{ id:"KFP1", titre:"Urétrite", items:"Item 162",
+  intro:`<p>Vous recevez un homme de 25 ans, barman, originaire du Bangladesh, en France depuis 3 ans, inquiet après une rupture de préservatif lors d'un rapport anal insertif avec un autre homme il y a 2 semaines. Il rapporte aussi des rapports oro-génitaux non protégés. Il se plaint depuis quelques jours d'un écoulement purulent au niveau du gland.</p>`,
+  qs:[
+{ type:"qroc", q:"Quel est votre diagnostic clinique ?",
+  kw:[["uretrite",1],["infection uretrale",1]], attendu:"Urétrite",
+  expl:`<p>Écoulement purulent du méat après un rapport à risque : urétrite aiguë.</p>`,
+  retenir:"Écoulement urétral ± brûlures mictionnelles = urétrite, IST jusqu'à preuve du contraire." },
+{ type:"qrm", qrp:true, label:"QRP (3)", neut:[0,3], q:"Quelles sont les 3 étiologies possibles de cette urétrite ?",
+  opts:["Trichomonas vaginalis","Candida albicans","Bartonella henselae","Mycoplasma genitalium","Bordetella pertussis","Chlamydia pneumoniae","Mycoplasma pneumoniae","Chlamydia trachomatis","Neisseria gonorrhoeae","Treponema pallidum","Infection par le VIH","Infection par le HTLV-1"],
+  ok:[7,8],
+  expl:["<b>Neutralisée.</b> Cause possible mais rare d'urétrite (proposition neutralisée à l'épreuve).","<b>Faux.</b>","<b>Faux.</b> Maladie des griffes du chat.","<b>Neutralisée.</b> Cause reconnue d'urétrite (proposition neutralisée à l'épreuve) : c'était sans doute la 3e réponse attendue.","<b>Faux.</b>","<b>Faux.</b> C'est C. <i>trachomatis</i> qui est génital.","<b>Faux.</b>","<b>Vrai.</b>","<b>Vrai.</b> Écoulement purulent abondant : gonocoque typique.","<b>Faux.</b> La syphilis donne un chancre, pas une urétrite.","<b>Faux.</b>","<b>Faux.</b>"],
+  retenir:"Urétrite : gonocoque et Chlamydia trachomatis (souvent associés), Mycoplasma genitalium, plus rarement Trichomonas." },
+{ type:"qrm", qrp:true, label:"QRP (7)", neut:[3], q:"Quels sont les 7 examens complémentaires à prescrire en première intention ?",
+  opts:["Sérologie Chlamydia trachomatis","Prélèvement du pus urétral pour analyse bactériologique","PCR Chlamydia trachomatis / Neisseria gonorrhoeae urinaire","PCR Chlamydia trachomatis / Neisseria gonorrhoeae pharyngée","PCR Mycoplasma genitalium urinaire","PCR Mycoplasma hominis urinaire","PCR Ureaplasma urealyticum urinaire","Sérologie VIH","Sérologie VHB","Sérologie VHC","Sérologie HTLV-1","Sérologie syphilis"],
+  ok:[1,2,7,8,9,11],
+  expl:["<b>Faux.</b> Aucun intérêt diagnostique.","<b>Vrai.</b> Examen direct + culture avec antibiogramme du gonocoque.","<b>Vrai.</b> PCR sur le premier jet urinaire.","<b>Neutralisée.</b> Elle est pourtant indiquée devant des rapports oro-génitaux non protégés.","<b>Faux.</b> Recherchée en 2e intention (urétrite persistante).","<b>Faux.</b> Non pathogène reconnu.","<b>Faux.</b>","<b>Vrai.</b> Toute IST impose le dépistage des autres.","<b>Vrai.</b>","<b>Vrai.</b> HSH à risque.","<b>Faux.</b>","<b>Vrai.</b>"],
+  retenir:"Urétrite : prélèvement urétral (gonocoque), PCR CT/NG (urines + gorge + anus selon pratiques), sérologies VIH, VHB, VHC, syphilis." }
+  ],
+  cours:`<h4>Urétrites</h4><ul>
+<li><b>Germes</b> : gonocoque, Chlamydia trachomatis, M. genitalium, Trichomonas.</li>
+<li><b>Bilan</b> : prélèvement urétral (culture + ATBgramme), PCR CT/NG sur 1er jet ± sites pharyngé et anal, sérologies VIH, VHB, VHC, syphilis.</li>
+<li><b>Traitement probabiliste</b> : ceftriaxone 1 g IM dose unique + doxycycline 7 jours.</li>
+<li><b>Mesures</b> : rapports protégés jusqu'à guérison, dépister et traiter les partenaires, vaccins (VHB, HPV, VHA), PrEP.</li></ul>` },
+
+{ id:"QI", titre:"Questions isolées", items:"Items 148, 155, 156, 168-170, 177, 186",
+  intro:`<p>11 questions isolées, sans lien entre elles.</p>`,
+  qs:[
+{ type:"qrm", q:"Vous recevez aux urgences un homme de 55 ans, né en France, pour une fièvre au retour d'un voyage de deux semaines au Cameroun. T° 39 °C, FC 85/min, PA 120/80 mmHg, SpO₂ 98 %. Pas de vomissements. NFS : leucocytes 6,5 G/L, Hb 12 g/dL, plaquettes 80 G/L. Ionogramme, fonction rénale et bilan hépatique normaux. CRP 120 mg/L. Frottis-goutte épaisse positif à Plasmodium falciparum, parasitémie 1 %. Quel traitement prescrivez-vous ?",
+  opts:["Chloroquine pendant 3 jours","Céfotaxime pendant 7 jours","Arténimol-pipéraquine pendant 3 jours","Doxycycline","Quinine intraveineuse"],
+  ok:[2],
+  expl:["<b>Faux.</b> P. falciparum est résistant à la chloroquine.","<b>Faux.</b> Ce n'est pas un antipaludique.","<b>Vrai.</b> Accès simple (pas de critère de gravité, parasitémie < 4 %, pas de vomissements) : ACT per os (arténimol-pipéraquine ou artéméther-luméfantrine).","<b>Faux.</b> Elle sert en prophylaxie, pas en traitement seul.","<b>Faux.</b> Le paludisme grave se traite par artésunate IV ; la quinine IV n'est plus qu'un recours."],
+  retenir:"Paludisme à P. falciparum simple : ACT per os 3 jours. Grave : artésunate IV. La thrombopénie seule n'est pas un critère de gravité." },
+{ type:"qroc", q:"Une femme de 40 ans, d'origine guinéenne, en France depuis 2 ans, présente une hépatalgie fébrile évoluant depuis plusieurs semaines. L'échographie retrouve une collection abcédée du segment IV. Quel est le diagnostic le plus probable ?",
+  kw:[["amib",1],["amoeb",1],["amib",1]], attendu:"Amibiase hépatique (abcès amibien du foie)",
+  expl:`<p>Hépatalgie fébrile + abcès hépatique chez une patiente originaire d'Afrique : abcès amibien (Entamoeba histolytica), même des années après le séjour. Diagnostic par sérologie ; traitement par métronidazole puis amœbicide de contact.</p>`,
+  retenir:"Abcès hépatique + séjour en zone tropicale : amibiase. Sérologie, métronidazole. Ne pas ponctionner sauf risque de rupture." },
+{ type:"qrm", q:"Parmi les personnes suivantes, auxquelles le vaccin antigrippal est-il recommandé chaque année ?",
+  opts:["Enfants de moins de 2 ans","Enfants de 2 à 15 ans","Personnes âgées de 65 ans et plus","Insuffisants cardiaques","Personnes atteintes de BPCO"],
+  ok:[2,3,4], indisp:[4],
+  expl:["<b>Faux.</b> Pas de recommandation générale avant 6 mois ; ensuite seulement si facteur de risque.","<b>Faux.</b> Recommandation récente élargie aux 2-17 ans selon les campagnes, mais pas la réponse attendue à ce barème.","<b>Vrai.</b>","<b>Vrai.</b> Maladies chroniques cardiaques.","<b>Vrai (indispensable).</b> Pathologie respiratoire chronique."],
+  retenir:"Grippe : vaccin annuel dès 65 ans, malades chroniques (cœur, poumon, rein, diabète, immunodépression), obèses (IMC ≥ 40), femmes enceintes, soignants." },
+{ type:"qru", q:"Afin de prévenir le risque de varicelle fœtale et néonatale, quelle est la mesure de prévention recommandée ?",
+  opts:["Isolement des femmes enceintes durant toute la grossesse","Vaccination des femmes en âge de procréer sans antécédent de varicelle","Vaccination des femmes enceintes sans antécédent de varicelle","Vaccination du nourrisson","Traitement antiviral préventif durant toute la grossesse"],
+  ok:[1],
+  expl:["<b>Faux.</b>","<b>Vrai.</b> Avec contraception pendant 1 mois après chaque dose.","<b>Faux.</b> Vaccin vivant atténué : contre-indiqué pendant la grossesse.","<b>Faux.</b> Pas de vaccination généralisée du nourrisson en France.","<b>Faux.</b>"],
+  retenir:"Varicelle : vaccin vivant atténué, contre-indiqué pendant la grossesse ; vacciner avant (femmes en âge de procréer séronégatives)." },
+{ type:"qrm", q:"Devant une angine streptococcique chez un enfant, quelles complications classiques devez-vous craindre ?",
+  opts:["Méningite streptococcique","Phlegmon péri-amygdalien","Glomérulonéphrite aiguë","Purpura fulminans","Rhumatisme articulaire aigu"],
+  ok:[1,2,4], indisp:[1],
+  expl:["<b>Faux.</b>","<b>Vrai (indispensable).</b> Complication locale suppurée : trismus, voix étouffée, bombement du voile.","<b>Vrai.</b> Complication post-streptococcique non suppurée.","<b>Faux.</b> C'est le méningocoque.","<b>Vrai.</b> Complication post-streptococcique, raison historique de l'antibiothérapie."],
+  retenir:"Angine à SGA : complications suppurées (phlegmon, abcès rétropharyngé) et non suppurées (RAA, GNA)." },
+{ type:"qru", q:"Un jeune homme de 18 ans consulte aux urgences pour fièvre et asthénie importante depuis 48 h. T° 38,5 °C, PA 120/80, pouls 85/min, SpO₂ 99 %. Auscultation claire, abdomen souple. Orienté mais ralenti. La flexion de la nuque est limitée et douloureuse. Pas de signe urinaire, examen ORL normal. Lésion violacée à l'extrémité des 2e et 3e doigts de la main droite. Quel est le premier diagnostic à évoquer ?",
+  opts:["Grippe","Infection invasive à méningocoque","Méningite à pneumocoque","Dermohypodermite aiguë bactérienne","Spondylodiscite cervicale"],
+  ok:[1],
+  expl:["<b>Faux.</b>","<b>Vrai.</b> Syndrome méningé + lésions purpuriques/nécrotiques des extrémités chez un adulte jeune : méningocoque. Ceftriaxone immédiate.","<b>Faux.</b> Le pneumocoque ne donne pas de purpura (et pas de porte d'entrée ORL ici).","<b>Faux.</b>","<b>Faux.</b>"],
+  retenir:"Fièvre + purpura (surtout nécrotique) = purpura fulminans possible : C3G IV/IM immédiate, avant tout examen." },
+{ type:"qru", q:"Un homme de 65 ans, diabétique insulinorequérant, consulte pour une dyspnée fébrile aiguë. T° 39 °C, PA 95/55 mmHg, pouls 110/min, FR 30/min, SpO₂ 89 %. La radiographie montre un foyer alvéolaire du lobe moyen. Vous posez une voie veineuse avec du sérum salé isotonique, du paracétamol et de l'oxygène. Quelle est votre antibiothérapie probabiliste initiale ?",
+  opts:["Méropénème + amikacine","Pipéracilline-tazobactam","Ceftriaxone + amikacine","Céfotaxime + spiramycine","Amoxicilline-acide clavulanique"],
+  ok:[3],
+  expl:["<b>Faux.</b> Pas de facteur de risque de BMR.","<b>Faux.</b> Ne couvre pas la légionelle.","<b>Faux.</b> L'aminoside ne couvre pas les intracellulaires.","<b>Vrai.</b> PAC grave (FR 30, PAS < 100, hypoxémie : relève de la réanimation) : C3G + macrolide (ou lévofloxacine) pour couvrir pneumocoque ET légionelle.","<b>Faux.</b> Insuffisant pour une PAC grave."],
+  retenir:"PAC grave (réanimation) : C3G (céfotaxime/ceftriaxone) + macrolide IV (spiramycine) ou lévofloxacine." },
+{ type:"qrm", q:"Quels sont les deux premiers diagnostics à évoquer chez un patient avec une hyperéosinophilie associée à une défaillance d'organe ?",
+  opts:["Syndrome d'hyperinfestation à Strongyloides stercoralis","Schistosomose urinaire","Asthme aigu grave","DRESS syndrome","Amœbose colique"],
+  ok:[0,3],
+  expl:["<b>Vrai.</b> Anguillulose maligne (sous corticoïdes, HTLV-1) : potentiellement mortelle.","<b>Faux.</b> Pas de défaillance d'organe.","<b>Faux.</b>","<b>Vrai.</b> Toxidermie grave avec hyperéosinophilie et atteinte viscérale (foie, rein…).","<b>Faux.</b> Les protozoaires ne donnent pas d'hyperéosinophilie."],
+  retenir:"Hyperéosinophilie + défaillance d'organe : anguillulose maligne, DRESS, syndrome hyperéosinophilique, vascularite (EGPA)." },
+{ type:"qru", q:"Quelles sont les causes les plus fréquentes de fièvre prolongée ? (une seule réponse)",
+  opts:["Les causes infectieuses","Les affections malignes","Les maladies inflammatoires systémiques","Les causes médicamenteuses","Les maladies thromboemboliques"],
+  ok:[0],
+  expl:["<b>Vrai.</b> Environ un tiers des cas (tuberculose, endocardite, abcès profonds…).","<b>Faux.</b> Deuxième ou troisième cause selon les séries.","<b>Faux.</b>","<b>Faux.</b>","<b>Faux.</b>"],
+  retenir:"Fièvre prolongée : infections > maladies inflammatoires ≈ cancers ; jusqu'à 30 % restent sans diagnostic." },
+{ type:"qrm", q:"Devant une fièvre au retour, lequel des éléments suivants permet d'écarter le diagnostic de paludisme ?",
+  opts:["Un retour de voyage en Europe","La prise d'une chimioprophylaxie antipalustre pendant le séjour","Un frottis sanguin-goutte épaisse négatif","L'absence d'anémie","Une vaccination antipalustre avant le départ"],
+  ok:[2],
+  expl:["<b>Faux.</b> Le piège : escales, voyages antérieurs, paludisme d'aéroport.","<b>Faux.</b> Aucune prophylaxie n'est efficace à 100 %.","<b>Vrai.</b> Seul un frottis-goutte épaisse (ou test équivalent) négatif l'écarte, à répéter si doute.","<b>Faux.</b>","<b>Faux.</b> Les vaccins existants concernent l'enfant en zone d'endémie et ne protègent pas complètement."],
+  retenir:"Toute fièvre au retour de zone d'endémie = paludisme jusqu'à preuve du contraire : frottis-goutte épaisse en urgence." },
+{ type:"qrm", q:"Un homme de 40 ans consulte pour une fièvre survenue le lendemain de son retour d'un voyage de 7 jours en Côte d'Ivoire. Lesquels de ces diagnostics sont compatibles avec ce délai ?",
+  opts:["Shigellose","Hépatite virale aiguë B","Dengue","Paludisme","Primo-infection par le VIH"],
+  ok:[0,2,3],
+  expl:["<b>Vrai.</b> Incubation de 1 à 3 jours.","<b>Faux.</b> Incubation de 1 à 6 mois.","<b>Vrai.</b> Incubation de 4 à 7 jours.","<b>Vrai.</b> P. falciparum : incubation minimale 7 jours ; un séjour de 7 jours + fièvre à J8 reste compatible.","<b>Faux.</b> Incubation de 2 à 6 semaines."],
+  retenir:"Incubation courte (< 7 j) : arboviroses, shigellose, salmonellose. Paludisme falciparum : ≥ 7 j, surtout < 2 mois. Incubation longue : hépatites, VIH, BK, amibiase." }
+  ],
+  cours:`<h4>Questions isolées : les points clés</h4><ul>
+<li><b>Paludisme</b> : frottis-goutte épaisse en urgence ; accès simple = ACT per os ; grave = artésunate IV.</li>
+<li><b>Abcès hépatique au retour</b> : amibiase (sérologie, métronidazole).</li>
+<li><b>Grippe</b> : vaccin annuel ≥ 65 ans, maladies chroniques, grossesse, obésité, soignants.</li>
+<li><b>Varicelle</b> : vaccin vivant, CI pendant la grossesse.</li>
+<li><b>Angine à SGA</b> : phlegmon, RAA, GNA.</li>
+<li><b>Purpura fébrile</b> : méningocoque, C3G immédiate.</li>
+<li><b>PAC grave</b> : C3G + macrolide.</li>
+<li><b>Hyperéosinophilie grave</b> : anguillulose maligne, DRESS.</li></ul>` },
+
+{ id:"DP2", titre:"Angine, primo-infection VIH et migrants", items:"Items 1, 148, 165, 169",
+  intro:`<p>Monsieur B., 20 ans, sans antécédent, se présente à la PASS pour une odynophagie depuis 3 jours. Il est en France depuis 1 an après un parcours migratoire difficile depuis le Sénégal. Il ne parle pas français, seulement le wolof, que vous ne parlez pas.</p>`,
+  qs:[
+{ type:"qrm", q:"Quels éléments de l'examen clinique vous semble-t-il pertinent de rechercher dans un premier temps ?",
+  opts:["Adénopathies cervicales","Diplopie","Paralysie faciale","Fièvre","Otalgie","Reflux hépato-jugulaire"],
+  ok:[0,3,4],
+  expl:["<b>Vrai.</b> Critère du score de McIsaac.","<b>Faux.</b>","<b>Faux.</b>","<b>Vrai.</b>","<b>Vrai.</b> L'otalgie réflexe oriente vers un phlegmon ou une angine sévère.","<b>Faux.</b>"],
+  retenir:"Odynophagie : fièvre, adénopathies, aspect des amygdales, signes de phlegmon (trismus, otalgie, voussure du voile)." },
+{ type:"qru", ctx:`<p>Pharynx érythémateux, amygdales augmentées de volume recouvertes d'un enduit blanchâtre facile à décoller.</p>`, q:"À quel type d'angine ce tableau correspond-il ?",
+  opts:["Angine érythémato-pultacée","Angine pseudomembraneuse","Angine vésiculeuse","Angine ulcéro-nécrotique"],
+  ok:[0],
+  expl:["<b>Vrai.</b> Enduit blanchâtre (pultacé) qui se décolle facilement.","<b>Faux.</b> Fausses membranes adhérentes, extensives : MNI, diphtérie.","<b>Faux.</b> Vésicules : herpès, coxsackie.","<b>Faux.</b> Ulcération : Vincent, syphilis, hémopathie."],
+  retenir:"Pultacée = enduit qui se décolle ; pseudomembraneuse = membranes adhérentes (MNI, diphtérie)." },
+{ type:"qroc", ctx:`<p>Au total : fièvre à 39 °C, adénopathies cervicales sensibles, amygdales augmentées de volume recouvertes d'un enduit.</p>`, q:"À combien est le score de McIsaac ?",
+  kw:[["3",1],["trois",1]], attendu:"3",
+  expl:`<p>Fièvre > 38 °C (+1), adénopathies cervicales sensibles (+1), atteinte amygdalienne (+1), <b>absence de toux</b> non précisée (0), âge 15-44 ans (0). Total : 3, donc TDR indiqué.</p>`,
+  retenir:"McIsaac : fièvre > 38, absence de toux, ADP sensibles, amygdales augmentées/exsudat, âge 3-14 (+1) / ≥ 45 (−1). TDR si ≥ 2 chez l'adulte." },
+{ type:"qrm", q:"Vous réalisez un TDR à la recherche d'un streptocoque β-hémolytique du groupe A. Quelles affirmations sont vraies ?",
+  opts:["Le test est réalisable uniquement à l'hôpital","Le résultat est disponible 72 h après réalisation","Le test est réalisé après écouvillonnage direct des amygdales","Sa spécificité est supérieure à 95 %","Sa sensibilité est supérieure à 90 %"],
+  ok:[2,3,4],
+  expl:["<b>Faux.</b> Fait au cabinet et en pharmacie.","<b>Faux.</b> En quelques minutes.","<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b> Environ 90 % : un TDR négatif chez l'adulte suffit (pas de culture)."],
+  retenir:"TDR : rapide, au cabinet, Se ≈ 90 %, Sp ≈ 95 %. TDR + → amoxicilline 6 j ; TDR − → pas d'antibiotique." },
+{ type:"qrm", ctx:`<p>Monsieur B. se livre davantage : il a eu un rapport sexuel il y a 3 semaines avec un homme qu'il ne connaissait pas et n'a pas revu.</p>`, q:"Quels éléments de l'interrogatoire vous semble-t-il pertinent de recueillir ?",
+  opts:["Usage du préservatif lors du rapport","Prise d'une PrEP avant le rapport","Réalisation antérieure d'une sérologie VIH","Âge du partenaire sexuel","Antécédents d'IST","Prise d'un traitement post-exposition pour le VIH"],
+  ok:[0,1,2,4,5],
+  expl:["<b>Vrai.</b>","<b>Vrai.</b>","<b>Vrai.</b> Pour dater une éventuelle séroconversion.","<b>Faux.</b> N'influe pas sur le risque.","<b>Vrai.</b>","<b>Vrai.</b>"],
+  retenir:"Exposition sexuelle : type de rapport, préservatif, PrEP, TPE, statut du partenaire, sérologies antérieures, IST." },
+{ type:"qru", q:"Quel élément biologique vous paraît indispensable pour avancer dans la recherche diagnostique concernant l'atteinte amygdalienne ?",
+  opts:["Une sérologie streptocoque β-hémolytique du groupe A","Une lipase","Un prélèvement amygdalien en mycologie","Une sérologie hépatite A","Un immunophénotypage lymphocytaire","Une sérologie VIH"],
+  ok:[5],
+  expl:["<b>Faux.</b> Aucun intérêt dans l'angine.","<b>Faux.</b>","<b>Faux.</b>","<b>Faux.</b>","<b>Faux.</b>","<b>Vrai.</b> Angine fébrile + adénopathies 3 semaines après un rapport à risque : primo-infection VIH à évoquer (test combiné Ag p24 + Ac)."],
+  retenir:"Angine + fièvre + ADP après un rapport à risque récent : primo-infection VIH → test de 4e génération (Ag p24 + Ac) ± charge virale." },
+{ type:"qrm", q:"Compte tenu de la migration récente, quels éléments vous semblent pertinents d'ajouter au bilan ?",
+  opts:["Une sérologie VHB","Un spermogramme","Une sérologie VHC","Un scotch-test","Des facteurs antinucléaires"],
+  ok:[0,2],
+  expl:["<b>Vrai.</b> Forte prévalence en Afrique subsaharienne.","<b>Faux.</b>","<b>Vrai.</b> Bilan de santé du migrant.","<b>Faux.</b> Cherche l'oxyure, sans rapport.","<b>Faux.</b>"],
+  retenir:"Bilan du migrant : VIH, VHB, VHC, syphilis, tuberculose (radio, IGRA), selon l'origine bilharziose et anguillulose, mise à jour vaccinale." },
+{ type:"qrm", qrp:true, label:"QRP (2)", ctx:`<p>L'hémogramme retrouve plus de 50 % de cellules mononucléées et de grands lymphocytes T basophiles (hyperlymphocytose).</p>`, q:"Quels sont les deux premiers diagnostics à évoquer devant ce tableau ?",
+  opts:["Une mononucléose infectieuse","Une réactivation de toxoplasmose","Une hépatite A","Une primo-infection VIH","Une syphilis","Une cryptococcose","Un cancer des amygdales"],
+  ok:[0,3],
+  expl:["<b>Vrai.</b> Syndrome mononucléosique + angine : MNI (EBV) en premier.","<b>Faux.</b> La primo-infection toxoplasmique peut donner un syndrome mononucléosique, pas une réactivation.","<b>Faux.</b>","<b>Vrai.</b> L'autre grande cause de syndrome mononucléosique fébrile, surtout après un rapport à risque.","<b>Faux.</b>","<b>Faux.</b>","<b>Faux.</b>"],
+  retenir:"Syndrome mononucléosique : EBV, CMV, toxoplasmose (primo), VIH (primo-infection)." },
+{ type:"qrm", ctx:`<p>La sérologie VIH et le western blot sur un second prélèvement confirment l'infection. Le patient est adressé en infectiologie.</p>`, q:"Quelles solutions vous paraissent les plus adaptées pour faire l'annonce diagnostique ?",
+  opts:["Recours à un interprète en wolof d'une entreprise spécialisée disponible à l'hôpital","Interprétariat par un confrère qui parle wolof","Traduction par un membre de la famille","Pas de nécessité de traduction","Images illustrées et annonce en français"],
+  ok:[0,1],
+  expl:["<b>Vrai.</b> Interprétariat professionnel : la référence.","<b>Vrai.</b> Professionnel de santé soumis au secret.","<b>Faux.</b> Atteinte au secret médical et risque de filtrage de l'information.","<b>Faux.</b>","<b>Faux.</b> Inadapté pour une annonce aussi grave."],
+  retenir:"Annonce à un patient allophone : interprète professionnel (présentiel ou téléphonique), jamais la famille." },
+{ type:"qru", q:"Le bilan comporte une charge virale VIH. À quel niveau vous attendez-vous dans ce contexte ?",
+  opts:["Très élevée","Basse","Très basse","Indétectable"],
+  ok:[0],
+  expl:["<b>Vrai.</b> La primo-infection s'accompagne d'une virémie très élevée (pic, souvent > 10⁶ copies/mL) : période très contagieuse.","<b>Faux.</b>","<b>Faux.</b>","<b>Faux.</b>"],
+  retenir:"Primo-infection VIH : charge virale très élevée, CD4 transitoirement bas, très contagieux." },
+{ type:"qrm", ctx:`<p>Les CD4 sont à 555/mm³.</p>`, q:"Quelles options thérapeutiques choisissez-vous chez ce patient ?",
+  opts:["Traitement antirétroviral","Prophylaxie médicamenteuse antitoxoplasmose","Prophylaxie médicamenteuse antipneumocystose","Prophylaxie médicamenteuse contre la tuberculose","Prophylaxie médicamenteuse contre les infections à streptocoque"],
+  ok:[0],
+  expl:["<b>Vrai.</b> Traitement antirétroviral pour tous, le plus tôt possible, quel que soit le taux de CD4 (urgence en primo-infection).","<b>Faux.</b> Seulement si CD4 < 100-200 et sérologie toxo positive.","<b>Faux.</b> Seulement si CD4 < 200 (ou < 15 %).","<b>Faux.</b>","<b>Faux.</b>"],
+  retenir:"VIH : ARV pour tous. Prophylaxie pneumocystose si CD4 < 200 ; toxoplasmose si CD4 < 100 et IgG +. Cotrimoxazole couvre les deux." },
+{ type:"qru", q:"À quoi correspond l'acronyme PASS ?",
+  opts:["Permanence d'accès aux soins de santé (hôpital public)","Permanence d'accès aux soins de sécurité des étrangers","Protection de l'accès de santé et de sécurité","Protection de l'arrivée des soins de santé"],
+  ok:[0],
+  expl:["<b>Vrai.</b> Accueil médico-social des personnes sans couverture sociale.","<b>Faux.</b>","<b>Faux.</b>","<b>Faux.</b>"],
+  retenir:"PASS : permanence d'accès aux soins de santé, à l'hôpital public, pour les personnes en précarité sans droits ouverts." },
+{ type:"qroc", q:"Le patient n'a pas de titre de séjour. Quelle mesure de protection sociale peut lui être proposée pour assurer son traitement et son suivi ?",
+  kw:[["ame",1],["aide medicale",1]], attendu:"AME (aide médicale de l'État)",
+  expl:`<p>L'AME couvre les étrangers en situation irrégulière résidant en France depuis plus de 3 mois, sous condition de ressources.</p>`,
+  retenir:"Sans titre de séjour : AME (> 3 mois de résidence). En attendant : PASS, soins urgents. Avec titre de séjour : PUMa + C2S." },
+{ type:"qru", ctx:`<p>Deux mois plus tard, le patient va mieux. Charge virale indétectable, CD4 à 620/mm³. La sérologie VHB initiale retrouvait : Ag HBs négatif, Ac anti-HBs positifs, Ac anti-HBc positifs.</p>`, q:"Quel vaccin vous semble pertinent à lui proposer ?",
+  opts:["Vaccin antipneumococcique","BCG","Vaccin contre le VRS","Vaccin contre la rage","Vaccin contre l'hépatite B"],
+  ok:[0],
+  expl:["<b>Vrai.</b> Recommandé chez tous les patients vivant avec le VIH.","<b>Faux.</b> Vaccin vivant, contre-indiqué chez le PVVIH.","<b>Faux.</b> Recommandé chez les ≥ 75 ans ou ≥ 65 ans à risque.","<b>Faux.</b>","<b>Faux.</b> Anti-HBs + anti-HBc positifs = hépatite B guérie, immunisé : pas de vaccin."],
+  retenir:"Sérologie VHB : anti-HBc + anti-HBs + = guérie ; anti-HBs seul = vacciné ; Ag HBs + = infection. PVVIH : pneumocoque, grippe, VHB si non immun, HPV ; pas de BCG." },
+{ type:"qrm", q:"Le patient vous interroge sur les modes de transmission du VIH. Quelles informations sont exactes ?",
+  opts:["Le VIH se transmet par voie sexuelle uniquement","Chez une mère séropositive non traitée, le VIH ne se transmet pas au bébé par l'allaitement","Une personne traitée avec une charge virale indétectable depuis plus de 6 mois ne transmet pas le VIH par voie sexuelle","Les AES professionnels sont les seules possibilités de transmission sanguine","Le type de rapport (vaginal réceptif, anal réceptif, anal insertif) influence le risque de transmission","Au cours d'un rapport anal insertif avec un partenaire infecté non suivi, le risque est nul"],
+  ok:[2,4],
+  expl:["<b>Faux.</b> Aussi sanguine et materno-fœtale.","<b>Faux.</b> L'allaitement transmet le VIH.","<b>Vrai.</b> I = I : indétectable = intransmissible.","<b>Faux.</b> Partage de matériel d'injection, transfusion (historiquement)…","<b>Vrai.</b> Le rapport anal réceptif est le plus à risque.","<b>Faux.</b> Risque plus faible que le réceptif, mais réel."],
+  retenir:"VIH : transmission sexuelle, sanguine, materno-fœtale (grossesse, accouchement, allaitement). I = I. Rapport anal réceptif = risque maximal." }
+  ],
+  cours:`<h4>Angine, primo-infection VIH, santé des migrants</h4><ul>
+<li><b>Angine</b> : McIsaac ≥ 2 chez l'adulte → TDR ; TDR + → amoxicilline 6 j.</li>
+<li><b>Syndrome mononucléosique</b> : EBV, CMV, toxoplasmose, primo-infection VIH.</li>
+<li><b>Primo-infection VIH</b> : 2-6 semaines après l'exposition ; fièvre, angine, ADP, éruption ; test combiné Ag p24 + Ac, charge virale très élevée ; ARV en urgence.</li>
+<li><b>Prophylaxies</b> : pneumocystose si CD4 < 200 ; toxoplasmose si CD4 < 100 et IgG +.</li>
+<li><b>Accès aux soins</b> : PASS, AME (sans titre de séjour, > 3 mois), PUMa + C2S, interprétariat professionnel.</li>
+<li><b>Bilan du migrant</b> : VIH, VHB, VHC, syphilis, tuberculose, parasitoses selon l'origine, vaccins.</li></ul>` }
+]
+};
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const L="ABCDEFGHIJKLMNOPQRST";
+const KEY="annale-infectio-nov25-v1";
+const TOTAL=60*60;
+const store={get(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}},clear(){try{localStorage.removeItem(KEY)}catch(e){}}};
+const Q=[];EXAM.dps.forEach((dp,d)=>dp.qs.forEach((q,i)=>Q.push({d,i,q,dp})));
+let S=null, tick=null, paused=false;
+function fresh(){return{pos:0,ans:{},left:TOTAL,done:false,override:{}}}
+function img(k,alt){return `<img src="${IMGS[k]}" alt="${alt||''}" data-zoom>`}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function fmt(t){t=Math.max(0,t|0);return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+function show(id){["vStart","vExam","vRes","vCorr"].forEach(v=>$("#"+v).hidden=v!==id);window.scrollTo(0,0)}
+function antibio(){const r=[["Amoxicilline","S"],["Imipénème","S"],["Gentamicine","S"],["Vancomycine","S"],["Cotrimoxazole","R"],["Teicoplanine","S"],["Linézolide","S"],["Lévofloxacine","R"],["Nitrofurantoïne","R"]];
+ return `<div class="tblwrap"><table class="abg"><tr><td colspan="2"><b>ECBU</b> · urines 2e jet</td></tr><tr><td>Hématies</td><td>50/mm³</td></tr><tr><td>Cellules épithéliales</td><td>absence</td></tr><tr><td>Leucocytes</td><td>150/mm³</td></tr><tr><td>CGP en courtes chaînettes</td><td>quelques</td></tr><tr><td>Culture : <i>Enterococcus faecalis</i></td><td>10⁵/mL</td></tr><tr><td colspan="2"><b>Antibiogramme</b></td></tr>${r.map(([a,b])=>`<tr><td>${a}</td><td class="${b}">${b}</td></tr>`).join("")}</table></div>`}
+
+/* ---------- accueil ---------- */
+$("#dpList").innerHTML=EXAM.dps.map((dp,d)=>`<li data-jd="${d}" style="cursor:pointer" title="Commencer par ce dossier"><span class="id">${dp.id}</span><span>${dp.titre}</span><span class="n">${dp.qs.length} Q</span></li>`).join("");
+const saved=store.get();
+if(saved&&!saved.done&&Object.keys(saved.ans).length){$("#btnResume").hidden=false}
+if(saved&&saved.done){$("#btnResume").hidden=false;$("#btnResume").textContent="Voir mes résultats"}
+$("#btnStart").onclick=()=>{S=fresh();store.set(S);startExam()};
+$("#btnResume").onclick=()=>{S=saved;if(S.done)results();else startExam()};
+$("#btnDirect").onclick=()=>{S=S||saved||fresh();openCorr(0)};
+
+/* ---------- épreuve ---------- */
+function steps(){const el=$("#steps");if(!S||$("#vExam").hidden&&!S.done){el.innerHTML="";return}
+ const cur=Q[S.pos]?Q[S.pos].d:-1;
+ el.innerHTML=EXAM.dps.map((dp,d)=>{const qs=Q.filter(x=>x.d===d);const done=qs.every(x=>S.ans[x.d+"-"+x.i]!==undefined);return `<span data-jd="${d}" style="cursor:pointer" title="Aller à ${dp.titre}" class="${d===cur&&!S.done?'on':done?'done':''}">${dp.id}</span>`}).join("")}
+function startExam(){show("vExam");$("#timer").hidden=false;$("#btnPause").hidden=false;paused=false;$("#btnPause").textContent="Pause";renderQ();runTimer()}
+function runTimer(){clearInterval(tick);tick=setInterval(()=>{if(paused||!S||S.done)return;S.left--;drawTimer();if(S.left%5===0)store.set(S);if(S.left<=0){finish()}},1000);drawTimer()}
+function drawTimer(){const t=$("#timer");t.textContent=fmt(S.left);t.classList.toggle("low",S.left<=300)}
+$("#btnPause").onclick=()=>{paused=!paused;$("#btnPause").textContent=paused?"Reprendre":"Pause";$("#qpanel").style.filter=paused?"blur(6px)":"";$("#enonce").style.filter=paused?"blur(6px)":""};
+
+function enonceHTML(d,upto){const dp=EXAM.dps[d];let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div>${dp.intro}`;
+ if(dp.introImg)h+=`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`;
+ dp.qs.forEach((q,i)=>{if(i<upto&&q.ctx){h+=`<div class="add"><div class="note">Ajouté en Q${i+1}</div>${q.ctx}${q.img?`<div class="imgs">${q.img.map(k=>img(k)).join("")}</div>`:""}${q.table==="antibio"?antibio():""}</div>`}});return h}
+
+function isFree(dp){return dp.free||/^(QI|SQI|TCS)/.test(dp.id)}
+function opened(n){const {d,i,dp}=Q[n];if(isFree(dp))return true;for(let k=0;k<i;k++){if(S.ans[d+"-"+k]===undefined)return false}return true}
+function navHTML(){return `<div class="qnav">`+EXAM.dps.map((dp,d)=>`<div class="qnav-dp"><span class="qnav-id">${dp.id}${isFree(dp)?"":" 🔒"}</span>`+Q.map((x,n)=>({x,n})).filter(o=>o.x.d===d).map(({x,n})=>{const k=x.d+"-"+x.i;const done=S.ans[k]!==undefined;const ok=opened(n);return `<button class="qn${n===S.pos?" cur":""}${done?" done":""}" data-n="${n}" ${ok?"":"disabled"} title="${ok?"":"Validez les questions précédentes du dossier"}">${x.i+1}</button>`}).join("")+`</div>`).join("")+`</div>`}
+function renderQ(){
+ if(S.pos>=Q.length)S.pos=Q.length-1;
+ const {d,i,q,dp}=Q[S.pos];steps();
+ const k=d+"-"+i, prev=S.ans[k], answered=prev!==undefined, free=isFree(dp), locked=answered&&!free;
+ $("#enonce").innerHTML=enonceHTML(d,i);
+ const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+ let h=navHTML();
+ h+=`<div class="qhead"><span class="qnum">${dp.id} · Q${i+1}/${dp.qs.length}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}<span class="spacer"></span><span class="note">${S.pos+1} / ${Q.length}</span></div>`;
+ if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+ if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+ if(q.table==="antibio")h+=antibio();
+ h+=`<div class="qtext">${q.q}</div>`;
+ const pa=Array.isArray(prev)?prev:[];
+ if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const t=q.type==="qrm"?"checkbox":"radio";
+  h+=`<ul class="opts">${q.opts.map((o,j)=>`<li class="opt"><label for="o${j}"><input type="${t}" name="opt" id="o${j}" value="${j}" ${pa.includes(j)?"checked":""} ${locked?"disabled":""}><span class="L">${L[j]}</span><span>${o}</span></label></li>`).join("")}</ul>`}
+ else if(q.type==="qroc"){h+=`<div class="qroc"><label class="note" for="qroc">Réponse courte (quelques mots)</label><input id="qroc" autocomplete="off" placeholder="Votre réponse" value="${answered&&prev?esc(prev):""}" ${locked?"disabled":""}></div>`}
+ else if(q.type==="info"){h+=`<p class="note">Question neutralisée à l'épreuve : validez pour continuer (1 point pour tous).</p>`}
+ let st="";
+ if(locked)st=`<p class="lockmsg">🔒 Réponse validée : dans un dossier progressif, elle n'est plus modifiable. Vous pouvez la relire.</p>`;
+ else if(answered&&free)st=`<p class="savedmsg">✓ Réponse enregistrée. Vous pouvez la modifier jusqu'à la fin de l'épreuve.</p>`;
+ else if(!free)st=`<p class="note">Dossier progressif : une fois validée, la réponse ne pourra plus être modifiée.</p>`;
+ h+=st;
+ const nAns=Object.keys(S.ans).length;
+ h+=`<div class="actions navrow"><button class="btn" id="bPrev" ${S.pos===0?"disabled":""}>◀ Précédente</button>${locked?"":`<button class="btn primary" id="btnVal">${answered?"Enregistrer la modification":"Valider"}</button>`}<button class="btn" id="bNext" ${S.pos>=Q.length-1||!opened(S.pos+1)?"disabled":""}>Suivante ▶</button><span class="spacer"></span><button class="btn ghost" id="bEnd">Terminer l'épreuve (${nAns}/${Q.length})</button></div>`;
+ h+=`<div class="confirm" id="conf" hidden><span id="confTxt">Réponse définitive ?</span><button class="btn primary small" id="ok">Confirmer</button><button class="btn small" id="no">Modifier</button></div>`;
+ $("#qpanel").innerHTML=h;
+ $("#qpanel").querySelectorAll(".qn").forEach(b=>b.onclick=()=>{S.pos=+b.dataset.n;store.set(S);renderQ();window.scrollTo(0,0)});
+ $("#bPrev").onclick=()=>{S.pos--;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bNext").onclick=()=>{S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bEnd").onclick=()=>{const left=Q.length-Object.keys(S.ans).length;if(confirmEnd(left))finish()};
+ if(locked)return;
+ let a=null,empty=true;
+ const read=()=>{if(q.type==="qrm")a=[...document.querySelectorAll("input[name=opt]:checked")].map(x=>+x.value);
+  else if(q.type==="qru"||q.type==="tcs"){const c=document.querySelector("input[name=opt]:checked");a=c?[+c.value]:[]}
+  else if(q.type==="qroc")a=$("#qroc").value.trim();
+  else a=true;
+  empty=(Array.isArray(a)&&!a.length)||a===""||a==null};
+ const save=()=>{S.ans[k]=empty?null:a;if(S.pos<Q.length-1&&opened(S.pos+1))S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#btnVal").onclick=()=>{read();
+  if(free){save();return}
+  $("#confTxt").textContent=(empty?"Aucune réponse : la question vaudra 0. ":"")+"Réponse définitive (non modifiable ensuite) ?";
+  $("#btnVal").hidden=true;$("#conf").hidden=false;$("#ok").focus()};
+ $("#no").onclick=()=>{$("#conf").hidden=true;$("#btnVal").hidden=false};
+ $("#ok").onclick=save;
+}
+function confirmEnd(left){const box=$("#conf");$("#confTxt").textContent=(left?left+" question(s) sans réponse. ":"")+"Rendre la copie et voir la note ?";box.hidden=false;const v=$("#btnVal");if(v)v.hidden=true;$("#ok").onclick=()=>finish();$("#no").onclick=()=>{box.hidden=true;if(v)v.hidden=false};return false}
+function jumpDp(d){const n=Q.findIndex(x=>x.d===d);if(n<0)return;let m=n;while(m+1<Q.length&&Q[m+1].d===d&&S.ans[Q[m].d+"-"+Q[m].i]!==undefined)m++;S.pos=m;store.set(S);if($("#vExam").hidden)startExam();else{renderQ();window.scrollTo(0,0)}}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-jd]");if(!t)return;if(!S||S.done){S=fresh();store.set(S)}jumpDp(+t.dataset.jd)});
+
+/* ---------- notation ---------- */
+function inPoly(x,y,pts){let c=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const[xi,yi]=pts[i],[xj,yj]=pts[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
+function norm(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim()}
+function grade(d,i){const q=EXAM.dps[d].qs[i];let a=S.ans[d+"-"+i];const k=d+"-"+i;
+ if(S.override&&S.override[k]!==undefined)return S.override[k];
+ if(a==null)return 0;
+ if(q.type==="qru")return a.length===1&&a[0]===q.ok[0]?1:0;
+ if(q.type==="tcs")return a.length===1?q.w[a[0]]:0;
+ if(q.type==="qrm"){if(q.neut)a=a.filter(x=>!q.neut.includes(x));if(!a.length)return 0;
+  if((q.inacc||[]).some(x=>a.includes(x)))return 0;
+  if((q.indisp||[]).some(x=>!a.includes(x)))return 0;
+  let n=0;for(let k2=0;k2<q.opts.length;k2++){if(a.includes(k2)!==q.ok.includes(k2))n++}
+  if(/QRP/i.test((q.label||'')+' '+(q.q||'')+' '+(q.tag||''))||q.qrp||q.opts.length>5){const g=a.filter(x=>q.ok.includes(x)).length,ex=Math.max(0,a.length-q.ok.length);return Math.max(0,(g-ex)/q.ok.length)}return n===0?1:n===1?.5:n===2?.2:0}
+ if(q.type==="info")return 1;
+ if(q.type==="qroc"){const s=norm(a);if(q.kw){let m=0;q.kw.forEach(([kk,v])=>{if(s.includes(norm(kk)))m=Math.max(m,v)});return m}return q.keys.some(kk=>s.includes(norm(kk)))?1:0}
+ if(q.type==="qzone"){return inPoly(a.x*q.zoneW,a.y*q.zoneH,q.zone)?1:0}
+ return 0}
+function f1(x){return (Math.round(x*100)/100).toString().replace(".",",")}
+
+function finish(){clearInterval(tick);S.done=true;store.set(S);$("#timer").hidden=true;$("#btnPause").hidden=true;results()}
+function results(){show("vRes");steps();let tot=0,max=Q.length;const byDp=EXAM.dps.map(()=>[0,0]),byR={A:[0,0],B:[0,0]};
+ Q.forEach(({d,i,q})=>{const g=grade(d,i);tot+=g;byDp[d][0]+=g;byDp[d][1]++;if(q.rang){byR[q.rang][0]+=g;byR[q.rang][1]++}});
+ $("#sBig").innerHTML=`${f1(tot/max*20)}<small> / 20</small>`;
+ const used=TOTAL-S.left;
+ $("#sSub").textContent=`${f1(tot)} points sur ${max} · temps utilisé ${fmt(used)}`;
+ $("#sBars").innerHTML=EXAM.dps.map((dp,d)=>`<div class="barrow"><span class="mono">${dp.id}</span><div class="track"><div class="fill" style="width:${byDp[d][0]/byDp[d][1]*100}%"></div></div><span class="v">${f1(byDp[d][0])}/${byDp[d][1]}</span></div>`).join("")+
+  ["A","B"].filter(r=>byR[r][1]).map(r=>`<div class="barrow"><span><span class="rk ${r.toLowerCase()}">${r}</span></span><div class="track"><div class="fill" style="width:${byR[r][0]/byR[r][1]*100}%;background:var(--rk${r})"></div></div><span class="v">${f1(byR[r][0])}/${byR[r][1]}</span></div>`).join("");
+ $("#sGrid").innerHTML=Q.map(({d,i,dp},n)=>{const g=grade(d,i);return `<button class="${g===1?'s1':g===0?'s0':'sp'}" data-go="${d}-${i}">${dp.id.replace("DP","")}.${i+1} · ${f1(g)}</button>`}).join("");
+ $("#sGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{const[d,i]=b.dataset.go.split("-").map(Number);openCorr(d,i)});
+}
+$("#btnCorr").onclick=()=>openCorr(0);
+$("#btnAgain").onclick=()=>{store.clear();S=fresh();store.set(S);startExam()};
+$("#btnBackRes").onclick=()=>{if(S&&S.done)results();else show("vStart")};
+$("#btnHome").onclick=()=>{show("vStart")};
+
+/* ---------- correction ---------- */
+let curD=0;
+function openCorr(d,i){show("vCorr");steps();curD=d;
+ $("#tabs").innerHTML=EXAM.dps.map((dp,k)=>`<button role="tab" aria-selected="${k===d}" data-d="${k}">${dp.id}</button>`).join("");
+ $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCorr(+b.dataset.d));
+ drawCorr(d);
+ if(i!==undefined){const el=document.getElementById("cq-"+d+"-"+i);if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),30)}
+}
+function drawCorr(d){const dp=EXAM.dps[d];const answered=S&&Object.keys(S.ans).length>0;
+ let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div><details class="enon"><summary>Énoncé initial</summary>${dp.intro}${dp.introImg?`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`:""}</details>`;
+ dp.qs.forEach((q,i)=>{const k=d+"-"+i;const a=S?S.ans[k]:undefined;const has=a!==undefined;const g=has?grade(d,i):null;
+  const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+  h+=`<div class="cq" id="cq-${k}"><div class="qhead"><span class="qnum">Q${i+1}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}${has?`<span class="pts ${g===1?'s1':g===0?'s0':'sp'}">${f1(g)} pt</span>`:""}</div>`;
+  if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+  if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+  if(q.table==="antibio")h+=antibio();
+  h+=`<div class="qtext">${q.q}</div>`;
+  if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const mine=Array.isArray(a)?a:[];
+   q.opts.forEach((o,j)=>{const ok=q.ok.includes(j),me=mine.includes(j);
+    let cls=has?(ok&&me?"good":ok&&!me?"miss":!ok&&me?"bad":""):(ok?"good":"");
+    let tagx=(q.indisp||[]).includes(j)?" · indispensable":(q.inacc||[]).includes(j)?" · inacceptable":"";
+    h+=`<div class="copt ${cls}"><span class="mk">${ok?"✓":"✗"}</span><span class="mk">${L[j]}</span><span class="tx">${o}${has&&me?` <span class="mine">· coché${tagx}</span>`:tagx?`<span class="mine">${tagx}</span>`:""}</span><div class="ex">${q.expl[j]}</div></div>`});
+  } else if(q.type==="qroc"){
+   h+=`<div class="free ${has?(g===1?'s1':g?'sp':'s0'):''}" style="background:${has?'':'var(--soft)'}"><b>Votre réponse :</b> ${has&&a?esc(a):"<i>aucune</i>"}<br><b>Attendu :</b> ${q.attendu}</div>`;
+   if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Correction automatique par mots-clés.</span><button class="btn small" data-ov="${k}" data-v="${g?0:1}">${g?"Compter faux":"Ma réponse est juste"}</button></div>`;
+   h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="info"){
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  } else if(q.type==="qzone"){
+   const pts=q.zone.map(p=>`${p[0]/q.zoneW*100},${p[1]/q.zoneH*100}`).join(" ");
+   h+=`<div class="zonebox" style="cursor:default"><img src="${IMGS[q.img[0]]}" alt="Scanner abdominal"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="${pts}" fill="rgba(46,160,90,.35)" stroke="#2ea05a" stroke-width=".6"/></svg>${has&&a?`<div class="pin" style="left:${a.x*100}%;top:${a.y*100}%"></div>`:""}</div>`;
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  }
+  if(q.fig)h+=`<div class="imgs" style="align-items:flex-end">${img(q.fig[0],q.fig[1])}<span class="note" style="max-width:260px">${q.fig[1]}</span></div>`;
+  h+=`<div class="retenir"><b class="h">À retenir</b>${q.retenir}</div></div>`;
+ });
+ if(!answered)h=`<p class="note" style="margin-top:0">Mode correction seule : les bonnes réponses sont en vert.</p>`+h;
+ $("#corrMain").innerHTML=h;
+ $("#corrMain").querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{S.override=S.override||{};S.override[b.dataset.ov]=+b.dataset.v;store.set(S);drawCorr(d)});
+ $("#course").innerHTML=`<div class="row"><h3>Cours résumé · ${dp.id}</h3><span class="spacer"></span><button class="btn small coursebtn" id="cToggle">Afficher</button></div><div class="cbody">${dp.cours.replace(/data-img="(\w+)"/g,(m,k)=>`src="${IMGS[k]}" data-zoom`)}</div><p class="small" style="margin-top:14px">Sources : corrigé officiel de l'épreuve (UE6, novembre 2025) ; explications rédigées d'après le Pilly et le Collège.</p>`;
+ const c=$("#course");if(matchMedia("(max-width:860px)").matches){c.classList.add("collapsed");const t=$("#cToggle");t.onclick=()=>{c.classList.toggle("collapsed");t.textContent=c.classList.contains("collapsed")?"Afficher":"Masquer"}}
+}
+
+/* ---------- zoom ---------- */
+document.addEventListener("click",e=>{const t=e.target;if(t.matches&&t.matches("img[data-zoom]")){$("#zoomImg").src=t.src;$("#zoom").hidden=false}});
+$("#zoom").onclick=()=>{$("#zoom").hidden=true};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#zoom").hidden=true});
+})();
+</script>
+
+<a id="backhome" href="index.html" style="position:fixed;left:12px;bottom:12px;z-index:9999;background:#1c1c1a;color:#fff;padding:8px 12px;border-radius:99px;font:600 13px system-ui;text-decoration:none;opacity:.85">← Toutes les annales</a>

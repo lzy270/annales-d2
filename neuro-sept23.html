@@ -1,0 +1,1356 @@
+<title>Annale neuro SEPT 2023</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout : copie d'examen — énoncé à gauche, question à droite ; correction en 2 colonnes avec cours collant */
+:root{
+  --bg:#f6f7f9; --paper:#ffffff; --ink:#18212b; --muted:#5d6876; --line:#dfe3e8; --soft:#eef1f5;
+  --accent:#1f4e8c; --accent-soft:#e6eef9;
+  --ok:#1d7a46; --ok-soft:#e3f4ea; --ko:#b42318; --ko-soft:#fdeceb; --mid:#a15c00; --mid-soft:#fdf1df;
+  --rkA:#c62828; --rkB:#d9822b;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+header.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:800;font-size:17px}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.steps{display:flex;gap:4px;flex-wrap:wrap}
+.steps span{font:700 11px var(--f-mono);padding:3px 7px;border-radius:5px;background:var(--soft);color:var(--muted)}
+.steps span.on{background:var(--accent);color:var(--paper)}
+.steps span.done{background:var(--accent-soft);color:var(--accent)}
+.timer{font:700 18px var(--f-mono);font-variant-numeric:tabular-nums;padding:4px 10px;border-radius:8px;background:var(--soft)}
+.timer.low{background:var(--ko-soft);color:var(--ko)}
+.btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:9px 16px;font-weight:700}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn.ghost{background:transparent}
+.btn.small{padding:5px 10px;font-size:13px}
+main{padding-block:24px 64px}
+[hidden]{display:none!important}
+
+/* start */
+.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(26px,4vw,36px)}
+.hero p{margin:0;color:var(--muted)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.rule{background:var(--soft);border-radius:10px;padding:12px 14px;font-size:14px}
+.rule b{display:block;font-family:var(--f-display);font-size:15px;margin-bottom:2px}
+.dplist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.dplist li{display:flex;gap:10px;align-items:baseline;font-size:15px}
+.dplist .id{font:700 12px var(--f-mono);color:var(--accent);min-width:34px}
+.dplist .n{color:var(--muted);font-size:13px;margin-left:auto;white-space:nowrap}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* exam */
+.exam{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:start}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:20px}
+.panel .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.enonce{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto}
+.enonce p{margin:.6em 0}
+.enonce .add{border-left:3px solid var(--accent);padding-left:12px;margin-top:14px}
+.imgs{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.imgs img{max-height:320px;width:auto;max-width:100%;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;background:#000}
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.qnum{font:700 13px var(--f-mono);color:var(--accent)}
+.tag{font:700 11px var(--f-mono);padding:2px 7px;border-radius:5px;background:var(--soft);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.rk{display:inline-grid;place-items:center;width:20px;height:20px;border:2px solid;border-radius:4px;font:700 11px var(--f-mono);vertical-align:middle}
+.rk.a{color:var(--rkA)} .rk.b{color:var(--rkB)}
+.ctx{background:var(--soft);border-radius:10px;padding:2px 14px;margin-bottom:12px}
+.ctx p{margin:.6em 0}
+.qtext{font-size:18px;font-weight:700;margin:6px 0 14px}
+.opts{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.opt label{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--paper)}
+.opt label:hover{border-color:var(--accent)}
+.opt input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.opt .L{font:700 14px var(--f-mono);color:var(--muted);min-width:16px}
+.opt input:checked ~ .L{color:var(--accent)}
+.opt label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.qroc input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit}
+.zonebox{position:relative;display:inline-block;max-width:100%;cursor:crosshair}
+.zonebox img{display:block;max-width:100%;border-radius:8px}
+.zonebox .pin{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:3px solid #fff;background:#e5484d;box-shadow:0 0 0 2px #e5484d;pointer-events:none}
+.zonebox svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--mid-soft);border-radius:10px;padding:10px 12px;font-size:14px}
+.note{font-size:13px;color:var(--muted)}
+
+/* results */
+.score{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.big{font:800 64px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.big small{font-size:24px;color:var(--muted)}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:44px 1fr 70px;gap:10px;align-items:center;font-size:14px}
+.barrow .track{height:10px;border-radius:5px;background:var(--soft);overflow:hidden}
+.barrow .fill{height:100%;background:var(--accent)}
+.barrow .v{font:700 13px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.grid-q{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.grid-q button{font:700 12px var(--f-mono);border:0;border-radius:6px;padding:6px 8px;min-width:58px}
+.s1{background:var(--ok-soft);color:var(--ok)} .s0{background:var(--ko-soft);color:var(--ko)} .sp{background:var(--mid-soft);color:var(--mid)}
+
+/* correction */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:7px 12px;font-weight:700;font-size:14px}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.corr{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.course{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto;font-size:14.5px}
+.course h3{font-size:18px;margin-bottom:6px}
+.course h4{font-size:15px;margin:16px 0 4px;display:flex;gap:8px;align-items:center}
+.course ul{padding-left:18px;margin:4px 0}
+.course li{margin:3px 0}
+.course .small,.small{font-size:13px;color:var(--muted)}
+table.mini{border-collapse:collapse;width:100%;font-size:13px;margin:6px 0}
+table.mini th,table.mini td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+table.mini th{background:var(--soft)}
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}
+.figs figure{margin:0}
+.figs img{width:100%;height:100px;object-fit:cover;border-radius:6px;cursor:zoom-in}
+.figs figcaption{font-size:11.5px;color:var(--muted)}
+.cq{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}
+.cq:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.pts{margin-left:auto;font:700 13px var(--f-mono);padding:3px 8px;border-radius:6px}
+.copt{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:22px 22px 1fr;gap:4px 10px;align-items:start}
+.copt + .copt{margin-top:6px}
+.copt .mk{font:700 14px var(--f-mono)}
+.copt .tx{font-weight:700}
+.copt .ex{grid-column:3;font-size:14.5px;color:var(--ink)}
+.copt.good{border-color:var(--ok);background:var(--ok-soft)}
+.copt.miss{border-color:var(--mid);background:var(--mid-soft)}
+.copt.bad{border-color:var(--ko);background:var(--ko-soft)}
+.mine{font:700 11px var(--f-mono);color:var(--muted)}
+.retenir{margin-top:12px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:14.5px}
+.retenir b.h{display:block;font-family:var(--f-display);color:var(--accent);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.free{border-radius:10px;padding:10px 14px;font-size:14.5px}
+.coursebtn{display:none}
+details.enon{background:var(--soft);border-radius:10px;padding:8px 14px;margin-bottom:16px}
+details.enon summary{cursor:pointer;font-weight:700}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.zoom img{max-width:100%;max-height:100%;border-radius:8px}
+.tblwrap{overflow-x:auto}
+table.abg{border-collapse:collapse;font:13px var(--f-mono);margin:8px 0}
+table.abg td{padding:3px 10px;border-bottom:1px dotted var(--line)}
+table.abg td:last-child{font-weight:700;text-align:center}
+table.abg .R{color:var(--ko)} table.abg .S{color:var(--ok)}
+
+@media (max-width:860px){
+  .exam,.corr{grid-template-columns:1fr}
+  .enonce,.course{position:static;max-height:none}
+  .corr .course{order:-1}
+  .course.collapsed .cbody{display:none}
+  .coursebtn{display:inline-block}
+  .score{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.qnav{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}.qnav-dp{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.qnav-id{font:700 11px var(--f-mono);color:var(--muted);margin-right:3px}.qn{min-width:26px;height:26px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;font:700 11px var(--f-mono);padding:0 4px}.qn.done{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft)}.qn.cur{outline:2px solid var(--accent)}.qn:disabled{opacity:.35;cursor:not-allowed}.navrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.navrow .spacer{flex:1}.lockmsg{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:14px}.savedmsg{color:var(--ok);font-size:14px}
+.offi{background:var(--soft);border-left:3px solid var(--accent);border-radius:8px;padding:8px 12px;margin:6px 0 10px}.offi p{margin:4px 0}.tcs{background:var(--soft);border-radius:10px;padding:10px 14px;margin-bottom:10px}.tcs p{margin:4px 0}
+</style>
+
+<header class="bar"><div class="wrap">
+  <div class="brand">Annale neuro · UE4.1 · septembre 2023 (rattrapage)<small>DFA1 · Bobigny · corrigé officiel + explications d'après les Collèges</small></div>
+  <div class="spacer"></div>
+  <div class="steps" id="steps"></div>
+  <div class="timer" id="timer" hidden>40:00</div>
+  <button class="btn small ghost" id="btnPause" hidden>Pause</button>
+</div></header>
+
+<main class="wrap">
+  <!-- Accueil -->
+  <section id="vStart">
+    <div class="hero">
+      <div>
+        <h1>7 épreuves, 46 questions</h1>
+        <p>Sujet de rattrapage de l'UE4.1 Neurologie-MPR de septembre 2023 : 18 questions isolées, 1 TCS, 1 KFP, 2 mini-DP et 2 DP de MPR. Conditions d'examen type LUNESS, notation EDN (QRP : bonnes réponses ÷ réponses attendues ; TCS : 1 point si ta réponse fait partie de celles validées par le panel). Les erreurs probables du corrigé officiel sont signalées par ⚠️.</p>
+      </div>
+      <ul class="dplist" id="dpList"></ul><p class="note" style="margin-top:6px">Clique sur un dossier pour commencer par lui. Pendant l'épreuve, les étiquettes en haut à droite (QI, DP1…) et la grille de numéros permettent de changer de dossier à tout moment.</p>
+      <div class="rules">
+        <div class="rule"><b>60 minutes</b>Le chrono tourne pendant l'épreuve. À zéro, la copie est rendue.</div>
+        <div class="rule"><b>Navigation type LUNESS</b>Questions isolées et TCS : navigation libre, réponses modifiables jusqu'à la fin. DP et KFP (🔒) : on peut revenir relire, mais une réponse validée est verrouillée, et la question suivante s'ouvre une fois la précédente validée.</div>
+        <div class="rule"><b>Notation EDN</b>QRM : 1 / 0,5 / 0,2 / 0 selon 0, 1, 2 ou ≥ 3 erreurs ; indispensable oubliée ou inacceptable cochée : 0. QRP : bonnes réponses cochées ÷ réponses attendues. QROC : barème officiel.</div>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="btnStart">Commencer l'épreuve</button>
+        <button class="btn" id="btnResume" hidden>Reprendre</button>
+        <button class="btn ghost" id="btnDirect">Voir directement la correction</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Épreuve -->
+  <section id="vExam" hidden>
+    <div class="exam">
+      <div class="panel enonce" id="enonce"></div>
+      <div class="panel" id="qpanel"></div>
+    </div>
+  </section>
+
+  <!-- Résultats -->
+  <section id="vRes" hidden>
+    <div class="panel">
+      <div class="score">
+        <div><div class="big" id="sBig">0</div><div class="note" id="sSub"></div></div>
+        <div class="bars" id="sBars"></div>
+      </div>
+      <div class="grid-q" id="sGrid"></div>
+      <div class="actions"><button class="btn primary" id="btnCorr">Voir la correction détaillée</button><button class="btn" id="btnAgain">Repasser l'épreuve</button></div>
+    </div>
+  </section>
+
+  <!-- Correction -->
+  <section id="vCorr" hidden>
+    <div class="row" style="margin-bottom:12px"><h2 style="font-size:22px">Correction</h2><div class="spacer"></div><button class="btn small" id="btnBackRes">Résultats</button><button class="btn small" id="btnHome">Accueil</button></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="corr">
+      <div class="panel" id="corrMain"></div>
+      <aside class="panel course" id="course"></aside>
+    </div>
+  </section>
+</main>
+<div class="zoom" id="zoom" hidden><img alt="Image agrandie" id="zoomImg"></div>
+
+<script>
+const IMGS={};
+var img=function(k,alt){return `<img src="${IMGS[k]}" alt="${alt||""}" data-zoom>`};
+const EXAM = {
+"title": "Annale neuro SEPT 2023",
+"dps": [
+{
+"id": "SQI1",
+"titre": "18 questions isolées de neuro",
+"items": "Items 91-106, 340, 341",
+"free": true,
+"intro": "<p>Questions isolées</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Un patient de 32 ans, originaire du Mali, est adressé aux urgences pour des céphalées inhabituelles évoluant depuis 2 jours. Il a pour antécédents une infection VIH traitée depuis 1 mois, une hypertension artérielle et un tabagisme actif. Cliniquement, il est fébrile à 38.8°C, il n’a pas de signe de localisation neurologique, il est céphalalgique et présente des nausées. La TDM cérébrale est normale. Quel(s) est (ou sont) la (ou les) réponse(s) vraie(s) ?</p>",
+"opts": [
+"Une thrombose veineuse cérébrale peut être exclue",
+"Une ponction lombaire ne peut être réalisée avant la réalisation d’une IRM cérébrale dans ce contexte",
+"La réalisation d’une PCR HSV dans le LCR n’est pas nécessaire car il s’agit d’un patient jeune",
+"Un EEG doit être réalisé",
+"Une TDM cérébrale injectée serait utile dans l’hypothèse d’une toxoplasmose cérébrale"
+],
+"ok": [
+4
+],
+"indisp": [
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>A. Un TDM cérébal injectée (avec temps veineux) est nécessaire dans ce contexte pour exclure une thrombose veineuse cérébral. Toutefois un TDM cérébral non injecté peut montrer des signes de thrombose veineuse cérébrale, mais sa normalité n'exclut pas le diagnostic</p></div>",
+"retenir": "Céphalée fébrile chez un VIH+ : TDM injecté (toxo, TVC), PL avec PCR HSV, cryptocoque (encre de Chine, antigène)."
+},
+{
+"type": "qrm",
+"q": "<p>Le SMUR vous amène un patient pour crise convulsive depuis 15 minutes, n’ayant pas cédé après deux injections de clonazepam à 5 minutes d’intervalle ; quelle est votre attitude thérapeutique ?</p>",
+"opts": [
+"Traitement anti-épileptique d'action rapide par diazepam",
+"Traitement anti-épileptique d'action lente par phénobarbital",
+"Traitement antiépileptique par valproate de sodium",
+"Surveillance simple tant que la crise ne dure pas plus de 30 minutes",
+"Prise en charge en réanimation"
+],
+"ok": [
+1,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>En cas d'intervention avant 30 minutes</p></div>",
+"retenir": "EME résistant à 2 doses de BZD : AE de 2e ligne IV (fosphénytoïne, phénobarbital, valproate, lévétiracétam) + réanimation."
+},
+{
+"type": "qru",
+"q": "<p>Un patient est admis aux Urgences pour un dé ficit brutal moteur à pré dominance brachiofaciale, des troubles sensitifs dans le même territoire et une hémianopsie latérale homonyme. Il présente en plus une hé miasomatognosie et une hé miné gligence.Quelle est la réponse juste concernant ce patient chez qui vous suspectez un accident vasculaire cérébral ?</p>",
+"opts": [
+"Il s’agit d’une atteinte du territoire de l’artère cérébrale antérieure droite",
+"Il s’agit d’une atteinte du territoire superficiel de l’artère cérébrale moyenne droite",
+"Il s’agit d’une atteinte du territoire de l’artère cérébrale postérieure gauche",
+"Il s’agit d’une atteinte du territoire profond de l’artère cérébrale moyenne droite",
+"Il s’agit d’une atteinte du territoire profond et superficiel de l’artère cérébrale moyenne profonde gauche survenue brutale évocatrice d'un événement vasculaire.Atteinte brachio-faciale donc à priori territoire superficiel.Atteinte de l'hémisphère mineure devant l'hémiasomatognosie et l'héminégligence"
+],
+"ok": [
+1
+],
+"expl": "<p>Déficit brachio-facial + troubles sensitifs + HLH + <b>hémiasomatognosie / héminégligence</b> (signes de l'hémisphère droit mineur) : infarctus <b>sylvien superficiel droit</b>. Le sylvien profond donne une hémiplégie proportionnelle sans troubles corticaux. L'ACA donne un déficit à prédominance crurale.</p>",
+"retenir": "Sylvien superficiel D : brachio-facial G + HLH G + anosognosie / héminégligence / hémiasomatognosie."
+},
+{
+"type": "qrm",
+"q": "<p>Un patient de 62 ans est adressé par son médecin traitant pour un tremblement des mains évoluant depuis 2 ans. En consultation, vous constatez un tremblement de repos de la main droite, une discrète roue dentée des membres supérieurs, et une perte du ballant du bras droit à la marche. Vous suspectez une maladie de Parkinson, concernant la démarche diagnostique, quel(s) est (ou sont) la (ou les) réponse(s) vraie(s) ?</p>",
+"opts": [
+"Vous devez prescrire une IRM cérébrale car le patient a moins de 65 ans",
+"Un DAT scanner est nécessaire pour confirmer le diagnostic",
+"L’existence d’une aphasie associée justifierait la réalisation d’une imagerie cérébrale (vrai, l'aphasie est un signe de localisation non en faveur d'une maladie de parkinson débutante )",
+"Un dosage du cuivre est nécessaire car le patient n’a pas d’antécédents familiaux de maladie de Parkinson",
+"Un PET TDM cérébral serait utile au diagnostic dans ce contexte"
+],
+"ok": [
+2
+],
+"indisp": [
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>A. Le diagnostic de la maladie de parkinson est un diagnostic clinique les examens complémentaires peuvent s'envisager chez le sujet jeune (&lt;40 ans)</p><p>B. Le diagnostic de la maladie de parkinson est un diagnostic clinique</p><p>D. faux, à discuter chez le sujet jeune &lt;40 ans pour maladie de wilson</p></div>",
+"retenir": "Parkinson typique : diagnostic clinique ; imagerie seulement si signe atypique (aphasie, pyramidal, début précoce…)."
+},
+{
+"type": "qrm",
+"q": "<p>Une patiente de 60 ans est hospitalisée pour des paresthésies des membres inférieurs évoluant depuis 6 jours. Vous suspectez une polyradiculonévrite aigue. Quel(s) serai(en)t le(s) élément(s) en défaveur de ce diagnostic ?</p>",
+"opts": [
+"Un déficit moteur des releveurs des pieds associé",
+"Une paralysie faciale centrale droite associée",
+"213 éléments à prédominance lymphocytaire sur la ponction lombaire",
+"Des troubles de la déglutition associés",
+"Une aphasie associée"
+],
+"ok": [
+1,
+2,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>B. PF périphérique</p><p>C. pas de méningite dans le syndrome de guillain barré mais hyperprotéinorahcie : c'est la dissociation albumino cytologique</p><p>E. pas d'atteinte encéphalitique dans le guillain barré</p></div>",
+"retenir": "Guillain-Barré : PF périphérique (souvent bilatérale), dissociation albumino-cytologique (< 50 éléments) ; jamais d'atteinte centrale."
+},
+{
+"type": "qrm",
+"q": "<p>Une patiente de 25 ans est adressée aux urgences pour des céphalées inhabituelles. Quel(s) éléments(s) de l’interrogatoire et l’examen clinique seraient compatible(s) avec une hémorragie méningée ?</p>",
+"opts": [
+"L’installation des céphalées en plusieurs jours",
+"Une raideur méningée à l’examen clinique",
+"Une paralysie de l’abduction de l’œil droit à l’examen clinique",
+"L’installation de troubles de la vigilance",
+"L’apparition d’une crise épileptique tonico-clonique"
+],
+"ok": [
+1,
+2,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>A. typiquement : installation brutale en coup de tonnerre dans l'hémorragie méningiée</p><p>C. Atteinte du 6 signe une HTIC</p></div>",
+"retenir": "HSA : coup de tonnerre, syndrome méningé, troubles de vigilance, crise comitiale, atteinte du III (anévrisme) ou du VI (HTIC)."
+},
+{
+"type": "qrm",
+"q": "<p>Une patiente de 36 ans est adressée en consultation de neurologie par son médecin traitant pour un épisode de trouble de la marche survenu il y a 1 mois. Elle a pour antécédent un diabète de type 1 depuis l’âge de 16 ans, une dyslipidémie et un tabagisme actif. Elle est traitée par Insuline et Statines. Elle rapporte une faiblesse du membre inférieur gauche il y a 1 mois. Ce jour, l’examen clinique est normal. Quel(s) est (ou sont) la (ou les) réponse(s) vraie(s) ?</p>",
+"opts": [
+"Une installation brutale",
+"Une amélioration progressive",
+"Une résolution des symptômes en moins d’une heure serait en faveur d’un accident vasculaire cérébral transitoire",
+"Un antécédent de migraine chez la patiente orienterait vers un épisode d’aura migraineuse",
+"Un signe de Lhermitte à l’interrogatoire pourrait vous orienter vers une lésion médullaire dorsale"
+],
+"ok": [
+2
+],
+"indisp": [
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>A. &lt; 1h) des symptômes serait en faveur d’une sclérose en plaques (installation en quelques jours</p><p>B. en plusieurs jours/semaines) de la parésie du membre inférieur gauche oriente davantage vers un accident vasculaire cérébral qu’une sclérose en plaques (amélioration progressive en plusieurs jours ou semaine dans les deux hypothèses</p><p>D. symptome moteur non typique d'une aura migraineuse (trouble du langage, troubles sensitifs, troubles visuels</p><p>E. lésion médullaire cervicale</p></div>",
+"retenir": "AIT : régression < 1 h (en pratique, souvent < 10-15 min) ; Lhermitte = lésion médullaire cervicale (SEP)."
+},
+{
+"type": "qrm",
+"q": "<p>Une patiente de 21 ans est hospitalisée en neurologie pour un bilan diagnostique. Elle présente une fatigabilité à la marche depuis 1 mois, un ptosis fluctuant de l’œil droit en fin de journée, et une diplopie à la lecture. Parmi les résultats paracliniques suivants, le(les)quel(s) serai(en)t compatible(s) avec une myasthénie ?</p>",
+"opts": [
+"Un incrément à la stimulodétection répétitive des muscles des membres inférieurs en électroneuromyographie",
+"Une IRM cérébrale normale",
+"Une prise de contraste spinale sur l’IRM médullaire",
+"La présence d’un thymus hyperplasique sur la TDM thoracique",
+"La présence d’une hyperplasie des surrénales sur la TDM abdominal"
+],
+"ok": [
+1,
+3
+],
+"expl": "<p>Myasthénie : <b>décrément</b> (pas incrément, qui est le signe de Lambert-Eaton) à la stimulation répétitive, IRM cérébrale normale (diagnostic différentiel), thymus hyperplasique ou thymome au TDM. Rien à voir avec une prise de contraste médullaire ou les surrénales.</p>",
+"retenir": "Décrément = myasthénie (post-synaptique) ; incrément = Lambert-Eaton (pré-synaptique, paranéoplasique)."
+},
+{
+"type": "qrm",
+"q": "<p>Madame A, 55 ans, est hospitalisée pour une suspicion de méningite herpétique. Elle a pour antécédent une dysthyroïdie, et un cancer du sein traité il y a 5 ans. Quel(s) serai(en)t le (ou les) signe(s) clinique(s) de gravité ?</p>",
+"opts": [
+"Une température &gt; 39°",
+"Des marbrures des membres inférieurs",
+"Une aphasie associée",
+"Une crise d’épilepsie partielle",
+"Un score de Glasgow à 10"
+],
+"ok": [
+1,
+2,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>A. signes de gravité d'une méningite : purpura, atteinte encéphalique, instabilité hémodynamique</p><p>B. signe de gravité : instabilité hémodynamique</p><p>C. signe de gravité : atteinte encéphalitique</p><p>D. signe de gravité : atteinte encéphalitique</p><p>E. signe de gravité : atteinte encéphalitique</p></div>",
+"retenir": "Méningite grave : purpura, choc, signes encéphalitiques (Glasgow < 11, signes focaux, crise), détresse respiratoire."
+},
+{
+"type": "qrm",
+"q": "<p>Une patiente parkinsonienne de 68 ans vous est adressée car son membre supérieur gauche a des mouvements involontaires, brusques, anarchiques, la main partant en arrière. Les symptômes parkinsoniens sont bien soulagés par le traitement qu'elle prend depuis 6 ans.Elle ne parle pas français. Que pouvez-vous en conclure ?</p>",
+"opts": [
+"Elle a probablement un syndrome parkinsonien post-neuroleptique",
+"Elle a probablement une maladie de Parkinson",
+"Les symptômes parkinsoniens ont probablement débuté du côté gauche",
+"Elle a probablement des dyskinésies Dopa-induites de pic de dose",
+"Elle a probablement des dyskinésies Dopa-induites de début/fin de dose"
+],
+"ok": [
+1,
+2,
+3
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>la patiente a une maladie de Parkinson qui répond bien au traitement par Levodopa qui induit des complications motrices Dopa-inbduites de type dyskinésies de milieu de dose ici car affectant le membre supérieur et survenant lorsque la patiente est soulagée par le traitement.Ces phénomène prédomine du côté où la maladie a débuté donc du côté gauche.</p></div>",
+"retenir": "Dyskinésies de milieu de dose (pic) = choréiques, quand la dopa est au maximum ; de début / fin de dose = dystoniques."
+},
+{
+"type": "qrm",
+"q": "<p>Une patiente de 78 ans est adressé par son médecin traitant pour des troubles mnésiques évoluant depuis 3 ans. Cliniquement, vous constatez une désorientation temporo spatiale, des troubles du langage, et des troubles mnésiques de type hippocampique. Concernant la démarche diagnostique quel(s) est (ou sont) la (ou les) réponse(s) vraie(s) ?</p>",
+"opts": [
+"Réalisation d’une IRM cérébrale en première intention",
+"Réalisation d’une ponction lombaire en première intention",
+"Réalisation d’un bilan sanguin avec dosage de la TSH",
+"Réalisation d’un bilan sanguin avec dosage de la protéine Tau hyperphosphorylée et bêta-amyloïde",
+"Réalisation d’une sérologie de Lyme"
+],
+"ok": [
+0,
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>A. L'IRM cérébral est indispensable pour le bilan des troubles neurocognitifs, notamment pour éliminer un diagnostic différentiel aux maladies neurodégénratives</p><p>D. Les marqueurs de la maladie d'Alzheimer sont dosés dans le LCR</p><p>E. seulement en cas de contexte évocateur</p></div>",
+"retenir": "Bilan de troubles cognitifs : IRM cérébrale + bilan bio (TSH, B12, calcémie, iono, NFS, glycémie) ; PL si doute / sujet jeune."
+},
+{
+"type": "qrm",
+"q": "<p>Un patient de 52 ans est adressé aux urgences pour des céphalées fébriles évoluant depuis 48 heures. Cliniquement, vous constatez une raideur méningée, un ralentissement psychomoteur et une faiblesse de l’hémicorps droit. Concernant la réalisation de la ponction lombaire, quel(s) est (ou sont) la (ou les) réponse(s) vraie(s) ?</p>",
+"opts": [
+"Dans ce contexte, une antibiothérapie probabiliste doit être commencée avant la réalisation de la ponction lombaire",
+"Dans ce contexte, une TDM cérébrale doit être réalisée avant la réalisation de la ponction lombaire",
+"En cas de thrombopénie à 100 000/mm3, la ponction lombaire sera contre indiquée",
+"La ponction lombaire est inutile, la raideur méningée fébrile permet le diagnostic de méningite infectieuse",
+"La présence d’une méningite à prédominance lymphocytaire associée à une hyperprotéinorachie serait compatible avec une listériose"
+],
+"ok": [
+1,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>B. oui car l'hémiparésie droite est un signe de localisation, l'imagerie est nécessaire avant la PL pour s'assurer de l'absence de risque d'engagement cérébral</p><p>C. PL contre indiquée si thrombopénie &lt; 50 000</p></div>",
+"retenir": "Méningite avec signes focaux : TDM avant PL (et ATB + corticoïdes AVANT le TDM)."
+},
+{
+"type": "qrm",
+"q": "<p>Un patient de 40 ans est adressé aux urgences par les pompiers pour une perte de connaissance sur son lieu de travail. Il n’a pas d’antécédent. Cliniquement, il est Glasgow 15, il présente une morsure de langue et des courbatures. Il ne se souvient pas avoir été pris en charge par les pompiers. L’examen neurologique est normal. Les constantes sont normales. Son collègue, qui l’accompagne, rapporte l’avoir vu tomber, et avoir observer une raideur des 4 membres. Concernant la conduite à tenir aux urgences, quel(s) est(ou sont) la (ou les) réponse(s) vraie(s) ?</p>",
+"opts": [
+"Une IRM cérébrale doit être réalisée en urgence",
+"Un TDM cérébral doit être réalisé en urgence",
+"Un EEG doit être réalisé dans les 24-48 heures",
+"Un traitement anti épileptique doit être débuté dans l’hypothèse d’une première crise épileptique",
+"Un ECG doit être réalisé"
+],
+"ok": [
+1,
+2,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>A. Une imagerie cérébrale doit être réalisé en urgence, TDM en première intentionUne IRM cérébrale sera nécessaire dans le bilan étiologique par la suite, mais pas obligatoirement en urgence</p><p>D. pas d'indication à un traitement anti épileptique d'emblée en cas de première crise isolée. Le traitement se discute selon les résultats du bilan étiologique par la suite (EEG, IRM) chez les patients à haut risque de récidie</p><p>E. systématique en cas de perte de connaissance, même si suspicion de crise, le diagnostic différentiel est la syncope</p></div>",
+"retenir": "1re crise : TDM / IRM, EEG < 24-48 h, ECG (perte de connaissance), glycémie ; pas d'AE systématique."
+},
+{
+"type": "qrm",
+"q": "<p>Madame R, 32 ans est amenée aux urgences pour troubles de la vigilance. Elle n’a pas d’antécédent connu et elle a été retrouvée par sa sœur à son domicile, au sol. Elle ne prend pas de traitements. Quel(s) est (ou sont) le (ou les) argument(s) en faveur d’un coma d’origine neurologique ?</p>",
+"opts": [
+"Une fièvre associée",
+"Une installation brutale des troubles de la vigilance",
+"Un score de Glasgow inférieur à 8",
+"Une asymétrie faciale à la manœuvre de Pierre Marie et Foix",
+"Une respiration de type Cheyne-Stokes"
+],
+"ok": [
+3
+],
+"indisp": [
+3
+],
+"expl": "<p>Arguments pour un coma neurologique (lésionnel) : <b>signes de localisation</b> (asymétrie faciale à la manœuvre de Pierre Marie et Foix, asymétrie motrice, Babinski unilatéral, anomalies pupillaires asymétriques). La fièvre, la brutalité, un Glasgow < 8 ou un Cheyne-Stokes ne permettent pas de trancher entre métabolique / toxique et lésionnel.</p>",
+"retenir": "Coma + signe de localisation = cause lésionnelle → imagerie en urgence."
+},
+{
+"type": "qrm",
+"q": "<p>Mme P vient aux Urgences car elle présente depuis la veille une hypoesthésie épicritique et thermo-algique des deux membres inférieurs. Elle a une faiblesse au testing moteur des deux membres inférieurs : psoas 4/5, tibial antérieur 4/5. Vous constatez aussi une ataxie à la marche. Quelles pourraient être vos hypothèses diagnostics ?</p>",
+"opts": [
+"Un syndrome de Guillain Barré",
+"Une compression médullaire",
+"Une crise myasthénique",
+"Une polyneuropathie longueur dépendante",
+"Un AVC ischémique sylvien droit"
+],
+"ok": [
+0,
+1,
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>A. atteinte sensitivo-motrice rapidement progressive</p><p>B. possible On s'attend à avoir des ROT vifs et autres signes pyramidaux (BBK, Hoffmann etc...</p><p>C. l'atteinte ne devrait être que motrice</p><p>D. non car depuis la veille et atteinte proximale peu compatible</p><p>E. non car pas hémicorporelG comme attendu dans un AVC sylvien droit</p></div>",
+"retenir": "Déficit rapidement progressif des 4 membres : GBS, compression médullaire, myasthénie (± botulisme)."
+},
+{
+"type": "qrm",
+"q": "<p>Un patient de 50 ans est adressé aux urgences pour l’apparition d’une hémiparésie droite survenue il y a 3h, associée à une aphasie. Il est hypertendu et traité par Eliquis pour une fibrillation atriale. Il a une tension artérielle à 180/110 mmHg, une fréquence cardiaque à 52 par minute. Il est apyrétique. Vous suspectez un accident vasculaire cérébral, concernant la conduite à tenir aux urgences, quel(s) est (ou sont) la (ou les) réponse(s) vraie(s) ?</p>",
+"opts": [
+"Réalisation d’une IRM cérébrale en urgence « alerte thrombolyse »",
+"Réalisation d’une thrombolyse en urgence car début des symptômes inférieur à 4h30",
+"Perfusion d’antihypertenseur intra veineux pour un objectif tensionnel &lt; 140/90 mmHg",
+"Réalisation d’un ECG",
+"Réalisation d’un EEG en urgence pour le diagnostic différentiel avec un déficit post critique"
+],
+"ok": [
+0,
+3
+],
+"indisp": [
+3
+],
+"inacc": [
+1
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>B. imagerie cérébral indispensable thrombolyse se discute si AVC d'origine ischémique sur l'IRM</p><p>C. L'objectif tensionnel dépendra de l'origine du déficit moteur du patient&lt;140/90 si AVC hémorragique&lt;220/120 si AVC ischémique, &lt;180/110 si thrombolyse envisagée</p></div>",
+"retenir": "Suspicion d'AVC : alerte thrombolyse, IRM (ou TDM) en urgence, ECG, glycémie ; respect de la PA sauf > 185/110 avant thrombolyse."
+},
+{
+"type": "qrm",
+"q": "<p>Monsieur H, 66 ans est hospitalisé en chirurgie orthopédique pour une fracture de hanche suite à une chute à domicile. Il est hypertendu, diabétique et a une consommation alcoolo-tabagique non sevré. La nuit, l’infirmière vous appelle car il est agité. Quels seraient les symptômes en faveur d’un delirium tremens ?</p>",
+"opts": [
+"Des sueurs",
+"Une aphasie",
+"Une tachycardie",
+"Des hallucinations visuelles",
+"Un tremblement de repos des mains"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<p>Delirium tremens : confusion, agitation, <b>hallucinations visuelles</b> (zoopsies), signes neurovégétatifs (sueurs, tachycardie, fièvre, déshydratation), tremblement d'<b>attitude</b> (pas de repos). L'aphasie n'en fait pas partie.</p>",
+"retenir": "DT : confusion + hallucinations + hyperactivité adrénergique → BZD, hydratation, B1."
+},
+{
+"type": "qrm",
+"q": "<p>Devant une douleur faciale, quels seraient les arguments en faveur d’une algie vasculaire ?</p>",
+"opts": [
+"L’existence d’une agitation motrice",
+"Douleur à type de décharge électrique",
+"Durée de la douleur de 15 à 180min",
+"Douleur bilatérale typiquement à bascule chez un même patient",
+"Rhinorrhée homolatérale"
+],
+"ok": [
+0,
+2,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Tableau 10.10. Critères diagnostiques ICHD-3 de l'algie vasculaire de la face.</p></div>",
+"retenir": "AVF : unilatérale toujours du même côté, 15-180 min, agitation, signes dysautonomiques homolatéraux."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Céphalée fébrile chez un VIH+ : TDM injecté (toxo, TVC), PL avec PCR HSV, cryptocoque (encre de Chine, antigène).</li><li>EME résistant à 2 doses de BZD : AE de 2e ligne IV (fosphénytoïne, phénobarbital, valproate, lévétiracétam) + réanimation.</li><li>Sylvien superficiel D : brachio-facial G + HLH G + anosognosie / héminégligence / hémiasomatognosie.</li><li>Parkinson typique : diagnostic clinique ; imagerie seulement si signe atypique (aphasie, pyramidal, début précoce…).</li><li>Guillain-Barré : PF périphérique (souvent bilatérale), dissociation albumino-cytologique (< 50 éléments) ; jamais d'atteinte centrale.</li><li>HSA : coup de tonnerre, syndrome méningé, troubles de vigilance, crise comitiale, atteinte du III (anévrisme) ou du VI (HTIC).</li><li>AIT : régression < 1 h (en pratique, souvent < 10-15 min) ; Lhermitte = lésion médullaire cervicale (SEP).</li><li>Décrément = myasthénie (post-synaptique) ; incrément = Lambert-Eaton (pré-synaptique, paranéoplasique).</li><li>Méningite grave : purpura, choc, signes encéphalitiques (Glasgow < 11, signes focaux, crise), détresse respiratoire.</li><li>Dyskinésies de milieu de dose (pic) = choréiques, quand la dopa est au maximum ; de début / fin de dose = dystoniques.</li><li>Bilan de troubles cognitifs : IRM cérébrale + bilan bio (TSH, B12, calcémie, iono, NFS, glycémie) ; PL si doute / sujet jeune.</li><li>Méningite avec signes focaux : TDM avant PL (et ATB + corticoïdes AVANT le TDM).</li><li>1re crise : TDM / IRM, EEG < 24-48 h, ECG (perte de connaissance), glycémie ; pas d'AE systématique.</li><li>Coma + signe de localisation = cause lésionnelle → imagerie en urgence.</li><li>Déficit rapidement progressif des 4 membres : GBS, compression médullaire, myasthénie (± botulisme).</li><li>Suspicion d'AVC : alerte thrombolyse, IRM (ou TDM) en urgence, ECG, glycémie ; respect de la PA sauf > 185/110 avant thrombolyse.</li><li>DT : confusion + hallucinations + hyperactivité adrénergique → BZD, hydratation, B1.</li><li>AVF : unilatérale toujours du même côté, 15-180 min, agitation, signes dysautonomiques homolatéraux.</li></ul>"
+},
+{
+"id": "TCS1",
+"titre": "TCS · diplopie de la femme de 62 ans",
+"items": "Item 82",
+"free": true,
+"intro": "<p>Une femme de 62 ans consulte pour une diplopie.</p>",
+"qs": [
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensiez à une myasthénie</p><p><b>Nouvelle information :</b> Et que vous apprenez que la paralysie oculomotrice est non systématisée</p></div><p>Quel est l'impact sur l'hypothèse?</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+3
+],
+"w": [
+0,
+0,
+0,
+1,
+0
+],
+"expl": "<p>La myasthénie donne une atteinte oculomotrice <b>non systématisée</b> (ne correspondant pas à un nerf), variable : cela la rend plus probable.</p>",
+"retenir": "Paralysie oculomotrice non systématisée et fluctuante = myasthénie."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensiez à une atteinte du III sur un anévrisme carotidien</p><p><b>Nouvelle information :</b> Que vous apprenez que la patiente n’a pas de mydriase</p></div><p>Quel est l'impact sur l'hypothèse         ?</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+1
+],
+"w": [
+0,
+1,
+0,
+0,
+0
+],
+"expl": "<p>Une paralysie du III par compression (anévrisme de la communicante postérieure) touche typiquement la <b>pupille</b> (fibres parasympathiques en périphérie du nerf) : mydriase. Son absence rend l'anévrisme moins probable et oriente plutôt vers une cause microvasculaire (diabète).</p>",
+"retenir": "III compressif (anévrisme) = mydriase ; III ischémique (diabète) = pupille épargnée."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensiez à une fistule carotido-caverneuse</p><p><b>Nouvelle information :</b> Et que vous apprenez que la patiente a une exophtalmie bilatérale</p></div><p>Quelle est l'impact sur l'hypothèse?</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+0,
+1
+],
+"w": [
+1,
+1,
+0,
+0,
+0
+],
+"expl": "<p>La fistule carotido-caverneuse donne une exophtalmie <b>pulsatile unilatérale</b> (souffle, chémosis, œil rouge). Une exophtalmie bilatérale oriente plutôt vers une maladie de Basedow.</p>",
+"retenir": "Exophtalmie pulsatile unilatérale + souffle = fistule carotido-caverneuse ; bilatérale = Basedow."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Paralysie oculomotrice non systématisée et fluctuante = myasthénie.</li><li>III compressif (anévrisme) = mydriase ; III ischémique (diabète) = pupille épargnée.</li><li>Exophtalmie pulsatile unilatérale + souffle = fistule carotido-caverneuse ; bilatérale = Basedow.</li></ul>"
+},
+{
+"id": "mDP1",
+"titre": "Vertige aigu de la nuit : Wallenberg",
+"items": "Items 103, 340",
+"free": false,
+"intro": "<p>Mme C., 70 ans, est amenée à 12h par la Brigade des Sapeurs Pompiers de Paris au Service dAvicenne pour vertiges apparus dans la nuit vers 2-3h alors qu’elle se rendait aux toilettes. A l’interrogatoire, elle décrit des vertiges ressentis à la marche avec impossibilité du maintien de la station debout. Ces vertiges sont également décrits comme positionnels déclenchés à lerreurs à gauche, plutôt mieux à droit à l’épreuve du finger chase, et un discret déficit à gauche à l’épreuve des marionnettes.La patiente est hypertendue et asthmatique.</p><p class=\"note\">⚠️ Le texte du sujet original est tronqué (« déclenchés à l…erreurs à gauche ») : il manque la fin de la première phrase et le début de la description de l'examen, qui retrouvait un syndrome cérébelleux gauche (erreurs à gauche au doigt-nez, finger chase, marionnettes).</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Quelle(s) est(sont) votre(vos) principale(s) hypothèse(s) ?</p>",
+"opts": [
+"Vertige paroxystique positionnel bénin",
+"AVC territoire postérieure (fossette postérieure)",
+"Névrite vestibulaire",
+"AVC cérébelleux gauche",
+"Maladie de Ménière"
+],
+"ok": [
+0,
+1
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>VPPB ca décrit comme positionnel par la patienteVertige associé à une atteinte cérébelleuse potentiellement lié à un événement vasculaire dans le territoire postérieur</p></div>",
+"retenir": "Vertige + signes cérébelleux = central jusqu'à preuve du contraire (AVC de la fosse postérieure)."
+},
+{
+"type": "qru",
+"q": "<p>Une IRM cérébrale est demandée (cf images jointes avec Flair, Diffusion, ADC et T1 Gado).</p><p>Quelle est désormais votre hypothèse ?</p><p><img src=\"data:image/jpeg;base64,/9j/4AAQSkZJRgABAQEAYABgAAD/4QA6RXhpZgAATU0AKgAAAAgAA1EQAAEAAAABAQAAAFERAAQAAAABAAAOxFESAAQAAAABAAAOxAAAAAD/2wBDAAgGBgcGBQgHBwcJCQgKDBQNDAsLDBkSEw8UHRofHh0aHBwgJC4nICIsIxwcKDcpLDAxNDQ0Hyc5PTgyPC4zNDL/2wBDAQkJCQwLDBgNDRgyIRwhMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjIyMjL/wAARCAEYA+gDASIAAhEBAxEB/8QAHwAAAQUBAQEBAQEAAAAAAAAAAAECAwQFBgcICQoL/8QAtRAAAgEDAwIEAwUFBAQAAAF9AQIDAAQRBRIhMUEGE1FhByJxFDKBkaEII0KxwRVS0fAkM2JyggkKFhcYGRolJicoKSo0NTY3ODk6Q0RFRkdISUpTVFVWV1hZWmNkZWZnaGlqc3R1dnd4eXqDhIWGh4iJipKTlJWWl5iZmqKjpKWmp6ipqrKztLW2t7i5usLDxMXGx8jJytLT1NXW19jZ2uHi4+Tl5ufo6erx8vP09fb3+Pn6/8QAHwEAAwEBAQEBAQEBAQAAAAAAAAECAwQFBgcICQoL/8QAtREAAgECBAQDBAcFBAQAAQJ3AAECAxEEBSExBhJBUQdhcRMiMoEIFEKRobHBCSMzUvAVYnLRChYkNOEl8RcYGRomJygpKjU2Nzg5OkNERUZHSElKU1RVVldYWVpjZGVmZ2hpanN0dXZ3eHl6goOEhYaHiImKkpOUlZaXmJmaoqOkpaanqKmqsrO0tba3uLm6wsPExcbHyMnK0tPU1dbX2Nna4uPk5ebn6Onq8vP09fb3+Pn6/9oADAMBAAIRAxEAPwCz8ZfiB4n8I+LrWw0TURbW8tiszg28T5Yu46sp9K85/wCF2/ED/oOr/wCAUH/xFb37R3/JQdP/AOwVH/6Nlrx+gD0I/Gz4gf8AQdT/AMAoP/iKT/hdnxA/6Dq/+AUH/wARXn1FAHoP/C7PiB/0HV/8AoP/AIij/hdnxA/6Dq/+AUH/AMRXn1FAHoP/AAuz4gf9B1f/AACg/wDiKP8AhdnxA/6Dq/8AgFB/8RXn1FAHoP8Awuz4gf8AQdX/AMAoP/iKP+F2fED/AKDq/wDgFB/8RXn1FAHoP/C7PiB/0HV/8AoP/iKP+F2fED/oOr/4BQf/ABFefUUAeg/8Ls+IH/QdX/wCg/8AiKP+F2fED/oOr/4BQf8AxFefU+ON5DhFJNAHff8AC7PiB/0HV/8AAKD/AOIo/wCF2fED/oOr/wCAUH/xFcC0MinBQg0eU/ZTQB33/C7PiB/0HV/8AoP/AIij/hdnxA/6Dq/+AUH/AMRXnxBFFAHoP/C7PiB/0HV/8AoP/iKP+F2fED/oOr/4BQf/ABFefUUAeg/8Ls+IH/QdX/wCg/8AiKP+F2fED/oOr/4BQf8AxFefUUAeg/8AC7PiB/0HV/8AAKD/AOIo/wCF2fED/oOr/wCAUH/xFefUUAeg/wDC7PiB/wBB1f8AwCg/+Io/4XZ8QP8AoOr/AOAUH/xFefUUAfWvwY8Tav4s8J3mo61di5uUvmiVxGqfKEQ4woHrS/GnxPq/hPwjZ3+jXf2a5e+WFn8tXypjcnhgfQVj/s5/8k/1D/sKP/6Kip37Rn/JPrD/ALCsf/omagDyH/hdvxA/6Do/8A4P/iKP+F2fED/oOj/wDg/+Irz2igD0L/hdnxA/6Do/8A4P/iKP+F2fED/oOj/wDg/+Irz2igD0L/hdnxA/6Do/8A4P/iKP+F2fED/oOj/wDg/+Irz2igD0L/hdnxA/6Do/8A4P/iKP+F2fED/oOj/wDg/+Irz2nUAegf8AC7PiB/0HR/4Bwf8AxFH/AAuz4g/9B0f+AUH/AMRXABaeFoA70fGr4gf9B4f+AUH/AMRTh8aviCP+Y8v/AIBQf/EVwIFOoA74/Gr4gd9cX/wDg/8AiKP+F1/EH/oOr/4BQ/8AxFcCBkgU8RNQB3n/AAun4gf9B5f/AADg/wDiKkX4y+P/APoOj/wDg/8AiK4QKoGMUooA73/hcvj7/oOL/wCAUP8A8RTD8ZvH/wD0HB/4Bw//ABFcRtUgikIoA7f/AIXP4/8A+g4P/AOH/wCIprfGn4gf9B0f+AcP/wARXDkUwigDuf8AhdfxA/6Dq/8AgFD/APEVH/wur4gf9B0f+AUH/wARXDlRTCtAHd/8Lq+IH/QdH/gFB/8AEUf8Lr+IH/QdH/gHB/8AEVwRFJigDvf+F2fED/oOj/wDg/8AiKP+F2fED/oOj/wDg/8AiK4DFBFAHoH/AAu34gf9B0f+AcH/AMRR/wALt+IH/QdH/gHB/wDEV55RQB6H/wALt+IH/QdH/gHB/wDEUf8AC7fiB/0HR/4Bwf8AxFeeUUAeh/8AC7fiB/0HR/4Bwf8AxFTWXxp8fS3sMb64CruAR9jh/wDiK82q1p//ACE7T/rsv/oVAH3pXzf8Svih4w8N/EHVNI0rVhBZwGLYht4XxmJGPLJ719IV8ffGr/kreufWH/0THQBL/wALu+IP/QeX/wAA4P8A4ij/AIXd8Qf+g8v/AIBwf/EV57RQB6F/wu74g/8AQeX/AMA4P/iKP+F3fEH/AKDy/wDgHB/8RXntFAHoX/C7viD/ANB5f/AOD/4ij/hd3xB/6Dy/+AcH/wARXntFAHoX/C7viD/0Hl/8A4P/AIij/hd3xB/6Dy/+AcH/AMRXntFAHoX/AAu74g/9B5f/AADg/wDiKP8Ahd3xB/6Dy/8AgHB/8RXntFAHoX/C7viD/wBB5f8AwDg/+Io/4Xd8Qf8AoPL/AOAcH/xFee0UAehf8Lu+IP8A0Hl/8A4P/iKP+F3fEH/oPL/4Bwf/ABFee0UAehf8Lu+IP/QeX/wDg/8AiKP+F3fEH/oPL/4Bwf8AxFefLwQfQ1PcztdTGRgBwAFUYAA4AFAHdf8AC7viD/0Hl/8AAOD/AOIo/wCF3fEH/oPL/wCAcH/xFcrpGkW+pWV9NLqMNvLbRmRIpBzLjsDWPQB6F/wu74g/9B5f/AOD/wCIo/4Xd8Qf+g8v/gHB/wDEV57RQB6F/wALu+IP/QeX/wAA4P8A4ij/AIXd8Qf+g8v/AIBwf/EV57RQB6F/wu74g/8AQeX/AMA4P/iKP+F3fEH/AKDy/wDgHB/8RXntFAHoX/C7viD/ANB5f/AOD/4ij/hd3xB/6Dy/+AcH/wARXntFAHoX/C7viD/0Hl/8A4P/AIij/hd3xB/6Dy/+AcH/AMRXntFAHoX/AAu74g/9B5f/AADg/wDiKP8Ahd3xB/6Dy/8AgHB/8RXntFAH1D8EPGmv+Mhrj67ei6NqYBCRAke3d5mfugegr0C68aeGLK6ktbnxFpUM8TbZIpLyNXRvQgmvHv2Z+nif/t1/9q15R8R/+Sk+I/8Ar/l/9CoA+tB498Hkf8jTov8A4Hxf/FUn/Ce+D/8AoadF/wDA+L/4qviOigD7c/4T3wf/ANDTov8A4Hxf/FUf8J74P/6GnRf/AAPi/wDiq+I6ctAH21/wnvg//oadF/8AA+L/AOKo/wCE98H/APQ06L/4Hxf/ABVfFFLQB9rf8J74P/6GnRf/AAPi/wDiqP8AhPfB/wD0NOi/+B8X/wAVXxVRQB9q/wDCe+D/APoadF/8D4v/AIqj/hPfCH/Q0aL/AOB8X/xVfFdFAH2r/wAJ54R/6GbRv/A+L/4qj/hPPCX/AEM2j/8AgdF/8VXxXRQB9qf8J54S/wChm0f/AMDov/iqP+E88Jf9DNo//gdF/wDFV8V0UAfan/CeeEv+hm0f/wADov8A4qj/AITzwl/0M2j/APgdF/8AFV8V07FAH2l/wnnhL/oZtH/8Dov/AIqj/hPPCX/QzaP/AOB0X/xVfFtFAH2l/wAJ54S/6GbR/wDwOi/+Ko/4Tzwl/wBDNo//AIHRf/FV8V0UAfaf/CeeE/8AoZtG/wDA6P8Axo/4T7wh/wBDRo//AIGx/wCNfFdJQB9q/wDCfeD/APoaNH/8DY/8aP8AhPvB/wD0NGj/APgbH/jXxVSUAfa3/CfeD/8AoaNH/wDA2P8Axo/4T7wf/wBDRo//AIGx/wCNfFFNagD7a/4Tzwh/0NOi/wDgfF/8VR/wnvg//oadF/8AA+L/AOKr4iooA+3P+E98If8AQ06L/wCDCL/4qj/hPfB//Q06L/4MIv8A4qviOigD7t0zX9H1vzP7K1Syv/Kx5n2W4SXZnpnaTjpRXiP7Mv8AzNH/AG6f+1qKAMD9o7/koOn/APYKT/0bLXj9ewftHf8AJQdP/wCwUn/o2WvH6ACiiigAooooAKKKKACiiigBQMnFWljcHMSg1XjUl6uwrcPJ5MCEluAKAIGDg42A1LBNNHnaoXNWre0LZSaXymA6U+W1tl/1nBoAoTO7SEinw3EwBTJyamSGFgSOKZKGt2jlicggUARXEFwF3MpIPeqRFaX2i8Em8ncGUHBqtcRfNuQfKeaAK1FOooAbRRRQAUUUUAFFFFAH09+zn/yIF/8A9hR//RMVO/aM/wCSfWH/AGFY/wD0TNSfs5/8k/1D/sKP/wCiYaP2jP8Akn2n/wDYVj/9Ey0AfMFFFFABRRRQAUoFOApwFADdtOxTgCelOK4oAaBTgKULTwKAECil7kU6jAoABTwaQClxQA07j0p5UikAp9ADoUBbmnyKOgrYay+z6bFKnIbrWXcYEqgdxQBWIpBwAKnlhCAEVAaAImWmFaeSaOKAIsUhFTEJ60woT0oAhIpCKkKkU0igCGinkUhFADKKKKACrWn/APITtP8Arsv/AKFVWrWn/wDITtP+uy/+hUAfelfH3xq/5K3rn1h/9Ex19g18ffGr/kreufWH/wBEx0AcFRRRQAUUUUAFFFFABRRRQAUUVd0/TbjU5nitgpZEMh3OF+UfWgClSgE9K3otO0aG1LXupt53ZLaPcB9Sa0LXxPo2l2qLYaIr3aDi4uMMd3rQBzttpV9do7W9rLIEGWIXpS22ntNHI8sghjQHl+59BVq88S6reXr3TXbxux+7Gdqj2AFF9rUl9p0Vq6LlG3NJ3LUAZRQrjPcZrtdA8M6ff6UPtTE3kgJTB+6O1Z3hWxtHNxfagUFvAp2iT7rNV7RIdRuNUm1IW8sUb5MRAwOemKAKHiDwpdaLiVEeS3P8ZrL+yJc2afZ0Y3MYPmIBncOuR9K9MsZry5EtksqXV3EoKiQYwSOpArhprv8Astrjz4ZI9bWU/vAflANAHNEEGiurhtrDW3juL7UFivJyd+08k9BxVXxF4ck0i5URCSS22g+aeRz9KAOeopSrDtSUAFFFFABRRRQAUUUUAFFFFAH0B+zP08T/APbr/wC1a8o+I/8AyUnxH/1/y/8AoVesfsz/AHfE/wBbX/2rXk/xH/5KT4j/AOwhL/6FQBy1FFFABTl6im06P71AD6WiigBaKKWgAoopaACiilAoASnrEzHCgk1JbwPcTpDEMsxwBXpGjeGI9OHMXmXIQMxc8LQBw6eGtXeLzVspCvriqE1tLbsVlQqR2Ir2CAXNzcSwRXiRxIB+8I45pniLwUt7K8D4ivEAGMcP7igDxyitjVdBvNLmZJ4HUdmIrKK0ARUU7FLQBHSU/FJQA2ilptABTGp9NegCOiikoAWiiigD3/8AZl/5mj/t0/8Aa1FH7Mv/ADNH/bp/7WooAwP2jv8AkoOn/wDYKT/0bLXj9ewftHf8lB0//sFJ/wCjZa8foAKKKKACiiigAopVUscCrNpFvmA6g96AESxmYZ21NFZNGplk6VtJGLEJOYjJFIn8fNUgs+oMfs8LFSwyT0FAEVnFCxdcHkVvaa8VhOuF5qh9kawWS4uHBGcADqahhmmuQzop/wABQBevx5t0zr3NZdy4MlaMSOsqhjnIqldYiuiAOKAIIRlWakdY1KvNCWAOTg1KEP3j3qOaPfERjJoAtX3iVLu1FuLCCOMLhdvBFZm/dC644qqYWAq6J3+xC38kFV798+tAFEGpntpBD5gGV9ajX5DkdaWO5ljztYgHqO1AENFSblIORz61HQAUUUUAFFFFAH0/+zn/AMk/1D/sKP8A+iYaP2jP+Sfaf/2FY/8A0TLR+zn/AMk/1D/sKyf+ioqX9oz/AJJ9Yf8AYVj/APRM1AHy/RSUUALSqKQCnqKAFpaKljjH3jQAKny5zS1IeaTFACCnCjacEikxQA7iiinUAISO4qTPy4phVvSigCSI7STTlYTXC7u5qMU+3H70E9AaANi8aV4oYIpMAkZ4qnqShbsqOwq/YRPeakvlDhVqpfrnU5BnpgUAQ3BBjGKoGrE7ckVBQAykoJFFABRS0lACNyKixUhpCKAGFaYRUrdKjNAERFFPNMNADataf/yE7T/rsv8A6FVWrWn/APITtP8Arsv/AKFQB96V8ffGr/kreufWH/0THX2DXx98av8AkreufWH/ANEx0AcFRRRQAUUUUAFFFFADwjMrMFJC9SBwKZVk3s32EWg2iLduIAAJPvVagC/Hfxxac9strCZJGJaZhlseg9KpZI6Eim1PcTm4lLlVU47UAQGig0UALV/R/O/tKPyLYXLd4yMgiqFdB4Qz/a7AHqhoA07wWMEEOj28gjnuiDNwGWM+ld1bRQ2UFpafa1YQIFQdyRXmGnILrxYqTgyL553L64r061Syl1L7S1uTLEMp6UAYtm0lj8Q1uGfyxcQnYD3K8Yrn/H9gyaudQXHlTcfQ1pSXlxffEi3XYNsWcD0GCTU3xLtgLK1uD13lcUAeb7uQRwRWxpnii/0+YFn8+PuknIrIdQrYDBhgcinQGJbhDMrNEGG8LwSvegD0CP4jWDZFxocUwIwQcVDLoejeIrWTUrWKTSmIJS3PKue22uM1NbIXh/s8yeQQCBJ95T6GrVnI+p3IF9qRhjiXh3OSB6ADqaAM+e0ntjiaJ4z7jFQ1ranqz3sEdu8aHysgS92FNtdWijtjb3VhDdLghGOVdc+hFAGVRWzq1hp8NnbXen3nmLKSHt34eJvQ1j4oASiiigAooooA+gf2Z/u+J/ra/wDtWvJ/iP8A8lJ8R/8AYQl/9Cr1f9mfp4n/AO3X/wBq15R8R/8AkpPiP/r/AJf/AEKgDlqKKKACnR/eptOT7woAkopaKACnUgFbmleFtR1Mgqgji/vmgDEp1ehx+FtF06333oe6lp0cmloc2mkR/wDAxQBwdpp93fTCG2haRq6Vfh9qYVDNLHHuGcDmu10/UIvuCyjikYY+Tg1b0/W286WM2eWjUsfM6KB3oA52x0VvDUIKxj7VcNsV3GWz7Crt1LcG9i8PQyM99ckeee6gnAWptB1CPW/iDpl7dXqTRi4AVOignpW5oeiufi/rM7jP2bzJFoA6HQvCVp9g1uNWVgsHlowHIIqa6STxR8OoNct2eLUbKAqOfvFKt+H3uNM8E6pftGRNdOxgT+Ik8CrNjpUvhH4X3VrI/mzJbySN2ALCgDxiLW9VliYahaLeQ+hGDUR8OaLq9v5ts72lw3/LKQfLWYo1nS1jvbgH7MzHbnkV0eneLLe4hNrtWMv0AFAHGap4UlsyFhkWU+1YE1rJAxVgQa9au7DT0hR/nJ25YF6zxplnN8zxnPvQB5cQRQRXo9x4ZgvVYwxL8ozkVzdx4Wmz+5yfbFAHMmmVfvNMuLOQrIh4qkQRQA2mvT6jegBlJS0lAC0UUUAe/wD7Mv8AzNH/AG6f+1qKP2Zf+Zo/7dP/AGtRQBgftHf8lB0//sFJ/wCjZa8fr2D9o7/koOn/APYKT/0bLXj9ABRRRQAUUU5F3MBQBNbQlznFbul2XBmTGU6isxMQgAAk1pw70jfI2kpuwPagC00qtYzJO7YjchQKm0yC0i0p7nU7too1T93BDwzE9CaL6a1jNqYoBJvjw8fbJ7msrUZrmCaQAAARiPA44oAyrq4M0xySYwema1dAv5LWSZUgaYOACB2FYFeofC7WdI0g3j38OQ6ct1xQBy5kdW3yxNFGjHg9RVC5lR5S6HJJrtPEcBv7qSW1XzLdxXBmIlmXupwaAB3DFMsCAelWMFIyWbrVWO2352nGH210+gaI9/FK1zAWihTPHqKANHwN4bttUuvs10nmQk7n7bBR4v8AC9notzKdOl82FTyAc4FOh8Vp4TtLm2ggb7ddIQz56egrkNL1K9OoM5ZpBcNskzyDQBnXoxOflUd+DVfFWr6EQ3ciDselRELxj0oAioq1E8XSUVWIwSKAGUUUUAFFFFAH0/8As5/8k/1D/sKyf+ioqX9oz/kn1h/2FY//AETNSfs5/wDJP9Q/7Csn/oqKl/aM/wCSfWH/AGFY/wD0TNQB8vUtFFADgKcBSJ3p4oAQDJxVk/dwKhT7wqagAWpPLb0p8CcFjTpGoAh6U2lPJpKAFp2RTKM0APLUZB6Gm0UAToplGwda3khiTQsTL+8WsrSFP22PPc1ua3bmG0wWBzQBDo14LENKVzk1R1SXzpHuNuN7E0iZ+x4AqnLITEENAFfcT1oLDBFJimmgBpFAFGeQKM8kUALQ3IxSUlACMaTuBSkUncGgBSKYw4p9ITwaAITTTTzSEUARVa0//kJ2n/XZf/Qqrmp7D/kJWv8A12X+dAH3rXx98av+St659Yf/AETHX2DXx98av+St659Yf/RMdAHBUUUUAFFFFABRT40MsioCAWYD86SRdjsuc4JFACUUU542jYqwIIoAbRS1Yto5pxJDDCJCV3HjkAUAVTRQaKAJXlDwxp5agpnLDq2fWu08HpDbaRc6hK6LGrESZ6kAVxUcfmSqm4AsQATwK9H0Hw9pF3ZTaXLq2ZODN5fPINAFbwtpV/ba99rht/MsQGdHcddwr0G1hRdNknZgJOetY4Nzp17BZ2RLRKFQfQDFaWvSwwtGqjqOQOmTQByXhdjc63qs8oXAkCB/RRWV8SNTW6urW2R8qiliK6lXstFsri5JJjccknvXkl3cy3s7SyFmPb2FAFeikooA3dE8RDR7O8tjYQXIuepl/h+lTjWNKsrYwWWneaH5kM55z6CubooAvwX0MV758ljDLHz+5OQtVJHEjltoXJ6DgCo6KAHCihUZs7VJwMmigBtFFFABRRRQB9Afsz9PE/8A26/+1a8o+I//ACUnxH/1/wAv/oVesfsz/d8T/W1/9q15P8R/+Sk+I/8AsIS/+hUActRRRQAU5PvCmU5PvCgCanRxtLIqKMsTgCm10eg2otle7kH708Rew9aANvRPDtvZ+X9qQS3TDLL2WugkvzD/AKPaKPcisKDUDbwN8hEkg+ZzTLDWohaTxW/Mo/iNAGsVWaQAqDW5H4dlFt58qYjxkAVxOkX1zb3punHm7ByDXozeKnvtOSMQNGwXCgDrQBU0DwxJfX29WZYVfcTW/reraJ4XkLvGk5aIxyRY5ZDSaRdvpemyyzEgqPl7cmvKvHV/DJqS7Z/Mmdcy+1AHX6VfeBTCmpWST2d5b3Ubi3c8BQ3UV3dvcRW/xjuYwuUv7UFD9Vrwvwbpkeo6v5t0rCw2ESOB68ACvTfDt5M3jbQzcxMpsz9ky3VlK/KTQB6jqctjpmoWaXc0cNnDGSitwC+QAan14WuoeGrpXulit5I/9efuivPfi5dt9osrNeZJpFSNa6XQ4bfV9AtbK8gaOxt02uJ8IJT7e1AHiXivxLGmlR+HLGXz47dy5uvXNaXgu1tgYzNAjEngn0rb+L3gfQNB0uHWdPh8mZpNhTdw1eYWviS6iCopAAoA9c1bTP7R1KOe2gSIKgzgd64jXNNutNlMblgpJrqtC8XNqdpGiAFlGCay/iF4ltr4W9rEmChA3UAcjHqt5p8g+yzHA6qa6K31AXyibAhu05wBgPXn99ck3GE7da6CCO90yaGKaaOWKZA6ODQB0d7p9rrNpJlQtwBz715hqVi1pcMvbNejQGRZDLE4OO9YHimyd4muBj1JFAHEVG9TOu01C/SgCOilooAKKKKAPf8A9mX/AJmj/t0/9rUUfsy/8zR/26f+1qKAMD9o7/koOn/9gpP/AEbLXj9ewftHf8lB0/8A7BSf+jZa8foAKKKKACr9tGnPrVOJNz1cEwJdsAHAAoAfKzodzg+1MMt02GzwelNmnkcqHOcKKmizc3CRRHGOB7mgDVtdUs4dImSWAtcyKU391qzomlzeIrS4to1w0eTuPUisD7Bcrcbdm5gCSV6HFdL4S1OKDU4WaYxq7hXA64oAw9Q8M6ha3MieQxC1r+HBM2y1aLy1mJYkjk4r3CDQtPnFwrQTiOWImKQ8BvavLU1W1tJrkIUiurVtoST+P0AoA6u/01E02OaNk+VfWuF1izjn+WKICYjI2DAJrZtvFKyCNLpD5bfe2isrxNrdrbSQCxRmYEFqAItE8NXMbNPdJlCDtB4rdk08yzwR29y1sMBtinG41kjxYGskRM+UXyRnG0ntRJ4mt/srFv8AWI2FaM5NAG0PBkOvzQ2M13FB8x/evXd6b4HtbPwbc6doV1p2pXiN/reN4ryGCe4klzcSE27ISrZzjHao9B8Q3Fgt7c2Ja2CoMkHBbtQByl/5v9pTeccyo5VvqDSCTyywZFBJJ6U+bzLmeR5WQM2XJHfNVZ42XaxOc0AOfY3I79qJISgPIIPcVGOBU0RyGU9MUAVKKcwwabQAUUUUAfT/AOzn/wAk/wBQ/wCwrJ/6Kipf2jP+SfWH/YVj/wDRM1J+zn/yT/UP+wrJ/wCioqX9oz/kn1h/2FY//RM1AHy/RRSigB6d6d/EaQUtAD4+pqdELnAqCLqauW4Iy1ADpSVUAVEXyKR2Jc5oGewoATuSTSGlwfSlxQA0DJoIp4XBBpGoAaKfGoLc0yp7dC8mBQBp2WV+YHBFPvJ5ngfe2eRVcS+RJ1rUeS3ksTn71AGTZmedo4U6OQCa7HXPBltp9paT+apEgyRWFowhQnIzID0rp9WL6npIKhkMfJFAHB6lAkF2yIOKzTWlqe8OsgrMJxQAoXjOaaTThINu2pIoHmxtoAhpKtSWboMmoNtACAUmKedgqMmgAoIpAaUmgCFhSZJp5FMxQA01PYf8hO1/67L/AOhVCRU1h/yE7X/rsv8A6FQB96V8ffGr/kreufWH/wBEx19g18ffGr/kreufWH/0THQBwVFFFABRRRQAUUU7y22bscUATSpHHho5N46elRMxYkk5JpFGTjIH1ooAKkhme3ffGxBwR+BqOigBpooNFACivWPBvh22t7GK4lDJduAXJ9DXl9haPf3sVqhAaRgMmve47VrXRraK3XLRoF3etAFDX7sWNus0KZmBwDVSKc3Kp55zK461pa5D/a+h+TcgQSY+Vh1BFWdN8P24nt72VwFWLgA96AOL8ZaZezaMggQnY+So715zL59gZ7UuPnAEgHsc179dwGWU9xXjvieP+y/E2oK0KsJVO3PbPegDmKKXFJQAUUUYoAKKKKAJ7e6mtfM8lyvmIUb3BqDNOXgikIoASiiigAooooA+gf2Z/u+J/ra/+1a8n+I//JSfEf8A2EJf/Qq9X/Zn6eJ/+3X/ANq15R8R/wDkpPiP/r/l/wDQqAOWooooASnJ94UlOT7woAv6fb/abxEP3Ry30FdTYzxNM8zD9zGpNc/Y/wCj2c05/jwo+lX9+yzWEZUyHcfpQBc1DXPt0SRSwRAhwWcdWFPN1pya1IqwBYyAAU6Vg2sb3N0VRc109n4K1abTrnUX2rHAcFT1J9qANDw9cRQXDwypv8zkV6npMujT6TaXRZMrkSDGM15Bp80lnLHLc27iPcMH3FdFLHNLY3U1qrKvLGPsKAMXx141k1PU5Lawcx2kZ6jgtXENI0sg3EkmiYkysScnJplAHoniFdV8KaBpdlZXg+yXNuJt0f8AGW5NdH4Yurm+8U+HZ7w7pXVN5/8AQTXH6LBd6/c2OjairHy0/dkHmNa9FWy03wj4k0mxtb9b65urqNnycvGBwBQBq/EnR7ifWLbUI3BjhcAqfUiqfjltWvPElhotizLb2sKs2zvxksa6PXtE1HXPEJhRWFokytuPtzXaXdjA8NzMEUTNA0fmYyw4IoA+ZfH96dSV5X1GR/JIjhtuygV57vK1c1TzRqd0sx5WQr9cVnmgDrPCF/JDqm1M+W8ZBWug12K2tr6Ce56H5ivpXMeBD/xV1oDjBznNdH4pMl7f+ciDy9uM0Acpq6281xm3XbVO4VjBG25jsXafbFXHhk8zecsai+zM27z43UEcDpQBqaNfiEcOWUjDA1ovMs4lgf5lYfLmuQ00sJiAeBW75wYRt3oA5W+hMF06EYweKpP0rc15VM0coGNy1hv0oAZRRRQAUUUUAe//ALMv/M0f9un/ALWoo/Zl/wCZo/7dP/a1FAGB+0d/yUHT/wDsFJ/6Nlrx+vYP2jv+Sg6f/wBgpP8A0bLXj9ABRRRQBZtcfvOccUw9afDA7A4HNO8jE4idwvq1ABLIsrKi56YyRVzS7iKy1FHmgEw6AGq0FlPIVxH8rEAP2zT5bB1cqX5BINAHQz3VxYtd3sFvBtK7Qo52bqwLYyW8yXCDlTlTWz5MsGnW32hwftSF8Dsq8ZNZttEYlJ7tyKAO0X4v64NDfTJoYmwfkauJuLuTVNSE7rhiCTW3aR20Gnvdz2/m3O4bh2ANZ+o3yzy71hEe4dOlAElrqottJMKf6zJOTVYal9skP2rBkA61Ru2QQoFCg85xVIOV6UAaVpaXOqzPDYQZ2KWbB7UCVI4pYUT5hwSa9I+Des6JpLajLqrJGWhIBIrz5pUfWLqaMBopZ32EjsWoAzjc3EUQh8xtv1pFLnOzIDDJHuK6e38PwX9p50SkyKhWXP8Aez1qlPpSwRQebGdrgBfY96AMlBuztUjA5qs5OcE1pPbpFMyOu479oNII47dWV4zKjZx6g0AZ1ORynI7imE4qRFWaRUBFACTFCqkVBT2GDim0AJRRRQB9P/s5/wDJP9Q/7Csn/oqKl/aM/wCSfWH/AGFY/wD0TNSfs5/8k/1D/sKyf+ioqX9oz/kn1h/2FY//AETNQB8wU4U2nigBaeKbT160ASpxUisBUIpxoAcTk0q00UCgCQNk4p2zNQ4OCRViIkrzQA5l/dCodoPWrDKeB0zTXhZRleRQBARVm3yJRimCMeWOaMYPFAE1wN0oAqctmNV9Krpj05qzbgGUE9BQBJbXD2M6S7cjvXbDxPo2oaT5KqsVyRgnoDXO3Gi282n/AGqGfle1Zkun+XZC4Q9DzxQBDqZH3fc1ktEOxxWjNJ50JJ6iqYOaAIhHtq5ZyrE2D3qHFNIGM0AXru6Vl2gVQwT1FKK2YoBJpRYCgDEK1HUrHBxio6AG4pSKKd1oAjIqKpZO1RUAIam0/wD5Cdp/13T/ANCqKprH/kJWn/XZf/QhQB95V8ffGr/kreufWH/0THX2DXx98av+St659Yf/AETHQBwVFFFABRRRQBeMv/EqWL7InMu4z/xH0Wp7G+WJ4EMXnRg/vINv36z2LiJQSduSR6UsE0lvMssRwy9DQAssbTTymKIgAk7f7orsvCejaZLpks+qWzyebkRFeoFV/B7QpHqVxdxGSPygS1R+GfF6+HNQaUWwntjKWVHPIFAC33ge7gnIhmjKPkwq3DEVypjcFhsPynDe1emap8QLHX9YjvPskysibVjHNVNLms4b29u78oLa8lzHGe5NAHndLg7d2OM4roPEegTabdvcrDixkc7GHOB6Vgsq7yA2VB+9igDd8HNGPElqZAD82Av4HkV2/jHXL3S0insbwJmQArXAwfZrTWLV7K6LgsCx242+1a/iWa0uJ1tIg0127DPPC0Adtba9a+JNAkVGAuvLw6nscVa8JXT3eiiG8m3ywuV4Ncn4Fto5ftJ8pfkYo9dhe+HNZ0zQrrVbe2SIQqWOT1oA6O8eKHTmZeCK8+8QCPUNa0mc7HDsbaQOM8EdRT/CvimTWI2S/IEoIC+jVieP5DBqFibeN4zgmgDj9XsX0zVLi0fGY3I4OapVf1i9jv7z7SsbRyMo8wHu3rVBjuJOAMntQAVaMNt9mDC5/fd02HH4GoZWjOzYuMKA3Oct3NJHBJMcIpNADKXC+WDu5z0rvbPwdpsuhW921xIZSQZB0BHoKy5fB9xfa5JaabsEQjDgu/QdKAOUzS1o2OjXV3qsmnLsSZchvMOMYqO708WsIb7RDJJkhkjO7bQBQopaKAEooooA+gP2Z+nif/t1/wDateUfEf8A5KT4j/6/5f8A0KvWP2Z/u+J/ra/+1a8n+I//ACUnxH/2EJf/AEKgDlqKKKACnJ94U2nx8yqPU0AbU8eLKxtx1Klj+NWLiR5JMFR8oAo1AhbuFe0cYFRwfNKAe5oA6PwrYW9sI7u5OCSdoI5rsLzXbQ2ifbbgqqYESJ8q+5NcXqQSyvLOLz/LIQLsx2P8VYs5a5uhYwytPCWxvHRqAPVYbW31TTVS2RJzM37s+lZ9prb+HY5NG1KwIzkIwNbPhLTZNDs40Ow5HBrJ8UeENfudYkv8pddG2qfug0AeW3sLw3cnmLjcxK+4rT8M2C3l8GmUgAZX3Nbl/YI0ghlQ+dD95MdDVCS78sSC2bbIVIB/u0AVraRYvEDm6vni2uMvGefpXoOl6ZYWus6Nf21sY9QMrSHe5Zti4+Y15RZ/Z4NTja9ZpIlbLEdWrsrHxIiQ3sqTSTXdwBGZZP8AllEOwoA971G51SPxBp8un3Ki21GLBDDK7wMiqPiXxB420OxkktNFtrzbzvjP/stZHh/xBaax4Q05EukF7pNzGxD9XUHFdH4q8e2mhQL9nC3DSKQHjYEIaAPn7xXot/e6d/wlQ042ltcSlZIiNpEncj2rh69m8WeL5vFFhHZ3EG22j+8E6b/WvKjp4nuykLdTQBZ8NW80+rxmGQRle5967NoZNR1CO0CH7PAuGI6E1lJo1hpVvG0sjNIRngV22hT2QgCK/wAzDJB60AU7LTdO0yRp5o87BkZrH1y9sNRhLwODIs2QAKseKtLneykvHuGEIwdkfUn3rjbO2hupllspArAZZJH5JHXFAFeW3ez1d4WXG88D61e2+Xavu6o9X/Etm8clpe9cKAfaqFxKSGA+7KKAM3VAZLCN+yuQawH6V0d3GZNGkI/hYGucfpQBHRRRQAUUUUAe/wD7Mv8AzNH/AG6f+1qKP2Zf+Zo/7dP/AGtRQBgftHf8lB0//sFJ/wCjZa8fr2D9o7/koOn/APYKT/0bLXj9ABUsELTPgdqiq7YiTKiOUJ5jBTQBZkcICGXgAAVHaxQXNwVmYqDkj8qjvFnildLjJPam2xh3bpZCODigDobXTpJrHS4Q/lq6vIwJwWwapWMHnzx285ZFeUmUjgjHarN7fQT3NoYQzeSigbeBgdqejPDBK7wsA8pYFRnBHQ5oAp3mpMLtHhXEKqUiRuqrmq1sZbk/IMBR0pJLaTguwk3ZbcD61atoXtYmnjlUseijuKAJoXluporXzGjBOeUPas+7R7nUZAJAwHQ16x4Fi07SvCepeKdQgWUbjY2yydMnqxrgMRi9uJovJXc+1h1oAxZdNuDaJKyZ6kKtZuxlOCK+k9N1TwLB4SFokKXF08OyQiM4DYr581pQmpzAAffagCbSNEudbvkstPzLKy5x6H0rT1PQr/RIVt7qBo5YWyMjAatz4UawuhavJeNa/aMdV717R4xOk+N/BtxPZSRi7jUnJ6qfSgDxTw7JDfRpFdFoWEquJUOE2n1qr4rsH/t/UkIPl5VoSPuEeoqjoN80VpeaS1j55mUoPXg9q9FL6b4l+GflwxmLVbMkMrnMhQUAeMqzoFyzE+masxTKt1hmYEDAIPrTZ4Qt8YWX1zVIYDZIzigBLhGSZgaiFa8mk3JVZnTyo2zt78ismgCQFnIFEpO7lQCBT0DJH5ijPbPoaZLuyC3UigCKiiigD6f/AGc/+Sf6h/2FZP8A0VFS/tGf8k+sP+wrH/6JmpP2c/8Akn+of9hWT/0VFS/tGf8AJPrD/sKx/wDomagD5gp4pop4oAWnCm09KAJ4tu3mozS0CgBydaevBzTVp4oARiScjipUH7vFNUCjc33R3oAfGp3csTUztg4BpiAg0NyaAFpduMhhSAAgginqpZgvrQA51dYMj7lXtNtjcWjnuOtXNRsRY6fGu7JPJFTeEnhM72s38dAF7QYITbSiccY5FUhLbHzLcNlSSK1NRVtJikWXoQcVy+lvvvWDjhulAFAqBJIvbmq7x45FbN/aGKZmArNcAjg0AVe4NGQelPKYo2gNkUANWM5yavpqBitTAFIBqnvb1qQRlo9x4FAFSQ/vDTRTpgN/ApqnBoAYRhjSinPzim0AO+Uw81Xapj/q8VEaAGVNY/8AITtf+uq/zqKprD/kJWv/AF1X/wBCFAH3lXx98av+St659Yf/AETHX2DXx98av+St659Yf/RMdAHBUUUUAFFFORS52gEk9AKAJp55ZYoYpOFjUhBjHBOar1bvPtKyJBdKyNGoUKRjAqtQB6T4R06OXw22SdtxuM4PIKivPrmJBeSJbsZI95CHHUZ612ugalb/APCKTW1w0kCrG6M4OM59KyvBVtZXWuj7am9Y0LovbcKAMKyjuJdSjCczbsgV6ZDp1neac/27ZHFjkHtWPNp8MmsXuq24cG2XciL64q7o0g8Rx+bLG0QD4oAmtZ9L1OFrGa6jktkG1QTwMVj6t4c0+Cz26dtlmbNaT+GLaS7m0s4tDKQVnHTIrKbwbqGjzyT3t20VmvSZcnfQBhGwvNHnCukLSScBWxVC9uGa9dwFQg8mPufWnardG6v5G84yxqxCN/s9qr3EccbL5b7wVBJxigDd8L61d6V9p+zFCxAYLJ3Irs3+KC6zodxpOpRG3MsZTd2ry6aGW3Zd6lTjIprocglgcjNAG1oqEXStHcNE0Mm7cO4zXU+L9elNrazWW0wtjMq4OCK4FJAIAgGCCcmuo0KNr7TX0ichdxyr9QtAGPrSMfs9zLB5Ulym84GFPOOKx67PV7W8NvBolxPbt5X/AB7v/G59K5aGyke+W1cMhLhWOM7cnGaAG2Uk8VyrW8e+X+Ebd1dZpECQ6PK09qyTyOT93HFWrLT9M0HUVH9oxyysuDIeBW1Y6rCtyViKXJJyzddooA43W7t5hDZqPsqIpJZuA1bnhjw9eWS/2smpW88SrnyopN5I9x2q3qkOl6/rFrbXszQksVXZxkmsnSboeE/GNxYL++hciPBFAHOa62NdupFLAs5bkbSpPNZVdP42mW41lZfKEchT5/euZzQBOtsWtWnVs7WwVxyB61BU8VzJAkqoRiVNrfSoKAEooooA+gf2Z/u+J/ra/wDtWvJ/iP8A8lJ8R/8AYQl/9Cr1f9mfp4n/AO3X/wBq15R8R/8AkpPiP/r/AJf/AEKgDlqKKKACp7QZvIR6uKgqa2OLmM+jCgDW1YEanJkdhVnS4ftGqW0Xq4qLWedSZvVQaveGZU/tyIv2UkUAaHjoAajCQP8Alio/Kui8N6RZRaTa3NtKZ5GQtKHTGxu4FZXj6OzeTTvLT97JuMv0NdNp9x/Y+kRywbQFjyQRncKANnSZE1DzAz+RFCVLua6K/ivbOP8Ati5UwxTEIsPXIA4NWNJufDeuWVrfEJCQ4MqE4rq7+4sNQjjt/MimtScMFP3SRhTQB4vqHhp7++m1a2vBHc+YP9GPAKgV5l4inYahLA0IiuEYrIRwCR7V7H4+1P8A4Ru2jSHa8ysQezKfcV4stnc6xeSMrCS5clsHqxPYUAZm6nqxHQkU+4sp7WRop42jkHVSKioAsm8mWMIjlQFA4PPFEGo3cWALiQjuCepqtmmigDUXVHO4yruJx/GRToGae4V4EIZfSs0GtXQLn7PqkYLAByBQB3nhe3uJtQs7h54LuGRtjRvgMjemK6PVNLt9P1CSe1cGJ03Keu2qljbQ22opdqgUghsj++KnvrzczMR1oAzFv11WzZME5bG0+1cTfWi6N4itbhUIjLgtXcwafJ5TXER/dbSS/vXNeJrPzrRZAoJXvQBoeL40OlM8R+XIYfSuGjlJjGa67VH3eFkDHqgri4XIBBoAux/vrO6i6ApXLPXU2R3ecn96M8/SuXl4LfWgCKiiigAooooA9/8A2Zf+Zo/7dP8A2tRR+zL/AMzR/wBun/taigDA/aO/5KDp/wD2Ck/9Gy14/XsH7R3/ACUHT/8AsFJ/6Nlrx+gAq9ZGFYpHlchlxsA75qjT0Ck4bOPagC7qFxJfSK55IUDPrUFvhA2VDBjjFaUVna3LbrGcKQB+7l7mquVWWO3cJhXJdloAeVayljk56Fc4xzium0+W9vPCd1J/aEEUdhgCJhzJurlrq/kuXMTNmMNmrlndixM8LRLIsyDJI6UASKTcsHCAKx/h4Wra2Li1No8yq0YLlg/HAzg1kPeSBWghG2JJCQe4NPjnEpyx5LZJoA9T8O6jJb/CvX31VYhbTuqWlv3L92rzqSC2srxd0Zkjzv2E4BIqI6lfTQCGSYhEzwO9U3nkuN3mtlqANz/hMnMTwfYkihOPkh4r0Pwl4b8Ha94avNUubSaM2mGcvySK8VjjP2gKO3QVettY1PTbWeyt7l44bgYlUdxQB1N34j8P2t2stjpbxSKx8txxwRUkWrS6pZudHaa2uBGZJk35ElcUYpPs5mKEDftB7H6VLa3V3YSM9pIVZoyWI7LQBu6XqEIu44sxxyOwIeQ42NWloGsX2j6/qFyUS/BBSVU9DXKQG3mgnNzIDcuoKMw4U061vrqy1BpYJPLL0AaOrR25vJZoQQzjeUP8Ge1ZlxYs3lyp/q2ba7dADVyD7bqH2l0IlYruk9sdhU+kXFl9iaDUpTHaE4fAySRQBTup4bG1e2WVpZMjac9MVl+W9x5jQpnYpZvoO9X9evtNn8m20222RQDBkb7z1kRzSQ7tjkbhg0ATxHdEyepBH4VDKwJGPSmqGY4FBQjqDQAyiiigD6f/AGc/+Sf6h/2FZP8A0VFS/tGf8k+sP+wrH/6JmpP2c/8Akn+of9hWT/0VFS/tGf8AJPrD/sKx/wDomagD5hFPFMFPFAC1NEN7Y6VDU1uQJQTQA5/vGmmnP940lACinCmqKeBzmgB4pE3560tKKALG7NPjl8s52g/WoFI9cGpFSRziKMsaABnyc4q5p4gF0jzdFPFUpAyNtI+b0pVNAGlq18bmfI+72qvaSPBMk6MQymo5F3xin28bMG56CgCfVNXl1CTDsSBVWN3WQP2B4NQOpDkGn7yVAoA0Z9RVotp+asjJDEgcHtU0xQAFRUK8gGgB2cgevpTjGRikTAYE093BKgUALHAznAou5wkaxAcCrEjNbQfWshyzHJNADXJY5NIQewpaDQA2kp1JQAnao2NSgZ4qFxg4oASprD/kJWv/AF1X/wBCFQGrFh/yE7T/AK6r/wChUAfeNfH3xq/5K3rn1h/9Ex19g18ffGr/AJK3rn1h/wDRMdAHBUUUUAFX9Ghkm1W3EfUOG/Ac1QrQsFnton1GIgCM7M+5FAEmv3UlzrNw0hBKtsBHcCs1X2sGwDg9DSEliSame0njt1naJhE33W7GgDqb/wAR6dqnh5rV7JrWZcFPKAKMwqXwZ4ftNbsrx7gsJYziNgcYzXKC5X7AbfZ8/mbw+eldd4Gu3upW0sqscOC5dfvFqAOwj0rTxoK2K6rDYy7drnzBvwfrWLo+nJpd+8Md6s+mfeQpyS9Y2naLEPFN5BqEn2u3gBzIXyPbNdNFBpdnbrLb22beImgCzBcR3bNdX7CYByIIs45Hc1kePvEV7LpkNnIqeXJkBfRa0tNij1a+aGC0mij42SyjC5rkNV0S7sdZvP7VjeeJM7Jcnbye1AHMQ2kk8UzqRiJctUYiJhaU9AwFPQSMCI1PAJOKltrmKCKaKaESiQDvjBHegBk4M5QQhmCIBSGFQFVfmkNXbTVZLJVKwR7aZbusMcl4JB5jZAQdVzQAlrJZrA8F1GSwbhhVVHmEhNu7nbzkcVDU0lwWCBFEe1cHHegDbsdH1TWhFcJdpu7M8mCMGtnSNAurfWpxrwlWG4jP78ch64mCaSCUSxOysO6HBr2X+0X8S+GrN7cbiigOmeRQBjHwjoQEgVJZlP3JJJDxWPf6DBo8sb2FzL+84YV1FxOif6PERlPvD0NJp+lrPdrLM58peTQBFbW9tYNHc3MYkCJkEj7przzUtWl1HxC+oqn7wuGXtkDpXaan4gmvPFZ0uC2DWsY2nueP4q57XtZht7v7Np1pbRtGQTOIxvLe2KAKPiuO+j1om/jhjleNGCxHKhSMisKtLWdWuNXnjmnzlECAfSswUAOoqxaWcl7K0UWNwUtj1xVagBKKKKAPoD9mfp4n/wC3X/2rXlHxH/5KT4j/AOv+X/0KvWP2Z/u+J/ra/wDtWvJ/iP8A8lJ8R/8AYQl/9CoA5aiiigAqa1GbqIerCoasWH/H/B/vigDW1VwdTcjoAOKgtbh7O8huU6xtmi++e/mZeQTUFAHXXWoQ65qFlJz5anDg9RUviXXcwx2lpMCFTkoehrj43ZTkGnbqAL0Ws38cYQTnaO1bemeLtVs5QIZ23SDHWuYC8A1IzlIgR1oA6e914ukqXJTUJrmTfKZRyrYxxVDTL8Q3kaLaeXufO/PzA9sVb8JaZ/aty09xgww9Qe7Vqare6IPFNjG2ba3t8ea6DPAoAsz67DqZMHiDToWxwkqDa/Fcuml2sepJBu/dFieeoxXTeKLu01aZtU01SLXdsQGuUkuUQ/OvNAGTLaTQysmwkg1budMMMIdSScfMPercd1JcyNjtV3Q7qNdaitbtfNs5pQrq/PX0oA5pIZM5C1csrQT3SBg+0cs0YztNd/4w0zStCtl0+wlE4mYyN2aOofCs89tBcmyAw6BXUjnbQBqeCLmTxBpF7b30qK1km9Hc7SRUlzNZ24AWTd/wPNcX4ovBHdW7QRvEWTc5BI5rDS/nY4LsfcmgDv7vXJf7LmtIGYRE5rHuL5v7OU5Bj2/MO4qnBcXLRpDCpd2OAAKkn0/UQsiz2zjYMmgDO1LWnvLGG2GQkdZi47mrzWMJhZhJjAJrOPFAF6wkX7TtJ6qRmufu02TOM9627JSZkXBDZGKzNXhaC+lQ9Q1AGdRRRQAUUUUAe/8A7Mv/ADNH/bp/7Woo/Zl/5mj/ALdP/a1FAGB+0d/yUHT/APsFJ/6Nlrx+vYP2jv8AkoOn/wDYKT/0bLXj9ABS0lFAEsJCygkkCpblogyeSc471WpVG5gMgZoA3rSximsd7cMTzUlhbr9ivHDx+YHAXecEAe1V1+3adCGlA/e/KuGBqnczSOwLoB6YoAgkkdjn3qawi+0XkabsZ71A/bgjjNNR2jYMpwRQB12sTWNzuW0UhoEVWI4y1ZFvpFzcyE5EUa9XetnTbvR59MjbUP8AWwPzjkyZq54na2v9IsprS6QReaQIujbcUAcjO0NndsVYsw6GoZLkiVhwBUkWn3N9qaWVpG8lw5AC10v/AAqzxPkmSCOMepkoAybbX0S2WwnhWe2Qlo2PDKTWVlCHG37xzWnfeGNQ0WdhqNo4hHWQcis+GOJioeTEb55xyMUAKsQaSKJ5PYMOmKfKHhXdLFmLOEYjirGkaa97emFY/NKAnAre8Uyw2+i2enIRHI/7yRDyVoA5WxvXsbsTpnuCM9Qatm1ju7WRbdmMu7cFYYNZJVlODVoahOFYKQCRgkUAVGR0+8pFaMUSLYBBEks0rfKT2qIG3SNXmHmMw6A9KhluGfaFTYqjgUAbNkLzSpY5VhtZCD91yDVXV7i5vrqa9lhji3kfKg4FZRdz1agM3c5FADD1ooooA+n/ANnP/kn+of8AYVk/9FRUv7Rn/JPrD/sKx/8Aomak/Zz/AOSf6h/2FZP/AEVFS/tGf8k+sP8AsKx/+iZqAPl8U8UxafQBIpxUoNQg08GgCVf9YKkZcnNQqcEGtW70e8trRLkqDC3egDP2e9SRx85YcU3FSBvlxigB3lFj8tMKnOKkQkcinNC7ZfHBoAh2letaum6iLBWGzLVmEnvSEYoAtT3HnkmUDJ7iohTA5xg07LAjNAEiHBzUiStGwYVECD0pvcGgB8jbmJptTOYfLzjFR5goAawBBBGTUltZXFz/AKlN1RsVJyDVvT702UxdW49KALel6bDLO8U77JB2qlfwC2umjFW3voHlaVs7j3rOmkZ23E0AMlkeU5Y1XIqwq7hmoWGGIoAiKimEGrB2AZIqKgCLOKbnNK/GKfFbzSxs6RkqoySKAGIcNUcn3qkHWon+9QA01YsP+Qnaf9dV/wDQqgqfT/8AkJ2v/XVf/QhQB9418ffGr/kreufWH/0THX2DXx98av8AkreufWH/ANEx0AcFRRRQAVbhg821kc3MaBAWCFsFj7CqlSwtGkoaWPzF7rnbQAsEKzShWlWIf3n6Vr6Tol/rYWGOdBCrFfnk6fQU2OwsL/ebSZonJ+WGQZwP94V0XgrSbyC/uBPF5cLp/rcjKkdCBQBja54Ov9EZTIRLEeroOlej6TZ6VY6EtrY2pMzKd9w33smvPfEz3+kau1v/AGrPcAjcCx4HsRU3hzxXe2kxguZt1rKNrk/w5oA6htHttO0aW1huPNuZckyEdW7E1F4eLxxzWl7d207Iu5ADy1Z0uvnSdUMD2xvYWGVMfVs1Q1PS9a+0m/tNKns4pO+c9e5oA6q28WxJG/8AaJhglRyqCM9hVo6WnjTSDPBqXlx7yGQferzLWNHfT5IF80SyzDJXuDV+1iv/AA3Db3KuY7m5JCR5+XHqaAK9/FLp2q3OlaXI8ke7YxI5Yish43tbhknjO9ex4wa0NPnil1Oa+vLowkkscZJYnsKz7tzPPJcBGEbscE0ANLk/TtVqzguHhuTbFWGwiRTwSvqKq4Nzc4iQLuIAUVNBbylpAFYFVyzDsKAN7w3oNlqEQmmuFLd09KS5vbPR5by3trcNNIpQseQAR2rAhkkW4/0YuCx28H17Vp6nor6Vp6yXIbz3bk9qANjw54I1bWoUZjHFYM4d8vya7Gw0220+c22ljyV3YbLn5iO9cNZ+INdt9EWK1+RFAG7oajPiHWYlRQCtwSRvoA6Dxhiyt0wrMSeqCsDw9d6rqNwtoNTeG2XBckBuKJbzVLzWbeGe7gunfggHI/Gu1a58OaHbp/aWnGG4cZLpFw31oAqeDtV+1X159ugh8iMbFk2Hcap6n4YNv4hs9X0lPtUL3Cs8PcGtGPxj4ZtkYImVJyQqZqGf4iaRDDutbdzL/dA2UAc1490u9t9ZOoT2C2sF0T5e1gQxHBNcjXdandeJPHdgXtNNY2NrlsR1zOl6HdalcLGoMcefmkccAUARaNF9o1a2t97IJXCllOCM03VbRLDUp7aOdZ0RiN46E1PrdmdH1ue1iLDyW+Uk81mMzMSzEkk5JNADaKKKAPoH9mf7vif62v8A7Vryf4j/APJSfEf/AGEJf/Qq9X/Zn6eJ/wDt1/8AateUfEf/AJKT4j/6/wCX/wBCoA5aiiigAq1p4zqNuPVxVWnxuY3VweVYGgDoVCLqUsSwFgzlQKsXOi3NlNtlgdVJB+cYqafT7i5nglthmSZFfPoa6nStJu7wxza/qAESZAMtAGV4g0/T7eeJrWEcxgk1kvaoQpCr37V2N/FaPqEkOmXMFzEvRQcHFY0thGszJckxMO1AGE9ogxlRVcW0ssgUKcDls11Ma2MP/LUNWJeakkl6yQriNhgt9KANe01+107SVsIoP3hGWcGp9I8GXDrJruujybYNvCycFhWdpNwdFvLXUhBBdkv8qONwGK6P4leLG8Va1a6dpYZo0hUOkI4eXuKAMu1vobvSL1oI8SCQNGB0C+tcxE32hpGYciuh1Kwk8MaP/ZjzwyahelTLHEc+UnZSazplt9IWOIbXlJBcjnmgDPRriDH7px9QRU2l5k121UD70y/zq3Pr9zOTDcBGjGQBsqkMRTLPC/IOVPoRQB3/AMULW1sZoWVCHdOa4vSddn0a9EqgPGww4NdvYahp3iu3istYf7JfqgVXkJxLXC6vo39l63JY3TiOIP8Af7FfUUAP1vU7i7ItQFEZYFKraBpb3OpojnABFMvYlWKfyY3CxuArP/GPWtPwXefYNWjup0WRYz916ALM8tyl43kOLaJQSrD1FZ89zcXEgaad24weetb+tpbT3093a3cMcbH/AFZPNUdN0xNUhedSWCHtxQAuj6UdW3YjMVsEJacgnHHYjuatab8PptVBSBtoIyZZSAABU13q0Oj2ccAuWiUJhoIurVkQeN7NCE+yXCj1DnNAFbVdKbRNY+yC8S42EYkjrM8VwBbuKfGDNGCRW5ZrpWp3yNaqTLn7rmsPxkw/t2ZF6IAMUAc3RRRQAUUUUAe//sy/8zR/26f+1qKP2Zf+Zo/7dP8A2tRQBgftHf8AJQdP/wCwUn/o2WvH69g/aO/5KDp//YKT/wBGy14/QAUUU5FLsFFACUo4INBBBwacwO0E0AW0u4BATNCZZ/4STwBVIPim0lAE8k7y7d5ztUKPoKjptdP4Y8Gah4kuPkUw2y/fmcYAoAwYIJrmURW8byyHoqjJrVi8L66Q5/s27Ugd0Ir3zw54W0nw2Uh0+BTdhcm5kG4k1d1nW54YmtXdVaQcsAOtAHjfw/gk+13dxMhNzGNoJ6qa9POqtNp7Bv8AWrgZrC0jSpbaeUtaziW4bc0mMKRW7cNp+kWn2i+0+8u41I8xoeNg9TQBSufDtzqegXb3W5VdCFGO4ryTRfAuua7M32W0/dK5QySEKK+hH8WeHdV8K/YdCuHvHP3YduHQe9cYurvZzvb3WmNZMifukU5VjQBh6b8NfFmh/aJLeO08xoyoYyVyXinwZ4k0eIajqiiZWOC6Nu2165DrUQELJOZ5cFXjL5Kmr+o2sUtrHJdAPboMtCTw5NAHzPQwB6DFepeL/AEN1exv4fixcMczwdEQV57qehanpDlb6ylh5+8U+U0AZlLTSaM0AOxTnhkSMMy8Hoab5h7cChndurE0AMooooA+n/2c/wDkn+of9hWT/wBFRUv7Rn/JPrD/ALCsf/omak/Zz/5J/qH/AGFZP/RUVL+0Z/yT6w/7Csf/AKJmoA+XxTxTBThQBIDTgaYKcKAJV5q8by6e0FrJKTEOgrPBNTbzQBIBgCnKBzgVDvNJuOQaALIFWPtckUWFAqosmaGc7jQA4nd83c0pBqPc3rSh2oAcAw60pIAwaVQ7JuC8U6PbwxoAagcDIp2acz85plAA3IppFSrb3DLuEJIphUgAEc0ANAHc4pQdpBoAbyuenakVS233oAsS8LUEr4WrFzG8Cqrc5FU2bdQARSlDkU5nLncahIpueDQA52JPWmUuaQ0AGFLru6VrvqiQacba3Qc8E1ik4oEhHSgAXKsCRTJGy1KzlutMNADDVjT/APkJ2n/XVf8A0Kq5qxp//ITtP+uq/wDoVAH3nXx98av+St659Yf/AETHX2DXx98av+St659Yf/RMdAHBUUUUAFaOk6q+k3XnrDHMCMFZBWdRQBr+TeXOofabWza3EzF4xjC/QE1vyx3NvZJPqOo+QVfenkjJJ7VzVzrV7c6fb2Mkn7mAYTFVUSe53Bdz7FLHvgCgDe8QxzX8sWoIC8DJ9/HAOe9VV0a7ilCGRfsj4LzIcpt9aylnmSJohIwjb7y54NbGoeJJL3TIbFLWOARqFZoz94AUAbI8S6Zo8UcGnxfazH0kkGBSeJfH+o6rHFbW7G2gUfOEYHca5CK3luFkaNCwQAtjnAoto45rhEmmEMbHBkILbfwFAHS6FcNqtyzTAG5jT5Tjlh6CtDxBrUWr6RDpFhbNLKjAyPjha5JrKWASTwTAxxuVVwdpOO4re8MLdC8Z9OAEewLcGQ9++KAI/EttZaXY2unpEGuQu5pB71gwXUwjFsC0kO8P5fbIroIdVFhrV5b3W2SIsU3lQSoFXtPsNANhdagZ51UKRkZ60Aa2j/DjWb6aHULjTnWKQhkeGTK1T8S/DLxBpvn3sUEs1v1bgg13Hwoi8TT2cVyusp/Z6EgWNyeSlejS/Efw39tbTdXEloWyqmYAxsfYigD5btNOggnWLUkMHG5XLcMK7zR/7F8RRLoN64liQjZdZ+eqHxV8Nro+rQ31tci60m4Y+QV7DrtriNSWK2u457ImON1DLg4IoA7DxX4A1fwq8e24E1juyg3Vka7bL/Z1rcO5U44A6mutsdevPGPgw6fqJbNvhFnHcCvO9bRI7wRLdNOEG3k/doAzopXilWVCQynKkdjXoMvxDs9Q0ZbTUtKMzBcM2RgmvOsVYW7lW2NuCPLJz0oA7P8A4Rdru4h1HTUjt4vv+XPypIGeKw9TMmpanb28elxWUznbsjBG9j3rHiu7iB0aKZ1KnK4J4rS1jxDPrCWwlhjQwLjK9SfWgD0C18X2/gyCHw9bW5eRTtuZVIJDGsnX9c1M3KG3sHKA7vljIWsCw1200fTs2lv5moyHMs02GAHotUbjxLq9xKZGvpVJOcKcCgCa+W7OoQ6rqttiO5fO3GMj6VkTujzOYwQpYkD0FSXV/dXoUXE8ku3O3ec4qrQAtFFFAH0B+zP08T/9uv8A7Vryj4j/APJSfEf/AF/y/wDoVesfsz/d8T/W1/8AateT/Ef/AJKT4j/7CEv/AKFQBy1FFFABRRQKAPW/h7qEV9pz28sAaa36fSsjxla6nLceYXzCDgAVznhTW20TV1n58txtcV6LeQi6tCsLhpXw6b+hBoA8wa3vLCRZSWiJPBqe71a9ugnnSBioxkjmuh1G7F3H9l1EqQCCskfBFcvciBZmWBiyg9TQA37RKV27qGkf1plbOgxWFz4jtYHIERJDA+tAGdsuocko6+9dL4Oh1CKa71KxwGigYGQ8lc9xW/a+CPEGsLfXMlkbaG2zky/dZRXOafDqdnHcJaB1hk4ZByD9aAKKzSuxknbcwySx6nJzzVrSdLk1GaR2k/dp61JJ4f1DU7a4urS3LR2/My9xxmuk0M50mEYUYXsKAM5vDVvggO241h6pYXOkTIJl+Xswrulb98Bis/xNE11phWIAtnigDlbzVI54oZkU+Yox7giut1J9E17wymo3TmPUEQKqDoawIPCl19ijup2SMvykZ+8RWhYaXJBNiZg8RH3KAOWk025u90aTEQxpuCu/YVLaayttbrbtCskeDuB6k+oNdR4lk0ux0eX7LbSG+mbHmE8KteeFyCQKANSG4ibdlc4xU2oalcmIC0maKHuiVkSXBlOSoGBTBcOpyDQBoWGiXWqmRy+0KASz81m3ltJaTtDL1HQ+tbVnr82Y4dioAe1ReJVXzLdgOqUAY0M0tvIHhkaNh0IplxK8zM7sSzHJJoFMk+5QBFRRRQAUUUUAe/8A7Mv/ADNH/bp/7Woo/Zl/5mj/ALdP/a1FAGB+0d/yUHT/APsFJ/6Nlrx+vYP2jv8AkoOn/wDYKT/0bLXj9ABTkYqcim0UAP8AvZOaleQGIKVOR0NMEreT5X8Oc0MOAc5zQBDRTqsWCLJeRo8bSBjjavU0Ad14G8DrfRx6pqsZFqWAiU9Hr1y3urO1uPskqjysYVgNoFcj4Mn8TaTZx2N7aC5sTyqv1TNegT6bFe2Mge3VScdODQBm6jfvomp214rLJE42kj0Nc9q1/wD2pryyg/Kr5BrI1nTbqzvDEZDJakkx59aq2bOm0kkmgDrLnVb2zvUCzZjGcJitvTtQS+uI47+EzRF8NGPut9a4+WWe6Ebc+YMLurrbO9s7sJFaXhjks0BlZByzehoAhvNM0nT764uNPtVsGkYhmTkla891vV3lvtpfzI43CqX5yK9MuYJb0yLBaySzcc+grzrX9MW31A4ON3J470AZ8cojujOn3jWzaa6/2qL7fG0sKf8ALMc5NYqDaMV0Phe2WbU90iA7KAOjiubq8VZ2jWwtc5RQPm+pNcx4u8f6dDY3OnRbNQkcYw44BrvXEcypAyeYOcnGcCudufh1oOqCS4dTGochQvJNAHz3I/mSM+AMnoKaBXWePvD9roOrxx2YIhkTIrlBQABcgnPSrgSAQAADeoDMxOOvYCqgPBFGKAB9u44ptSM7KNu0CmUAfTv7Of8AyT/UP+wrJ/6Kipf2jP8Akn1h/wBhWP8A9EzUn7Of/JP9Q/7Csn/oqKl/aM/5J9Yf9hWP/wBEzUAfL9OFJRQBIKUUwU4UASAVMDUK1IKAJCoxmm0ZooAeh6ClJpg3etPOCOtACdQRT9u0dQajHFOUUAWoJWWFlFQGp7eGR28pUJJq0dHvv+eDUAV7K0e+uEgQ4J74zXo2m+HtOt7VIWQM3c1xXh9Gj1mMMMEV6NJG3mqYuQaAHpbW1sMrAuBXM+LdCsUsRqEGFkJ5Wuzs7NriVYj681e8d6HYnwuQsZBUUAeCZJXFPtseaMmtvRfDT6rJwcLmuui+G9snzi5BoA80vHZpiCeBVevSNV8DIIN8L8ivO542gneJhgqcUAR5Heo6eabQAlNJp1NIoAaRSYp1AFADDTTTzTDQAw1Y0/8A5Cdp/wBdV/8AQqrtVjT/APkJ2n/XVf8A0KgD7zr4++NX/JW9c+sP/omOvsGvj741f8lb1z6w/wDomOgDgqKKKACiiigArrvBX9nmae3uWP2i5ASJdvHfPNcjV3Tprmwuor+CMkwtkMRkA0Abvi/wjP4duFkVSbWUZU/3a5euxuviNqeoaPcadfQQTRyrgNt5FcbQBLDPJbyiWFyrDoajVC5AHUnApM0tAE9xBLbOYJOJF+8vpXa/DiyWbWlCz7t6ZlTYcIK5PTtMudYvVt7cFpD1Jr1HwNpc3g6WY6s8aCbspyRQBifEPwfNZ+JvMt+YLpN6nyzjeOq1v6F4aGk+ALg6tZgl237JK9ItfHOgw26wvDFPjoWFTeIpLbXvBVxcQnIA4UcYoA8VnvrmWXzoJmiPoDgVVnmlmXFxKWz1oVnh3xtGD7mqdzOJVMIA3UAdl4fsJ/Glm2gXDZhHMfqjdiK5HWfhh4k0/WJNPgtGv/KAJeDDYBro/hTNMPEqoibsgg11Ov8Ajy/0DUp7fTF2MT+8PdqAG+HfB2o6d4Hgi1K0MEg3HY33hz3rxHV9Ou7G6ke4gZYnlbY/ZsGvS734ia1q9iyXD7axYkk13S7i38pZrgxkx59aAPO6KV1KOVIwRSUAFJSUUAOptOFS3SRRTFIZvOTA+fbtoAgooooAKKKKAPoH9mf7vif62v8A7Vryf4j/APJSfEf/AGEJf/Qq9X/Zn6eJ/wDt1/8AateUfEf/AJKT4j/6/wCX/wBCoA5aiiigAooooAtwWlxMuYoXYDuBXpOiOD4VjuHIEkWUJPcDpVDwpFa3GmNv/d7ASMdyKt6xPYLppsFzBuG7A5y1AHKavLEPLWKQMADWQKfMSZWqOgB4NOgSUyAwg7gcgigoBEjjOGz9OK7Pw7psYsYbl4iGJoA1NB8ReI59El0e6vpJbRwAVfqKmhs5bXcu8sKmjj23O/GM9qtvy26gCPT799Fklm2M0MgKyIB1BqODyFUrbBvK7ZGKkJoJoApX2sW+nzeXKj/7wHFDTmZRLANzEZTHIpupwC4s3UjPBNN0yB4LSNXGCBQBPELg83DZbAp54qTjuaY/agCvNGkpO9QQRjFcdqnh2SJjNbcqf4K7UioZEDDBoA8yIKkgjBFMYV1+uWbyWubePMiHcSBXJNuBw64NADEJVgw7V0kFv/aenqHXOOM1zldFpt3cWulTG2baQmQaAMe+0i6spAChZSeCKifTrtYjKYHCjuRXT6P4gt5gY72Urclvv9jU+r3arYzhuVZcYoA4CikooAWiiigD3/8AZl/5mj/t0/8Aa1FH7Mv/ADNH/bp/7WooAwP2jv8AkoOn/wDYKT/0bLXj9ewftHf8lB0//sFJ/wCjZa8foAKKKKAHCpbeJ5ZCkYycEn6CohT42ZTlWINADTXQeBkEnjDTlOMGSsCTAckHIJrX8K3SWfiSyuJBwkoagD6kGG7AVMh42n/Vnq1JbxLMqypIPuhlB6EUOkgPyHBH3loA5/xJYLfwG2SMiXOVavOJFdJGQrypIIr29lCwMAQdw9OlcTr3hn7YJZ7UeXc+3egDP8LTQtKkEyLudeM84rpbi1ht7gvDaJF/elTqx9TXCaMJjqBt2Hl3KkAKe5r0eJ7iSGNCsYlGN6S9GxQBjvDf6hOZYNWuNPjjTDCHuK4XVVH2uQ72kYNgsepr0zWLltPsJppo7aPcmI0hPVj0zXH2Xhq6u/31wfLB5K96AOYtreSbKxKWINehaBp8VjCokhYS4+ardjokOnRIsC4Pcv3NaxHzE+woArJbpg43Rr3HrVK4lVmQJwqZAxVq4unJKRbTKegxWTfyCz0u8uV4eKI4oA8Z+Jeqw6h4iEUByLZdjH3rjBT5pXnneVzlnYkmo6AHCjNNzRQApJNFNooA+n/2c/8Akn+of9hWT/0VFS/tGf8AJPrD/sKx/wDomak/Zz/5J/qH/YVk/wDRUVL+0Z/yT6w/7Csf/omagD5gopKKAHinCmCnqMnFADxT1qX7FJ5QdcMKRYHyMjFABRRRQAoNBIySDSUUAKa3PD+hvqs6kfdBq34Y8JXus3UZC4h7mvTbPR7fSVMMC/jQBFaaHp1uqeVCMgVcu7SBTkwrirFsqmQ5NO1EhrfigDh7zw7ImrC7tVBFdVHZXP2RT5fNaltCosxRBcebJ5RHIFAHGanqus+HLyGadc25PJrsdV1r/hLPCqQrGIvkAzVDxVp/9raYICMkdDTNOtZLDQY4C2cUAUfD+h/2VCVJya3PLfyiRTbUZGKV5W80xdhQBBJcFIsFdwJri/GXgcraLqdkNzNy4ruzAhbcDVlZo8Ms4yrDFAHzm6srFWGCKbXqPibwMl8ZL2xQA+grgrnw9qNrv3wH5aAMjPJoJpD980poAKKaKU0ANNMNSmmMrelAETVY0/8A5Cdp/wBdV/8AQqgNTWH/ACE7X/rsv/oVAH3pXx98av8AkreufWH/ANEx19g18ffGr/kreufWH/0THQBwVFFFABRRU1tKsFwsjRiRQeVYZBFAENaFvrV/bafJYRTkWrnLRkAg1vjQ9J1MLNa3BjHG9Y8Haao6xomnafExg1LzZFxhDjPP0oAwKKaKdQAVYFun2Pz/AD03b9pj749ar11ej+HTbhLvUY8E/MkLdfYmgDQ8Ewz6XDPqLHaXAVU74BzmlvtYlv70tK1MW+ImkiI4b3qj5P8ApBOaALDSfvcgmuk0rx1faRZvb48yFhgqa5UcNmogd0vXIoAvy+IEN007QoQT0q94a0Kz8SalcPNIkYZfMDAENGQOnuKxXtg64FXdJ8+1ilK5BoAtrqE/h/UpP7Kcrg8mql9fzX07XFxJliarecZJHJHJNEuJCCDQA0TMTir0U/8AZkIFtxKcc1Qwq0wsXYZoA1I9B07xFcCWe8+zTt98gcOa5bXNCudEvHhlG6LPySj7riujjlWCD5fvU6eGG8iiN8vm4Y7ecYoA4SivQfFHhrRrXwfDqlgskc4mCMCchga8+oAcKunSpzpq30ZWSPJDBOSv1qkK09J1u40q8t5FO6KJ8mPs1AGVRXRalcWPiHUrdNPsxZySNh/T61PqPhzT9M05nnv2N1jhEA2k0ActRRRQB9Afsz9PE/8A26/+1a8o+I//ACUnxH/1/wAv/oVesfsz/d8T/W1/9q15P8R/+Sk+I/8AsIS/+hUActRRRQAUUUo60Ab3hzWf7KvP32TbvwwrqtduLC+02N7HaWD8nHRTXngNbfh+U7rmEnhkHH0oAh1G2gt5lEDbwVBNUsVekY3U7K4UehAqpJE8ErJKMMKAO68IzaLf6M2m6kqfaY5zLAX6NkdK2FZBjHAHAFeZ203l8jgggg16PbBmt4yx5KAmgC6vBzUm8GoFOBTqAHE0hNN3rkDNMZ+MYoAjuZcYXpk4pY3AGDVC6sZJ5Q4lY+2emKliilxiU8dqALm8UO3So04GKXcKAFzUbVJUbcUAYuo6sdO3CAgzOCMegriXLOzMxyxOSa6wi2vfF1tCzcE7PoanufA99omsP/ali4iU5j9KAOWsNNe4HmkYjFaFqypDcoG6IcCrOp3qRH7LAdsaVREZhsZZSCPl6n3oAxI5NkqPtztOav3+tPdQiIxBR3wazTTWoAiopaKACiiigD3/APZl/wCZo/7dP/a1FH7Mv/M0f9un/taigDA/aO/5KDp//YKT/wBGy14/XsH7R3/JQdP/AOwUn/o2WvH6ACiiigBRTgaZRmgCdsND9KiVipBBwRVoRhduOjiqzRspxigD6J+GXi+38TaCulToRqdqODn74rvYG+1AwyDDDoa+TPD+uXXhzWYNRtWw8bcjswr6m0DXNO8YadFf6Pdxm6K/vbWR8HdQBduVFjGN7EioUkjljV4n3AipNRmnXTpFS1WWQfeQnJH0ri/D3isXGrNY3UBgmDkBPWgCbxDoQuY/7QtB5dzHzx3rY0m9OrQW/myRx3IXBV3ALVsXUYggkJCkY7d68k8fS32l6bHqFogj8ucMs4bDg0Ael3FmX1KLz4QQnQP0NSiDaC23n1rgvhf4ml1+yvX1rVPMmDcKTghAKmTxzpMWsSaRpsU88m/bu8zK0AdfNdupEUQDSGpUsmEJlnl/eEU63jSCIT3ChWI6VTu2e5WSe5KxQqCWPTAoApwr5t06R5wer9eBXmvxM8aRDfomlyEgEieUVL4k+KF1b2NxZaTCkKSHaJu+BXkcsjzOzucsSST9aAGgEsAO9SzRqNmzuoz9afbEIryd8YFMVmMquFB2noaAI9uATmmVPOwHy7QDk5qKgBtFFFAH0/8As5/8k/1D/sKyf+ioqX9oz/kn1h/2FY//AETNSfs5/wDJP9Q/7Csn/oqKl/aM/wCSfWH/AGFY/wD0TNQB8v0UUUAOFPBI6GmCnUAW4LuWH7pqWS4eXrVEVKGoAkNJSc9hSUAPBrQ0a1S91aCCX7rHms3NdV4BskvvEkSyEACgD1uz/wBBsVtrdQq4HIqaILKpB61q3WnJZEKjA/LWS/8ArDQAzYiS8mpWUEEGk8new3cVFJvRsNQALMYVMZzwahlUxXCSr0NLJKoOKWZRc2bxA/N2oAhvdWh+3R2wcHcRVyaQLbYkauIs9NlS7kaV8lckE1fhF/qM375yI0NAHQQXKjKgE+9OH+syaiRApyKecscgUAWB8v3aGUPwarglGoNzxgCgC0shiXjrWJ4inaTSJcxgYFa8e4jLdTXMeO9at9KsjbYzK4oA8gk/18n1pDSE5Yn1pyjLCgBopDVibaBgVVoAeGwQaWWcuuAoFR5ptADTU1h/yE7X/rsv/oVQGrGn/wDITtP+uq/+hUAfedfH3xq/5K3rn1h/9Ex19g18ffGr/kreufWH/wBEx0AcFRRRQAUUUUAOVmHQkUU0U6gBXQocHHSkqRp3khSJjkJnb+NRUAa3hu0lvvEen28UfmM06nb6gHJrs/EUzjWpVJ5zXLeFrx9N8WaRPZuDIZYw2V6Fjgiuy8fadNZ66/mDksSKAOXm4epEwwyRTApYbX/CljOARQBKifKckDNMSNVOacWJGDS0ATwR+dMkWQCxrqZ/D0dlp2wTIbhwDgVx6cSK/cGugBa4SO4Vz8vWgDLTRpYg0s7BMHoaqSmIMdlTXt8L+9bLn5eKp+Up+8aACQhhgUiq6jGKAgWQAVI+eQDQAwOe9WAzsQGFV9tamjRq14JZ/wDUopZj7CgCLxRqaxeF4NLYfvHlEnvtFcGK0NZ1BtR1Oa4LZUsdg7Be1QWFhPqN0tvbrlj1PYD1NADUiUwSSGQAqRhfWoa09bs7exu47eCZZSqASFezVmUAOSR4ZFkRiGByDTpZpLiQyTOzyHqxOaiooAKKKKAPoH9mf7vif62v/tWvJ/iP/wAlJ8R/9hCX/wBCr1f9mfp4n/7df/ateUfEf/kpPiP/AK/5f/QqAOWooooAKBRSigB61bsro2t0kw7dRVVaWgDqNWtd6x3Nsn7srlNgzjNadjbaRrNoILkyJcbBiXGAG7ZrM8K3hlmbTJX/AHcinZns1MnMujahJGBuU9c0AWPF/ht/C97a27P5nn26zB+xDVteHbv7RpyoTkxYWtyziT4keH2tywN9osIMR/jki7rXnIkl0LUMwSeZEeoPAYUAehilLYrD07xJaXgCsTHJ6GtgETAFDmgAZuM0zcCQBTzHIeNmPc1g6tqq2O1VYbjQBfvHv0z9gj8zPD/SnWtzNcQKZ02yDgrXFf27qKfcuWFaVl4tuUc/ao1kU+gwRQB1W6guO9ZEPiLT5gSZCv1qvL4ptkzsiMg9c0Ab6uO1Y+r66loWgi/1tYN1rN7rEqQWsGDjAEfeiPS3tZEnu8NJn7mefxoA09AsS2sWF1OAu+4U89huzXafE3xFDe65NLBOxgRFjQVz8Vtc2ulprDQTLZ7ykbbMq5A61x91dSXkxllbNABFE91OI15dvWpdcl8uGO2P3urVpaVaJbQfaZQCGXO49hXM31217dvMe54oArGmmlNNagBlFFFABRRRQB7/APsy/wDM0f8Abp/7Woo/Zl/5mj/t0/8Aa1FAGB+0d/yUHT/+wUn/AKNlrx+vYP2jv+Sg6f8A9gpP/RsteP0AFFFFACUUtFAFq3BmTGeU5p7oJl3LwB971xVWKV4W3IcGt2K6sb5ArJ5cwHBzQBiMgU9c+9X9E1u88P6pDf2UhWWNgfY069ilCtlfl7VmEYoA920r462dwVh1fTmHBUyx1zer+KtJ/wCEpttYsJHltg+Jc9K8spQzKCAeD1FAH09/wsvwpPbrt1gRKBkh4zXjvjvxZD4k1YQ25b+yoHJ9Nxrg/Mbbt7UGR8EZwDQBt2Md0160+kgQELgh35rU8JXyeGfE0Nzq4YRScsw5rkVuJUztcjIwale/uHUK0mQBQB7rqnxh0SIj+yNPuL24H/PU7UrzbxL8SvEHiAvBLP8AZrYnmGKuNjmeJ9yHBppYk5NADyS3JJJPc1NaW4uJxGzBQerHoKhjXccVbbEMfAJFAEUpUbgvQ9KspaNaxNPcDb8vyrUyWywxLNfcLjKgDrVG/vXvJsk/KOAKAKrsWYmkFFFABRRRQB9P/s5/8k/1D/sKyf8AoqKl/aM/5J9Yf9hWP/0TNSfs5/8AJP8AUP8AsKyf+ioqX9oz/kn1h/2FY/8A0TNQB8v0UUUAOFOpgpwoAcKkTqKjFPQ/MKALBDRHFRkVYmlV+1Q0ANrV8PajJpmtW8yHHzYJrKpwZlIKnBBoA+l/tMk9rDcMeGQGqMiFpd4rjvCPjeO9tlsNQYCQDCmuuE/IZTkUAW2IYYFMKkAk1B5rggqhqQM8pxQBDJEjVXSMrLitZLRh3rnvEupxaTA/K+YQefSgDmdZ1P7NrnkIeGNdVZRKLdSO9eTQ38l9r0cs54L17HZRRGzj2OGGKAF8t+1BYp0q4HATaapydqAIWY5Oaj38nin4J6Cqj3dtFnfOAaALazsFb0AryLxhqn9o6u/OVWtbxJ4vfzXtrIny64l3aWVmPUmgBBThQowc0MSTnNAAaifg1IKjc5JoAbmjNNoNAATVjT/+Qnaf9dV/9Cqqas6b/wAhK0/67J/6FQB96V8ffGr/AJK3rn1h/wDRMdfYNfH3xq/5K3rn1h/9Ex0AcFRRRQAUUUUAAqaCRElBePzF9KhooAsQvEt2jSR5i3AshPavQb7wbYeINMN94ahYT4ybcHIb/drzyONGikZpQrKAQpH3q2fCnia78LaxHfW4Lxr9+LOA4oAyJI7jT7va6SQzxsDhhtZSK9O1fWJPGWj2uoCRXuYowlwB1BrU8W6XB8RdNg13TsQzJFyOzAdjXk2n6leaJemSBtrDKuh5VvYigDewSSCMEUBAgJFTxX9lrMcfkKILsrh4+ik+oq4LK5WIjymNAGeiCePh8GmOrxLjINPNvKsm0CpI7OZmoANPinvZUghQszGvWYfCsOl+BZri7IW5mAxXFabd6P4ctHvbuYC5VCY4R95zWVafE68u5riDWF8yzmOVCdY6AKDpAs0m0Y5qKrxhsrxmbTpQwqubWXLLsNAEOV70mc0/7HcfxLxQsun24Zrq5U/LkKgyTQBJa2sl5MIYVJY0a9MmgwTWKyg3sg2uAPuLVOPxpLYA/wBmWqwSn/lox3EfSq3hbQLjxf4jW0a4Cljvlkk9B1oAr6Do0uo6lbCa3m+yMwLyBSAF9jXR+Ltft7cpp2lxLbbFCsYhtIFbnxLutO8P6ZZeGtIm+4A0u1s4FeUM7OxZiST1JoACSSSTknqaStL+00XR1sY7OBWJzJORl354HsBWYKACiiigAooooA+gP2Z+nif/ALdf/ateUfEf/kpPiP8A6/5f/Qq9Y/Zn+74n+tr/AO1a8n+I/wDyUnxH/wBhCX/0KgDlqKKKAClFJRQBKtLTAadQBYtp3triOZDhkYGu/voIrrTIdR2mQOgB9s150DXoPgXUobvT7jRrrAYHfF7jvQBV8G+Ih4S8X2up8/ZgSk6juhrr/Hvg61a0XXtIkS60q8kJTYOYmPO2uC1axewvnhkXBIyp9jW94R8ZX1jYt4duXWbTrk8iTqp9RQBys2lQiPKymOUdc+tQRahqNqNiSsB7Gu41jQriynWG+tsxsMrNHypBqhcaFZXATYDGVXHXg0AcrPrOoSrsa5fFUjI8jZYkmu3j0G2ESJKgO3v3NOHh7T8gmLJoA4apPJkIBVCQa7K40WwhkjzCMMxFFlE8F7cBIIxbsu1M9qAORj068mUulu5UdSB0qzaabHJaPcXEqhUIzEfvMPau2UkQuuSFIw30NVhFp6fNNt9qAMfTI1fzG05PKkQDl+rZ7Cum8P8Ahp9WuFg85I4h89xcSHhAPvUyGOKK3NxcGG0tSOG43H6YrltT8QyTK9tYPJFak9ehf3oA6fxr4wk128/4R7Spkg0G0AjT0cKMFq4pbBnvBDC3mKTxJjAptnptxfzBIkO3ucV1M81l4Ztfn2tcFcog65HegChr8yWOiJZBv3snBHsK4yrN9fzahdyXE7Es1VqAENNalptADaKKKACiiigD3/8AZl/5mj/t0/8Aa1FH7Mv/ADNH/bp/7WooAwP2jv8AkoOn/wDYKT/0bLXj9ewftHf8lB0//sFJ/wCjZa8foAKKKKACiiigAooooA3tK1Lz5I7W5wVzwxqhd2j28sglGByVqiCQQQcGuhs7mDWIo7W8lEUqjAkPcelAGBupNxwB2FWb2yeymZSdy5wGHQ1VoATNGaMUUAFFFFACUtFW7ewnuJQgQr7txQBDE5VuBkmt5ILLToFmuXMtyy8RntULtbadCQApuSwYd9uKx5p3uJmkkOSaAJL29e8mLMeOwqrS0UAFFFFABRRRQB9P/s5/8k/1D/sKyf8AoqKl/aM/5J9Yf9hWP/0TNSfs5/8AJP8AUP8AsKyf+ioqX9oz/kn1h/2FY/8A0TNQB8v0UUUAApaUUUAKDTxTBThQBKpp4NRCng0APpDRmloAVJHjYMjEEd66/RvHc9jEkFyN0Yrj6bmgD1q2+JdpPKsRhC1sr4o0xh8k9eF7qPNkH3XIoA9h1TxrFbAok9ea69r1zqNw+JT5eax2d2J3OTSUAOWVwQQeRXWaP43uNPhWGVjj1rkaKAPVofHlrLCpcc0k3jiyUA815SKUmgDur/4gzFClpEFHrXIXOpXVzIWaZsmqdKATQAhJJyTk08CpILSS4k2xDJoliaGRkbqKAGEnsaQUtMJoAcSAKhNPY8UwmgBooNITTc0ABq3p3/ITtP8Arun/AKFVSrWnf8hO0/67p/6FQB96V8ffGr/kreufWH/0THX2DXx98av+St659Yf/AETHQBwVFFFABRRRQAUUUUAPRd0ir6kCtfX9J/si+MKO5hkQMhY8n61jV1k8w8Q+HokVM39moBA6lB3NACeDPGc/hWeVSjTWswAZc/d9xVvxvoNrbrHq9tcA/bH3mLAAG4ZGAK4mvQfD/wBi8ZGPSb0mJo0yku4Arj0oA8/V2Q5UkGtFfEOprLFL9rkLQrtTJ6CtTxP4WXw25VrwTF3xEEHYdzWHb6ZfXQBgtZZAehVc0Ab3/CcXhj2mzsz77Dmlt/HN9bwskdpabipAcoSRmualglglaOZCkinDKeCKZQBZvLue/uGuLiQySt1Y1Wp1FACxzSQtujkZT6g1oW/iLVbZNkV44X3AP86oLHJI6qsbFicAepqz/Y+oDg2ky/VcUAS3Wv6peQGC4vHeM9RgD+VZ1dPd+C5oLGO5iv7ebJG9QCuwHuSahn0Oz0mET3t2k+RhIoiQSaAM3T9HvNShuJrePKW8ZdyfbsKkt726sLQiCAQsxObgAhyp7dcYrudGvdNt/DhuC8dvEQUKn7xIGce5NcPqmsC+3JDGUiJ7mgDMd2lfc7Fm7k00oR9Oxrf01tDtLJbq5D3N1nAgYYWs/VNUOoypiFIYUBCRx8AZoAzqWkooAKKKKACiiigD6B/Zn+74n+tr/wC1a8n+I/8AyUnxH/2EJf8A0KvV/wBmfp4n/wC3X/2rXlHxH/5KT4j/AOv+X/0KgDlqKKKACikpaAHCnimLTqAHCrNldy2F5FdQNiSJsg1VFOoA9WW90PxfpscZmFvfgfcl4Ib2Nc7feEbu0KEOGJPygda41WZSCpII7irw1nUF2n7VLlRgc0Ablzaazb2ohaaSSEdFyazjLqFtN95oyOoqvN4h1S4h8l7klans/EVxbRbGjEvuaALQ1m/QbjJVpPE1xGELqkoI6Cp9PutG1clbox2ze/Ga0JPBURjY2s+ARkMOaAMSbxEJ+sOG7UxPEkqHmMEe3FaH/CHTf89lqT/hCZ3KkSLyKAGr4otf7PBMJiuQ+SvXIFVNU1eC/ji+z2LRXGMtLn7x+law8L6fZxFrucBl7VVbVvDtjINkTSY/uDrQBgx2WoXkqqEJPcua3rTw9aWETXOpXKjapbBODVKfxxInFhZRxejMMmuavNQub+Uy3MrSMaAOq1TxkkMBtNJiEYAx5vQ1x8s8k8peaRmY9yaiooAdRTMmjJoAWm0tJQA2iikoAWiiigD3/wDZl/5mj/t0/wDa1FH7Mv8AzNH/AG6f+1qKAMD9o7/koOn/APYKT/0bLXj9ewftHf8AJQdP/wCwUn/o2WvH6ACiiigAooooAKKKKACiiigDStNVaIBLhPOi9DU076ZOd0CeSe4IJrHooA1V0tJAxS6iOB+dOOgXW4BShG3Oc1k04SOOjmgDSi0O6dwrlYx6mnLpQhky93CMCs0zSHrI/wCdRHmgDRZ7KKQHe0uPbHNJc6xczqqhtoA7Vn0UAKWZjknNIKKKACiiigAooooAKKKKAPp/9nP/AJJ/qH/YVk/9FRUv7Rn/ACT6w/7Csf8A6JmpP2c/+Sf6h/2FZP8A0VFS/tGf8k+sP+wrH/6JmoA+X6KKKAHCigUUAKKBQKWgBwNPU1HSigCanxsu4bqhD0A0AWJSpbioyB2FMzRvNADsUU5GHepQ6mgCCiraiI/epTDC4wpoAo0YzVgwKpw1IQi9DQBCEb0pTCR1NP3qKYZGNAAIx3p4ZFpgYnrQRQBZivnt93lHr1qs7M8jMTyTTMUE0ALvGSBTSaKaxoAGPFMJozTaAEooooAKtad/yE7T/run/oVVatad/wAhO0/67p/6FQB96V8ffGr/AJK3rn1h/wDRMdfYNfH3xq/5K3rn1h/9Ex0AcFRRRQAUUUUAFFFFAC1d0vU59JvUuYMHH3kP3WHoao0UAdd4m0zS7i1GtaPPCIXIEltnBRj6CuURmRgyMQQcgg4NMooA1bzXLq+sI7W5xL5b7llflx7ZpukavNpVwGjJKnqtZlSRIHkVS4UEgEntQB0Tand6rqUl3baZ5+AA+U3n8TTSNJmmZZbdoZyeYiSozVi016Lw3ILexiSfH+tlJ++fatS48aaVezRubN4pR1k4NABo9nALaW11Hw8pUg7Zej4+tYF3HpdhPNE9jcSfPlCX2gKe1dK/xEtxIAbeSZV6HIFWH8caNfwGKa2Chhhldc0AZeo+LAthbm1jt9wIUIoA2gVFc3muW/h+PU7hreW2uRhOzL9QKq6xpGlmcTWOp2scbdY/Mzj6VTs7fTrKUNdXSXAwcJglPYmgCGe/1T+ykglLraSklWKYD/Q1kBj3JNdFqXiu7urf7GioIBwOM/L2ArEvLuW+uWuJ2BkbGSAB0GKALH9n50kagLiLHmbDHn5x74qhnNNooAWikooAKKKKACiiigAooooA+gP2Z+nif/t1/wDateUfEf8A5KT4j/6/5f8A0KvWP2Z/u+J/ra/+1a8n+I//ACUnxH/2EJf/AEKgDl6K9T8AeNPEMeg+IbdNVuBBp2jtJap2iYOgBFZ/gfxTf3nxF0241BYr69u7uCL7VcrueIZwdtAHndFaviQY8T6r/wBfs3/oZr0S8vdR8MXWl6B4bvrPSWm0+K4ub2ZkiNw7jcd0jdhQB5QtOr0Obw9fan45mtfEqXd9efZ1nK6LCjvOCAQ27hV92qS++HEEHjTTNLWS8sbO7tTey/a1VpreNQdwO3hjxQB5+lvO1vJcCFzBGwV5AhKqx6AnsTioSa9KkHh//hV2utoD6h5Zv7RXivtm5fv4IKUg8E+GP7aHhQ3+qDxERs8/ahtfN25Kbfv0AebinE0rxtFIyP8AeRirD3FJQAUtMooAcTV2HWb+CHyYrlxH6ZqhRQBo/wBv6r/z9tUn/CS6z5ewXr4rKooAlmup7hi00rSH3NRUlFABmlptFABRTaKACiiigAooooAbSUtFABRRRQB7/wDsy/8AM0f9un/taij9mX/maP8At0/9rUUAYH7R3/JQdP8A+wUn/o2WvMdN0DWNZEjaXpd7fCIgSfZoHl2Z6Z2g16d+0d/yUHT/APsFJ/6NlrC8Iy2UPw618391fW8B1C0HmWKq0mdsnYstAHJy+GdYgt7+a4sJ4BYGMXSzLsePf93KnB5rJxXoFk0Evgbxs1pPcT2xay2SXQAkP7zuATWvF4P0k6BdwXmlWthfRaa9yhfUne7Yqm4MYh8m00AeZTWF3b2kF1LbTR29zu8mRkIWTbwdp74zVSvRtP0TTbqH4exzQu66neyRXQMrYdRMi4HI21zvi2bRv7Uks9I0cafHayyROxneRpsNgE7iQKAObooooAKKKKACiiigBaKSigBaKSigAooooAKKKKACiiigAooooAKKKKAPp/8AZz/5J/qH/YVk/wDRUVH7Rv8AyT7T/wDsKx/+ipaX9nT/AJJ/qH/YVf8A9Ew0n7R3/JPdP/7Csf8A6KloA+ZYYZLmZIYY2kkkYKiKCWZicAAdya0r3wvr+mwfaL/RNRtIe8k9q6IPxIp3hP8A5G/Rf+v+3/8ARi16Fol/ff8AC9L/AE8SyzWdxqdxBcwOSyPCWfcCKAPMDp92tgl8beUWjyGJZth2FwASoPqM1uN4C8SJfWdk2m4ubtC8UfnR5wBklvm+TA67q2TY6TaaFp+orbC7Q+IJ7fa0rhJIVVCvQ13LappX/CyfF0J0CAzQ6fcNLMLmUGbCDgjdgUAeJahYT6Vey2d0oWaM4cB1cfgykg1Wrrtc07Tv+Ec0HVbWyFq9/dXIkRXZgEVl2KNxPQGumk8O+FbPx74k0ya3tv8ARiv9m2d1dyRRSHupkBzmgDzRLG7exkvltpWtI3Eck4UlFY8hSemTVcGu6v8ARYoPD+tNc6Y2nXMWqwRC3EzOsSsr8Dkhvqa1xoXhlvGT+ChokglBaEap9ocyeYqZ3lPuYoA8uBpQwrureHw5o/g/SNS1HQf7Surq5nhfddPGm1CvOFI55rC8caNbeH/GWp6VZlzbW8uI9xycEA0AYu8UmaiFPBoAlXYetTCdVJGAap5paAL63CHhlpjTKH+UGqgNKDQBdE6MRuqNgjHIaq1FAE/lA9SKRtgHDVDuOMUw0AS7hRvqLNGaAHk0VHk0uaAHmoyaXdUeaAFpKM0ZoASiiigAq1p3/ITtP+u6f+hVVq3p3/ITtP8Arun/AKFQB9518ffGr/kreufWH/0THX2DXx98av8AkreufWH/ANEx0AcfpemXes6jBp1hD511O4SNMhck+5IAqd9A1NNf/sNrYjUvtAtvJLL/AKwnAXOcV1nw80wix1vWjeWlmYbc2drcXcvloJpQRwfUIGrotX03HjrwNr4vLW7+33NtFcz2km9DPFIivQBwup+APEulWkt3dacDDF/rWgnjn8v3YRs20VT0PwprXiNpP7KsTOsX+skaRI0X2LMQtdf4K+0j4sXbxlvsazXRv/7nkYfduqjrwdPhl4fawDCzN1dfatn3fN3jZu99gXFAHJavo1/oN+1jqVsYLlQCVJDcHoQQSCKz6llMp2+dv+6Nm7P3e2M9qjoASiiigAopKKAFopKWgBaKTNGaAFopKKAHUU3NGaAClzSUUAFFFFABRRRQAUUUUAFFFFABRRRQB9A/sz/d8T/W1/8AateT/Ef/AJKT4j/7CEv/AKFXq/7M5+XxR7fZf/a1b+vfAbTdf1+/1aXW7qGS8naYxpCpClqAPn3QPEH9iWmswC3E39pWTWed+3y8sDn36VP4T1/T/DeqJqN3o51GeGRJbc/amiEbKc9gd1e1/wDDNmkf9DBe/wDflKP+GbNI/wChgvf+/KUAeFeJdVsda1eS/sdNNgJSXljM5l3OSSWyQK3LXxvZz6XaWHiPw7b6yLJBHaz/AGl4JUQfwll+8K9Z/wCGbNI/6GC9/wC/KUf8M2aR/wBDBe/9+UoA8x/4WS02rancXWjQPY6jax2klpFO8e2OP7mHqvP8QSuu6RqNhpMFpDptsbZbXzGdHiJbKknnkNXq3/DNmkf9DBe/9+Uo/wCGbNI/6GC9/wC/KUAeR6l4zsZvD95omkeH4NMtLmVJiRcvLJuX1duoq9/wsWAXP9qjw9bf8JD5RQaj9ofbuKlfM8rpuxXpv/DNuk/9DBe/9+Uo/wCGbNJ/6GC9/wC/KUAfPAycknJJyT7mlr6G/wCGbNJ/6GC9/wC/KUf8M2aT/wBDBe/9+UoA+d6K+iP+GbNJ/wChgvf+/KUf8M26T/0MF7/35SgD53or6I/4Zs0n/oYL3/vylH/DNmk/9DBe/wDflKAPneivoj/hmzSf+hgvf+/KUf8ADNmk/wDQwXv/AH5SgD52or6J/wCGbNJ/6GC9/wC/KUf8M2aT/wBDBe/9+UoA+daK+iv+GbNJ/wChgvf+/KUf8M26T/0MF7/35SgD5zor6M/4Zt0n/oYL3/vylH/DNuk/9DBe/wDflKAPnOivoz/hm3Sf+hgvf+/KUf8ADNuk/wDQwXv/AH5SgD5zor6M/wCGbdJ/6GC9/wC/KUf8M26T/wBDBe/9+UoA+caK+jv+GbdJ/wChgvf+/KUf8M26T/0MF7/35SgD5xor6P8A+GbNI/6GC+/78pR/wzbpGP8AkYL3/vwlAGf+zL/zNH/bp/7Wor0X4efDi0+Hp1L7LfTXYvvK3eYoXbs3/wDxdFAHK/FX4W67488T22paZd6dBDDZrARcyOGLB3boqH1rlYvgb43t9EudJTUtA+zXMqSvmaYncg/65UUUAFt8D/HFlpGo6ZFqegfZr7y/OBlmz8h3DH7qugn+H3xJltZVe88JG4ltjazXnlt58ke3bgv5VFFAGVB8HvH9uNGEep+H/wDiTytLa5kl4JYNz+79ay7v9n3xneXM1zNqWhGSZy7nzpf/AI1RRQBX/wCGc/F//QR0P/v/AC//ABqj/hnPxf8A9BHQ/wDv/L/8aoooAT/hnPxf/wBBDQ/+/wDL/wDGqP8AhnPxf/0END/7/wAv/wAaoooAP+Gc/F//AEEND/7/AMv/AMao/wCGc/F//QQ0P/v/AC//ABqiigA/4Zz8X/8AQQ0P/v8Ay/8Axqj/AIZz8X/9BDQ/+/8AL/8AGqKKAF/4Zz8X/wDQR0T/AMCJf/jVH/DOfi//AKCOif8AgRL/APGqKKAD/hnPxf8A9BHRP/AiX/41R/wzn4v/AOgjon/gRL/8aoooAP8AhnPxf/0EdE/8CJf/AI1R/wAM5+L/APoI6J/4ES//ABqiigA/4Zz8X/8AQR0T/wACJf8A41R/wzn4v/6COif+BEv/AMaoooAP+Gc/F/8A0EdE/wDAiX/41R/wzn4v/wCgjon/AIES/wDxqiigA/4Zz8X/APQR0T/wIl/+NUf8M5+L/wDoI6H/AOBEv/xqiigD2H4TeDdR8D+GrvTNTltpZpbxpw1s7MuCiD+ID+7R8V/BmoeOfDdrpemzW0M0d4twzXLMFICOvVQfWiigDyjT/gB400zULe+g1LQvOt5VlTM03VTn/nlXT33w++I90l0I7jwhZS3m4XFxZRPFNKG5ILiLNFFAGC3wT8cto9tpY1PQBb29w11HiWbO4j/rnV3/AIVN8QP7b1DWDqXh03OoxPDMPMl27XwDgeXRRQA7R/hZ8QNJ0pLCG88LTwRzGWA3KvK0D92QmKp/+FX/ABAk1fUtSuJ/CN3JqDq88d0jypuXoQDFRRQBSv8A4RfEHVIL+K71bQHN7cJczN5koO9AVXH7qtSb4e/Eia3KG98Ji6MHkHUBG4uSnTBk8qiigDn5/gb44uNJs9MfVdC+z2jO8X7+bOX9/Kp2t/Azxz4g1i51S91PQTcXDZk2zSgf+iqKKAM//hnTxh/0EdC/7/y//GqX/hnfxb/0EdE/7/y//G6KKAG/8M7+Lf8AoJaH/wCBEv8A8bo/4Z38W/8AQS0P/wACJf8A43RRQA7/AIZ48W/9BDRP+/8AL/8AG6Ufs7eLv+ghov8A3+l/+N0UUAH/AAzt4u/6CGi/9/5f/jdH/DO3i7/oIaL/AN/5f/jdFFACH9nbxd/0EdE/7/S//Gqb/wAM7+Lf+gjof/f+X/43RRQAv/DOvi7/AKCWh/8Af6X/AON0f8M6+Lv+glof/f6X/wCN0UUAH/DOvi7/AKCWh/8Af6X/AON00/s7eLv+glon/f8Al/8AjdFFAB/wzr4u/wCglon/AH/l/wDjdH/DOni3/oJaH/3+l/8AjdFFAB/wzr4v/wCghon/AH/l/wDjdJ/wzp4w/wCf/RP+/wDL/wDG6KKAD/hnTxh/0ENE/wC/8v8A8bo/4Z08Yf8AQQ0T/v8Ay/8AxuiigA/4Z08Yf9BDRP8Av/L/APG6sWf7PXiyC6imfUdFwjq/E8v/AMboooA+mK8g8Z/A3/hL/Fd9rh8RfZDdFP3Ist+3agXrvHp6UUUAZ7/s/wB6+kLpJ8at9hWYziL+zRjzCMbv9bU9n8C9V0+1gt7XxwY4oLtb2If2Wp2TL0YfvKKKANHVfhT4o1uyaz1D4hySWznMkcelJEH+u2QZqnofwU1vw3v/ALJ8ePbrJ99Dpaup/BpDRRQBU1j4B6lr9+19qnjh7m4b+JtNx/KWs7/hmb/qbv8Aym//AG2iigA/4Zm/6m7/AMp3/wBto/4Zm/6m7/ynf/baKKAD/hmX/qbv/Kb/APbaP+GZf+pu/wDKb/8AbaKKAD/hmX/qbv8Aym//AG2j/hmX/qbv/Kb/APbaKKAD/hmb/qbv/Kd/9to/4Zm/6m7/AMp3/wBtoooAP+GZv+pu/wDKd/8AbaP+GZv+pu/8p3/22iigA/4Zm/6m7/ynf/baP+GZv+pu/wDKd/8AbaKKAD/hmb/qbv8Aynf/AG2j/hmb/qbv/Kd/9toooAP+GZv+pu/8p3/22j/hmb/qbv8Aynf/AG2iigA/4Zm/6m7/AMp3/wBto/4Zm/6m7/ynf/baKKAD/hmb/qbv/Kd/9to/4Zm/6m7/AMp3/wBtoooAP+GZv+pu/wDKd/8AbaP+GZv+pu/8p3/22iigA/4Zm/6m7/ynf/baP+GZv+pu/wDKd/8AbaKKAO9+Gvw1Pw7GqAat9vN95X/Lv5WzZu926769BoooAWiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooAKKKKACiiigAooooASiiigAooooA//9k=\" style=\"max-width:100%;max-height:420px;border-radius:8px\" data-zoom></p>",
+"opts": [
+"AVC cérébelleux gauche",
+"Névrite vestibulaire gauche",
+"Maladie de Ménière",
+"AVC territoire rétro-olivaire gauche",
+"Vertige paroxystique positionnel bénin"
+],
+"ok": [
+3
+],
+"expl": "<p>Hypersignal diffusion avec ADC bas dans la partie latérale <b>gauche</b> du bulbe (rétro-olivaire) : infarctus récent du territoire de la PICA, soit un <b>syndrome de Wallenberg</b>.</p>",
+"retenir": "Wallenberg = infarctus rétro-olivaire (PICA / vertébrale)."
+},
+{
+"type": "qrm",
+"q": "<p>Quel(s) élément(s) recherché(s) à l'examen clinique appuie(nt) votre hypothèse ?</p>",
+"opts": [
+"Myosis",
+"Ptosis",
+"Exophtalmie",
+"Hémi-anesthésie face droite",
+"Hémiparésie face gauche"
+],
+"ok": [
+0,
+1
+],
+"expl": "<p>Wallenberg, côté lésion : <b>Claude Bernard-Horner</b> (myosis, ptosis, énophtalmie), anesthésie thermo-algique de l'hémiface homolatérale, syndrome cérébelleux, paralysie du IX-X (troubles de déglutition, dysphonie), vertige / nystagmus. Côté opposé : anesthésie thermo-algique de l'hémicorps épargnant la face. Pas de déficit moteur. Pas d'exophtalmie (au contraire, énophtalmie).</p>",
+"retenir": "Wallenberg : homolatéral = V, CBH, IX-X, cérébelleux ; controlatéral = thermo-algique du corps, sans déficit moteur."
+},
+{
+"type": "qrm",
+"q": "<p>Quel(s) est(sont) votre(vos) diagnostic(s) syndromique(s) ?</p>",
+"opts": [
+"Syndrome cérébelleux gauche",
+"Syndrome alterne",
+"Syndrome de Brown-Sequard.",
+"Syndrome de pyramidal hémicorps gauche",
+"Syndrome de Wallenberg"
+],
+"ok": [
+0,
+1,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>le syndrome de Wallenberg est par définition un syndrome alterne associant:-        Vertige rotatoire-     Céphalées postérieuresDu côté de la lésion : 1.   Nystagmus2.    Hémisyndrome cérébelleux (à prédominance statique)3.          Signe de Claude-Bernard-Horner4.     Hypo ou anesthésie de l’hémiface5.   Paralysie de l’hémivoile du palais, de l’hémilarynx, et de la corde vocaleDu côté opposé à la lésion :1.   Hémianesthésie nociceptive épargnant la face2. Hémianesthésie thermique épargnant la face</p></div>",
+"retenir": "Syndrome alterne = atteinte d'un nerf crânien homolatéral + voie longue controlatérale → lésion du tronc."
+},
+{
+"type": "qrm",
+"q": "<p>Quelle(s) anomalie(s) sensitive(s) pouvez-vous objectiver dans le cadre de cet AVC mettant en jeu le territoire de l’artère de la fossette latérale du bulbe gauche, branche de l’artère cérébelleuse postéro-inférieure (PICA) gauche ?</p>",
+"opts": [
+"Hémi hypo/anesthésie nociceptive droite épargnant la face",
+"Hémi hypo/anesthésie nociceptive droite aux trois étages",
+"Hémi hypo/anesthésie thermique gauche épargnant la face",
+"Hémi hypo/anesthésie thermique droite aux trois étages",
+"Hypo/anesthésie de l’hémiface gauche"
+],
+"ok": [
+0,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Hypoesthésie/anesthésie thermo-algique de l'hémiface homolatérale à la lésion et de l'hémicorps controlatérale épargnant l'hémiface controlatérale.</p></div>",
+"retenir": "Wallenberg : thermo-algique de l'hémiface homolatérale + de l'hémicorps controlatéral (face épargnée)."
+},
+{
+"type": "qrm",
+"q": "<p>Suite au bilan réalisé durant son hospitalisation, il a été mis en évidence l’origine athéromateuse de cet AVC. Quelle a été votre prise en charge thérapeutique ?</p>",
+"opts": [
+"Mise en route d’un anti-thrombotique",
+"Mise en route d’un traitement anticoagulant",
+"Réalisation d’une thrombolyse",
+"Mise en place de séances de kinésithérapie",
+"Surveillance de la déglutition"
+],
+"ok": [
+0,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>origine athéromateuse en contexte d'HTA donc antiagrégant plaquettaire, pas d'anticoagulation; hors délai thrombolyse et thrombectomie même si possible</p></div>",
+"retenir": "AVC athéromateux : antiagrégant (pas d'anticoagulant), statine, contrôle des FDR ; dépistage des troubles de déglutition."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Vertige + signes cérébelleux = central jusqu'à preuve du contraire (AVC de la fosse postérieure).</li><li>Wallenberg = infarctus rétro-olivaire (PICA / vertébrale).</li><li>Wallenberg : homolatéral = V, CBH, IX-X, cérébelleux ; controlatéral = thermo-algique du corps, sans déficit moteur.</li><li>Syndrome alterne = atteinte d'un nerf crânien homolatéral + voie longue controlatérale → lésion du tronc.</li><li>Wallenberg : thermo-algique de l'hémiface homolatérale + de l'hémicorps controlatéral (face épargnée).</li><li>AVC athéromateux : antiagrégant (pas d'anticoagulant), statine, contrôle des FDR ; dépistage des troubles de déglutition.</li></ul>"
+},
+{
+"id": "KFP1",
+"titre": "Troubles mnésiques et du comportement",
+"items": "Item 108",
+"free": false,
+"intro": "<p>Mr D. 76 ans est amené par son épouse pour des troubles de la mémoire et du comportement évoluant progressivement depuis 6 mois. Elle a constaté qu’il perd souvent ses affaires, est plus irritable et répète souvent les mêmes questions. Il n’a pas d’antécédents particuliers en dehors d’une HTA traitée par betabloquants. Dans les antécédents familiaux, on note une maladie d’Alzheimer chez sa grand-mère maternelle diagnostiquée lorsqu’elle avait 80 ans. Il n’y a par ailleurs pas d’altération de l’état général. L’examen physique neurologique est normal.</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Devant ce tableau, que pouvez-vous évoquer ? (maxi 4 réponses)</p>",
+"opts": [
+"Une dépression",
+"Une maladie d’Alzheimer",
+"Un fécalome",
+"une démence frontotemporale",
+"une tumeur cérébrale",
+"Un AVC ischémique",
+"Une infection urinaire",
+"une méningite tuberculeuse",
+"une thrombose veineuse cerebrale",
+"une maladie de parkinson",
+"une hydrocéphalie à pression normale",
+"une hémorragie méningée",
+"aucune des hypothèses précédentes"
+],
+"ok": [
+0,
+1,
+3,
+4
+],
+"expl": "<p>Troubles mnésiques et du comportement progressifs sur 6 mois : maladie d'Alzheimer, DFT, <b>dépression</b> (pseudo-démence), tumeur frontale. Pas un AVC (progressif), une hémorragie méningée ou une TVC. Le corrigé n'a pas retenu l'HPN (pas de troubles de la marche ni urinaires) ni le fécalome / l'infection urinaire (pas de confusion aiguë).</p>",
+"retenir": "Troubles cognitifs progressifs : Alzheimer, DFT, dépression, tumeur, HPN, causes métaboliques."
+},
+{
+"type": "qrm",
+"q": "<p>Le MMS est à 22/30 (perte de 3 points pour le rappel des mots, et de 5 points pour l’orientation). Le patient n’exprime pas de tristesse de l’humeur, mais la femme du patient vous dit qu’il pleure souvent. Quelle est votre attitude ? (maxi 4 réponses)</p>",
+"opts": [
+"Vous prescrivez une IRM cérébrale",
+"Vous prescrivez une ponction lombaire",
+"Vous prescrivez un bilan neuropsychologique",
+"Vous prescrivez une scintigraphie cérébrale",
+"Vous prescrivez un dosage sanguin de la TSH",
+"Vous prescrivez un dosage sanguin de la protéine tau",
+"Vous prescrivez un Electroencéphalogramme",
+"Vous ne proposez pas d’examen complémentaire",
+"Vous prescrivez un traitement antidépresseur",
+"Vous prescrivez un neuroleptique",
+"Vous prescrivez un anti-épileptique",
+"Aucune des réponses"
+],
+"ok": [
+0,
+2,
+4,
+8
+],
+"expl": "<p>Bilan : <b>IRM cérébrale</b>, bilan neuropsychologique, bilan biologique (TSH, B12…). Il pleure souvent : on traite une dépression possible par antidépresseur. La PL et les biomarqueurs ne sont pas de 1re intention. Pas de neuroleptique.</p>",
+"retenir": "Troubles cognitifs : IRM + bilan neuropsy + biologie ; traiter une dépression associée."
+},
+{
+"type": "qrm",
+"q": "<p>Un diagnostic de maladie d’Alzheimer est finalement posé. Quelle est votre prise en charge ? (maxi 4 réponses)</p>",
+"opts": [
+"Hospitalisation en Urgences",
+"Prise en charge à 100%",
+"Mise sous tutelle",
+"Institutionnalisation",
+"Rééducation orthophonique",
+"Déclaration obligatoire de la maladie",
+"Soutien psychologique",
+"Soutien de l’aidant",
+"Traitement par benzodiazépines",
+"Recherche génétique",
+"Mise sous neuroleptique",
+"Aucune des réponses"
+],
+"ok": [
+1,
+4,
+6,
+7
+],
+"expl": "<p>Alzheimer : ALD (100 %), orthophonie, soutien psychologique, <b>aide aux aidants</b>, aides sociales (APA). Pas de tutelle ni d'institutionnalisation d'emblée, pas de BZD ni de neuroleptiques, pas de recherche génétique (forme tardive sporadique), pas de déclaration obligatoire.</p>",
+"retenir": "Alzheimer : ALD, orthophonie, aides (APA, accueil de jour), soutien des aidants, ± IAChE."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Troubles cognitifs progressifs : Alzheimer, DFT, dépression, tumeur, HPN, causes métaboliques.</li><li>Troubles cognitifs : IRM + bilan neuropsy + biologie ; traiter une dépression associée.</li><li>Alzheimer : ALD, orthophonie, aides (APA, accueil de jour), soutien des aidants, ± IAChE.</li></ul>"
+},
+{
+"id": "mDP2",
+"titre": "Fourmillements et faiblesse des MI : compression médullaire",
+"items": "Items 92, 93",
+"free": false,
+"intro": "<p>Mlle P., 28 ans, vous consulte en urgences pour des fourmillements et des douleurs ayant débuté aux pieds il y a 3 jours, et touchant maintenant l’ensemble des membres inférieurs. Elle a également une faiblesse des membres inférieurs qui s’est progressivement aggravée depuis 3 jours. Elle ne prend pas de traitement particulier en dehors d’une contraception par Minidril® (Ethinylestradiol + Levonorgestrel).</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Quelle(s) est(sont) votre(vos) principale(s) hypothèse(s) topographique(s) ?</p>",
+"opts": [
+"Polyradiculonévrite aigue",
+"Syndrome cérébelleux",
+"Syndrome médullaire",
+"Syndrome de la queue de cheval",
+"Mononeuropathie multiple"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<p>Paresthésies + faiblesse ascendante des MI en 3 jours : polyradiculonévrite (Guillain-Barré), atteinte <b>médullaire</b>, syndrome de la queue de cheval. La multinévrite est asymétrique et l'atteinte cérébelleuse n'explique pas le tableau.</p>",
+"retenir": "Paraparésie aiguë : GBS vs moelle vs queue de cheval → examen (ROT, niveau, sphincters)."
+},
+{
+"type": "qrm",
+"q": "<p>Que devez-vous absolument chercher à l’examen clinique pour afner votre/vos hypothèse(s) ?</p>",
+"opts": [
+"un globe urinaire",
+"une abolition des ROT",
+"un syndrome parkinsonien",
+"une anesthésie en selle",
+"un tremblement cinétique"
+],
+"ok": [
+0,
+1,
+3
+],
+"expl": "<p>Pour trancher : <b>ROT</b> (abolis = périphérique, vifs = central, attention au choc spinal), signes sphinctériens (globe), anesthésie en selle (queue de cheval), niveau sensitif (moelle).</p>",
+"retenir": "ROT + sphincters + niveau sensitif = les 3 clés de l'examen d'une paraparésie."
+},
+{
+"type": "qru",
+"q": "<p>Votre examen met en évidence des réflexes vifs et diffusés aux membres inférieurs avec un signe de Babinski bilatéral. Il existe un déficit moteur touchant les membres inférieurs de manière symétrique (triceps sural, jambiers antérieurs et quadriceps à 4/5, psoas à 3/5) et des troubles sensitifs remontant jusqu’à l’ombilic. Quel est votre diagnostic syndromique ?</p>",
+"opts": [
+"Syndrome de la queue de cheval",
+"Syndrome alterne",
+"Syndrome de Guillain-Barré",
+"Syndrome médullaire",
+"Syndrome de Brown Sequard."
+],
+"ok": [
+3
+],
+"expl": "<p>Troubles sensitifs remontant jusqu'à un <b>niveau</b> (ombilic) + déficit des MI : <b>syndrome médullaire</b>.</p>",
+"retenir": "Niveau sensitif = moelle."
+},
+{
+"type": "qrm",
+"q": "<p>Quel(s) examens(s) complémentaire(s) demandez-vous en urgence ?</p>",
+"opts": [
+"IRM cérébrale",
+"IRM médullaire",
+"Electromyogramme",
+"Ponction lombaire",
+"Potentiels évoqués sensitifs et moteurs"
+],
+"ok": [
+1
+],
+"indisp": [
+1
+],
+"inacc": [
+3
+],
+"expl": "<p>Syndrome médullaire aigu : <b>IRM médullaire en urgence</b> (compression ? myélite ?).</p>",
+"retenir": "Syndrome médullaire = IRM médullaire en urgence."
+},
+{
+"type": "qrm",
+"q": "<p>La patiente décrit une douleur en ceinture thoracique (environ au niveau des mamelons). A quoi pensez-vous ?</p>",
+"opts": [
+"Un syndrome lésionnel niveau D4",
+"Un syndrome lésionnel niveau D6",
+"Un syndrome lésionnel niveau D8",
+"Un syndrome sous lésionnel",
+"Un syndrome sus lésionnel"
+],
+"ok": [
+0
+],
+"indisp": [
+0
+],
+"expl": "<p>Douleur en ceinture au niveau des <b>mamelons</b> = dermatome T4 : syndrome lésionnel radiculaire T4. (Repères : mamelons T4, xiphoïde T6, ombilic T10.)</p>",
+"retenir": "Dermatomes : mamelons T4, xiphoïde T6, ombilic T10, pli inguinal L1."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Paraparésie aiguë : GBS vs moelle vs queue de cheval → examen (ROT, niveau, sphincters).</li><li>ROT + sphincters + niveau sensitif = les 3 clés de l'examen d'une paraparésie.</li><li>Niveau sensitif = moelle.</li><li>Syndrome médullaire = IRM médullaire en urgence.</li><li>Dermatomes : mamelons T4, xiphoïde T6, ombilic T10, pli inguinal L1.</li></ul>"
+},
+{
+"id": "DP1",
+"titre": "Traumatisme cervical au rugby : rééducation",
+"items": "Items 96, 127, 334 (MPR)",
+"free": false,
+"intro": "<p>Vous êtes médecin du sport de l’équipe de rugby féminine de Bobigny, et pendant la surveillance d’un match, vous</p><p>intervenez pour un cas traumatisme cervical chez une joueuse de 18 ans de votre équipe. Lors d’un plaquage cathédral non autorisé, votre joueuse n’a pu bien se réceptionner, et sa tête a heurté violemment le sol. Après un rapide examen, vous appelez le 15 car vous suspectez un traumatisme grave du rachis cervical. Vous l’accompagnez et réalisez un premier examen clinique. Vous êtes alerté car elle décrit des paresthésies dans les 4 membres.</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Quelle(s) est (sont) la (les) proposition(s) correcte(s) ?</p>",
+"opts": [
+"Votre score ASIA initial évaluera les déficiences",
+"Une paralysie entre C7 et T1 entrainera une perte du réflexe bicipital",
+"Un scanner du rachis lombaire est à réaliser en urgence",
+"Vous demandez à la patiente si elle réussit à uriner",
+"Une abolition d’un réflexe ostéo tendineux est de bon pronostic"
+],
+"ok": [
+0,
+3
+],
+"expl": "<p>Le score ASIA évalue les <b>déficiences</b> (motricité, sensibilité, niveau, complet / incomplet). C7-T1 : le bicipital (C5-C6) est conservé. Il faut un scanner du rachis <b>cervical</b> (pas lombaire). On demande si elle urine (atteinte sphinctérienne). Une aréflexie (choc spinal) n'est pas de bon pronostic.</p>",
+"retenir": "Traumatisme médullaire : ASIA, niveau, complet / incomplet ; imagerie du segment concerné."
+},
+{
+"type": "qrm",
+"q": "<p>Vous suspectez une tétraparésie, et elle présente cliniquement une rétention aigue d’urine. L’abduction d’épaule est possible contre résistance légère, la flexion de bras également, il existe une extension du bras contre pesanteur et la flexion du IIIe doigt est impossible.Quelle(s) est (sont) la (les) proposition(s) correcte(s) ?</p>",
+"opts": [
+"L’abduction d’épaule et la flexion de bras sont cotées à 5/5",
+"L’extension du bras est cotée à 1",
+"Vous vous attendez à une abolition du réflexe crémastérien",
+"La rétention d’urine est une déficience",
+"Ne pas pouvoir réaliser des auto-sondages est une restriction de participations"
+],
+"ok": [
+2,
+3
+],
+"expl": "<p>Testing : abduction / flexion contre résistance légère = 4/5 ; extension contre pesanteur = 3/5. Atteinte médullaire cervicale : le réflexe crémastérien (L1-L2) est aboli en phase de choc. La rétention urinaire est une <b>déficience</b> ; ne pas pouvoir s'auto-sonder est une <b>limitation d'activité</b>, pas une restriction de participation.</p>",
+"retenir": "CIF : déficience (organe) → limitation d'activité (personne) → restriction de participation (société)."
+},
+{
+"type": "qrm",
+"q": "<p>Durant son séjour en neurochirurgie, elle a malheureusement développé une escarre talonnière.Parmi les propositions suivantes, la ou lesquelles est(sont) une(des) complications chronique(s) du décubitus ?</p>",
+"opts": [
+"L’hypertension artérielle",
+"La rétraction Capsulo ligamentaire",
+"L’ostéoporose",
+"L’hypertrophie musculaire",
+"Le reflux gastro œsophagien"
+],
+"ok": [
+1,
+2,
+4
+],
+"expl": "<p>Complications du décubitus prolongé : rétractions capsulo-ligamentaires, ostéoporose, amyotrophie, RGO, escarres, MTEV, hypotension orthostatique, encombrement, constipation. Pas d'HTA ni d'hypertrophie musculaire.</p>",
+"retenir": "Décubitus : escarres, MTEV, rétractions, ostéoporose, amyotrophie, HTO, RGO, encombrement."
+},
+{
+"type": "qrm",
+"q": "<p>Vous suivez son évolution, après une prise en charge initiale en neurochirurgie, elle a pu récupérer une partie de sa</p><p>motricité des membres inférieurs et supérieurs, et est donc transférée en centre de rééducation de MPR.</p>",
+"opts": [
+"Get-up and Go test",
+"Le SCAT 5",
+"MOCA",
+"Cotton test",
+"Test des 6 minutes"
+],
+"ok": [
+0,
+4
+],
+"expl": "<p>Évaluation fonctionnelle de la marche et de l'équilibre : <b>Get-up and Go</b> (Timed Up and Go), test de marche de 6 minutes. Le SCAT 5 évalue les commotions, le MoCA la cognition.</p>",
+"retenir": "Marche / équilibre : TUG, TM6, vitesse de marche."
+},
+{
+"type": "qrm",
+"q": "<p>A sa sortie d’hospitalisation, elle devra poursuivre une rééducation avec un kinésithérapeute en ville. Concernant la prescription de kinésithérapie, quelle(s) est (sont) la (les) proposition(s) correcte(s) ?</p>",
+"opts": [
+"La fréquence des séances peut figurer sur l'ordonnance",
+"Le diagnostic doit figurer sur l'ordonnance",
+"Les techniques utilisées sont au libre choix du kinésithérapeute",
+"Le nombre total de séance doit figurer sur l'ordonnance",
+"Les principaux objectifs de rééducation doivent figurer sur l'ordonnance"
+],
+"ok": [
+0,
+2,
+4
+],
+"expl": "<p>Ordonnance de kiné : on peut indiquer la fréquence et les objectifs ; le kiné choisit ses techniques et le nombre de séances (bilan diagnostic kiné). Le diagnostic médical n'est pas obligatoire (secret).</p>",
+"retenir": "Ordonnance de kiné : objectifs ± fréquence ; techniques et nombre de séances au choix du kiné."
+},
+{
+"type": "qrm",
+"q": "<p>Quelle(s) restriction(s) de participation pourrait-elle présenter ?</p>",
+"opts": [
+"Limitation de la marche",
+"Chutes du fait de son déficit moteur",
+"Impossibilité de conduire un véhicule",
+"Impossibilité de pratiquer son sport",
+"Difcultés à cuisiner"
+],
+"ok": [
+3
+],
+"expl": "<p>Restriction de participation = retentissement sur le rôle social (sport en compétition, travail, loisirs). Marcher, cuisiner, conduire sont des activités (limitations d'activité). Les chutes sont une conséquence.</p>",
+"retenir": "Restriction de participation = rôle social (travail, sport, vie associative)."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Traumatisme médullaire : ASIA, niveau, complet / incomplet ; imagerie du segment concerné.</li><li>CIF : déficience (organe) → limitation d'activité (personne) → restriction de participation (société).</li><li>Décubitus : escarres, MTEV, rétractions, ostéoporose, amyotrophie, HTO, RGO, encombrement.</li><li>Marche / équilibre : TUG, TM6, vitesse de marche.</li><li>Ordonnance de kiné : objectifs ± fréquence ; techniques et nombre de séances au choix du kiné.</li><li>Restriction de participation = rôle social (travail, sport, vie associative).</li></ul>"
+},
+{
+"id": "DP2",
+"titre": "SEP et perte d'autonomie : MPR",
+"items": "Items 101, 127 (MPR)",
+"free": false,
+"intro": "<p>Vous recevez dans votre service Mme M, 53 ans, suivie pour une sclérose en plaque, qui à la suite de sa dernière poussée a subi une perte majeure d’autonomie, avec notamment un déficit moteur du membre inférieur droit, des troubles de l’équilibre et de la coordination. Elle vit seule à son domicile, en pavillon, avec 4 marches d’escaliers pour y accéder. Elle travaille en tant que professeure des écoles et tient particulièrement à conserver une activité professionnelle pour sa santé mentale. Actuellement elle a besoin d’une aide humaine pour ses transferts et sa toilette.</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Concernant le risque d’escarre chez cette patiente, parmi les propositions suivantes, la ou lesquelles est/sont correcte(s) ?</p>",
+"opts": [
+"Il est nécessaire d’évaluer le risque d’escarre chez cette patiente avec l’aide de l’échelle de Rankin",
+"L’apparition d’une phlyctène cutanée signe une escarre de stade 3",
+"En cas d’immobilité stricte, une escarre apparait généralement après 24h",
+"Un traitement par corticoïdes favorise l’apparition d’une escarre",
+"Un pansement hydrocolloïde peut être nécessaire en cas d’apparition d’une hyperhémie cutanée persistante"
+],
+"ok": [
+3,
+4
+],
+"expl": "<p>Risque d'escarre : échelles de Braden, Norton, Waterlow (pas Rankin). Phlyctène = stade <b>2</b>. Une escarre peut apparaître en 2-3 heures d'appui. Corticoïdes = facteur favorisant. Hydrocolloïde : pansement adapté aux escarres superficielles.</p>",
+"retenir": "Escarre : stade 1 érythème persistant, 2 phlyctène / abrasion, 3 nécrose sous-cutanée, 4 muscle / os."
+},
+{
+"type": "qrm",
+"q": "<p>Parmi les propositions suivantes, la ou lesquelles peut/peuvent être des limitations d’activités pour cette patiente ?</p>",
+"opts": [
+"Perte d’autonomie aux transferts",
+"Constipation",
+"Douleur neuropathique",
+"Perte de la conduite",
+"Incapacité à se rendre sur son lieu de travail"
+],
+"ok": [
+0,
+3
+],
+"expl": "<p>Limitations d'activité : transferts, conduite. Constipation et douleur = déficiences. Ne pas pouvoir aller au travail = restriction de participation.</p>",
+"retenir": "Limitation d'activité = ce que la personne ne peut plus faire (transferts, marche, conduite)."
+},
+{
+"type": "qrm",
+"q": "<p>Vous souhaitez faire intervenir un ergothérapeute lors de son séjour dans votre service. Parmi les missions suivantes, la ou lesquelles est/sont attribuée(s) à l’ergothérapeute ?</p>",
+"opts": [
+"Rééducation des troubles de la déglutition",
+"Installation, positionnement du patient",
+"Bilan et rééducation des troubles des fonctions supérieurs",
+"Réadaptation à l’effort",
+"Visite du domicile pour adaptation de l’espace"
+],
+"ok": [
+1,
+2,
+4
+],
+"expl": "<p>Ergothérapeute : installation / positionnement, rééducation des fonctions supérieures et de l'autonomie dans les gestes du quotidien, aides techniques, visite et adaptation du domicile. La déglutition = orthophoniste ; le réentraînement à l'effort = kiné / APA.</p>",
+"retenir": "Ergo : autonomie, aides techniques, domicile, fonctions cognitives dans le quotidien."
+},
+{
+"type": "qrm",
+"q": "<p>Après plusieurs semaines passées dans votre service, elle garde comme séquelle une spasticité du membre inférieure droit. Concernant le testing de la spasticité, quelles sont les échelles adaptées à l'évaluation de celle-ci ?</p>",
+"opts": [
+"A. Échelle de Tardieu",
+"Échelle de Waterloo",
+"Échelle de Barthel",
+"Échelle de Lequesne",
+"Échelle d'Ashworth modifiée"
+],
+"ok": [
+0,
+4
+],
+"expl": "<p>Spasticité : échelles d'<b>Ashworth modifiée</b> et de <b>Tardieu</b>. Barthel = autonomie, Lequesne = arthrose, Waterloo = escarres.</p>",
+"retenir": "Spasticité = Ashworth modifiée, Tardieu."
+},
+{
+"type": "qrm",
+"q": "<p>La patiente vous questionne sur la possibilité de reprendre son travail à sa sortie d’hospitalisation. Quel(s) conseil(s) pouvez-vous lui donner ?</p>",
+"opts": [
+"Sachant qu’elle souhaite utiliser son véhicule, vous en informerez le médecin de la préfecture",
+"Il n’y a pas nécessité de repasser son examen théorique du permis de conduire si celle-ci détient déjà son permis B",
+"Elle peut bénéficier de la reconnaissance de travailleur handicapé si elle en fait la demande à la sécurité sociale",
+"Elle peut bénéficier de l’attribution d’aides financières grâce à l’AGEFIPH",
+"Vous calculerez son score GIR pour qu’elle puisse bénéficier de l’APA"
+],
+"ok": [
+1,
+3
+],
+"expl": "<p>Conduite avec handicap : avis du médecin agréé de la préfecture, à l'initiative de la patiente (le médecin ne fait pas de signalement). Pas besoin de repasser le code. RQTH : par la MDPH, sans condition d'âge particulière. AGEFIPH : aides financières pour l'emploi (secteur privé ; FIPHFP pour la fonction publique). L'APA est réservée aux plus de 60 ans.</p>",
+"retenir": "Handicap et emploi : RQTH (MDPH), AGEFIPH / FIPHFP ; permis : médecin agréé, démarche du patient."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Escarre : stade 1 érythème persistant, 2 phlyctène / abrasion, 3 nécrose sous-cutanée, 4 muscle / os.</li><li>Limitation d'activité = ce que la personne ne peut plus faire (transferts, marche, conduite).</li><li>Ergo : autonomie, aides techniques, domicile, fonctions cognitives dans le quotidien.</li><li>Spasticité = Ashworth modifiée, Tardieu.</li><li>Handicap et emploi : RQTH (MDPH), AGEFIPH / FIPHFP ; permis : médecin agréé, démarche du patient.</li></ul>"
+}
+]
+};
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const L="ABCDEFGHIJKLMNOPQRST";
+const KEY="annale-neuro-sept23-v1";
+const TOTAL=60*60;
+const store={get(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}},clear(){try{localStorage.removeItem(KEY)}catch(e){}}};
+const Q=[];EXAM.dps.forEach((dp,d)=>dp.qs.forEach((q,i)=>Q.push({d,i,q,dp})));
+let S=null, tick=null, paused=false;
+function fresh(){return{pos:0,ans:{},left:TOTAL,done:false,override:{}}}
+function img(k,alt){return `<img src="${IMGS[k]}" alt="${alt||''}" data-zoom>`}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function fmt(t){t=Math.max(0,t|0);return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+function show(id){["vStart","vExam","vRes","vCorr"].forEach(v=>$("#"+v).hidden=v!==id);window.scrollTo(0,0)}
+function antibio(){const r=[["Amoxicilline","S"],["Imipénème","S"],["Gentamicine","S"],["Vancomycine","S"],["Cotrimoxazole","R"],["Teicoplanine","S"],["Linézolide","S"],["Lévofloxacine","R"],["Nitrofurantoïne","R"]];
+ return `<div class="tblwrap"><table class="abg"><tr><td colspan="2"><b>ECBU</b> · urines 2e jet</td></tr><tr><td>Hématies</td><td>50/mm³</td></tr><tr><td>Cellules épithéliales</td><td>absence</td></tr><tr><td>Leucocytes</td><td>150/mm³</td></tr><tr><td>CGP en courtes chaînettes</td><td>quelques</td></tr><tr><td>Culture : <i>Enterococcus faecalis</i></td><td>10⁵/mL</td></tr><tr><td colspan="2"><b>Antibiogramme</b></td></tr>${r.map(([a,b])=>`<tr><td>${a}</td><td class="${b}">${b}</td></tr>`).join("")}</table></div>`}
+
+/* ---------- accueil ---------- */
+$("#dpList").innerHTML=EXAM.dps.map((dp,d)=>`<li data-jd="${d}" style="cursor:pointer" title="Commencer par ce dossier"><span class="id">${dp.id}</span><span>${dp.titre}</span><span class="n">${dp.qs.length} Q</span></li>`).join("");
+const saved=store.get();
+if(saved&&!saved.done&&Object.keys(saved.ans).length){$("#btnResume").hidden=false}
+if(saved&&saved.done){$("#btnResume").hidden=false;$("#btnResume").textContent="Voir mes résultats"}
+$("#btnStart").onclick=()=>{S=fresh();store.set(S);startExam()};
+$("#btnResume").onclick=()=>{S=saved;if(S.done)results();else startExam()};
+$("#btnDirect").onclick=()=>{S=S||saved||fresh();openCorr(0)};
+
+/* ---------- épreuve ---------- */
+function steps(){const el=$("#steps");if(!S||$("#vExam").hidden&&!S.done){el.innerHTML="";return}
+ const cur=Q[S.pos]?Q[S.pos].d:-1;
+ el.innerHTML=EXAM.dps.map((dp,d)=>{const qs=Q.filter(x=>x.d===d);const done=qs.every(x=>S.ans[x.d+"-"+x.i]!==undefined);return `<span data-jd="${d}" style="cursor:pointer" title="Aller à ${dp.titre}" class="${d===cur&&!S.done?'on':done?'done':''}">${dp.id}</span>`}).join("")}
+function startExam(){show("vExam");$("#timer").hidden=false;$("#btnPause").hidden=false;paused=false;$("#btnPause").textContent="Pause";renderQ();runTimer()}
+function runTimer(){clearInterval(tick);tick=setInterval(()=>{if(paused||!S||S.done)return;S.left--;drawTimer();if(S.left%5===0)store.set(S);if(S.left<=0){finish()}},1000);drawTimer()}
+function drawTimer(){const t=$("#timer");t.textContent=fmt(S.left);t.classList.toggle("low",S.left<=300)}
+$("#btnPause").onclick=()=>{paused=!paused;$("#btnPause").textContent=paused?"Reprendre":"Pause";$("#qpanel").style.filter=paused?"blur(6px)":"";$("#enonce").style.filter=paused?"blur(6px)":""};
+
+function enonceHTML(d,upto){const dp=EXAM.dps[d];let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div>${dp.intro}`;
+ if(dp.introImg)h+=`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`;
+ dp.qs.forEach((q,i)=>{if(i<upto&&q.ctx){h+=`<div class="add"><div class="note">Ajouté en Q${i+1}</div>${q.ctx}${q.img?`<div class="imgs">${q.img.map(k=>img(k)).join("")}</div>`:""}${q.table==="antibio"?antibio():""}</div>`}});return h}
+
+function isFree(dp){return dp.free||/^(QI|SQI|TCS)/.test(dp.id)}
+function opened(n){const {d,i,dp}=Q[n];if(isFree(dp))return true;for(let k=0;k<i;k++){if(S.ans[d+"-"+k]===undefined)return false}return true}
+function navHTML(){return `<div class="qnav">`+EXAM.dps.map((dp,d)=>`<div class="qnav-dp"><span class="qnav-id">${dp.id}${isFree(dp)?"":" 🔒"}</span>`+Q.map((x,n)=>({x,n})).filter(o=>o.x.d===d).map(({x,n})=>{const k=x.d+"-"+x.i;const done=S.ans[k]!==undefined;const ok=opened(n);return `<button class="qn${n===S.pos?" cur":""}${done?" done":""}" data-n="${n}" ${ok?"":"disabled"} title="${ok?"":"Validez les questions précédentes du dossier"}">${x.i+1}</button>`}).join("")+`</div>`).join("")+`</div>`}
+function renderQ(){
+ if(S.pos>=Q.length)S.pos=Q.length-1;
+ const {d,i,q,dp}=Q[S.pos];steps();
+ const k=d+"-"+i, prev=S.ans[k], answered=prev!==undefined, free=isFree(dp), locked=answered&&!free;
+ $("#enonce").innerHTML=enonceHTML(d,i);
+ const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+ let h=navHTML();
+ h+=`<div class="qhead"><span class="qnum">${dp.id} · Q${i+1}/${dp.qs.length}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}<span class="spacer"></span><span class="note">${S.pos+1} / ${Q.length}</span></div>`;
+ if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+ if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+ if(q.table==="antibio")h+=antibio();
+ h+=`<div class="qtext">${q.q}</div>`;
+ const pa=Array.isArray(prev)?prev:[];
+ if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const t=q.type==="qrm"?"checkbox":"radio";
+  h+=`<ul class="opts">${q.opts.map((o,j)=>`<li class="opt"><label for="o${j}"><input type="${t}" name="opt" id="o${j}" value="${j}" ${pa.includes(j)?"checked":""} ${locked?"disabled":""}><span class="L">${L[j]}</span><span>${o}</span></label></li>`).join("")}</ul>`}
+ else if(q.type==="qroc"){h+=`<div class="qroc"><label class="note" for="qroc">Réponse courte (quelques mots)</label><input id="qroc" autocomplete="off" placeholder="Votre réponse" value="${answered&&prev?esc(prev):""}" ${locked?"disabled":""}></div>`}
+ else if(q.type==="self"){h+=`<p class="note">Question d'image : la seule copie du sujet est annotée, l'image est donc donnée en correction. Réfléchis à ta réponse, puis valide ; tu t'auto-noteras en correction.</p>`}
+
+ else if(q.type==="info"){h+=`<p class="note">Question neutralisée à l'épreuve : validez pour continuer (1 point pour tous).</p>`}
+ let st="";
+ if(locked)st=`<p class="lockmsg">🔒 Réponse validée : dans un dossier progressif, elle n'est plus modifiable. Vous pouvez la relire.</p>`;
+ else if(answered&&free)st=`<p class="savedmsg">✓ Réponse enregistrée. Vous pouvez la modifier jusqu'à la fin de l'épreuve.</p>`;
+ else if(!free)st=`<p class="note">Dossier progressif : une fois validée, la réponse ne pourra plus être modifiée.</p>`;
+ h+=st;
+ const nAns=Object.keys(S.ans).length;
+ h+=`<div class="actions navrow"><button class="btn" id="bPrev" ${S.pos===0?"disabled":""}>◀ Précédente</button>${locked?"":`<button class="btn primary" id="btnVal">${answered?"Enregistrer la modification":"Valider"}</button>`}<button class="btn" id="bNext" ${S.pos>=Q.length-1||!opened(S.pos+1)?"disabled":""}>Suivante ▶</button><span class="spacer"></span><button class="btn ghost" id="bEnd">Terminer l'épreuve (${nAns}/${Q.length})</button></div>`;
+ h+=`<div class="confirm" id="conf" hidden><span id="confTxt">Réponse définitive ?</span><button class="btn primary small" id="ok">Confirmer</button><button class="btn small" id="no">Modifier</button></div>`;
+ $("#qpanel").innerHTML=h;
+ $("#qpanel").querySelectorAll(".qn").forEach(b=>b.onclick=()=>{S.pos=+b.dataset.n;store.set(S);renderQ();window.scrollTo(0,0)});
+ $("#bPrev").onclick=()=>{S.pos--;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bNext").onclick=()=>{S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bEnd").onclick=()=>{const left=Q.length-Object.keys(S.ans).length;if(confirmEnd(left))finish()};
+ if(locked)return;
+ let a=null,empty=true;
+ const read=()=>{if(q.type==="qrm")a=[...document.querySelectorAll("input[name=opt]:checked")].map(x=>+x.value);
+  else if(q.type==="qru"||q.type==="tcs"){const c=document.querySelector("input[name=opt]:checked");a=c?[+c.value]:[]}
+  else if(q.type==="qroc")a=$("#qroc").value.trim();
+  else a=true;
+  empty=(Array.isArray(a)&&!a.length)||a===""||a==null};
+ const save=()=>{S.ans[k]=empty?null:a;if(S.pos<Q.length-1&&opened(S.pos+1))S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#btnVal").onclick=()=>{read();
+  if(free){save();return}
+  $("#confTxt").textContent=(empty?"Aucune réponse : la question vaudra 0. ":"")+"Réponse définitive (non modifiable ensuite) ?";
+  $("#btnVal").hidden=true;$("#conf").hidden=false;$("#ok").focus()};
+ $("#no").onclick=()=>{$("#conf").hidden=true;$("#btnVal").hidden=false};
+ $("#ok").onclick=save;
+}
+function confirmEnd(left){const box=$("#conf");$("#confTxt").textContent=(left?left+" question(s) sans réponse. ":"")+"Rendre la copie et voir la note ?";box.hidden=false;const v=$("#btnVal");if(v)v.hidden=true;$("#ok").onclick=()=>finish();$("#no").onclick=()=>{box.hidden=true;if(v)v.hidden=false};return false}
+function jumpDp(d){const n=Q.findIndex(x=>x.d===d);if(n<0)return;let m=n;while(m+1<Q.length&&Q[m+1].d===d&&S.ans[Q[m].d+"-"+Q[m].i]!==undefined)m++;S.pos=m;store.set(S);if($("#vExam").hidden)startExam();else{renderQ();window.scrollTo(0,0)}}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-jd]");if(!t)return;if(!S||S.done){S=fresh();store.set(S)}jumpDp(+t.dataset.jd)});
+
+/* ---------- notation ---------- */
+function inPoly(x,y,pts){let c=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const[xi,yi]=pts[i],[xj,yj]=pts[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
+function norm(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim()}
+function grade(d,i){const q=EXAM.dps[d].qs[i];let a=S.ans[d+"-"+i];const k=d+"-"+i;
+ if(S.override&&S.override[k]!==undefined)return S.override[k];
+ if(a==null)return 0;
+ if(q.type==="qru")return a.length===1&&a[0]===q.ok[0]?1:0;
+ if(q.type==="tcs")return a.length===1?q.w[a[0]]:0;
+ if(q.type==="qrm"){if(q.neut)a=a.filter(x=>!q.neut.includes(x));if(!a.length)return 0;
+  if((q.inacc||[]).some(x=>a.includes(x)))return 0;
+  if((q.indisp||[]).some(x=>!a.includes(x)))return 0;
+  let n=0;for(let k2=0;k2<q.opts.length;k2++){if(a.includes(k2)!==q.ok.includes(k2))n++}
+  if(/QRP/i.test((q.label||'')+' '+(q.q||'')+' '+(q.tag||''))||q.qrp||q.opts.length>5){const g=a.filter(x=>q.ok.includes(x)).length,ex=Math.max(0,a.length-q.ok.length);return Math.max(0,(g-ex)/q.ok.length)}return n===0?1:n===1?.5:n===2?.2:0}
+ if(q.type==="info")return 1;
+ if(q.type==="self")return 0;
+ if(q.type==="qroc"){const s=norm(a);if(q.kw){let m=0;q.kw.forEach(([kk,v])=>{if(s.includes(norm(kk)))m=Math.max(m,v)});return m}return q.keys.some(kk=>s.includes(norm(kk)))?1:0}
+ if(q.type==="qzone"){return inPoly(a.x*q.zoneW,a.y*q.zoneH,q.zone)?1:0}
+ return 0}
+function f1(x){return (Math.round(x*100)/100).toString().replace(".",",")}
+
+function finish(){clearInterval(tick);S.done=true;store.set(S);$("#timer").hidden=true;$("#btnPause").hidden=true;results()}
+function results(){show("vRes");steps();let tot=0,max=Q.length;const byDp=EXAM.dps.map(()=>[0,0]),byR={A:[0,0],B:[0,0]};
+ Q.forEach(({d,i,q})=>{const g=grade(d,i);tot+=g;byDp[d][0]+=g;byDp[d][1]++;if(q.rang){byR[q.rang][0]+=g;byR[q.rang][1]++}});
+ $("#sBig").innerHTML=`${f1(tot/max*20)}<small> / 20</small>`;
+ const used=TOTAL-S.left;
+ $("#sSub").textContent=`${f1(tot)} points sur ${max} · temps utilisé ${fmt(used)}`;
+ $("#sBars").innerHTML=EXAM.dps.map((dp,d)=>`<div class="barrow"><span class="mono">${dp.id}</span><div class="track"><div class="fill" style="width:${byDp[d][0]/byDp[d][1]*100}%"></div></div><span class="v">${f1(byDp[d][0])}/${byDp[d][1]}</span></div>`).join("")+
+  ["A","B"].filter(r=>byR[r][1]).map(r=>`<div class="barrow"><span><span class="rk ${r.toLowerCase()}">${r}</span></span><div class="track"><div class="fill" style="width:${byR[r][0]/byR[r][1]*100}%;background:var(--rk${r})"></div></div><span class="v">${f1(byR[r][0])}/${byR[r][1]}</span></div>`).join("");
+ $("#sGrid").innerHTML=Q.map(({d,i,dp},n)=>{const g=grade(d,i);return `<button class="${g===1?'s1':g===0?'s0':'sp'}" data-go="${d}-${i}">${dp.id.replace("DP","")}.${i+1} · ${f1(g)}</button>`}).join("");
+ $("#sGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{const[d,i]=b.dataset.go.split("-").map(Number);openCorr(d,i)});
+}
+$("#btnCorr").onclick=()=>openCorr(0);
+$("#btnAgain").onclick=()=>{store.clear();S=fresh();store.set(S);startExam()};
+$("#btnBackRes").onclick=()=>{if(S&&S.done)results();else show("vStart")};
+$("#btnHome").onclick=()=>{show("vStart")};
+
+/* ---------- correction ---------- */
+let curD=0;
+function openCorr(d,i){show("vCorr");steps();curD=d;
+ $("#tabs").innerHTML=EXAM.dps.map((dp,k)=>`<button role="tab" aria-selected="${k===d}" data-d="${k}">${dp.id}</button>`).join("");
+ $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCorr(+b.dataset.d));
+ drawCorr(d);
+ if(i!==undefined){const el=document.getElementById("cq-"+d+"-"+i);if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),30)}
+}
+function drawCorr(d){const dp=EXAM.dps[d];const answered=S&&Object.keys(S.ans).length>0;
+ let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div><details class="enon"><summary>Énoncé initial</summary>${dp.intro}${dp.introImg?`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`:""}</details>`;
+ dp.qs.forEach((q,i)=>{const k=d+"-"+i;const a=S?S.ans[k]:undefined;const has=a!==undefined;const g=has?grade(d,i):null;
+  const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+  h+=`<div class="cq" id="cq-${k}"><div class="qhead"><span class="qnum">Q${i+1}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}${has?`<span class="pts ${g===1?'s1':g===0?'s0':'sp'}">${f1(g)} pt</span>`:""}</div>`;
+  if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+  if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+  if(q.table==="antibio")h+=antibio();
+  h+=`<div class="qtext">${q.q}</div>`;
+  if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const mine=Array.isArray(a)?a:[];
+   q.opts.forEach((o,j)=>{const ok=q.ok.includes(j),me=mine.includes(j);
+    let cls=has?(ok&&me?"good":ok&&!me?"miss":!ok&&me?"bad":""):(ok?"good":"");
+    let tagx=(q.indisp||[]).includes(j)?" · indispensable":(q.inacc||[]).includes(j)?" · inacceptable":"";
+    h+=`<div class="copt ${cls}"><span class="mk">${ok?"✓":"✗"}</span><span class="mk">${L[j]}</span><span class="tx">${o}${has&&me?` <span class="mine">· coché${tagx}</span>`:tagx?`<span class="mine">${tagx}</span>`:""}</span>${Array.isArray(q.expl)?`<div class="ex">${q.expl[j]}</div>`:""}</div>`});if(!Array.isArray(q.expl))h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="qroc"){
+   h+=`<div class="free ${has?(g===1?'s1':g?'sp':'s0'):''}" style="background:${has?'':'var(--soft)'}"><b>Votre réponse :</b> ${has&&a?esc(a):"<i>aucune</i>"}<br><b>Attendu :</b> ${q.attendu}</div>`;
+   if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Correction automatique par mots-clés.</span><button class="btn small" data-ov="${k}" data-v="${g?0:1}">${g?"Compter faux":"Ma réponse est juste"}</button></div>`;
+   h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="self"){
+   h+=`${q.cimg?`<div class="imgs">${img(q.cimg)}</div>`:""}<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Auto-évaluation :</span><button class="btn small" data-ov="${k}" data-v="1">J'avais juste</button><button class="btn small" data-ov="${k}" data-v="0.5">À moitié</button><button class="btn small" data-ov="${k}" data-v="0">J'avais faux</button></div>`;
+  } else if(q.type==="info"){
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  } else if(q.type==="qzone"){
+   const pts=q.zone.map(p=>`${p[0]/q.zoneW*100},${p[1]/q.zoneH*100}`).join(" ");
+   h+=`<div class="zonebox" style="cursor:default"><img src="${IMGS[q.img[0]]}" alt="Scanner abdominal"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="${pts}" fill="rgba(46,160,90,.35)" stroke="#2ea05a" stroke-width=".6"/></svg>${has&&a?`<div class="pin" style="left:${a.x*100}%;top:${a.y*100}%"></div>`:""}</div>`;
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  }
+  if(q.fig)h+=`<div class="imgs" style="align-items:flex-end">${img(q.fig[0],q.fig[1])}<span class="note" style="max-width:260px">${q.fig[1]}</span></div>`;
+  h+=(q.retenir?`<div class="retenir"><b class="h">À retenir</b>${q.retenir}</div>`:"")+`</div>`;
+ });
+ if(!answered)h=`<p class="note" style="margin-top:0">Mode correction seule : les bonnes réponses sont en vert.</p>`+h;
+ $("#corrMain").innerHTML=h;
+ $("#corrMain").querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{S.override=S.override||{};S.override[b.dataset.ov]=+b.dataset.v;store.set(S);drawCorr(d)});
+ $("#course").innerHTML=`<div class="row"><h3>Cours résumé · ${dp.id}</h3><span class="spacer"></span><button class="btn small coursebtn" id="cToggle">Afficher</button></div><div class="cbody">${dp.cours.replace(/data-img="(\w+)"/g,(m,k)=>`src="${IMGS[k]}" data-zoom`)}</div><p class="small" style="margin-top:14px">Sources : corrigé officiel de l'épreuve ; explications complémentaires d'après le Collège des enseignants de neurologie (CEN).</p>`;
+ const c=$("#course");if(matchMedia("(max-width:860px)").matches){c.classList.add("collapsed");const t=$("#cToggle");t.onclick=()=>{c.classList.toggle("collapsed");t.textContent=c.classList.contains("collapsed")?"Afficher":"Masquer"}}
+}
+
+/* ---------- zoom ---------- */
+document.addEventListener("click",e=>{const t=e.target;if(t.matches&&t.matches("img[data-zoom]")){$("#zoomImg").src=t.src;$("#zoom").hidden=false}});
+$("#zoom").onclick=()=>{$("#zoom").hidden=true};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#zoom").hidden=true});
+})();
+</script>
+
+<a id="backhome" href="index.html" style="position:fixed;left:12px;bottom:12px;z-index:9999;background:#1c1c1a;color:#fff;padding:8px 12px;border-radius:99px;font:600 13px system-ui;text-decoration:none;opacity:.85">← Toutes les annales</a>

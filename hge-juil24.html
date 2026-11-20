@@ -1,0 +1,1335 @@
+<title>Annale HGE JUILLET 2024</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout : copie d'examen — énoncé à gauche, question à droite ; correction en 2 colonnes avec cours collant */
+:root{
+  --bg:#f6f7f9; --paper:#ffffff; --ink:#18212b; --muted:#5d6876; --line:#dfe3e8; --soft:#eef1f5;
+  --accent:#1f4e8c; --accent-soft:#e6eef9;
+  --ok:#1d7a46; --ok-soft:#e3f4ea; --ko:#b42318; --ko-soft:#fdeceb; --mid:#a15c00; --mid-soft:#fdf1df;
+  --rkA:#c62828; --rkB:#d9822b;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+header.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:800;font-size:17px}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.steps{display:flex;gap:4px;flex-wrap:wrap}
+.steps span{font:700 11px var(--f-mono);padding:3px 7px;border-radius:5px;background:var(--soft);color:var(--muted)}
+.steps span.on{background:var(--accent);color:var(--paper)}
+.steps span.done{background:var(--accent-soft);color:var(--accent)}
+.timer{font:700 18px var(--f-mono);font-variant-numeric:tabular-nums;padding:4px 10px;border-radius:8px;background:var(--soft)}
+.timer.low{background:var(--ko-soft);color:var(--ko)}
+.btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:9px 16px;font-weight:700}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn.ghost{background:transparent}
+.btn.small{padding:5px 10px;font-size:13px}
+main{padding-block:24px 64px}
+[hidden]{display:none!important}
+
+/* start */
+.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(26px,4vw,36px)}
+.hero p{margin:0;color:var(--muted)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.rule{background:var(--soft);border-radius:10px;padding:12px 14px;font-size:14px}
+.rule b{display:block;font-family:var(--f-display);font-size:15px;margin-bottom:2px}
+.dplist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.dplist li{display:flex;gap:10px;align-items:baseline;font-size:15px}
+.dplist .id{font:700 12px var(--f-mono);color:var(--accent);min-width:34px}
+.dplist .n{color:var(--muted);font-size:13px;margin-left:auto;white-space:nowrap}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* exam */
+.exam{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:start}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:20px}
+.panel .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.enonce{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto}
+.enonce p{margin:.6em 0}
+.enonce .add{border-left:3px solid var(--accent);padding-left:12px;margin-top:14px}
+.imgs{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.imgs img{max-height:320px;width:auto;max-width:100%;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;background:#000}
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.qnum{font:700 13px var(--f-mono);color:var(--accent)}
+.tag{font:700 11px var(--f-mono);padding:2px 7px;border-radius:5px;background:var(--soft);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.rk{display:inline-grid;place-items:center;width:20px;height:20px;border:2px solid;border-radius:4px;font:700 11px var(--f-mono);vertical-align:middle}
+.rk.a{color:var(--rkA)} .rk.b{color:var(--rkB)}
+.ctx{background:var(--soft);border-radius:10px;padding:2px 14px;margin-bottom:12px}
+.ctx p{margin:.6em 0}
+.qtext{font-size:18px;font-weight:700;margin:6px 0 14px}
+.opts{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.opt label{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--paper)}
+.opt label:hover{border-color:var(--accent)}
+.opt input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.opt .L{font:700 14px var(--f-mono);color:var(--muted);min-width:16px}
+.opt input:checked ~ .L{color:var(--accent)}
+.opt label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.qroc input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit}
+.zonebox{position:relative;display:inline-block;max-width:100%;cursor:crosshair}
+.zonebox img{display:block;max-width:100%;border-radius:8px}
+.zonebox .pin{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:3px solid #fff;background:#e5484d;box-shadow:0 0 0 2px #e5484d;pointer-events:none}
+.zonebox svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--mid-soft);border-radius:10px;padding:10px 12px;font-size:14px}
+.note{font-size:13px;color:var(--muted)}
+
+/* results */
+.score{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.big{font:800 64px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.big small{font-size:24px;color:var(--muted)}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:44px 1fr 70px;gap:10px;align-items:center;font-size:14px}
+.barrow .track{height:10px;border-radius:5px;background:var(--soft);overflow:hidden}
+.barrow .fill{height:100%;background:var(--accent)}
+.barrow .v{font:700 13px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.grid-q{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.grid-q button{font:700 12px var(--f-mono);border:0;border-radius:6px;padding:6px 8px;min-width:58px}
+.s1{background:var(--ok-soft);color:var(--ok)} .s0{background:var(--ko-soft);color:var(--ko)} .sp{background:var(--mid-soft);color:var(--mid)}
+
+/* correction */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:7px 12px;font-weight:700;font-size:14px}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.corr{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.course{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto;font-size:14.5px}
+.course h3{font-size:18px;margin-bottom:6px}
+.course h4{font-size:15px;margin:16px 0 4px;display:flex;gap:8px;align-items:center}
+.course ul{padding-left:18px;margin:4px 0}
+.course li{margin:3px 0}
+.course .small,.small{font-size:13px;color:var(--muted)}
+table.mini{border-collapse:collapse;width:100%;font-size:13px;margin:6px 0}
+table.mini th,table.mini td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+table.mini th{background:var(--soft)}
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}
+.figs figure{margin:0}
+.figs img{width:100%;height:100px;object-fit:cover;border-radius:6px;cursor:zoom-in}
+.figs figcaption{font-size:11.5px;color:var(--muted)}
+.cq{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}
+.cq:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.pts{margin-left:auto;font:700 13px var(--f-mono);padding:3px 8px;border-radius:6px}
+.copt{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:22px 22px 1fr;gap:4px 10px;align-items:start}
+.copt + .copt{margin-top:6px}
+.copt .mk{font:700 14px var(--f-mono)}
+.copt .tx{font-weight:700}
+.copt .ex{grid-column:3;font-size:14.5px;color:var(--ink)}
+.copt.good{border-color:var(--ok);background:var(--ok-soft)}
+.copt.miss{border-color:var(--mid);background:var(--mid-soft)}
+.copt.bad{border-color:var(--ko);background:var(--ko-soft)}
+.mine{font:700 11px var(--f-mono);color:var(--muted)}
+.retenir{margin-top:12px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:14.5px}
+.retenir b.h{display:block;font-family:var(--f-display);color:var(--accent);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.free{border-radius:10px;padding:10px 14px;font-size:14.5px}
+.coursebtn{display:none}
+details.enon{background:var(--soft);border-radius:10px;padding:8px 14px;margin-bottom:16px}
+details.enon summary{cursor:pointer;font-weight:700}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.zoom img{max-width:100%;max-height:100%;border-radius:8px}
+.tblwrap{overflow-x:auto}
+table.abg{border-collapse:collapse;font:13px var(--f-mono);margin:8px 0}
+table.abg td{padding:3px 10px;border-bottom:1px dotted var(--line)}
+table.abg td:last-child{font-weight:700;text-align:center}
+table.abg .R{color:var(--ko)} table.abg .S{color:var(--ok)}
+
+@media (max-width:860px){
+  .exam,.corr{grid-template-columns:1fr}
+  .enonce,.course{position:static;max-height:none}
+  .corr .course{order:-1}
+  .course.collapsed .cbody{display:none}
+  .coursebtn{display:inline-block}
+  .score{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.qnav{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}.qnav-dp{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.qnav-id{font:700 11px var(--f-mono);color:var(--muted);margin-right:3px}.qn{min-width:26px;height:26px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;font:700 11px var(--f-mono);padding:0 4px}.qn.done{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft)}.qn.cur{outline:2px solid var(--accent)}.qn:disabled{opacity:.35;cursor:not-allowed}.navrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.navrow .spacer{flex:1}.lockmsg{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:14px}.savedmsg{color:var(--ok);font-size:14px}
+.offi{background:var(--soft);border-left:3px solid var(--accent);border-radius:8px;padding:8px 12px;margin:6px 0 10px}.offi p{margin:4px 0}.tcs{background:var(--soft);border-radius:10px;padding:10px 14px;margin-bottom:10px}.tcs p{margin:4px 0}
+</style>
+
+<header class="bar"><div class="wrap">
+  <div class="brand">Annale HGE · UE8.1 · juillet 2024 (rattrapage)<small>DFA1 · Bobigny · corrigé officiel + explications d'après les Collèges</small></div>
+  <div class="spacer"></div>
+  <div class="steps" id="steps"></div>
+  <div class="timer" id="timer" hidden>40:00</div>
+  <button class="btn small ghost" id="btnPause" hidden>Pause</button>
+</div></header>
+
+<main class="wrap">
+  <!-- Accueil -->
+  <section id="vStart">
+    <div class="hero">
+      <div>
+        <h1>7 épreuves, 45 questions</h1>
+        <p>Sujet de rattrapage de l'UE8.1 Hépato-gastro-entérologie et chirurgie digestive de juillet 2024 : 1 DP, 1 mini-DP, 1 KFP, 2 TCS et 17 questions isolées. Conditions d'examen type LUNESS, notation EDN (QRP : bonnes réponses ÷ réponses attendues ; TCS : 1 point si ta réponse fait partie de celles validées par le panel). Les erreurs probables du corrigé officiel sont signalées par ⚠️.</p>
+      </div>
+      <ul class="dplist" id="dpList"></ul><p class="note" style="margin-top:6px">Clique sur un dossier pour commencer par lui. Pendant l'épreuve, les étiquettes en haut à droite (QI, DP1…) et la grille de numéros permettent de changer de dossier à tout moment.</p>
+      <div class="rules">
+        <div class="rule"><b>60 minutes</b>Le chrono tourne pendant l'épreuve. À zéro, la copie est rendue.</div>
+        <div class="rule"><b>Navigation type LUNESS</b>Questions isolées et TCS : navigation libre, réponses modifiables jusqu'à la fin. DP et KFP (🔒) : on peut revenir relire, mais une réponse validée est verrouillée, et la question suivante s'ouvre une fois la précédente validée.</div>
+        <div class="rule"><b>Notation EDN</b>QRM : 1 / 0,5 / 0,2 / 0 selon 0, 1, 2 ou ≥ 3 erreurs ; indispensable oubliée ou inacceptable cochée : 0. QRP : bonnes réponses cochées ÷ réponses attendues. QROC : barème officiel.</div>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="btnStart">Commencer l'épreuve</button>
+        <button class="btn" id="btnResume" hidden>Reprendre</button>
+        <button class="btn ghost" id="btnDirect">Voir directement la correction</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Épreuve -->
+  <section id="vExam" hidden>
+    <div class="exam">
+      <div class="panel enonce" id="enonce"></div>
+      <div class="panel" id="qpanel"></div>
+    </div>
+  </section>
+
+  <!-- Résultats -->
+  <section id="vRes" hidden>
+    <div class="panel">
+      <div class="score">
+        <div><div class="big" id="sBig">0</div><div class="note" id="sSub"></div></div>
+        <div class="bars" id="sBars"></div>
+      </div>
+      <div class="grid-q" id="sGrid"></div>
+      <div class="actions"><button class="btn primary" id="btnCorr">Voir la correction détaillée</button><button class="btn" id="btnAgain">Repasser l'épreuve</button></div>
+    </div>
+  </section>
+
+  <!-- Correction -->
+  <section id="vCorr" hidden>
+    <div class="row" style="margin-bottom:12px"><h2 style="font-size:22px">Correction</h2><div class="spacer"></div><button class="btn small" id="btnBackRes">Résultats</button><button class="btn small" id="btnHome">Accueil</button></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="corr">
+      <div class="panel" id="corrMain"></div>
+      <aside class="panel course" id="course"></aside>
+    </div>
+  </section>
+</main>
+<div class="zoom" id="zoom" hidden><img alt="Image agrandie" id="zoomImg"></div>
+
+<script>
+const IMGS={};
+var img=function(k,alt){return `<img src="${IMGS[k]}" alt="${alt||""}" data-zoom>`};
+const EXAM = {
+"title": "Annale HGE JUILLET 2024",
+"dps": [
+{
+"id": "SQI1",
+"titre": "10 questions isolées (urgences digestives)",
+"items": "Items 351, 352, 354, 355, 356",
+"free": true,
+"intro": "<p>Questions isolées</p>",
+"qs": [
+{
+"type": "qru",
+"q": "<p>Un homme de 70 ans, directeur de banque, qui a comme antécédents médico-chirurgicaux (diverticulites simples traitées médicalement - HTA - Appendicectomie - Gastrite à H. pylori), déclare des douleurs abdominales en fosse iliaque gauche, qui ont débuté depuis 24heures, avec nausées et sans vomissements. Le transit intestinal aux gaz et selles est conservé. L’examen clinique montre un poids de 70 kg pour une taille d’1,80 m, une température à 39°C, une langue saburrale et un abdomen avec une sensibilité en fosse iliaque gauche.Les examens biologiques montrent :NFS : Leucocytes 12000/ mm3               Hémoglobine : 14,5 g/ dl         Plaquettes 212 000/ mm3          CRP : 105 mg/lUn scanner abdomino-pelvien est réalisée en urgence qui montre un épaississement pariétal circonférentiel du sigmoïde étendu sur 7cm, avec rehaussement muqueux et œdème sous-muqueux, inflammation de la paroi d'un diverticule sur le versant antimésentérique avec un rehaussement pariétal inflammatoire, un contenu liquidien hypodense et une bulle d'air (mesurant 10 mm de grand axe). Importante densification de la graisse du mésosigmoïde. Lame d'épanchement pelvien. Pas de pneumopéritoine libre. Parmi les diagnostics suivants, quel est le plus probable ?</p>",
+"opts": [
+"Cholécystite aiguë",
+"Diverticulite",
+"Appendicite aigüe",
+"Torsion testiculaire",
+"Hernie inguinale"
+],
+"ok": [
+1
+],
+"expl": "<p>Bulle d'air extra-digestive, densification de la graisse du <b>mésosigmoïde</b> : diverticulite sigmoïdienne compliquée d'une perforation couverte, sans pneumopéritoine libre.</p>",
+"retenir": "Diverticulite = TDM injecté : épaississement colique + infiltration de la graisse ± abcès / air."
+},
+{
+"type": "qru",
+"q": "<p>Une femme de 59 ans consulte aux urgences pour des vomissements incoercibles et des douleurs de l’abdomen. Dans ses antécédents elle déclare un Bypass gastrique il y a 5 ans avec un poids initial à 110kg, une HTA et G2P2 (voie basse). Les dernières selles et gaz datent de 48 heures. Elle ne vomit plus mais reste nauséeuse. Elle pèse 75 kg pour une taille de 1,70m. A l’examen on trouve un abdomen distendu au niveau sus mésocolique. Le bilan biologique fait aux urgences montre : -       Leucocytes 10000/mm3-           Hémoglobine : 13,5 g/dl-        CRP : 3 mg/l- Potassium : 3.0 mmol/lLe scanner thoraco-abdomino-pelvien montre une infiltration du mésentère, une dilatation de l’estomac exclu et un aspect de torsion des vaisseaux à la racine du mésentère. Parmi les diagnostics suivants, quel est le plus probable ?</p>",
+"opts": [
+"Cholécystite",
+"Volvulus du sigmoïde",
+"Hernie interne par l’espace de Petersen",
+"Invagination iléo caecale",
+"Iléus Biliaire"
+],
+"ok": [
+2
+],
+"expl": "<p>Après un bypass gastrique (estomac exclu dilaté), une torsion des vaisseaux mésentériques (« whirl sign ») évoque une <b>hernie interne</b> par l'espace de Petersen : c'est une urgence chirurgicale (risque d'ischémie).</p>",
+"retenir": "Douleur abdominale après bypass = hernie interne jusqu'à preuve du contraire → chirurgie."
+},
+{
+"type": "qrm",
+"q": "<p>Quelles sont les éléments qui peuvent vous orienter sur la gravité d’un syndrome occlusif chez un patient de 35 ans sans antécédents médico-chirurgicaux ?</p>",
+"opts": [
+"Fréquence cardiaque &gt; 110 bpm",
+"Température à 36.5 °C",
+"Créatinine à 215 µmol/l",
+"Diamètre du caecum à 12 cm",
+"pH à 7.20"
+],
+"ok": [
+0,
+2,
+3,
+4
+],
+"expl": "<p>Signes de gravité d'une occlusion : retentissement systémique (tachycardie, IRA, acidose métabolique / lactates), fièvre ou <b>hypothermie</b>, défense, et un cæcum > 10-12 cm (risque de perforation diastatique). 36,5 °C est normal.</p>",
+"retenir": "Occlusion grave : choc, IRA, acidose / lactates, péritonite, cæcum > 10-12 cm."
+},
+{
+"type": "qrm",
+"q": "<p>Un patient de 75 ans consulte aux urgences pour apparition d’un ictère. Il vous donne le résultat d’une échographie faite en ville qui conclut à une vésicule biliaire multi lithiasique. Vous suspectez une angiocholite d’origine lithiasique. Quels sont les éléments de la triade de Charcot ?</p>",
+"opts": [
+"Fièvre",
+"Augmentation de la lipase",
+"Douleur de l'hypocondre droit",
+"Selles décolorées",
+"Ictère"
+],
+"ok": [
+0,
+2,
+4
+],
+"expl": "<p>Triade de Charcot, dans l'ordre : <b>douleur</b> de l'hypochondre droit → <b>fièvre</b> (frissons) → <b>ictère</b>, en 24-48 h. La lipase oriente vers une pancréatite. Les selles décolorées accompagnent l'ictère mais ne font pas partie de la triade.</p>",
+"retenir": "Angiocholite : douleur → fièvre → ictère (Charcot) = urgence, ATB + drainage biliaire."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant les péritonites aigues, quelles sont les affirmations vraies ?</p>",
+"opts": [
+"Une péritonite primaire survient après la perforation d’un organe creux",
+"Une infection spontanée de liquide d’ascite est une péritonite primaire",
+"Une péritonite généralisée sur perforation d’ulcère gastro-duodénal est une péritonite secondaire",
+"Les péritonites primaires sont en général des infections mono-bactériennes",
+"Les péritonites secondaires sont traitées par traitement médical exclusif"
+],
+"ok": [
+1,
+2,
+3
+],
+"expl": "<p>Péritonite <b>primaire</b> : pas de brèche digestive, souvent monomicrobienne (infection du liquide d'ascite), traitement médical. <b>Secondaire</b> : perforation ou foyer digestif (ulcère, appendicite), polymicrobienne, traitement chirurgical + ATB. Tertiaire : persistante après traitement.</p>",
+"retenir": "Primaire = ascite, monomicrobienne, médical ; secondaire = perforation, polymicrobienne, chirurgie."
+},
+{
+"type": "qrm",
+"q": "<p>Un homme de 45 ans se présente aux urgences pour l’apparition d’une tuméfaction de l’aine gauche.Le diagnostic de hernie de l’aine non compliquée est retenu. Vous êtes le médecin senior aux urgences et votre externe vous demande de lui expliquer l’anatomie du canal inguinal chez l’homme. Quelles sont les affirmations vraies ?</p>",
+"opts": [
+"Le plan postérieur du canal inguinal est représenté par le fascia transversalis",
+"Le canal est constitué de trois orifices : profond, moyen, superficiel",
+"Le bord inférieur est représenté par le ligament inguinal",
+"En haut, le canal est limité par le tendon conjoint",
+"Les vaisseaux épigastriques sont adhérents au pubis"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<p>Canal inguinal : paroi postérieure = fascia transversalis, inférieure = ligament inguinal, supérieure = tendon conjoint (muscles oblique interne et transverse), antérieure = aponévrose de l'oblique externe. Deux orifices : profond et superficiel. Les vaisseaux épigastriques longent le bord médial de l'orifice profond (repère hernie directe / indirecte).</p>",
+"retenir": "Hernie indirecte = en dehors des vaisseaux épigastriques ; directe = en dedans."
+},
+{
+"type": "qru",
+"q": "<p>Une patiente consulte aux urgences pour des douleurs de l’hypochondre droit qui ont débuté brutalement depuis 24 heures. Elle a présenté des vomissements et les douleurs ne sont pas calmées par les antalgiques qu’elle a pris à domicile. A l’examen clinique, la température est à 39.2°C, la tension artérielle à 140/80 mmHg et le pouls à 95/mn. Au niveau du bilan biologique : bilirubine totale= 15 µmol/l, lipasémie à 39 UI/L (N&lt;60), ASAT=35 UI/l (N&lt;40), ALAT=38 UI/L (N&lt;40), GGT= 40 UI/L (N&lt;50), PAL=90 UI/l (N&lt;120). L’échographie montre une vésicule biliaire avec une paroi de 5mm.Quel diagnostic évoquez-vous ?</p>",
+"opts": [
+"Cholécystite aiguë",
+"Angiocholite",
+"Migration lithiasique",
+"Pancréatite aiguë lithiasique",
+"Hépatite aigue E"
+],
+"ok": [
+0
+],
+"expl": "<p>Bilan hépatique et lipase normaux, paroi vésiculaire épaissie (> 3-4 mm) : <b>cholécystite aiguë</b>. Pas de cholestase ni de cytolyse, donc pas de migration ni d'angiocholite.</p>",
+"retenir": "Cholécystite : douleur HCD + Murphy + fièvre, paroi épaissie à l'écho, BH souvent normal."
+},
+{
+"type": "qrm",
+"q": "<p>Le SAMU ramène aux urgences un patient de 55 ans qui présente des douleurs abdominales.A l’examen on trouve un abdomen pléthorique avec une sensibilité du flanc gauche et de l’hypogastre. Le patient présente des dysuries. Le bilan biologique fait aux urgences montre :-Leucocytes 16000/mm3-Hémoglobine 14 g/dl-CRP 12 mg/l-ECBU – négatifLe scanner montre une diverticulite sigmoïdienne non compliquée. Quel est la bonne réponse dans la prise en charge en cas de diverticulite sigmoïdienne ?</p>",
+"opts": [
+"Le traitement ambulatoire est recommandé en cas de diverticulite aiguë non compliquée et quelles que soient les comorbidités",
+"En présence d’un abcès de taille &lt; 3 cm, un drainage radiologique est recommandé.",
+"Une sigmoïdectomie élective systématique après une ou des poussées de diverticulites aiguës n'est pas recommandée si le patient est peu symptomatique, s'il n'est pas immunodéprimé ou insuffisant rénal chronique et si les poussées n'impactent pas sa qualité de vie.",
+"Le diagnostic de diverticulite sigmoïdienne aiguë, y compris chez les patients avec antécédents de diverticulose connue, peut être affirmé sur les seules données cliniques et biologiques.",
+"Dans les stades Hinchey III (péritonite généralisée purulente) et IV, il est recommandé de réaliser une résection-anastomose colorectale non protégée"
+],
+"ok": [
+2
+],
+"expl": "<p>A : faux, l'ambulatoire se fait seulement sans comorbidité grave ni immunodépression. B : abcès < 3 cm → ATB seule (drainage si > 3-5 cm). D : faux, le TDM est indispensable au diagnostic. E : Hinchey III-IV → Hartmann ou résection-anastomose <b>protégée</b> (ou lavage en III). C : vrai, la sigmoïdectomie prophylactique systématique n'est plus recommandée.</p>",
+"retenir": "Diverticulite : TDM pour le diagnostic ; abcès > 3 cm = drainage ; pas de colectomie systématique après poussée."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant la pathologie herniaire, quelles sont les affirmations vraies ?</p>",
+"opts": [
+"Le diagnostic d’une hernie inguino-scrotale est scannographique.",
+"Une éventration est développée sur un orifice acquis.",
+"Le sexe féminin ne peut pas avoir une hernie inguinale.",
+"Avec le régime diététique et le sport, une hernie abdominale peut guérir spontanément",
+"Une hernie douloureuse et non réductible est une urgence chirurgicale."
+],
+"ok": [
+1,
+4
+],
+"expl": "<p>Le diagnostic de hernie est <b>clinique</b>. L'éventration se fait sur un orifice acquis (cicatrice), la hernie sur un orifice naturel. Les femmes ont des hernies inguinales (et surtout crurales). Une hernie ne guérit jamais seule. Une hernie douloureuse et irréductible = étranglement = urgence chirurgicale.</p>",
+"retenir": "Hernie étranglée (douloureuse, irréductible) = urgence chirurgicale."
+},
+{
+"type": "qru",
+"q": "<p>Concernant le volvulus du sigmoïde, quelle proposition est vraie ?</p>",
+"opts": [
+"Le volvulus du colon sigmoïde représente la première cause d’occlusion colique chez l’adulte",
+"Le traitement en urgence sans signe de souffrance du colon est une résection anastomose non protégée.",
+"Après une détorsion endoscopique, la mise en place d’un tube de Faucher est systématique",
+"La récidive d’un volvulus du sigmoïde est impossible",
+"La présentation est celle d’une occlusion digestive haute"
+],
+"ok": [
+2
+],
+"expl": "<p>Volvulus du sigmoïde : occlusion <b>basse</b>, la 1re cause d'occlusion colique est le cancer. Sans souffrance colique : détorsion endoscopique + tube de Faucher, puis sigmoïdectomie à froid car la récidive est fréquente. Avec souffrance : chirurgie (Hartmann).</p>",
+"retenir": "Volvulus du sigmoïde : détorsion endoscopique + Faucher, puis sigmoïdectomie à distance (récidive ++)."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Diverticulite = TDM injecté : épaississement colique + infiltration de la graisse ± abcès / air.</li><li>Douleur abdominale après bypass = hernie interne jusqu'à preuve du contraire → chirurgie.</li><li>Occlusion grave : choc, IRA, acidose / lactates, péritonite, cæcum > 10-12 cm.</li><li>Angiocholite : douleur → fièvre → ictère (Charcot) = urgence, ATB + drainage biliaire.</li><li>Primaire = ascite, monomicrobienne, médical ; secondaire = perforation, polymicrobienne, chirurgie.</li><li>Hernie indirecte = en dehors des vaisseaux épigastriques ; directe = en dedans.</li><li>Cholécystite : douleur HCD + Murphy + fièvre, paroi épaissie à l'écho, BH souvent normal.</li><li>Diverticulite : TDM pour le diagnostic ; abcès > 3 cm = drainage ; pas de colectomie systématique après poussée.</li><li>Hernie étranglée (douloureuse, irréductible) = urgence chirurgicale.</li><li>Volvulus du sigmoïde : détorsion endoscopique + Faucher, puis sigmoïdectomie à distance (récidive ++).</li></ul>"
+},
+{
+"id": "DP1",
+"titre": "Douleur de FID de la femme jeune : appendicite",
+"items": "Item 353",
+"free": false,
+"intro": "<p>Madame B, âgée de 32 ans, consulte aux urgences pour des douleurs brutales au niveau de la fosse iliaque droite et du flanc droit, sans fièvre, avec un épisode de vomissement, sans troubles du transit associés.A l'examen, on retrouve une défense en fosse iliaque droite.Un bilan biologique est réalisé et montre une CRP à 22 mg/l et des leucocytes à 17 400/ mm3 dont 80% de polynucléaires neutrophiles.A l'arrivée, le patient est apyrétique, hémodynamique stable.A l'examen clinique on retrouve une défense en fosse iliaque droite, le reste de l'abdomen souple. Signes de Blumberg et de Rovsing positifs.</p>",
+"qs": [
+{
+"type": "qru",
+"q": "<p>Parmi les diagnostics suivants, quel est le plus probable ?</p>",
+"opts": [
+"Cholécystite aiguë",
+"Diverticulite",
+"Appendicite aiguë",
+"Torsion testiculaire",
+"Hernie inguinale"
+],
+"ok": [
+2
+],
+"expl": "<p>Douleur FID + défense + Blumberg + Rovsing + hyperleucocytose : <b>appendicite aiguë</b>. Chez une femme jeune, il faut éliminer GEU et pathologie annexielle (β-hCG, écho pelvienne).</p>",
+"retenir": "FID + défense + hyperleucocytose = appendicite ; femme jeune : β-hCG systématique."
+},
+{
+"type": "qrm",
+"q": "<p>ère Quel(s) examen(s) radiologique(s) complémentaire(s) demandez-vous en 1          intention ?</p>",
+"opts": [
+"Scanner abdo-pelvien",
+"Échographie abdominale",
+"IRM pelvien",
+"Cœlioscopie exploratrice",
+"Échographie testiculaire"
+],
+"ok": [
+1
+],
+"indisp": [
+1
+],
+"expl": "<p>Chez une femme jeune (et chez l'enfant), on commence par l'<b>échographie</b> abdomino-pelvienne : pas d'irradiation, et elle explore les annexes. Le TDM vient en 2e intention si l'écho n'est pas contributive, ou d'emblée chez l'adulte plus âgé.</p>",
+"retenir": "Suspicion d'appendicite : écho chez l'enfant, la femme jeune, la femme enceinte ; TDM sinon."
+},
+{
+"type": "qrm",
+"q": "<p>Quel(s) autre(s) examen(s) complémentaire(s) demandez-vous ?</p>",
+"opts": [
+"Bandelette urinaire",
+"B-bCG",
+"Dosage des marqueurs tumoraux ( ACE, CA19-9 et CA125)",
+"Albumine et pré-albumine",
+"Procalcitonine"
+],
+"ok": [
+0,
+1
+],
+"expl": "<p>BU (pyélonéphrite, colique néphrétique) et <b>β-hCG</b> (GEU) chez toute femme en âge de procréer. Pas de marqueurs tumoraux, pas de PCT en routine.</p>",
+"retenir": "Douleur abdominale de la femme jeune : β-hCG + BU systématiques."
+},
+{
+"type": "qrm",
+"q": "<p>Une échographie abdominale réalisée en urgence montre un épanchement péritonéal de faible abondance, un appendice hyperémié avec un diamètre de 9mm ; associé à une infiltration de la graisse péri appendiculaire. Le reste de l’examen échographique est sans particularité.A propos des variations anatomiques de localisation de l‘appendice, quelles sont les propositions exactes ?</p>",
+"opts": [
+"Chez la majorité des patients, l’appendice se situe en position rétro-caecale",
+"Chez la majorité des patients, l’appendice se situe en position latéro-caecale",
+"L'appendicite peut se situer en position rétro-caecale",
+"L’appendice se situe rarement en position latéro-caecale",
+"L'appendice peut se situer en position pelvienne"
+],
+"ok": [
+1,
+2,
+4
+],
+"expl": "<p>L'appendice est le plus souvent en position <b>latéro-cæcale</b> (descendante interne). Variantes : rétro-cæcale (douleur lombaire, psoïtis), pelvienne (signes urinaires / rectaux, TR douloureux), sous-hépatique, méso-cœliaque (occlusion).</p>",
+"retenir": "Positions atypiques : rétro-cæcale, pelvienne, sous-hépatique, méso-cœliaque."
+},
+{
+"type": "qrm",
+"q": "<p>Quelles sont les propositions exactes concernant les différentes formes d’appendicite possibles ?</p>",
+"opts": [
+"Appendicite catarrhale",
+"Appendicite suppurée",
+"Abcès appendiculaire",
+"Péritonite appendiculaire",
+"Appendicite gangreneuse"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4
+],
+"expl": "<p>Formes anatomiques : catarrhale (simple), suppurée (phlegmoneuse), gangreneuse, puis complications : abcès, plastron, péritonite. Tout est vrai.</p>",
+"retenir": "Catarrhale → suppurée → gangreneuse → perforation (abcès, plastron, péritonite)."
+},
+{
+"type": "qrm",
+"q": "<p>Quelles formes d’appendicite aiguë peuvent être considérées comme compliquées ?</p>",
+"opts": [
+"Plastron appendiculaire",
+"Appendicite suppurée",
+"Abcès appendiculaire",
+"Péritonite appendiculaire",
+"Appendicite gangreneuse"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<p>Appendicite compliquée : perforation, <b>abcès, plastron, péritonite</b>. La forme suppurée n'est pas compliquée. Le corrigé ne retient pas non plus la gangreneuse, mais selon les sources elle peut l'être.</p>",
+"retenir": "Compliquée = abcès, plastron, péritonite (perforation)."
+},
+{
+"type": "qrm",
+"q": "<p>A propos d’appendicite aiguë, quelles sont les propositions exactes ?</p>",
+"opts": [
+"L’appendicite aiguë peut survenir à tout âge mais reste exceptionnelle avant 1 an",
+"Sa fréquence est maximale chez l’enfant de plus de 6 ans jusqu’à l’âge de 30-40 ans",
+"Sa fréquence décroit avec l’âge en raison de l’involution des tissus lymphoïdes",
+"Chez la personne âgée, sa suspicion doit faite évoquer de principe d’autres diagnostic tel que le cancer du côlon droit",
+"L’appendicite aiguë constitue l’urgence chirurgicale la moins fréquente"
+],
+"ok": [
+0,
+1,
+2,
+3
+],
+"expl": "<p>L'appendicite est l'urgence chirurgicale abdominale la <b>plus</b> fréquente, d'où E fausse. Elle est rare avant 1 an, maximale entre 6 et 30 ans. Chez le sujet âgé, il faut penser au cancer du côlon droit (tumeur obstruant l'appendice).</p>",
+"retenir": "Appendicite du sujet âgé → coloscopie à distance (cancer du cæcum)."
+},
+{
+"type": "qrm",
+"q": "<p>A propos du diagnostic différentiel d’appendicite aiguë, quelles sont les propositions exactes ?</p>",
+"opts": [
+"Pathologie de l’appareil urinaire (colique néphrétique et pyélonéphrite)",
+"Diverticulite de Meckel",
+"Maladie de Crohn",
+"Invagination intestinale aiguë",
+"Adenolymphite mésentérique",
+"Gastro-entérite aiguë"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4,
+5
+],
+"expl": "<p>Tous ces diagnostics sont des différentiels classiques : urinaires, Meckel, Crohn iléal, invagination (enfant), adénolymphite mésentérique, gastro-entérite.</p>",
+"retenir": "Différentiels de l'appendicite : urinaires, gynéco, Meckel, Crohn, adénolymphite, GEA."
+},
+{
+"type": "qrm",
+"q": "<p>A propos du diagnostic différentiel d’appendicite aiguë, quelles sont les propositions exactes ?</p>",
+"opts": [
+"Grosses extra-utérine",
+"Kyste ovarien rompu",
+"Salpingite",
+"Torsion d’annexe",
+"Torsion testiculaire"
+],
+"ok": [
+0,
+1,
+2,
+3
+],
+"expl": "<p>Chez une <b>femme</b> : GEU, kyste rompu, salpingite, torsion d'annexe. La torsion testiculaire ne se discute que chez l'homme, donc faux ici.</p>",
+"retenir": "Femme : GEU, torsion d'annexe, salpingite, kyste rompu."
+},
+{
+"type": "qroc",
+"q": "<p>Quel type de prise en charge proposez-vous pour ce patient (3 mots maximum) ?</p>",
+"keys": [
+"appendicectomie",
+"coelioscopie",
+"cœlioscopie",
+"mc burney"
+],
+"attendu": "Appendicectomie (cœlioscopie ou Mc Burney)",
+"expl": "<p>Traitement de référence : <b>appendicectomie</b>, de préférence par cœlioscopie, en urgence.</p>",
+"retenir": "Appendicite = appendicectomie (cœlioscopie)."
+},
+{
+"type": "qrm",
+"q": "<p>A propos des principes du traitement de l’appendicite aiguë, quelles sont les propositions exactes ?</p>",
+"opts": [
+"Traitement médical",
+"Traitement chirurgical",
+"La prise en charge doit être entreprise en urgence",
+"La prise en charge peut être prise à distance",
+"L'appendicectomie reste le traitement de référence"
+],
+"ok": [
+1,
+2,
+4
+],
+"expl": "<p>L'appendicectomie en urgence reste le traitement de référence. Le traitement médical seul (ATB) se discute dans des formes non compliquées sélectionnées, mais ce n'est pas la réponse attendue.</p>",
+"retenir": "Appendicite : chirurgie en urgence = référence."
+},
+{
+"type": "qrm",
+"q": "<p>A propos des principe de la prise en charge préopératoire de l’appendicite aiguë, quelles sont les propositions exactes ?</p>",
+"opts": [
+"Le patient est mis à jeun en attendant l’intervention chirurgicale",
+"Une hydratation par voie orale pour correction des troubles hydro-électrolytiques est réalisée",
+"Un traitement par antalgiques de palier I (paracétamol ; antispasmodiques) est débuté",
+"Un consultation d’anesthésie est demandée en urgence",
+"L’hospitalisation post-opératoire en service conventionnel de chirurgie viscérale et digestive est programmée"
+],
+"ok": [
+0,
+2,
+3,
+4
+],
+"expl": "<p>Préopératoire : à jeun, hydratation <b>IV</b> (pas per os, il est à jeun), antalgiques, consultation d'anesthésie, puis hospitalisation en chirurgie.</p>",
+"retenir": "Avant le bloc : à jeun, VVP + hydratation IV, antalgiques, anesthésiste."
+},
+{
+"type": "qrm",
+"q": "<p>Nous avons décidé de réalise en urgences une appendicectomie par voie cœlioscopique. Constatations préopératoires : péritonite appendiculaire. A propos du principe général de la prise en charge de la péritonite par appendicite aiguë, quelles sont les propositions exactes ?</p>",
+"opts": [
+"Une toilette péritonéale rigoureuse est obligatoire",
+"Un drainage de la cavité péritonéale dans les zones déclives est nécessaire",
+"L’antibiothérapie secondairement adaptée aux prélèvements de liquide péritonéal sera poursuivie 3 à 5 jours après l’intervention chirurgicale",
+"L’antibiothérapie secondairement adaptée aux prélèvements de liquide péritonéal sera poursuivie 7 à 10 jours après l’intervention chirurgicale",
+"L’appendicectomie sera réalisée à distance de l’épisode infectieux (en général 3 mois)"
+],
+"ok": [
+0,
+1,
+2
+],
+"expl": "<p>Péritonite appendiculaire : appendicectomie <b>dans le même temps</b>, toilette péritonéale abondante, drainage des zones déclives, ATB adaptée aux prélèvements pour une durée courte (3-5 jours si contrôle du foyer).</p>",
+"retenir": "Péritonite : chirurgie en urgence (appendicectomie + toilette), ATB courte 3-5 j."
+},
+{
+"type": "qrm",
+"q": "<p>A propos du principe général de la prise en charge du plastron appendiculaire, quelles sont les propositions exactes ?</p>",
+"opts": [
+"Il est préférable de réaliser en première intention un traitement médical seul par antibiothérapie",
+"Il est préférable de réaliser en premier intention un traitement chirurgical",
+"Il est préférable de réaliser en première intention un traitement chirurgical associé à un traitement médical par antibiothérapie",
+"L’évolution possible vers une péritonite doit conduire à hospitaliser le patient lors de la phase initiale du traitement",
+"L’appendicectomie sera réalisée à distance de l’épisode infectieux (en général 3 mois)"
+],
+"ok": [
+0,
+3,
+4
+],
+"expl": "<p>Plastron : magma inflammatoire, l'opérer d'emblée est dangereux. Antibiothérapie en hospitalisation, puis appendicectomie à distance (environ 3 mois) selon le corrigé (et coloscopie selon l'âge).</p>",
+"retenir": "Plastron = ATB d'abord, chirurgie à froid ; abcès = drainage + ATB."
+},
+{
+"type": "qrm",
+"q": "<p>Quelles affirmations sont vraies à propos de la crise d’appendicite typique ?</p>",
+"opts": [
+"Patient généralement jeune 15-25 ans",
+"Douleur de la fosse iliaque gauche +/- épigastre, migratrice",
+"L’examen clinique retrouve une défense de la fosse iliaque droite, avec un Bloomberg positif",
+"Douleur au point de Mc Burney",
+"Toucher rectal toujours douloureux"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<p>Crise typique : patient jeune, douleur épigastrique ou péri-ombilicale qui migre en <b>FID</b> (pas FIG), point de McBurney, défense, Blumberg. Le TR n'est pas toujours douloureux (seulement dans les formes pelviennes).</p>",
+"retenir": "Douleur migrant de l'épigastre vers la FID + McBurney + fièvre modérée."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>FID + défense + hyperleucocytose = appendicite ; femme jeune : β-hCG systématique.</li><li>Suspicion d'appendicite : écho chez l'enfant, la femme jeune, la femme enceinte ; TDM sinon.</li><li>Douleur abdominale de la femme jeune : β-hCG + BU systématiques.</li><li>Positions atypiques : rétro-cæcale, pelvienne, sous-hépatique, méso-cœliaque.</li><li>Catarrhale → suppurée → gangreneuse → perforation (abcès, plastron, péritonite).</li><li>Compliquée = abcès, plastron, péritonite (perforation).</li><li>Appendicite du sujet âgé → coloscopie à distance (cancer du cæcum).</li><li>Différentiels de l'appendicite : urinaires, gynéco, Meckel, Crohn, adénolymphite, GEA.</li><li>Femme : GEU, torsion d'annexe, salpingite, kyste rompu.</li><li>Appendicite = appendicectomie (cœlioscopie).</li><li>Appendicite : chirurgie en urgence = référence.</li><li>Avant le bloc : à jeun, VVP + hydratation IV, antalgiques, anesthésiste.</li><li>Péritonite : chirurgie en urgence (appendicectomie + toilette), ATB courte 3-5 j.</li><li>Plastron = ATB d'abord, chirurgie à froid ; abcès = drainage + ATB.</li><li>Douleur migrant de l'épigastre vers la FID + McBurney + fièvre modérée.</li></ul>"
+},
+{
+"id": "SQI2",
+"titre": "7 questions isolées (hépato, transit)",
+"items": "Items 163, 282, 284, 300",
+"free": true,
+"intro": "<p>Questions isolées</p>",
+"qs": [
+{
+"type": "qru",
+"q": "<p>Quelle est la prévalence du syndrome de l’intestin irritable dans la population générale dans le monde ?</p>",
+"opts": [
+"1%",
+"2,5 %",
+"4%",
+"10%",
+"20%"
+],
+"ok": [
+2
+],
+"expl": "<p>Selon les critères de Rome IV, la prévalence mondiale du SII est d'environ <b>4 %</b> (10-20 % avec les anciens critères).</p>",
+"retenir": "SII : environ 4 % (Rome IV), femmes ++."
+},
+{
+"type": "qrm",
+"q": "<p>Quel(s) est(sont) le(s) cause(s) neurologique(s) ou métabolique(s) de constipation parmi les suivantes ?</p>",
+"opts": [
+"Diabète",
+"Hyperthyroïdie",
+"Maladie de Parkinson",
+"Hyponatrémie",
+"Hypokaliémie"
+],
+"ok": [
+0,
+2,
+4
+],
+"expl": "<p>Constipation d'origine neurologique / métabolique : diabète (neuropathie), Parkinson, SEP, lésion médullaire, <b>hypo</b>thyroïdie (pas hyper : elle donne une diarrhée), <b>hypercalcémie</b>, hypokaliémie.</p>",
+"retenir": "Constipation : hypothyroïdie, hypercalcémie, hypokaliémie, diabète, Parkinson, médicaments."
+},
+{
+"type": "qru",
+"q": "<p>Concernant l’hépatite virale C, quelle proposition est fausse ?</p>",
+"opts": [
+"Le diagnostic d’hépatite virale C est le plus souvent fait au stade chronique de la maladie",
+"Il existe un traitement efficace de la maladie (guérison virologique &gt; 90%)",
+"Il n’est plus nécessaire de dépister le carcinome hépatocellulaire 2 ans après guérison d’une cirrhose virale C",
+"Cette infection est impliquée dans certaines glomérulonéphrites extra-membraneuses",
+"Il existe une transmission possible de la mère à l’enfant pendant la grossesse en cas d’hépatite C chronique active"
+],
+"ok": [
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>C. le dépistage du chc à vie est nécessaire si l'hépatite C était au stade de cirrhose au diagnostic (même si le vhc a été éradiqué</p></div><p>On cherche la proposition <b>fausse</b>. Après une cirrhose C guérie, le risque de CHC persiste : le dépistage (écho tous les 6 mois) se poursuit à vie.</p>",
+"retenir": "Cirrhose = dépistage du CHC à vie, même après guérison virologique."
+},
+{
+"type": "qrm",
+"q": "<p>Quel(s) est(sont) le(s) signe(s) d’alarme incitant à la réalisation d’une coloscopie en cas de constipation ?</p>",
+"opts": [
+"Efforts de poussée importants",
+"Rectorragies",
+"Manœuvres digitales d’extraction des selles",
+"Altération de l’état général",
+"Modification récente du transit"
+],
+"ok": [
+1,
+3,
+4
+],
+"expl": "<p>Signes d'alarme → coloscopie : rectorragies, AEG / amaigrissement, modification récente du transit après 50 ans, anémie, ATCD familial de CCR. Les efforts de poussée et manœuvres digitales évoquent une dyschésie, pas une néoplasie.</p>",
+"retenir": "Constipation + alarme (rectorragie, AEG, changement récent, > 50 ans, anémie) = coloscopie."
+},
+{
+"type": "qrm",
+"q": "<p>Vous voyez en consultation un patient suivi par une cirrhose liée à un syndrome métabolique. Une échographie hépatique a trouvé un nodule hépatique de 3 cm du segment IV. Le patient a une bonne fonction hépatique (Child Pugh A 5) et son taux sérique d'alpha-foetoprotéine est normal (5 ng/l, N&lt;10). Vous suspectez un carcinome hépatocellulaire (CHC).Quel(les) est(sont) la (ou les) bonne(s) réponse(s) à propos du CHC ?</p>",
+"opts": [
+"Une alpha-foetoprotéine normale permet d’éliminer le diagnostic de CHC",
+"La présence d’une hypodensité au temps artériel et une hyperdensité au temps portal permet d’établir le diagnostic non invasif de CHC",
+"La biopsie hépatique tumorale est une modalité diagnostique pour le CHC",
+"Les critères diagnostiques non invasifs de CHC à l’imagerie ne peuvent être utiliser qu'en cas de cirrhose",
+"Le Pet scanner au 18 FDG peut être utilisé comme outil diagnostique du CHC"
+],
+"ok": [
+2,
+3
+],
+"expl": "<p>L'AFP normale n'élimine pas un CHC. Critère non invasif (uniquement sur cirrhose) : nodule > 1 cm hyper<b>vascularisé au temps artériel</b> avec <b>lavage au temps portal / tardif</b>, l'inverse de ce qui est proposé. La biopsie reste possible. Le TEP-FDG n'est pas un outil diagnostique du CHC.</p>",
+"retenir": "CHC non invasif : cirrhose + nodule > 1 cm wash-in artériel / wash-out portal."
+},
+{
+"type": "qrm",
+"q": "<p>Quelles sont les causes possibles d’une cytolyse à 2 fois la limite supérieure de la normale?</p>",
+"opts": [
+"Une hépatite virale E chronique",
+"Une hépatite virale B chronique",
+"Une hépatite virale C chronique",
+"Un infarctus du myocarde",
+"Une hépatite toxique"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4
+],
+"expl": "<p>Toute hépatopathie chronique peut donner une cytolyse modérée (B, C, E chez l'immunodéprimé), de même que les toxiques. L'IDM aussi : l'ASAT est présente dans le muscle cardiaque.</p>",
+"retenir": "Cytolyse modérée : virus, alcool, NASH, médicaments… et causes musculaires (ASAT)."
+},
+{
+"type": "qrm",
+"q": "<p>Concernant les hépatites virales, quelles sont les affirmations vraies ?</p>",
+"opts": [
+"L’hépatite virale A peut se compliquer d’hépatite fulminante",
+"L’hépatite virale B aiguë devient chronique dans 60% des cas chez un adulte qui contracte l’infection",
+"L’hépatite virale C aiguë entraine un ictère chez la majorité des adultes qui contractent l’infection",
+"L’hépatite virale A peut devenir chronique chez les personnes atteintes d’immunodépression",
+"Il existe une vaccination efficace contre le virus de l’hépatite delta"
+],
+"ok": [
+0,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>B. Ds 10% des cas seulement qd la contamination a lieu à l'âge adulte et ds 90% des cas lorsque la contamination à lieu en néonatal</p><p>C. asymptomatique ds 90% des cas comme toutes les hépatites virales</p><p>D. Non. En revanche, c'est l'hépatite E qui peut devenir chronique en cas d'immunodépression</p><p>E. OUI la vaccination contre le VHB protège de l'hépatite Delta</p></div><p>VHA : peut donner une hépatite fulminante, jamais chronique. VHB de l'adulte : chronicité dans environ 10 % des cas (90 % chez le nouveau-né). VHC aigu : asymptomatique dans environ 90 % des cas. Le vaccin anti-VHB protège du delta (virus défectif).</p>",
+"retenir": "Chronicité : VHB adulte 10 %, néonatal 90 % ; VHC 70-80 % ; VHE chronique chez l'immunodéprimé."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>SII : environ 4 % (Rome IV), femmes ++.</li><li>Constipation : hypothyroïdie, hypercalcémie, hypokaliémie, diabète, Parkinson, médicaments.</li><li>Cirrhose = dépistage du CHC à vie, même après guérison virologique.</li><li>Constipation + alarme (rectorragie, AEG, changement récent, > 50 ans, anémie) = coloscopie.</li><li>CHC non invasif : cirrhose + nodule > 1 cm wash-in artériel / wash-out portal.</li><li>Cytolyse modérée : virus, alcool, NASH, médicaments… et causes musculaires (ASAT).</li><li>Chronicité : VHB adulte 10 %, néonatal 90 % ; VHC 70-80 % ; VHE chronique chez l'immunodéprimé.</li></ul>"
+},
+{
+"id": "TCS1",
+"titre": "TCS · diarrhée chronique",
+"items": "Item 286",
+"free": true,
+"intro": "<p>Une patiente de 34 ans consulte pour une diarrhée chronique.</p>",
+"qs": [
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous évoquez une maladie coeliaque</p><p><b>Nouvelle information :</b> Et que les biopsies duodénales sont normales</p></div><p>La nouvelle information rend l’hypothèse diagnostique…</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+0,
+1
+],
+"w": [
+1,
+1,
+0,
+0,
+0
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>A. En l'absence de régime sans gluten suivi depuis plusieurs mois qui pourrait normaliser une atrophie villositaire et d'autres anomalies.</p></div>",
+"retenir": "Biopsies duodénales normales (hors régime sans gluten) = maladie cœliaque peu probable."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous évoquez une colite microscopique</p><p><b>Nouvelle information :</b> Et que l’endoscopie oeso-gastroduodénale est normale</p></div><p>La nouvelle information rend l’hypothèse diagnostique…</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+2,
+3
+],
+"w": [
+0,
+0,
+1,
+1,
+0
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Les réponses auraient été différentes s'il s'agissait d'une endoscopie digestive basse avec des biopsies étagées normales, qui rendaient le diagnostic peu probable ou très peu probable.</p><p>D. L'endoscopie haute apporte peu d'informations et élimine seulement d'autres étiologies peu fréquentes (par exemple, maladie coeliaque).</p></div>",
+"retenir": "Colite microscopique : diagnostic sur biopsies coliques étagées (endoscopie basse), l'EOGD ne sert à rien."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Biopsies duodénales normales (hors régime sans gluten) = maladie cœliaque peu probable.</li><li>Colite microscopique : diagnostic sur biopsies coliques étagées (endoscopie basse), l'EOGD ne sert à rien.</li></ul>"
+},
+{
+"id": "TCS2",
+"titre": "TCS · diarrhée chronique et douleurs",
+"items": "Items 282, 286",
+"free": true,
+"intro": "<p>Une patiente de 26 ans consulte pour des douleurs abdominales avec troubles du transit à type de diarrhée chronique.</p>",
+"qs": [
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous évoquez une maladie de Crohn</p><p><b>Nouvelle information :</b> Et que la CRP est à 15 mg/dL et la calprotectine à 1500 µg/g de selles</p></div><p>La nouvelle information rend l’hypothèse diagnostique…</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+3,
+4
+],
+"w": [
+0,
+0,
+0,
+1,
+1
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Si le caractère chronique n'étant pas précisé, d'autres diagnostics auraient été possibles également, comme une gastroentérite aiguë.</p></div><p>CRP élevée + calprotectine très élevée (> 250) = inflammation organique intestinale : arguments forts pour une MICI.</p>",
+"retenir": "Calprotectine fécale élevée = organique (MICI) ; normale = plutôt fonctionnel."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vois évoquez un syndrome de l’intestin irritable</p><p><b>Nouvelle information :</b> Et que l’iléo-coloscopie avec biopsies est normale</p></div><p>La nouvelle information rend l’hypothèse diagnostique…</p>",
+"opts": [
+"improbable",
+"peu probable",
+"ni plus ou moins probable",
+"probable",
+"certain"
+],
+"ok": [
+2,
+3,
+4
+],
+"w": [
+0,
+0,
+1,
+1,
+1
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>E. La normalité des biopsies coliques n'exclut pas une colite microscopique car les lésions peuvent être discontinues et non ciblées par des biopsies réalisées au hasard, et, en l'absence d'informations sur une endoscopie digestive haute, d'autres hypothèses ne peuvent être écartées.</p></div>",
+"retenir": "SII = diagnostic positif (Rome IV) ; une coloscopie normale le conforte."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Calprotectine fécale élevée = organique (MICI) ; normale = plutôt fonctionnel.</li><li>SII = diagnostic positif (Rome IV) ; une coloscopie normale le conforte.</li></ul>"
+},
+{
+"id": "mDP1",
+"titre": "Dysphagie et amaigrissement : cancer de l'œsophage",
+"items": "Item 302",
+"free": false,
+"intro": "<p>Un homme de 69 ans est hospitalisé pour amaigrissement de 15 kg en 4 mois (80 kg à 65 kg). Il présente une dysphagie aux solides rapidement évolutive. Depuis 2 semaines, il ne s’alimente plus qu’avec des liquides.Depuis un cancer de la langue il y 3 ans il a cessé de fumer mais garde une consommation d’alcool excessive (60g/24h). L’examen clinique ne retrouve pas d’adénopathie périphérique; il existe une circulation veineuse collatérale abdominale porto-cave mais pas d’angiome stellaire.</p>",
+"qs": [
+{
+"type": "qru",
+"q": "<p>Quel diagnostic vous semble le plus probable ?</p>",
+"opts": [
+"Adénocarcinome de la bouche œsophagienne",
+"Carcinome épidermoïde œsophagien",
+"Adénocarcinome gastrique",
+"Adénocarcinome œsophagien",
+"Achalasie"
+],
+"ok": [
+1
+],
+"expl": "<p>Dysphagie rapidement progressive + amaigrissement + terrain alcoolo-tabagique + ATCD de cancer ORL : <b>carcinome épidermoïde</b> de l'œsophage.</p>",
+"retenir": "Épidermoïde = alcool-tabac, ATCD ORL ; adénocarcinome = RGO, Barrett, obésité."
+},
+{
+"type": "qrm",
+"q": "<p>Quel(s) est(sont) le(s) argument(s) en faveur du type épidermoïde d'un carcinome œsophagien ?</p>",
+"opts": [
+"Dysphagie d’aggravation rapidement progressive",
+"Terrain alcoolo-tabagique",
+"ATCD personnel de reflux gastro-œsophagien",
+"ATCD familial de cancer de l’œsophage",
+"Amaigrissement"
+],
+"ok": [
+1
+],
+"indisp": [
+1
+],
+"expl": "<p>Le terrain alcoolo-tabagique oriente vers l'épidermoïde. Le RGO oriente vers l'adénocarcinome. La dysphagie et l'amaigrissement sont communs aux deux.</p>",
+"retenir": "Alcool-tabac → épidermoïde (+ chercher un 2e cancer ORL / bronchique)."
+},
+{
+"type": "qrm",
+"q": "<p>Quelle(s) est(sont) la(les) réponse(s) exacte(s) concernant la prévalence et l’épidémiologie du cancer de l’œsophage ?</p>",
+"opts": [
+"Incidence en diminution",
+"Plus fréquent chez les hommes",
+"Augmentation de l’incidence des épidermoïdes",
+"Augmentation de l’incidence des adénocarcinomes",
+"Plus de 10000 cas par an"
+],
+"ok": [
+1,
+3
+],
+"expl": "<p>Cancer de l'œsophage : environ 5 000 cas/an en France, prédominance masculine. L'incidence des épidermoïdes baisse, celle des adénocarcinomes augmente (RGO, obésité).</p>",
+"retenir": "Œsophage : épidermoïdes ↓, adénocarcinomes ↑ ; ~5 000 cas/an."
+},
+{
+"type": "qru",
+"q": "<p>Quel examen demandez-vous pour confirmer le diagnostic de cancer de l’œsophage ?</p>",
+"opts": [
+"PET scanner",
+"Echoendoscopie œsophagienne",
+"Transit oeso-gastro-duodénal",
+"Endoscopie œsogastroduodénale",
+"TDM thoraco-abdomino pelvien"
+],
+"ok": [
+3
+],
+"expl": "<p>Diagnostic = <b>EOGD avec biopsies</b>. Écho-endoscopie et TEP servent au bilan d'extension.</p>",
+"retenir": "Dysphagie = EOGD + biopsies en 1re intention."
+},
+{
+"type": "qru",
+"q": "<p>Quel examen demandez-vous en 1ère intention pour préciser le stade de la maladie ?</p>",
+"opts": [
+"TDM thorax",
+"TDM thoraco-abdominale",
+"Scintigraphie osseuse",
+"Echoendoscopie",
+"PET scanner"
+],
+"ok": [
+1
+],
+"expl": "<p>Bilan d'extension de 1re intention : <b>TDM thoraco-abdominal</b> (± pelvis). Puis TEP-scanner et écho-endoscopie si le patient est opérable et sans métastase. Ici, ajouter une panendoscopie ORL (terrain).</p>",
+"retenir": "Extension : TDM TAP → si résécable : TEP + écho-endoscopie ; ORL si épidermoïde."
+},
+{
+"type": "qrm",
+"q": "<p>Quelle(s) exploration(s) supplémentaire(s) pouvez-vous réaliser dans le bilan initial pour orienter la stratégie</p><p>thérapeutique ?</p>",
+"opts": [
+"Dosage de l’albumine sérique",
+"Créatininémie et débit de filtration glomérulaire",
+"Taux de prothrombine",
+"Epreuve fonctionnelle respiratoire",
+"Echographie cardiaque"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4
+],
+"expl": "<p>Bilan d'opérabilité : état nutritionnel (albumine), fonction rénale (chimio), hépatique (TP ; il a une CVC = hépatopathie alcoolique ?), respiratoire (EFR) et cardiaque.</p>",
+"retenir": "Opérabilité : nutrition, cœur, poumon, foie (cirrhose = contre-indication fréquente), rein."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Épidermoïde = alcool-tabac, ATCD ORL ; adénocarcinome = RGO, Barrett, obésité.</li><li>Alcool-tabac → épidermoïde (+ chercher un 2e cancer ORL / bronchique).</li><li>Œsophage : épidermoïdes ↓, adénocarcinomes ↑ ; ~5 000 cas/an.</li><li>Dysphagie = EOGD + biopsies en 1re intention.</li><li>Extension : TDM TAP → si résécable : TEP + écho-endoscopie ; ORL si épidermoïde.</li><li>Opérabilité : nutrition, cœur, poumon, foie (cirrhose = contre-indication fréquente), rein.</li></ul>"
+},
+{
+"id": "KFP1",
+"titre": "Rectorragies et malaise du sujet âgé",
+"items": "Item 355",
+"free": false,
+"intro": "<p>Mr M. un homme de 76 ans à la retraite, consulte aux urgences car il a constaté depuis plusieurs jours la présence de sang en allant à la selle. Il a présenté un petit malaise au domicile 1 heure avant de venir aux urgences avec son épouse qui l’a véhiculé.Il n’a pas d’antécédent particulier en dehors d’une appendicectomie à l’âge de 11 ans et ne prend aucun traitement.Il raconte qu’il a réalisé une fibroscopie il y a deux ans pour un problème de reflux et une coloscopie dans le cadre de dépistage de polypes. La fibroscopie était normale en dehors de la présence d’une hernie hiatale de 2 cm par glissement. La coloscopie a retrouvé des diverticules du sigmoïde et a permis l’ablation d’un polype de 1 cm du colon gauche.Aux urgences, on note une pression artérielle au repos de 100/45 mmHg, une fréquence cardiaque de 110 par min.</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Quels sont les éléments qui vous incitent à hospitaliser le patient dans l’immédiat ? Sélectionnez 3 items.</p>",
+"opts": [
+"Sexe masculin",
+"Age de 76 ans",
+"A la retraite",
+"Accompagné de son épouse",
+"Absence d’antécédent notable",
+"Début saignement depuis plusieurs jours",
+"Hernie hiatale",
+"Antécédent de polype colique",
+"Antécédent de diverticule colique",
+"PA de 100/45 mm Hg",
+"Fréquence cardiaque à 110/min"
+],
+"ok": [
+1,
+9,
+10
+],
+"qrp": true,
+"label": "QRP (3)",
+"expl": "<p>Âge > 75 ans et retentissement hémodynamique (hypotension, tachycardie, malaise) = gravité → hospitalisation immédiate en soins continus.</p>",
+"retenir": "Hémorragie digestive grave : âge, malaise, PAS < 100, FC > 100, anémie, comorbidités."
+},
+{
+"type": "qrm",
+"q": "<p>Après l’hospitalisation en unité de surveillance continue, quelles mesures prenez-vous ? Sélectionnez 4 items.</p>",
+"opts": [
+"Pose de voie d’abord veineuse de bon calibre",
+"Transfusion de culots globulaire sans délai",
+"Oxygénothérapie nasale",
+"Demande de consultation de gastroentérologie",
+"Mise sous scope pour surveillance du pouls et de la tension en continu",
+"Recherche de sang dans les selles",
+"Bilan biologique avec NFS-plaquettes, ionogramme sanguin, urée, créatinine",
+"Mise en place de sonde nasogastrique",
+"Isolement strict du patient",
+"Groupage sanguin"
+],
+"ok": [
+0,
+4,
+6,
+9
+],
+"qrp": true,
+"label": "QRP (4)",
+"expl": "<p>Mesures immédiates : 2 VVP de bon calibre, scope, bilan (NFS, iono, urée, créat, hémostase), <b>groupe-RAI</b>. Transfusion seulement selon l'Hb (cible 7-8 g/dl, 9 si coronarien), pas « sans délai » systématique. La SNG n'est pas recommandée en routine.</p>",
+"retenir": "Hémorragie digestive : 2 VVP, groupe-RAI, NFS-hémostase, scope ; transfusion selon l'Hb."
+},
+{
+"type": "qrm",
+"q": "<p>Comment explorez-vous ce patient en urgence ? Sélectionnez 2 items.</p>",
+"opts": [
+"TDM abdomino-pelvien",
+"Vidéocapsule colique",
+"Entéroscopie haute",
+"Entéroscopie basse",
+"Rectoscopie",
+"Rectosigmoïdoscopie",
+"Coloscopie sous anesthésie générale",
+"Endoscopie œso-gastro-duodénale",
+"Vidéocapsule du grêle",
+"Angio-TDM"
+],
+"ok": [
+5,
+7
+],
+"qrp": true,
+"label": "QRP (2)",
+"expl": "<p>Rectorragie avec retentissement hémodynamique : on élimine d'abord une origine <b>haute</b> (EOGD : 10-15 % des rectorragies abondantes), puis rectosigmoïdoscopie / coloscopie après préparation. L'angio-TDM se discute si l'hémorragie est active et non localisée.</p>",
+"retenir": "Rectorragie grave : EOGD d'abord (origine haute), puis exploration basse."
+}
+],
+"cours": "<p><b>Les points à retenir de ce dossier :</b></p><ul><li>Hémorragie digestive grave : âge, malaise, PAS < 100, FC > 100, anémie, comorbidités.</li><li>Hémorragie digestive : 2 VVP, groupe-RAI, NFS-hémostase, scope ; transfusion selon l'Hb.</li><li>Rectorragie grave : EOGD d'abord (origine haute), puis exploration basse.</li></ul>"
+}
+]
+};
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const L="ABCDEFGHIJKLMNOPQRST";
+const KEY="annale-hge-juil24-v1";
+const TOTAL=60*60;
+const store={get(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}},clear(){try{localStorage.removeItem(KEY)}catch(e){}}};
+const Q=[];EXAM.dps.forEach((dp,d)=>dp.qs.forEach((q,i)=>Q.push({d,i,q,dp})));
+let S=null, tick=null, paused=false;
+function fresh(){return{pos:0,ans:{},left:TOTAL,done:false,override:{}}}
+function img(k,alt){return `<img src="${IMGS[k]}" alt="${alt||''}" data-zoom>`}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function fmt(t){t=Math.max(0,t|0);return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+function show(id){["vStart","vExam","vRes","vCorr"].forEach(v=>$("#"+v).hidden=v!==id);window.scrollTo(0,0)}
+function antibio(){const r=[["Amoxicilline","S"],["Imipénème","S"],["Gentamicine","S"],["Vancomycine","S"],["Cotrimoxazole","R"],["Teicoplanine","S"],["Linézolide","S"],["Lévofloxacine","R"],["Nitrofurantoïne","R"]];
+ return `<div class="tblwrap"><table class="abg"><tr><td colspan="2"><b>ECBU</b> · urines 2e jet</td></tr><tr><td>Hématies</td><td>50/mm³</td></tr><tr><td>Cellules épithéliales</td><td>absence</td></tr><tr><td>Leucocytes</td><td>150/mm³</td></tr><tr><td>CGP en courtes chaînettes</td><td>quelques</td></tr><tr><td>Culture : <i>Enterococcus faecalis</i></td><td>10⁵/mL</td></tr><tr><td colspan="2"><b>Antibiogramme</b></td></tr>${r.map(([a,b])=>`<tr><td>${a}</td><td class="${b}">${b}</td></tr>`).join("")}</table></div>`}
+
+/* ---------- accueil ---------- */
+$("#dpList").innerHTML=EXAM.dps.map((dp,d)=>`<li data-jd="${d}" style="cursor:pointer" title="Commencer par ce dossier"><span class="id">${dp.id}</span><span>${dp.titre}</span><span class="n">${dp.qs.length} Q</span></li>`).join("");
+const saved=store.get();
+if(saved&&!saved.done&&Object.keys(saved.ans).length){$("#btnResume").hidden=false}
+if(saved&&saved.done){$("#btnResume").hidden=false;$("#btnResume").textContent="Voir mes résultats"}
+$("#btnStart").onclick=()=>{S=fresh();store.set(S);startExam()};
+$("#btnResume").onclick=()=>{S=saved;if(S.done)results();else startExam()};
+$("#btnDirect").onclick=()=>{S=S||saved||fresh();openCorr(0)};
+
+/* ---------- épreuve ---------- */
+function steps(){const el=$("#steps");if(!S||$("#vExam").hidden&&!S.done){el.innerHTML="";return}
+ const cur=Q[S.pos]?Q[S.pos].d:-1;
+ el.innerHTML=EXAM.dps.map((dp,d)=>{const qs=Q.filter(x=>x.d===d);const done=qs.every(x=>S.ans[x.d+"-"+x.i]!==undefined);return `<span data-jd="${d}" style="cursor:pointer" title="Aller à ${dp.titre}" class="${d===cur&&!S.done?'on':done?'done':''}">${dp.id}</span>`}).join("")}
+function startExam(){show("vExam");$("#timer").hidden=false;$("#btnPause").hidden=false;paused=false;$("#btnPause").textContent="Pause";renderQ();runTimer()}
+function runTimer(){clearInterval(tick);tick=setInterval(()=>{if(paused||!S||S.done)return;S.left--;drawTimer();if(S.left%5===0)store.set(S);if(S.left<=0){finish()}},1000);drawTimer()}
+function drawTimer(){const t=$("#timer");t.textContent=fmt(S.left);t.classList.toggle("low",S.left<=300)}
+$("#btnPause").onclick=()=>{paused=!paused;$("#btnPause").textContent=paused?"Reprendre":"Pause";$("#qpanel").style.filter=paused?"blur(6px)":"";$("#enonce").style.filter=paused?"blur(6px)":""};
+
+function enonceHTML(d,upto){const dp=EXAM.dps[d];let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div>${dp.intro}`;
+ if(dp.introImg)h+=`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`;
+ dp.qs.forEach((q,i)=>{if(i<upto&&q.ctx){h+=`<div class="add"><div class="note">Ajouté en Q${i+1}</div>${q.ctx}${q.img?`<div class="imgs">${q.img.map(k=>img(k)).join("")}</div>`:""}${q.table==="antibio"?antibio():""}</div>`}});return h}
+
+function isFree(dp){return dp.free||/^(QI|SQI|TCS)/.test(dp.id)}
+function opened(n){const {d,i,dp}=Q[n];if(isFree(dp))return true;for(let k=0;k<i;k++){if(S.ans[d+"-"+k]===undefined)return false}return true}
+function navHTML(){return `<div class="qnav">`+EXAM.dps.map((dp,d)=>`<div class="qnav-dp"><span class="qnav-id">${dp.id}${isFree(dp)?"":" 🔒"}</span>`+Q.map((x,n)=>({x,n})).filter(o=>o.x.d===d).map(({x,n})=>{const k=x.d+"-"+x.i;const done=S.ans[k]!==undefined;const ok=opened(n);return `<button class="qn${n===S.pos?" cur":""}${done?" done":""}" data-n="${n}" ${ok?"":"disabled"} title="${ok?"":"Validez les questions précédentes du dossier"}">${x.i+1}</button>`}).join("")+`</div>`).join("")+`</div>`}
+function renderQ(){
+ if(S.pos>=Q.length)S.pos=Q.length-1;
+ const {d,i,q,dp}=Q[S.pos];steps();
+ const k=d+"-"+i, prev=S.ans[k], answered=prev!==undefined, free=isFree(dp), locked=answered&&!free;
+ $("#enonce").innerHTML=enonceHTML(d,i);
+ const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+ let h=navHTML();
+ h+=`<div class="qhead"><span class="qnum">${dp.id} · Q${i+1}/${dp.qs.length}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}<span class="spacer"></span><span class="note">${S.pos+1} / ${Q.length}</span></div>`;
+ if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+ if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+ if(q.table==="antibio")h+=antibio();
+ h+=`<div class="qtext">${q.q}</div>`;
+ const pa=Array.isArray(prev)?prev:[];
+ if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const t=q.type==="qrm"?"checkbox":"radio";
+  h+=`<ul class="opts">${q.opts.map((o,j)=>`<li class="opt"><label for="o${j}"><input type="${t}" name="opt" id="o${j}" value="${j}" ${pa.includes(j)?"checked":""} ${locked?"disabled":""}><span class="L">${L[j]}</span><span>${o}</span></label></li>`).join("")}</ul>`}
+ else if(q.type==="qroc"){h+=`<div class="qroc"><label class="note" for="qroc">Réponse courte (quelques mots)</label><input id="qroc" autocomplete="off" placeholder="Votre réponse" value="${answered&&prev?esc(prev):""}" ${locked?"disabled":""}></div>`}
+ else if(q.type==="self"){h+=`<p class="note">Question d'image : la seule copie du sujet est annotée, l'image est donc donnée en correction. Réfléchis à ta réponse, puis valide ; tu t'auto-noteras en correction.</p>`}
+
+ else if(q.type==="info"){h+=`<p class="note">Question neutralisée à l'épreuve : validez pour continuer (1 point pour tous).</p>`}
+ let st="";
+ if(locked)st=`<p class="lockmsg">🔒 Réponse validée : dans un dossier progressif, elle n'est plus modifiable. Vous pouvez la relire.</p>`;
+ else if(answered&&free)st=`<p class="savedmsg">✓ Réponse enregistrée. Vous pouvez la modifier jusqu'à la fin de l'épreuve.</p>`;
+ else if(!free)st=`<p class="note">Dossier progressif : une fois validée, la réponse ne pourra plus être modifiée.</p>`;
+ h+=st;
+ const nAns=Object.keys(S.ans).length;
+ h+=`<div class="actions navrow"><button class="btn" id="bPrev" ${S.pos===0?"disabled":""}>◀ Précédente</button>${locked?"":`<button class="btn primary" id="btnVal">${answered?"Enregistrer la modification":"Valider"}</button>`}<button class="btn" id="bNext" ${S.pos>=Q.length-1||!opened(S.pos+1)?"disabled":""}>Suivante ▶</button><span class="spacer"></span><button class="btn ghost" id="bEnd">Terminer l'épreuve (${nAns}/${Q.length})</button></div>`;
+ h+=`<div class="confirm" id="conf" hidden><span id="confTxt">Réponse définitive ?</span><button class="btn primary small" id="ok">Confirmer</button><button class="btn small" id="no">Modifier</button></div>`;
+ $("#qpanel").innerHTML=h;
+ $("#qpanel").querySelectorAll(".qn").forEach(b=>b.onclick=()=>{S.pos=+b.dataset.n;store.set(S);renderQ();window.scrollTo(0,0)});
+ $("#bPrev").onclick=()=>{S.pos--;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bNext").onclick=()=>{S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bEnd").onclick=()=>{const left=Q.length-Object.keys(S.ans).length;if(confirmEnd(left))finish()};
+ if(locked)return;
+ let a=null,empty=true;
+ const read=()=>{if(q.type==="qrm")a=[...document.querySelectorAll("input[name=opt]:checked")].map(x=>+x.value);
+  else if(q.type==="qru"||q.type==="tcs"){const c=document.querySelector("input[name=opt]:checked");a=c?[+c.value]:[]}
+  else if(q.type==="qroc")a=$("#qroc").value.trim();
+  else a=true;
+  empty=(Array.isArray(a)&&!a.length)||a===""||a==null};
+ const save=()=>{S.ans[k]=empty?null:a;if(S.pos<Q.length-1&&opened(S.pos+1))S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#btnVal").onclick=()=>{read();
+  if(free){save();return}
+  $("#confTxt").textContent=(empty?"Aucune réponse : la question vaudra 0. ":"")+"Réponse définitive (non modifiable ensuite) ?";
+  $("#btnVal").hidden=true;$("#conf").hidden=false;$("#ok").focus()};
+ $("#no").onclick=()=>{$("#conf").hidden=true;$("#btnVal").hidden=false};
+ $("#ok").onclick=save;
+}
+function confirmEnd(left){const box=$("#conf");$("#confTxt").textContent=(left?left+" question(s) sans réponse. ":"")+"Rendre la copie et voir la note ?";box.hidden=false;const v=$("#btnVal");if(v)v.hidden=true;$("#ok").onclick=()=>finish();$("#no").onclick=()=>{box.hidden=true;if(v)v.hidden=false};return false}
+function jumpDp(d){const n=Q.findIndex(x=>x.d===d);if(n<0)return;let m=n;while(m+1<Q.length&&Q[m+1].d===d&&S.ans[Q[m].d+"-"+Q[m].i]!==undefined)m++;S.pos=m;store.set(S);if($("#vExam").hidden)startExam();else{renderQ();window.scrollTo(0,0)}}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-jd]");if(!t)return;if(!S||S.done){S=fresh();store.set(S)}jumpDp(+t.dataset.jd)});
+
+/* ---------- notation ---------- */
+function inPoly(x,y,pts){let c=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const[xi,yi]=pts[i],[xj,yj]=pts[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
+function norm(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim()}
+function grade(d,i){const q=EXAM.dps[d].qs[i];let a=S.ans[d+"-"+i];const k=d+"-"+i;
+ if(S.override&&S.override[k]!==undefined)return S.override[k];
+ if(a==null)return 0;
+ if(q.type==="qru")return a.length===1&&a[0]===q.ok[0]?1:0;
+ if(q.type==="tcs")return a.length===1?q.w[a[0]]:0;
+ if(q.type==="qrm"){if(q.neut)a=a.filter(x=>!q.neut.includes(x));if(!a.length)return 0;
+  if((q.inacc||[]).some(x=>a.includes(x)))return 0;
+  if((q.indisp||[]).some(x=>!a.includes(x)))return 0;
+  let n=0;for(let k2=0;k2<q.opts.length;k2++){if(a.includes(k2)!==q.ok.includes(k2))n++}
+  if(/QRP/i.test((q.label||'')+' '+(q.q||'')+' '+(q.tag||''))||q.qrp||q.opts.length>5){const g=a.filter(x=>q.ok.includes(x)).length,ex=Math.max(0,a.length-q.ok.length);return Math.max(0,(g-ex)/q.ok.length)}return n===0?1:n===1?.5:n===2?.2:0}
+ if(q.type==="info")return 1;
+ if(q.type==="self")return 0;
+ if(q.type==="qroc"){const s=norm(a);if(q.kw){let m=0;q.kw.forEach(([kk,v])=>{if(s.includes(norm(kk)))m=Math.max(m,v)});return m}return q.keys.some(kk=>s.includes(norm(kk)))?1:0}
+ if(q.type==="qzone"){return inPoly(a.x*q.zoneW,a.y*q.zoneH,q.zone)?1:0}
+ return 0}
+function f1(x){return (Math.round(x*100)/100).toString().replace(".",",")}
+
+function finish(){clearInterval(tick);S.done=true;store.set(S);$("#timer").hidden=true;$("#btnPause").hidden=true;results()}
+function results(){show("vRes");steps();let tot=0,max=Q.length;const byDp=EXAM.dps.map(()=>[0,0]),byR={A:[0,0],B:[0,0]};
+ Q.forEach(({d,i,q})=>{const g=grade(d,i);tot+=g;byDp[d][0]+=g;byDp[d][1]++;if(q.rang){byR[q.rang][0]+=g;byR[q.rang][1]++}});
+ $("#sBig").innerHTML=`${f1(tot/max*20)}<small> / 20</small>`;
+ const used=TOTAL-S.left;
+ $("#sSub").textContent=`${f1(tot)} points sur ${max} · temps utilisé ${fmt(used)}`;
+ $("#sBars").innerHTML=EXAM.dps.map((dp,d)=>`<div class="barrow"><span class="mono">${dp.id}</span><div class="track"><div class="fill" style="width:${byDp[d][0]/byDp[d][1]*100}%"></div></div><span class="v">${f1(byDp[d][0])}/${byDp[d][1]}</span></div>`).join("")+
+  ["A","B"].filter(r=>byR[r][1]).map(r=>`<div class="barrow"><span><span class="rk ${r.toLowerCase()}">${r}</span></span><div class="track"><div class="fill" style="width:${byR[r][0]/byR[r][1]*100}%;background:var(--rk${r})"></div></div><span class="v">${f1(byR[r][0])}/${byR[r][1]}</span></div>`).join("");
+ $("#sGrid").innerHTML=Q.map(({d,i,dp},n)=>{const g=grade(d,i);return `<button class="${g===1?'s1':g===0?'s0':'sp'}" data-go="${d}-${i}">${dp.id.replace("DP","")}.${i+1} · ${f1(g)}</button>`}).join("");
+ $("#sGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{const[d,i]=b.dataset.go.split("-").map(Number);openCorr(d,i)});
+}
+$("#btnCorr").onclick=()=>openCorr(0);
+$("#btnAgain").onclick=()=>{store.clear();S=fresh();store.set(S);startExam()};
+$("#btnBackRes").onclick=()=>{if(S&&S.done)results();else show("vStart")};
+$("#btnHome").onclick=()=>{show("vStart")};
+
+/* ---------- correction ---------- */
+let curD=0;
+function openCorr(d,i){show("vCorr");steps();curD=d;
+ $("#tabs").innerHTML=EXAM.dps.map((dp,k)=>`<button role="tab" aria-selected="${k===d}" data-d="${k}">${dp.id}</button>`).join("");
+ $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCorr(+b.dataset.d));
+ drawCorr(d);
+ if(i!==undefined){const el=document.getElementById("cq-"+d+"-"+i);if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),30)}
+}
+function drawCorr(d){const dp=EXAM.dps[d];const answered=S&&Object.keys(S.ans).length>0;
+ let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div><details class="enon"><summary>Énoncé initial</summary>${dp.intro}${dp.introImg?`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`:""}</details>`;
+ dp.qs.forEach((q,i)=>{const k=d+"-"+i;const a=S?S.ans[k]:undefined;const has=a!==undefined;const g=has?grade(d,i):null;
+  const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+  h+=`<div class="cq" id="cq-${k}"><div class="qhead"><span class="qnum">Q${i+1}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}${has?`<span class="pts ${g===1?'s1':g===0?'s0':'sp'}">${f1(g)} pt</span>`:""}</div>`;
+  if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+  if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+  if(q.table==="antibio")h+=antibio();
+  h+=`<div class="qtext">${q.q}</div>`;
+  if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const mine=Array.isArray(a)?a:[];
+   q.opts.forEach((o,j)=>{const ok=q.ok.includes(j),me=mine.includes(j);
+    let cls=has?(ok&&me?"good":ok&&!me?"miss":!ok&&me?"bad":""):(ok?"good":"");
+    let tagx=(q.indisp||[]).includes(j)?" · indispensable":(q.inacc||[]).includes(j)?" · inacceptable":"";
+    h+=`<div class="copt ${cls}"><span class="mk">${ok?"✓":"✗"}</span><span class="mk">${L[j]}</span><span class="tx">${o}${has&&me?` <span class="mine">· coché${tagx}</span>`:tagx?`<span class="mine">${tagx}</span>`:""}</span>${Array.isArray(q.expl)?`<div class="ex">${q.expl[j]}</div>`:""}</div>`});if(!Array.isArray(q.expl))h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="qroc"){
+   h+=`<div class="free ${has?(g===1?'s1':g?'sp':'s0'):''}" style="background:${has?'':'var(--soft)'}"><b>Votre réponse :</b> ${has&&a?esc(a):"<i>aucune</i>"}<br><b>Attendu :</b> ${q.attendu}</div>`;
+   if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Correction automatique par mots-clés.</span><button class="btn small" data-ov="${k}" data-v="${g?0:1}">${g?"Compter faux":"Ma réponse est juste"}</button></div>`;
+   h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="self"){
+   h+=`${q.cimg?`<div class="imgs">${img(q.cimg)}</div>`:""}<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Auto-évaluation :</span><button class="btn small" data-ov="${k}" data-v="1">J'avais juste</button><button class="btn small" data-ov="${k}" data-v="0.5">À moitié</button><button class="btn small" data-ov="${k}" data-v="0">J'avais faux</button></div>`;
+  } else if(q.type==="info"){
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  } else if(q.type==="qzone"){
+   const pts=q.zone.map(p=>`${p[0]/q.zoneW*100},${p[1]/q.zoneH*100}`).join(" ");
+   h+=`<div class="zonebox" style="cursor:default"><img src="${IMGS[q.img[0]]}" alt="Scanner abdominal"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="${pts}" fill="rgba(46,160,90,.35)" stroke="#2ea05a" stroke-width=".6"/></svg>${has&&a?`<div class="pin" style="left:${a.x*100}%;top:${a.y*100}%"></div>`:""}</div>`;
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  }
+  if(q.fig)h+=`<div class="imgs" style="align-items:flex-end">${img(q.fig[0],q.fig[1])}<span class="note" style="max-width:260px">${q.fig[1]}</span></div>`;
+  h+=(q.retenir?`<div class="retenir"><b class="h">À retenir</b>${q.retenir}</div>`:"")+`</div>`;
+ });
+ if(!answered)h=`<p class="note" style="margin-top:0">Mode correction seule : les bonnes réponses sont en vert.</p>`+h;
+ $("#corrMain").innerHTML=h;
+ $("#corrMain").querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{S.override=S.override||{};S.override[b.dataset.ov]=+b.dataset.v;store.set(S);drawCorr(d)});
+ $("#course").innerHTML=`<div class="row"><h3>Cours résumé · ${dp.id}</h3><span class="spacer"></span><button class="btn small coursebtn" id="cToggle">Afficher</button></div><div class="cbody">${dp.cours.replace(/data-img="(\w+)"/g,(m,k)=>`src="${IMGS[k]}" data-zoom`)}</div><p class="small" style="margin-top:14px">Sources : corrigé officiel de l'épreuve ; explications d'après le Collège des universitaires en hépato-gastro-entérologie (CDU-HGE) et le Collège de chirurgie digestive.</p>`;
+ const c=$("#course");if(matchMedia("(max-width:860px)").matches){c.classList.add("collapsed");const t=$("#cToggle");t.onclick=()=>{c.classList.toggle("collapsed");t.textContent=c.classList.contains("collapsed")?"Afficher":"Masquer"}}
+}
+
+/* ---------- zoom ---------- */
+document.addEventListener("click",e=>{const t=e.target;if(t.matches&&t.matches("img[data-zoom]")){$("#zoomImg").src=t.src;$("#zoom").hidden=false}});
+$("#zoom").onclick=()=>{$("#zoom").hidden=true};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#zoom").hidden=true});
+})();
+</script>
+
+<a id="backhome" href="index.html" style="position:fixed;left:12px;bottom:12px;z-index:9999;background:#1c1c1a;color:#fff;padding:8px 12px;border-radius:99px;font:600 13px system-ui;text-decoration:none;opacity:.85">← Toutes les annales</a>
