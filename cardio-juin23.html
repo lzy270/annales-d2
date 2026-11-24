@@ -1,0 +1,459 @@
+<title>Annale cardio JUIN23</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+/* Layout : copie d'examen — énoncé à gauche, question à droite ; correction en 2 colonnes avec cours collant */
+:root{
+  --bg:#f6f7f9; --paper:#ffffff; --ink:#18212b; --muted:#5d6876; --line:#dfe3e8; --soft:#eef1f5;
+  --accent:#1f4e8c; --accent-soft:#e6eef9;
+  --ok:#1d7a46; --ok-soft:#e3f4ea; --ko:#b42318; --ko-soft:#fdeceb; --mid:#a15c00; --mid-soft:#fdf1df;
+  --rkA:#c62828; --rkB:#d9822b;
+  --f-display:"Bricolage Grotesque",ui-sans-serif,system-ui,sans-serif;
+  --f-body:"Atkinson Hyperlegible",ui-sans-serif,system-ui,-apple-system,sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#11161d; --paper:#18202a; --ink:#e7ecf2; --muted:#9aa6b4; --line:#2b3542; --soft:#1e2833;
+  --accent:#7fb0f0; --accent-soft:#1c2d45;
+  --ok:#5fd08f; --ok-soft:#143323; --ko:#ff8a80; --ko-soft:#3a1a18; --mid:#f2b45a; --mid-soft:#3a2a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font:16px/1.55 var(--f-body);margin:0}
+body::before{content:"";position:fixed;inset:0 0 auto;height:env(safe-area-inset-top,0px);z-index:10;background:var(--paper)}
+h1,h2,h3,h4{font-family:var(--f-display);text-wrap:balance;margin:0;line-height:1.2}
+button{font:inherit;cursor:pointer}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.wrap{max-width:1180px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px))}
+header.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--paper);border-bottom:1px solid var(--line)}
+header.bar .wrap{display:flex;align-items:center;gap:12px;padding-block:10px;flex-wrap:wrap}
+.brand{font-family:var(--f-display);font-weight:800;font-size:17px}
+.brand small{display:block;font-family:var(--f-body);font-weight:400;font-size:12px;color:var(--muted)}
+.spacer{flex:1}
+.steps{display:flex;gap:4px;flex-wrap:wrap}
+.steps span{font:700 11px var(--f-mono);padding:3px 7px;border-radius:5px;background:var(--soft);color:var(--muted)}
+.steps span.on{background:var(--accent);color:var(--paper)}
+.steps span.done{background:var(--accent-soft);color:var(--accent)}
+.timer{font:700 18px var(--f-mono);font-variant-numeric:tabular-nums;padding:4px 10px;border-radius:8px;background:var(--soft)}
+.timer.low{background:var(--ko-soft);color:var(--ko)}
+.btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:9px 16px;font-weight:700}
+.btn:hover{border-color:var(--accent)}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.btn.ghost{background:transparent}
+.btn.small{padding:5px 10px;font-size:13px}
+main{padding-block:24px 64px}
+[hidden]{display:none!important}
+
+/* start */
+.hero{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:28px;display:grid;gap:18px;max-width:780px}
+.hero h1{font-size:clamp(26px,4vw,36px)}
+.hero p{margin:0;color:var(--muted)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.rule{background:var(--soft);border-radius:10px;padding:12px 14px;font-size:14px}
+.rule b{display:block;font-family:var(--f-display);font-size:15px;margin-bottom:2px}
+.dplist{display:grid;gap:6px;margin:0;padding:0;list-style:none}
+.dplist li{display:flex;gap:10px;align-items:baseline;font-size:15px}
+.dplist .id{font:700 12px var(--f-mono);color:var(--accent);min-width:34px}
+.dplist .n{color:var(--muted);font-size:13px;margin-left:auto;white-space:nowrap}
+.row{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+
+/* exam */
+.exam{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.15fr);gap:20px;align-items:start}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:20px;min-width:0}
+.panel h2{font-size:20px}
+.panel .meta{font-size:13px;color:var(--muted);margin-top:2px}
+.enonce{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto}
+.enonce p{margin:.6em 0}
+.enonce .add{border-left:3px solid var(--accent);padding-left:12px;margin-top:14px}
+.imgs{display:flex;gap:10px;flex-wrap:wrap;margin:10px 0}
+.imgs img{max-height:320px;width:auto;max-width:100%;border-radius:8px;border:1px solid var(--line);cursor:zoom-in;background:#000}
+.qhead{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.qnum{font:700 13px var(--f-mono);color:var(--accent)}
+.tag{font:700 11px var(--f-mono);padding:2px 7px;border-radius:5px;background:var(--soft);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.rk{display:inline-grid;place-items:center;width:20px;height:20px;border:2px solid;border-radius:4px;font:700 11px var(--f-mono);vertical-align:middle}
+.rk.a{color:var(--rkA)} .rk.b{color:var(--rkB)}
+.ctx{background:var(--soft);border-radius:10px;padding:2px 14px;margin-bottom:12px}
+.ctx p{margin:.6em 0}
+.qtext{font-size:18px;font-weight:700;margin:6px 0 14px}
+.opts{display:grid;gap:8px;margin:0;padding:0;list-style:none}
+.opt label{display:flex;gap:12px;align-items:flex-start;padding:11px 14px;border:1px solid var(--line);border-radius:10px;cursor:pointer;background:var(--paper)}
+.opt label:hover{border-color:var(--accent)}
+.opt input{margin-top:4px;width:18px;height:18px;accent-color:var(--accent);flex:none}
+.opt .L{font:700 14px var(--f-mono);color:var(--muted);min-width:16px}
+.opt input:checked ~ .L{color:var(--accent)}
+.opt label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.qroc input{width:100%;padding:12px 14px;border:1px solid var(--line);border-radius:10px;background:var(--paper);color:var(--ink);font:inherit}
+.zonebox{position:relative;display:inline-block;max-width:100%;cursor:crosshair}
+.zonebox img{display:block;max-width:100%;border-radius:8px}
+.zonebox .pin{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:3px solid #fff;background:#e5484d;box-shadow:0 0 0 2px #e5484d;pointer-events:none}
+.zonebox svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.actions{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-top:18px}
+.confirm{display:flex;gap:10px;align-items:center;flex-wrap:wrap;background:var(--mid-soft);border-radius:10px;padding:10px 12px;font-size:14px}
+.note{font-size:13px;color:var(--muted)}
+
+/* results */
+.score{display:grid;grid-template-columns:auto 1fr;gap:24px;align-items:center}
+.big{font:800 64px/1 var(--f-display);font-variant-numeric:tabular-nums}
+.big small{font-size:24px;color:var(--muted)}
+.bars{display:grid;gap:10px}
+.barrow{display:grid;grid-template-columns:44px 1fr 70px;gap:10px;align-items:center;font-size:14px}
+.barrow .track{height:10px;border-radius:5px;background:var(--soft);overflow:hidden}
+.barrow .fill{height:100%;background:var(--accent)}
+.barrow .v{font:700 13px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.grid-q{display:flex;flex-wrap:wrap;gap:6px;margin-top:14px}
+.grid-q button{font:700 12px var(--f-mono);border:0;border-radius:6px;padding:6px 8px;min-width:58px}
+.s1{background:var(--ok-soft);color:var(--ok)} .s0{background:var(--ko-soft);color:var(--ko)} .sp{background:var(--mid-soft);color:var(--mid)}
+
+/* correction */
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:16px}
+.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:8px;padding:7px 12px;font-weight:700;font-size:14px}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--paper)}
+.corr{display:grid;grid-template-columns:minmax(0,1.5fr) minmax(0,1fr);gap:20px;align-items:start}
+.course{position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px);max-height:calc(100vh - 100px);overflow:auto;font-size:14.5px}
+.course h3{font-size:18px;margin-bottom:6px}
+.course h4{font-size:15px;margin:16px 0 4px;display:flex;gap:8px;align-items:center}
+.course ul{padding-left:18px;margin:4px 0}
+.course li{margin:3px 0}
+.course .small,.small{font-size:13px;color:var(--muted)}
+table.mini{border-collapse:collapse;width:100%;font-size:13px;margin:6px 0}
+table.mini th,table.mini td{border:1px solid var(--line);padding:5px 7px;text-align:left;vertical-align:top}
+table.mini th{background:var(--soft)}
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:8px;margin-top:12px}
+.figs figure{margin:0}
+.figs img{width:100%;height:100px;object-fit:cover;border-radius:6px;cursor:zoom-in}
+.figs figcaption{font-size:11.5px;color:var(--muted)}
+.cq{border-top:1px solid var(--line);padding-top:18px;margin-top:18px}
+.cq:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.pts{margin-left:auto;font:700 13px var(--f-mono);padding:3px 8px;border-radius:6px}
+.copt{border:1px solid var(--line);border-radius:10px;padding:10px 12px;display:grid;grid-template-columns:22px 22px 1fr;gap:4px 10px;align-items:start}
+.copt + .copt{margin-top:6px}
+.copt .mk{font:700 14px var(--f-mono)}
+.copt .tx{font-weight:700}
+.copt .ex{grid-column:3;font-size:14.5px;color:var(--ink)}
+.copt.good{border-color:var(--ok);background:var(--ok-soft)}
+.copt.miss{border-color:var(--mid);background:var(--mid-soft)}
+.copt.bad{border-color:var(--ko);background:var(--ko-soft)}
+.mine{font:700 11px var(--f-mono);color:var(--muted)}
+.retenir{margin-top:12px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:10px;padding:10px 14px;font-size:14.5px}
+.retenir b.h{display:block;font-family:var(--f-display);color:var(--accent);font-size:13px;letter-spacing:.06em;text-transform:uppercase;margin-bottom:2px}
+.free{border-radius:10px;padding:10px 14px;font-size:14.5px}
+.coursebtn{display:none}
+details.enon{background:var(--soft);border-radius:10px;padding:8px 14px;margin-bottom:16px}
+details.enon summary{cursor:pointer;font-weight:700}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.85);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.zoom img{max-width:100%;max-height:100%;border-radius:8px}
+.tblwrap{overflow-x:auto}
+table.abg{border-collapse:collapse;font:13px var(--f-mono);margin:8px 0}
+table.abg td{padding:3px 10px;border-bottom:1px dotted var(--line)}
+table.abg td:last-child{font-weight:700;text-align:center}
+table.abg .R{color:var(--ko)} table.abg .S{color:var(--ok)}
+
+@media (max-width:860px){
+  .exam,.corr{grid-template-columns:1fr}
+  .enonce,.course{position:static;max-height:none}
+  .corr .course{order:-1}
+  .course.collapsed .cbody{display:none}
+  .coursebtn{display:inline-block}
+  .score{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+.qnav{display:flex;flex-wrap:wrap;gap:8px 14px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--line)}.qnav-dp{display:flex;align-items:center;gap:3px;flex-wrap:wrap}.qnav-id{font:700 11px var(--f-mono);color:var(--muted);margin-right:3px}.qn{min-width:26px;height:26px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:6px;font:700 11px var(--f-mono);padding:0 4px}.qn.done{background:var(--accent-soft);color:var(--accent);border-color:var(--accent-soft)}.qn.cur{outline:2px solid var(--accent)}.qn:disabled{opacity:.35;cursor:not-allowed}.navrow{display:flex;gap:8px;flex-wrap:wrap;align-items:center}.navrow .spacer{flex:1}.lockmsg{background:var(--soft);border-radius:8px;padding:8px 12px;font-size:14px}.savedmsg{color:var(--ok);font-size:14px}
+</style>
+
+<header class="bar"><div class="wrap">
+  <div class="brand">Annale cardio · UE8.2 · juin 2023<small>DFA1 · Bobigny · corrigé officiel</small></div>
+  <div class="spacer"></div>
+  <div class="steps" id="steps"></div>
+  <div class="timer" id="timer" hidden>40:00</div>
+  <button class="btn small ghost" id="btnPause" hidden>Pause</button>
+</div></header>
+
+<main class="wrap">
+  <!-- Accueil -->
+  <section id="vStart">
+    <div class="hero">
+      <div>
+        <h1>2 épreuves, 32 questions</h1>
+        <p>Sujet de l'UE8.2 Cardiologie de juin 2023 (session 2 (rattrapage) de 2022-2023) : questions isolées (20 Q), DP1 (12 Q). Conditions type LUNESS, notation EDN, corrigé officiel (indispensables et inacceptables compris). Les ECG du sujet ne sont pas reproduits.</p>
+      </div>
+      <ul class="dplist" id="dpList"></ul><p class="note" style="margin-top:6px">Clique sur un dossier pour commencer par lui. Pendant l'épreuve, les étiquettes en haut à droite (QI, DP1…) et la grille de numéros permettent de changer de dossier à tout moment.</p>
+      <div class="rules">
+        <div class="rule"><b>60 minutes</b>Le chrono tourne pendant l'épreuve. À zéro, la copie est rendue.</div>
+        <div class="rule"><b>Navigation type LUNESS</b>Questions isolées et TCS : navigation libre, réponses modifiables jusqu'à la fin. DP et KFP (🔒) : on peut revenir relire, mais une réponse validée est verrouillée, et la question suivante s'ouvre une fois la précédente validée.</div>
+        <div class="rule"><b>Notation EDN</b>QRM : 1 / 0,5 / 0,2 / 0 selon 0, 1, 2 ou ≥ 3 erreurs ; indispensable oubliée ou inacceptable cochée : 0. QRP : bonnes réponses cochées ÷ réponses attendues. QROC : barème officiel.</div>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="btnStart">Commencer l'épreuve</button>
+        <button class="btn" id="btnResume" hidden>Reprendre</button>
+        <button class="btn ghost" id="btnDirect">Voir directement la correction</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Épreuve -->
+  <section id="vExam" hidden>
+    <div class="exam">
+      <div class="panel enonce" id="enonce"></div>
+      <div class="panel" id="qpanel"></div>
+    </div>
+  </section>
+
+  <!-- Résultats -->
+  <section id="vRes" hidden>
+    <div class="panel">
+      <div class="score">
+        <div><div class="big" id="sBig">0</div><div class="note" id="sSub"></div></div>
+        <div class="bars" id="sBars"></div>
+      </div>
+      <div class="grid-q" id="sGrid"></div>
+      <div class="actions"><button class="btn primary" id="btnCorr">Voir la correction détaillée</button><button class="btn" id="btnAgain">Repasser l'épreuve</button></div>
+    </div>
+  </section>
+
+  <!-- Correction -->
+  <section id="vCorr" hidden>
+    <div class="row" style="margin-bottom:12px"><h2 style="font-size:22px">Correction</h2><div class="spacer"></div><button class="btn small" id="btnBackRes">Résultats</button><button class="btn small" id="btnHome">Accueil</button></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="corr">
+      <div class="panel" id="corrMain"></div>
+      <aside class="panel course" id="course"></aside>
+    </div>
+  </section>
+</main>
+<div class="zoom" id="zoom" hidden><img alt="Image agrandie" id="zoomImg"></div>
+
+<script>
+const IMGS={};
+var img=function(k,alt){return `<img src="${IMGS[k]}" alt="${alt||""}" data-zoom>`};
+const EXAM = {
+title: "Annale cardio · UE8.2 · juin 2023",
+dps: [
+{ id:"QI", titre:"Questions isolées", items:"Items 221-236",
+  intro:"",
+  qs:[
+{ type:"qrm", label:"QRM", q:"Concernant le diagnostic étiologique de l'insuffisance cardiaque, laquelle(lesquelles) de ces propositions est/sont exacte(s) ?", opts:["La cardiopathie ischémique représente la première cause d'insuffisance cardiaque", "Les anthracyclines peuvent être responsables d'altération de la fraction d'éjection", "L'hypertension artérielle provoque en premier lieu une altération de la fonction diastolique", "L'amylose cardiaque est la cause la plus fréquente d'insuffisance cardiaque chez le patient âgé", "Une fibrillation atriale rapide prolongée peut entraîner une cardiomyopathie"], ok:[0, 1, 2, 4], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b>", "<b>Vrai.</b> Cardiomyopathie rythmique."], retenir:"IC : ischémique 1re cause ; HTA → dysfonction diastolique d'abord ; toxiques (anthracyclines) ; rythmique." },
+{ type:"qrm", label:"QRM", q:"Patient de 24 ans : palpitations, douleurs précordiales, fièvre. CRP 74 mg/L, troponine T hs 78 ng/L (N < 14). ECG (non reproduit). Laquelle ou lesquelles de ces propositions sont justes ?", opts:["L'ECG est compatible avec une péricardite", "Il n'existe pas d'indication pour une prise en charge en hospitalisation", "Une coronarographie diagnostique doit être réalisée en urgence si la douleur persiste", "Le tableau clinique est compatible avec un syndrome de Dressler", "Il n'existait pas d'indication à réaliser une troponine"], ok:[0], indisp:[0], expl:["<b>Vrai (indispensable).</b>", "<b>Faux.</b> Troponine élevée = myopéricardite → hospitalisation.", "<b>Faux.</b>", "<b>Faux.</b> Le Dressler survient après un IDM.", "<b>Faux.</b>"], retenir:"Péricardite + troponine élevée = myopéricardite : hospitalisation, surveillance." },
+{ type:"qrm", label:"QRM", q:"Prise en charge initiale d'un infarctus avec sus-décalage du ST : quelles sont les propositions vraies ?", opts:["Elle commence dès le premier contact médical (PCM)", "Un ECG 12 dérivations doit être obtenu dès que possible", "La reperfusion peut être associée à un trouble du rythme ventriculaire", "La reperfusion est inutile au-delà d'un délai de 12 h après le PCM", "L'angioplastie coronaire est plus efficace que la fibrinolyse, sauf chez les patients âgés"], ok:[0, 1, 2, 3], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b> ⚠️ Validée ici, comptée fausse en mars 2023 (« toujours inutile ») : on discute la reperfusion au-delà de 12 h si douleur ou instabilité persistantes.", "<b>Faux.</b>"], retenir:"SCA ST+ : reperfusion dans les 12 h ; au-delà seulement si ischémie persistante ou instabilité." },
+{ type:"qrm", label:"QRM", q:"Quelles sont les propositions exactes concernant le rétrécissement aortique serré ?", opts:["La bicuspidie est l'étiologie la plus fréquente entre 65 et 85 ans", "Il peut être longtemps asymptomatique", "Il donne un souffle mésosystolique, éjectionnel, irradiant dans les vaisseaux du cou", "Le gradient moyen est > 40 mmHg", "La surface aortique est < 1 cm² ou < 0,6 cm²/m²"], ok:[1, 2, 3, 4], expl:["<b>Faux.</b> C'est la cause dégénérative (Mönckeberg) ; bicuspidie chez le plus jeune.", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>"], retenir:"RA serré : surface < 1 cm², gradient moyen > 40 mmHg, Vmax > 4 m/s." },
+{ type:"qrm", label:"QRM", q:"La prévention secondaire au décours d'un SCA sans sus-décalage du ST comprend :", opts:["Statines pour tous les patients dès la prise en charge avec un objectif de LDL < 0,55 g/L", "Les bêtabloquants sont indiqués uniquement si la FEVG < 40 %", "Les IEC sont indiqués si la FEVG < 40 %", "Les ARA2 sont préférés aux IEC chez les patients âgés", "Le régime peu salé est indispensable"], ok:[0, 2], expl:["<b>Vrai.</b>", "<b>Faux.</b>", "<b>Vrai.</b>", "<b>Faux.</b>", "<b>Faux.</b>"], retenir:"Post-SCA : statine forte dose, DAPT, IEC si FEVG < 40 %." },
+{ type:"qrm", label:"QRM", q:"Les critères importants à surveiller dans l'insuffisance cardiaque chronique symptomatique sont :", opts:["Le diamètre télédiastolique du ventricule gauche", "La fraction d'éjection ventriculaire gauche", "La pression artérielle pulmonaire (PAPS)", "La classe fonctionnelle NYHA", "La concentration de peptide natriurétique"], ok:[0, 1, 2, 3, 4], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>"], retenir:"Suivi de l'IC : NYHA, BNP, ETT." },
+{ type:"qrm", label:"QRM", q:"Parmi les propositions suivantes concernant la fibrillation atriale, lesquelles sont vraies ?", opts:["Sa prévalence augmente avec l'âge", "Chez l'insuffisant cardiaque, elle n'a pas de conséquence significative sur le débit cardiaque", "Elle peut être totalement asymptomatique", "Elle entraîne un risque accru d'embolie systémique", "Sa principale cause est l'hyperthyroïdie"], ok:[0, 2, 3], expl:["<b>Vrai.</b>", "<b>Faux.</b> Perte de la systole auriculaire : baisse du débit.", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b> C'est l'HTA."], retenir:"FA : HTA 1re cause ; décompense une IC." },
+{ type:"qrm", label:"QRM", q:"Parmi les propositions suivantes concernant l'embolie pulmonaire, lesquelles sont vraies ?", opts:["Elle peut compliquer une phlébite surale", "Le seul examen à réaliser est le dosage des D-dimères plasmatiques", "Elle s'accompagne habituellement d'un effet shunt gazométrique", "L'électrocardiogramme peut être normal", "À l'auscultation pulmonaire, on note habituellement des râles crépitants"], ok:[0, 2, 3], expl:["<b>Vrai.</b>", "<b>Faux.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b>"], retenir:"EP : effet shunt, ECG souvent normal." },
+{ type:"qrm", label:"QRM", q:"Parmi les signes suivants observés chez un patient atteint de péricardite aiguë, lesquels doivent faire craindre une tamponnade ?", opts:["Turgescence jugulaire", "Impossibilité de s'allonger", "L'élévation de la troponine", "Douleur rétrosternale prolongée", "État de choc"], ok:[0, 1, 4], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b>", "<b>Faux.</b>", "<b>Vrai.</b>"], retenir:"Tamponnade : TJ, orthopnée, pouls paradoxal, choc." },
+{ type:"qrm", label:"QRM", q:"Laquelle (lesquelles) des propositions suivantes peut(vent) être une cause d'HTA secondaire ?", opts:["La consommation de substances toxiques (alcool, cocaïne, amphétamines)", "Le phéochromocytome", "Insuffisance surrénale chronique (maladie d'Addison)", "L'acromégalie", "La coarctation de l'aorte"], ok:[0, 1, 3, 4], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b> Donne une hypotension.", "<b>Vrai.</b>", "<b>Vrai.</b>"], retenir:"HTA secondaire : rénovasculaire, hyperaldostéronisme, phéochromocytome, Cushing, toxiques, coarctation, SAOS." },
+{ type:"qrm", label:"QRM", q:"La douleur angineuse est typiquement :", opts:["Rétrosternale en barre", "Irradie dans les mâchoires et les bras", "Cède en moins de quelques minutes à la trinitrine", "Survient toujours à l'effort", "Est de durée brève, quelques secondes"], ok:[0, 1, 2], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b>", "<b>Faux.</b>"], retenir:"Angor typique : constrictif, rétrosternal, effort, cède en < 5 min." },
+{ type:"qrm", label:"QRM", q:"Quelles sont les caractéristiques évocatrices d'une syncope d'Adams-Stokes ?", opts:["Survenue inopinée sans prodrome", "Amnésie post-critique", "Perte de connaissance incomplète", "Chute avec traumatisme", "Absence de perte d'urine"], ok:[0, 3, 4], expl:["<b>Vrai.</b>", "<b>Faux.</b>", "<b>Faux.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>"], retenir:"Adams-Stokes : brutale, sans prodrome, traumatisante, récupération rapide." },
+{ type:"qrm", label:"QRM", q:"Quels sont les signes possibles à l'ECG chez un patient qui présente un SCA ST- ?", opts:["L'ECG peut être normal", "Sus-décalage du segment ST dans le précordium", "Ondes T négatives dans le précordium", "Onde de Pardee dans les dérivations inférieures", "Sous-décalage du segment ST dans les dérivations inférieures"], ok:[0, 2, 4], expl:["<b>Vrai.</b>", "<b>Faux.</b>", "<b>Vrai.</b>", "<b>Faux.</b>", "<b>Vrai.</b>"], retenir:"SCA ST- : ECG normal possible." },
+{ type:"qrm", label:"QRM", q:"Parmi les affections suivantes, laquelle(lesquelles) contre-indique(nt) un traitement anticoagulant curatif ?", opts:["Présence d'un stent actif", "Dissection aortique", "Embolie pulmonaire", "Hémothorax", "Pneumopathie franche lobaire aiguë"], ok:[1, 3], expl:["<b>Faux.</b>", "<b>Vrai.</b>", "<b>Faux.</b>", "<b>Vrai.</b>", "<b>Faux.</b>"], retenir:"CI aux anticoagulants : saignement actif (hémothorax), dissection aortique." },
+{ type:"qrm", label:"QRM", q:"L'insuffisance ventriculaire gauche peut compliquer :", opts:["Un rétrécissement mitral", "Une insuffisance aortique", "Une cardiopathie ischémique", "Une hypertension artérielle", "Une insuffisance tricuspidienne"], ok:[1, 2, 3], expl:["<b>Faux.</b> Le VG est protégé.", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b>"], retenir:"Le RM ne donne pas d'insuffisance VG (le VG est en amont protégé)." },
+{ type:"qrm", label:"QRM", q:"Parmi les traitements suivants, quels sont ceux qui diminuent la mortalité dans l'IC chronique à FEVG altérée ?", opts:["IEC", "Bêtabloquants", "Diurétiques de l'anse", "Inhibiteurs du SGLT2", "Antagonistes des récepteurs aux minéralocorticoïdes"], ok:[0, 1, 3, 4], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>"], retenir:"Les 4 piliers : IEC/ARNi, BB, ARM, iSGLT2." },
+{ type:"qrm", label:"QRM", q:"Parmi les propositions suivantes concernant le bloc auriculo-ventriculaire, quelles sont les propositions vraies ?", opts:["Dans un BAV du troisième degré, aucune oreillette n'est conduite", "Dans un BAV du deuxième degré, certaines oreillettes sont conduites et certaines bloquées", "Le bloc de type Mobitz est un bloc du deuxième degré", "Le BAV du premier degré se traduit par un PR ≤ 0,20 s", "Un BAV peut être dû à un bloc bilatéral sur les deux branches du faisceau de His"], ok:[0, 1, 2], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b> PR > 0,20 s.", "<b>Faux.</b> ⚠️ Compté faux par le corrigé, alors qu'un bloc bilatéral de branche est bien une cause de BAV infrahissien."], retenir:"BAV 1 : PR > 200 ms ; BAV 2 : P bloquées ; BAV 3 : dissociation complète." },
+{ type:"qrm", label:"QRM", q:"Le bilan initial d'une hypertension artérielle suspectée comporte :", opts:["Un ionogramme sanguin", "Une échographie cardiaque", "Des mesures ambulatoires de la pression artérielle", "Une épreuve d'effort", "Un dosage de rénine et d'aldostérone plasmatique"], ok:[0, 2], expl:["<b>Vrai.</b>", "<b>Faux.</b>", "<b>Vrai.</b> Confirmer l'HTA (MAPA ou automesure).", "<b>Faux.</b>", "<b>Faux.</b> Seulement si HTA secondaire suspectée."], retenir:"Bilan initial : confirmer par MAPA/automesure ; iono, créat, glycémie, lipides, BU, ECG." },
+{ type:"qrm", label:"QRM", q:"Parmi les propositions suivantes concernant l'endocardite infectieuse, quelles sont vraies ?", opts:["Une bactérie est souvent en cause", "Cliniquement, un souffle apparaît ou se majore le plus souvent", "Elle peut entraîner une insuffisance cardiaque", "Elle peut entraîner des embolies septiques", "Elle ne touche pas les prothèses valvulaires mécaniques"], ok:[0, 1, 2, 3], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b>"], retenir:"Endocardite : souffle nouveau, IC, emboles, prothèses à haut risque." },
+{ type:"qrm", label:"QRM", q:"Concernant l'insuffisance cardiaque à fraction d'éjection conservée, quelle(s) est(sont) la(les) réponse(s) vraie(s) ?", opts:["Sa prévalence augmente avec l'âge", "Le diabète est un facteur de risque", "L'HTA est un facteur de risque", "L'HVG est un facteur favorisant ce type d'insuffisance cardiaque", "Toutes les propositions précédentes sont fausses"], ok:[0, 1, 2, 3], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b>"], retenir:"ICFEp : sujet âgé, femme, HTA, diabète, obésité, HVG." }
+  ] },
+{ id:"DP1", titre:"SCA ST- puis fibrillation ventriculaire", items:"Items 334, 232, 327",
+  intro:"<p>Une femme de 62 ans, hypertendue et tabagique, est admise aux urgences pour douleur thoracique constrictive. Antécédents : cholécystectomie, hypothyroïdie substituée, IMC 27 kg/m². Douleur rétrosternale constrictive, montrée de la paume de la main, apparue spontanément et ayant cédé seule au bout d'une heure. Deux épisodes brefs identiques la semaine précédente.</p><p>FC 80/min, PA 170/80 mmHg au bras droit et 160/70 mmHg au bras gauche, SpO₂ 94 % en ventilation spontanée. Auscultation et reste de l'examen normaux. Traitement : L-thyroxine 75 µg/j, amlodipine 5 mg/j.</p>",
+  qs:[
+{ type:"qrm", label:"QRM", q:"Quel(s) est(sont) le(s) examen(s) à effectuer immédiatement ?", opts:["ECG", "Radiographie de thorax", "Angioscanner de l'aorte", "Dosage de la troponine", "Dosage des D-dimères plasmatiques"], ok:[0], indisp:[0], expl:["<b>Vrai (indispensable).</b>", "<b>Faux.</b>", "<b>Faux.</b>", "<b>Faux.</b>", "<b>Faux.</b>"], retenir:"Douleur thoracique : ECG dans les 10 minutes." },
+{ type:"qrm", label:"QRM", q:"Vous réalisez l'ECG (non reproduit). Quel(s) est(sont) le(s) diagnostic(s) possible(s) ?", opts:["Syndrome coronarien aigu sans sus-décalage de ST", "Infarctus du myocarde transmural en cours de constitution", "Angor d'effort stable", "Angor d'effort crescendo", "Douleur thoracique d'origine extracardiaque"], ok:[0], indisp:[0], expl:["<b>Vrai (indispensable).</b>", "<b>Faux.</b>", "<b>Faux.</b>", "<b>Faux.</b>", "<b>Faux.</b>"], retenir:"Douleur de repos prolongée + ECG sans ST+ = SCA ST-." },
+{ type:"qrm", label:"QRM", q:"Vous avez évoqué un SCA ST-. Quels examens biologiques demandez-vous en urgence ?", opts:["Groupe sanguin, rhésus, RAI", "Dosage de la troponine", "Ionogramme sanguin et créatininémie", "Dosage de la TSH", "Numération sanguine"], ok:[1, 2, 4], expl:["<b>Faux.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b>", "<b>Vrai.</b>"], retenir:"SCA ST- : troponine hs H0/H1, NFS, iono, créat, hémostase." },
+{ type:"qrm", label:"QRM", q:"Transfert en USIC. Hb 11,6 g/dL, plaquettes 280 G/L, K 4,5, créat 92 µmol/L, troponine T hs 118 ng/L (N < 14), NT-proBNP 450 ng/L. Quelle est votre attitude thérapeutique immédiate ?", opts:["Double antiagrégation plaquettaire avec dose de charge (aspirine + ticagrelor)", "Transfusion d'un culot globulaire", "Anticoagulation efficace (HBPM)", "Arrêt immédiat de la L-thyroxine", "Bêtabloquant par voie orale"], ok:[0, 2, 4], expl:["<b>Vrai.</b>", "<b>Faux.</b>", "<b>Vrai.</b>", "<b>Faux.</b>", "<b>Vrai.</b>"], retenir:"SCA ST- : DAPT, anticoagulation, BB si pas de CI, statine." },
+{ type:"qru", label:"QRU", q:"Quelle est votre attitude à propos de la stratégie de revascularisation ?", opts:["Fibrinolyse immédiate", "Coronarographie immédiate", "Coronarographie dans les 24 heures", "Recherche d'ischémie non invasive puis coronarographie si positive", "Coronarographie différée (après 1 semaine) sans recherche d'ischémie"], ok:[2], expl:["<b>Faux.</b> Jamais dans le ST-.", "<b>Faux.</b> Si très haut risque (instabilité, arythmie, IC).", "<b>Vrai.</b> Haut risque : troponine élevée.", "<b>Faux.</b>", "<b>Faux.</b>"], retenir:"SCA ST- à haut risque (troponine +) : coronarographie < 24 h." },
+{ type:"qrm", label:"QRM", q:"Coronarographie prévue dans les 24 h. Quel(s) élément(s) serai(en)t de nature à raccourcir ce délai ?", opts:["Récidive douloureuse thoracique", "Survenue de troubles du rythme ventriculaire", "Poussée d'HTA à 180/90 mmHg", "Apparition de signes d'insuffisance cardiaque", "Élévation de la troponine sur un second dosage à 280 ng/L"], ok:[0, 1, 3], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b>", "<b>Vrai.</b>", "<b>Faux.</b>"], retenir:"Très haut risque (< 2 h) : douleur réfractaire, arythmie, IC, instabilité." },
+{ type:"qru", label:"QRU", q:"Brutalement la patiente perd connaissance. L'infirmière vous apporte l'ECG (non reproduit). Quel est votre diagnostic ?", opts:["Torsade de pointe", "Fibrillation ventriculaire", "Tachycardie ventriculaire", "Fibrillation auriculaire", "Il s'agit vraisemblablement d'artéfacts"], ok:[1], expl:["<b>Faux.</b>", "<b>Vrai.</b>", "<b>Faux.</b>", "<b>Faux.</b>", "<b>Faux.</b>"], retenir:"FV : activité anarchique, arrêt cardiaque." },
+{ type:"qrm", label:"QRM", q:"Quelle est votre attitude ?", opts:["CEE en urgence (choc électrique externe)", "MCE (massage cardiaque externe) immédiat", "Intubation-ventilation assistée immédiate", "Administration immédiate d'amiodarone IV", "Administration immédiate d'adrénaline IV"], ok:[0, 1], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b>", "<b>Faux.</b> Après le 3e choc.", "<b>Faux.</b> Après le 3e choc pour un rythme choquable."], retenir:"FV : MCE + choc le plus tôt possible ; adrénaline et amiodarone après le 3e choc." },
+{ type:"qrm", label:"QRM", q:"Retour à une activité hémodynamique stable après CEE, sans déficit neurologique. Quelle est votre attitude thérapeutique ?", opts:["Coronarographie en urgence", "Fibrinolyse immédiate", "Majoration des bêtabloquants et coronarographie le lendemain", "Transfert en réanimation médicale", "Nouveau prélèvement biologique en urgence à la recherche de trouble hydroélectrolytique"], ok:[0], indisp:[0], expl:["<b>Vrai (indispensable).</b>", "<b>Faux.</b>", "<b>Faux.</b>", "<b>Faux.</b>", "<b>Faux.</b> ⚠️ Compté faux, alors que le ionogramme est logique après une FV ; la priorité reste la coronarographie."], retenir:"FV sur SCA = coronarographie immédiate." },
+{ type:"qrm", label:"QRM", q:"Cet événement rythmique a été sans séquelle VG ni neurologique. Quel est son impact sur votre stratégie à moyen et long terme ?", opts:["Recontrôler la coronarographie systématiquement à 6 mois", "Mise en place d'un pacemaker", "Mise en place d'un défibrillateur implantable", "Cela ne change pas ma prise en charge", "Un traitement par amiodarone au long cours est indispensable"], ok:[3], indisp:[3], expl:["<b>Faux.</b>", "<b>Faux.</b>", "<b>Faux.</b> Pas pour une FV de la phase aiguë (< 48 h) d'un SCA.", "<b>Vrai (indispensable).</b>", "<b>Faux.</b>"], retenir:"FV précoce (< 48 h) d'un SCA : pas d'indication de DAI." },
+{ type:"qrm", label:"QRM", q:"Angioplastie avec stent de l'IVA. FEVG normale, évolution simple. Quelle est votre ordonnance de sortie ?", opts:["Poursuite de la bithérapie aspirine-ticagrelor pour une durée totale d'un an", "Statine à forte posologie (atorvastatine 80 mg/j)", "Bêtabloquant oral", "IEC (ramipril)", "Antagoniste des récepteurs minéralocorticoïdes"], ok:[0, 1, 2, 3], expl:["<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Vrai.</b>", "<b>Faux.</b> Seulement si FEVG ≤ 40 % avec IC ou diabète."], retenir:"Sortie post-SCA : BASIC." },
+{ type:"qrm", label:"QRM", q:"Après 3 mois, angor d'effort typique ; épreuve d'effort positive à bas niveau sous traitement. Mécanisme le plus vraisemblable et conduite ?", opts:["Il s'agit d'une occlusion de stent", "Il s'agit de l'apparition d'une nouvelle sténose athéromateuse", "Il s'agit d'une resténose", "Il s'agit d'un phénomène d'hibernation myocardique", "Vous l'hospitalisez pour coronarographie"], ok:[2, 4], expl:["<b>Faux.</b>", "<b>Faux.</b>", "<b>Vrai.</b> Typique dans les 3 à 6 mois.", "<b>Faux.</b>", "<b>Vrai.</b>"], retenir:"Angor à 3-6 mois d'un stent = resténose → coronarographie." }
+  ] }
+]
+};
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const L="ABCDEFGHIJKLMNOPQRST";
+const KEY="annale-cardio-juin23-v1";
+const TOTAL=60*60;
+const store={get(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}},clear(){try{localStorage.removeItem(KEY)}catch(e){}}};
+const Q=[];EXAM.dps.forEach((dp,d)=>dp.qs.forEach((q,i)=>Q.push({d,i,q,dp})));
+let S=null, tick=null, paused=false;
+function fresh(){return{pos:0,ans:{},left:TOTAL,done:false,override:{}}}
+function img(k,alt){return `<img src="${IMGS[k]}" alt="${alt||''}" data-zoom>`}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function fmt(t){t=Math.max(0,t|0);return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+function show(id){["vStart","vExam","vRes","vCorr"].forEach(v=>$("#"+v).hidden=v!==id);window.scrollTo(0,0)}
+function antibio(){const r=[["Amoxicilline","S"],["Imipénème","S"],["Gentamicine","S"],["Vancomycine","S"],["Cotrimoxazole","R"],["Teicoplanine","S"],["Linézolide","S"],["Lévofloxacine","R"],["Nitrofurantoïne","R"]];
+ return `<div class="tblwrap"><table class="abg"><tr><td colspan="2"><b>ECBU</b> · urines 2e jet</td></tr><tr><td>Hématies</td><td>50/mm³</td></tr><tr><td>Cellules épithéliales</td><td>absence</td></tr><tr><td>Leucocytes</td><td>150/mm³</td></tr><tr><td>CGP en courtes chaînettes</td><td>quelques</td></tr><tr><td>Culture : <i>Enterococcus faecalis</i></td><td>10⁵/mL</td></tr><tr><td colspan="2"><b>Antibiogramme</b></td></tr>${r.map(([a,b])=>`<tr><td>${a}</td><td class="${b}">${b}</td></tr>`).join("")}</table></div>`}
+
+/* ---------- accueil ---------- */
+$("#dpList").innerHTML=EXAM.dps.map((dp,d)=>`<li data-jd="${d}" style="cursor:pointer" title="Commencer par ce dossier"><span class="id">${dp.id}</span><span>${dp.titre}</span><span class="n">${dp.qs.length} Q</span></li>`).join("");
+const saved=store.get();
+if(saved&&!saved.done&&Object.keys(saved.ans).length){$("#btnResume").hidden=false}
+if(saved&&saved.done){$("#btnResume").hidden=false;$("#btnResume").textContent="Voir mes résultats"}
+$("#btnStart").onclick=()=>{S=fresh();store.set(S);startExam()};
+$("#btnResume").onclick=()=>{S=saved;if(S.done)results();else startExam()};
+$("#btnDirect").onclick=()=>{S=S||saved||fresh();openCorr(0)};
+
+/* ---------- épreuve ---------- */
+function steps(){const el=$("#steps");if(!S||$("#vExam").hidden&&!S.done){el.innerHTML="";return}
+ const cur=Q[S.pos]?Q[S.pos].d:-1;
+ el.innerHTML=EXAM.dps.map((dp,d)=>{const qs=Q.filter(x=>x.d===d);const done=qs.every(x=>S.ans[x.d+"-"+x.i]!==undefined);return `<span data-jd="${d}" style="cursor:pointer" title="Aller à ${dp.titre}" class="${d===cur&&!S.done?'on':done?'done':''}">${dp.id}</span>`}).join("")}
+function startExam(){show("vExam");$("#timer").hidden=false;$("#btnPause").hidden=false;paused=false;$("#btnPause").textContent="Pause";renderQ();runTimer()}
+function runTimer(){clearInterval(tick);tick=setInterval(()=>{if(paused||!S||S.done)return;S.left--;drawTimer();if(S.left%5===0)store.set(S);if(S.left<=0){finish()}},1000);drawTimer()}
+function drawTimer(){const t=$("#timer");t.textContent=fmt(S.left);t.classList.toggle("low",S.left<=300)}
+$("#btnPause").onclick=()=>{paused=!paused;$("#btnPause").textContent=paused?"Reprendre":"Pause";$("#qpanel").style.filter=paused?"blur(6px)":"";$("#enonce").style.filter=paused?"blur(6px)":""};
+
+function enonceHTML(d,upto){const dp=EXAM.dps[d];let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div>${dp.intro}`;
+ if(dp.introImg)h+=`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`;
+ dp.qs.forEach((q,i)=>{if(i<upto&&q.ctx){h+=`<div class="add"><div class="note">Ajouté en Q${i+1}</div>${q.ctx}${q.img?`<div class="imgs">${q.img.map(k=>img(k)).join("")}</div>`:""}${q.table==="antibio"?antibio():""}</div>`}});return h}
+
+function isFree(dp){return dp.free||/^(QI|SQI|TCS)/.test(dp.id)}
+function opened(n){const {d,i,dp}=Q[n];if(isFree(dp))return true;for(let k=0;k<i;k++){if(S.ans[d+"-"+k]===undefined)return false}return true}
+function navHTML(){return `<div class="qnav">`+EXAM.dps.map((dp,d)=>`<div class="qnav-dp"><span class="qnav-id">${dp.id}${isFree(dp)?"":" 🔒"}</span>`+Q.map((x,n)=>({x,n})).filter(o=>o.x.d===d).map(({x,n})=>{const k=x.d+"-"+x.i;const done=S.ans[k]!==undefined;const ok=opened(n);return `<button class="qn${n===S.pos?" cur":""}${done?" done":""}" data-n="${n}" ${ok?"":"disabled"} title="${ok?"":"Validez les questions précédentes du dossier"}">${x.i+1}</button>`}).join("")+`</div>`).join("")+`</div>`}
+function renderQ(){
+ if(S.pos>=Q.length)S.pos=Q.length-1;
+ const {d,i,q,dp}=Q[S.pos];steps();
+ const k=d+"-"+i, prev=S.ans[k], answered=prev!==undefined, free=isFree(dp), locked=answered&&!free;
+ $("#enonce").innerHTML=enonceHTML(d,i);
+ const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+ let h=navHTML();
+ h+=`<div class="qhead"><span class="qnum">${dp.id} · Q${i+1}/${dp.qs.length}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}<span class="spacer"></span><span class="note">${S.pos+1} / ${Q.length}</span></div>`;
+ if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+ if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+ if(q.table==="antibio")h+=antibio();
+ h+=`<div class="qtext">${q.q}</div>`;
+ const pa=Array.isArray(prev)?prev:[];
+ if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const t=q.type==="qrm"?"checkbox":"radio";
+  h+=`<ul class="opts">${q.opts.map((o,j)=>`<li class="opt"><label for="o${j}"><input type="${t}" name="opt" id="o${j}" value="${j}" ${pa.includes(j)?"checked":""} ${locked?"disabled":""}><span class="L">${L[j]}</span><span>${o}</span></label></li>`).join("")}</ul>`}
+ else if(q.type==="qroc"){h+=`<div class="qroc"><label class="note" for="qroc">Réponse courte (quelques mots)</label><input id="qroc" autocomplete="off" placeholder="Votre réponse" value="${answered&&prev?esc(prev):""}" ${locked?"disabled":""}></div>`}
+ else if(q.type==="self"){h+=`<p class="note">Question d'image : la seule copie du sujet est annotée, l'image est donc donnée en correction. Réfléchis à ta réponse, puis valide ; tu t'auto-noteras en correction.</p>`}
+
+ else if(q.type==="info"){h+=`<p class="note">Question neutralisée à l'épreuve : validez pour continuer (1 point pour tous).</p>`}
+ let st="";
+ if(locked)st=`<p class="lockmsg">🔒 Réponse validée : dans un dossier progressif, elle n'est plus modifiable. Vous pouvez la relire.</p>`;
+ else if(answered&&free)st=`<p class="savedmsg">✓ Réponse enregistrée. Vous pouvez la modifier jusqu'à la fin de l'épreuve.</p>`;
+ else if(!free)st=`<p class="note">Dossier progressif : une fois validée, la réponse ne pourra plus être modifiée.</p>`;
+ h+=st;
+ const nAns=Object.keys(S.ans).length;
+ h+=`<div class="actions navrow"><button class="btn" id="bPrev" ${S.pos===0?"disabled":""}>◀ Précédente</button>${locked?"":`<button class="btn primary" id="btnVal">${answered?"Enregistrer la modification":"Valider"}</button>`}<button class="btn" id="bNext" ${S.pos>=Q.length-1||!opened(S.pos+1)?"disabled":""}>Suivante ▶</button><span class="spacer"></span><button class="btn ghost" id="bEnd">Terminer l'épreuve (${nAns}/${Q.length})</button></div>`;
+ h+=`<div class="confirm" id="conf" hidden><span id="confTxt">Réponse définitive ?</span><button class="btn primary small" id="ok">Confirmer</button><button class="btn small" id="no">Modifier</button></div>`;
+ $("#qpanel").innerHTML=h;
+ $("#qpanel").querySelectorAll(".qn").forEach(b=>b.onclick=()=>{S.pos=+b.dataset.n;store.set(S);renderQ();window.scrollTo(0,0)});
+ $("#bPrev").onclick=()=>{S.pos--;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bNext").onclick=()=>{S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#bEnd").onclick=()=>{const left=Q.length-Object.keys(S.ans).length;if(confirmEnd(left))finish()};
+ if(locked)return;
+ let a=null,empty=true;
+ const read=()=>{if(q.type==="qrm")a=[...document.querySelectorAll("input[name=opt]:checked")].map(x=>+x.value);
+  else if(q.type==="qru"||q.type==="tcs"){const c=document.querySelector("input[name=opt]:checked");a=c?[+c.value]:[]}
+  else if(q.type==="qroc")a=$("#qroc").value.trim();
+  else a=true;
+  empty=(Array.isArray(a)&&!a.length)||a===""||a==null};
+ const save=()=>{S.ans[k]=empty?null:a;if(S.pos<Q.length-1&&opened(S.pos+1))S.pos++;store.set(S);renderQ();window.scrollTo(0,0)};
+ $("#btnVal").onclick=()=>{read();
+  if(free){save();return}
+  $("#confTxt").textContent=(empty?"Aucune réponse : la question vaudra 0. ":"")+"Réponse définitive (non modifiable ensuite) ?";
+  $("#btnVal").hidden=true;$("#conf").hidden=false;$("#ok").focus()};
+ $("#no").onclick=()=>{$("#conf").hidden=true;$("#btnVal").hidden=false};
+ $("#ok").onclick=save;
+}
+function confirmEnd(left){const box=$("#conf");$("#confTxt").textContent=(left?left+" question(s) sans réponse. ":"")+"Rendre la copie et voir la note ?";box.hidden=false;const v=$("#btnVal");if(v)v.hidden=true;$("#ok").onclick=()=>finish();$("#no").onclick=()=>{box.hidden=true;if(v)v.hidden=false};return false}
+function jumpDp(d){const n=Q.findIndex(x=>x.d===d);if(n<0)return;let m=n;while(m+1<Q.length&&Q[m+1].d===d&&S.ans[Q[m].d+"-"+Q[m].i]!==undefined)m++;S.pos=m;store.set(S);if($("#vExam").hidden)startExam();else{renderQ();window.scrollTo(0,0)}}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-jd]");if(!t)return;if(!S||S.done){S=fresh();store.set(S)}jumpDp(+t.dataset.jd)});
+
+/* ---------- notation ---------- */
+function inPoly(x,y,pts){let c=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const[xi,yi]=pts[i],[xj,yj]=pts[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
+function norm(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z ]/g," ").replace(/\s+/g," ").trim()}
+function grade(d,i){const q=EXAM.dps[d].qs[i];let a=S.ans[d+"-"+i];const k=d+"-"+i;
+ if(S.override&&S.override[k]!==undefined)return S.override[k];
+ if(a==null)return 0;
+ if(q.type==="qru")return a.length===1&&a[0]===q.ok[0]?1:0;
+ if(q.type==="tcs")return a.length===1?q.w[a[0]]:0;
+ if(q.type==="qrm"){if(q.neut)a=a.filter(x=>!q.neut.includes(x));if(!a.length)return 0;
+  if((q.inacc||[]).some(x=>a.includes(x)))return 0;
+  if((q.indisp||[]).some(x=>!a.includes(x)))return 0;
+  let n=0;for(let k2=0;k2<q.opts.length;k2++){if(a.includes(k2)!==q.ok.includes(k2))n++}
+  if(/QRP/i.test((q.label||'')+' '+(q.q||'')+' '+(q.tag||''))||q.qrp||q.opts.length>5){const g=a.filter(x=>q.ok.includes(x)).length,ex=Math.max(0,a.length-q.ok.length);return Math.max(0,(g-ex)/q.ok.length)}return n===0?1:n===1?.5:n===2?.2:0}
+ if(q.type==="info")return 1;
+ if(q.type==="self")return 0;
+ if(q.type==="qroc"){const s=norm(a);if(q.kw){let m=0;q.kw.forEach(([kk,v])=>{if(s.includes(norm(kk)))m=Math.max(m,v)});return m}return q.keys.some(kk=>s.includes(norm(kk)))?1:0}
+ if(q.type==="qzone"){return inPoly(a.x*q.zoneW,a.y*q.zoneH,q.zone)?1:0}
+ return 0}
+function f1(x){return (Math.round(x*100)/100).toString().replace(".",",")}
+
+function finish(){clearInterval(tick);S.done=true;store.set(S);$("#timer").hidden=true;$("#btnPause").hidden=true;results()}
+function results(){show("vRes");steps();let tot=0,max=Q.length;const byDp=EXAM.dps.map(()=>[0,0]),byR={A:[0,0],B:[0,0]};
+ Q.forEach(({d,i,q})=>{const g=grade(d,i);tot+=g;byDp[d][0]+=g;byDp[d][1]++;if(q.rang){byR[q.rang][0]+=g;byR[q.rang][1]++}});
+ $("#sBig").innerHTML=`${f1(tot/max*20)}<small> / 20</small>`;
+ const used=TOTAL-S.left;
+ $("#sSub").textContent=`${f1(tot)} points sur ${max} · temps utilisé ${fmt(used)}`;
+ $("#sBars").innerHTML=EXAM.dps.map((dp,d)=>`<div class="barrow"><span class="mono">${dp.id}</span><div class="track"><div class="fill" style="width:${byDp[d][0]/byDp[d][1]*100}%"></div></div><span class="v">${f1(byDp[d][0])}/${byDp[d][1]}</span></div>`).join("")+
+  ["A","B"].filter(r=>byR[r][1]).map(r=>`<div class="barrow"><span><span class="rk ${r.toLowerCase()}">${r}</span></span><div class="track"><div class="fill" style="width:${byR[r][0]/byR[r][1]*100}%;background:var(--rk${r})"></div></div><span class="v">${f1(byR[r][0])}/${byR[r][1]}</span></div>`).join("");
+ $("#sGrid").innerHTML=Q.map(({d,i,dp},n)=>{const g=grade(d,i);return `<button class="${g===1?'s1':g===0?'s0':'sp'}" data-go="${d}-${i}">${dp.id.replace("DP","")}.${i+1} · ${f1(g)}</button>`}).join("");
+ $("#sGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{const[d,i]=b.dataset.go.split("-").map(Number);openCorr(d,i)});
+}
+$("#btnCorr").onclick=()=>openCorr(0);
+$("#btnAgain").onclick=()=>{store.clear();S=fresh();store.set(S);startExam()};
+$("#btnBackRes").onclick=()=>{if(S&&S.done)results();else show("vStart")};
+$("#btnHome").onclick=()=>{show("vStart")};
+
+/* ---------- correction ---------- */
+let curD=0;
+function openCorr(d,i){show("vCorr");steps();curD=d;
+ $("#tabs").innerHTML=EXAM.dps.map((dp,k)=>`<button role="tab" aria-selected="${k===d}" data-d="${k}">${dp.id}</button>`).join("");
+ $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCorr(+b.dataset.d));
+ drawCorr(d);
+ if(i!==undefined){const el=document.getElementById("cq-"+d+"-"+i);if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),30)}
+}
+function drawCorr(d){const dp=EXAM.dps[d];const answered=S&&Object.keys(S.ans).length>0;
+ let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items}</div><details class="enon"><summary>Énoncé initial</summary>${dp.intro}${dp.introImg?`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`:""}</details>`;
+ dp.qs.forEach((q,i)=>{const k=d+"-"+i;const a=S?S.ans[k]:undefined;const has=a!==undefined;const g=has?grade(d,i):null;
+  const type=q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"QZONE · neutralisée",tcs:"TCS"}[q.type];
+  h+=`<div class="cq" id="cq-${k}"><div class="qhead"><span class="qnum">Q${i+1}</span><span class="tag">${type}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}${has?`<span class="pts ${g===1?'s1':g===0?'s0':'sp'}">${f1(g)} pt</span>`:""}</div>`;
+  if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+  if(q.img&&q.type!=="qzone")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+  if(q.table==="antibio")h+=antibio();
+  h+=`<div class="qtext">${q.q}</div>`;
+  if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const mine=Array.isArray(a)?a:[];
+   q.opts.forEach((o,j)=>{const ok=q.ok.includes(j),me=mine.includes(j);
+    let cls=has?(ok&&me?"good":ok&&!me?"miss":!ok&&me?"bad":""):(ok?"good":"");
+    let tagx=(q.indisp||[]).includes(j)?" · indispensable":(q.inacc||[]).includes(j)?" · inacceptable":"";
+    h+=`<div class="copt ${cls}"><span class="mk">${ok?"✓":"✗"}</span><span class="mk">${L[j]}</span><span class="tx">${o}${has&&me?` <span class="mine">· coché${tagx}</span>`:tagx?`<span class="mine">${tagx}</span>`:""}</span><div class="ex">${q.expl[j]}</div></div>`});
+  } else if(q.type==="qroc"){
+   h+=`<div class="free ${has?(g===1?'s1':g?'sp':'s0'):''}" style="background:${has?'':'var(--soft)'}"><b>Votre réponse :</b> ${has&&a?esc(a):"<i>aucune</i>"}<br><b>Attendu :</b> ${q.attendu}</div>`;
+   if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Correction automatique par mots-clés.</span><button class="btn small" data-ov="${k}" data-v="${g?0:1}">${g?"Compter faux":"Ma réponse est juste"}</button></div>`;
+   h+=`<div style="margin-top:10px">${q.expl}</div>`;
+  } else if(q.type==="self"){
+   h+=`${q.cimg?`<div class="imgs">${img(q.cimg)}</div>`:""}<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;if(has)h+=`<div class="row" style="margin-top:8px"><span class="note">Auto-évaluation :</span><button class="btn small" data-ov="${k}" data-v="1">J'avais juste</button><button class="btn small" data-ov="${k}" data-v="0.5">À moitié</button><button class="btn small" data-ov="${k}" data-v="0">J'avais faux</button></div>`;
+  } else if(q.type==="info"){
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  } else if(q.type==="qzone"){
+   const pts=q.zone.map(p=>`${p[0]/q.zoneW*100},${p[1]/q.zoneH*100}`).join(" ");
+   h+=`<div class="zonebox" style="cursor:default"><img src="${IMGS[q.img[0]]}" alt="Scanner abdominal"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="${pts}" fill="rgba(46,160,90,.35)" stroke="#2ea05a" stroke-width=".6"/></svg>${has&&a?`<div class="pin" style="left:${a.x*100}%;top:${a.y*100}%"></div>`:""}</div>`;
+   h+=`<p><b>Attendu :</b> ${q.attendu}</p>${q.expl}`;
+  }
+  if(q.fig)h+=`<div class="imgs" style="align-items:flex-end">${img(q.fig[0],q.fig[1])}<span class="note" style="max-width:260px">${q.fig[1]}</span></div>`;
+  h+=`<div class="retenir"><b class="h">À retenir</b>${q.retenir}</div></div>`;
+ });
+ if(!answered)h=`<p class="note" style="margin-top:0">Mode correction seule : les bonnes réponses sont en vert.</p>`+h;
+ $("#corrMain").innerHTML=h;
+ $("#corrMain").querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{S.override=S.override||{};S.override[b.dataset.ov]=+b.dataset.v;store.set(S);drawCorr(d)});
+ $("#course").innerHTML=`<div class="row"><h3>Cours résumé · ${dp.id}</h3><span class="spacer"></span><button class="btn small coursebtn" id="cToggle">Afficher</button></div><div class="cbody">${dp.cours.replace(/data-img="(\w+)"/g,(m,k)=>`src="${IMGS[k]}" data-zoom`)}</div><p class="small" style="margin-top:14px">Sources : corrigé officiel de l'épreuve (UE8.2, mars 2024) ; explications rédigées d'après le Collège de cardiologie.</p>`;
+ const c=$("#course");if(matchMedia("(max-width:860px)").matches){c.classList.add("collapsed");const t=$("#cToggle");t.onclick=()=>{c.classList.toggle("collapsed");t.textContent=c.classList.contains("collapsed")?"Afficher":"Masquer"}}
+}
+
+/* ---------- zoom ---------- */
+document.addEventListener("click",e=>{const t=e.target;if(t.matches&&t.matches("img[data-zoom]")){$("#zoomImg").src=t.src;$("#zoom").hidden=false}});
+$("#zoom").onclick=()=>{$("#zoom").hidden=true};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#zoom").hidden=true});
+})();
+</script>
+
+<a id="backhome" href="index.html" style="position:fixed;left:12px;bottom:12px;z-index:9999;background:#1c1c1a;color:#fff;padding:8px 12px;border-radius:99px;font:600 13px system-ui;text-decoration:none;opacity:.85">← Toutes les annales</a>
