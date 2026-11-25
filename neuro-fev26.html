@@ -1,0 +1,1237 @@
+<!DOCTYPE html>
+<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Annale neuro FÉVRIER 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Source+Sans+3:ital,wght@0,400;0,600;0,700;1,400&family=JetBrains+Mono:wght@500;700&display=swap">
+<style>
+:root{
+  --bg:#eef2f7; --paper:#ffffff; --ink:#1b2430; --muted:#5b6675; --line:#d9e0ea; --soft:#f2f5f9;
+  --nav:#0d2f57; --nav-ink:#ffffff; --nav-muted:#a9bdd6;
+  --accent:#0a62c9; --accent-soft:#e7f0fc; --accent-ink:#ffffff;
+  --ok:#1d7a46; --ok-soft:#e5f5ec; --ko:#b42318; --ko-soft:#fdeceb; --mid:#a15c00; --mid-soft:#fdf2e0;
+  --rkA:#c62828; --rkB:#d9822b;
+  --f-body:"Source Sans 3",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-mono:"JetBrains Mono",ui-monospace,Menlo,monospace;
+  --r:12px; --sh:0 1px 2px rgba(16,32,60,.06),0 2px 8px rgba(16,32,60,.05);
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e141b; --paper:#161f2a; --ink:#e6ecf3; --muted:#9aa7b6; --line:#28344296; --soft:#1c2734;
+  --nav:#0a1a2e; --nav-muted:#8ea6c4; --accent:#6aa8f0; --accent-soft:#16304f; --accent-ink:#0a1a2e;
+  --ok:#5fd08f; --ok-soft:#133022; --ko:#ff8a80; --ko-soft:#381a18; --mid:#f2b45a; --mid-soft:#382a12;
+  --rkA:#ff7a7a; --rkB:#f2a65a; --sh:none; color-scheme:dark}}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{background:var(--bg);color:var(--ink);font:17px/1.6 var(--f-body);margin:0}
+h1,h2,h3,h4{text-wrap:balance;margin:0;line-height:1.25;font-weight:700}
+button{font:inherit;cursor:pointer}
+button:disabled{cursor:not-allowed}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+[hidden]{display:none!important}
+.wrap{max-width:1240px;margin:0 auto;padding-left:max(20px,env(safe-area-inset-left,0px));padding-right:max(20px,env(safe-area-inset-right,0px))}
+.mono{font-family:var(--f-mono)}
+/* barre UNESS */
+header.bar{position:sticky;top:0;z-index:5;background:var(--nav);color:var(--nav-ink);padding-top:env(safe-area-inset-top,0px)}
+header.bar .wrap{display:flex;align-items:center;gap:14px;padding-block:12px;flex-wrap:wrap}
+.home{color:var(--nav-ink);text-decoration:none;font-weight:700;font-size:14px;border:1px solid #ffffff33;border-radius:8px;padding:6px 10px;white-space:nowrap}
+.home:hover{background:#ffffff14}
+.brand{font-weight:700;font-size:17px;line-height:1.25}
+.brand small{display:block;font-weight:400;font-size:12.5px;color:var(--nav-muted)}
+.spacer{flex:1}
+.steps{display:flex;gap:5px;flex-wrap:wrap}
+.steps span{font:700 11.5px var(--f-mono);padding:4px 8px;border-radius:6px;background:#ffffff14;color:var(--nav-muted)}
+.steps span.on{background:var(--nav-ink);color:var(--nav)}
+.steps span.done{background:#ffffff2e;color:var(--nav-ink)}
+.modepill{font:700 11px var(--f-mono);letter-spacing:.05em;text-transform:uppercase;padding:4px 8px;border-radius:6px;background:#ffffff1f;color:var(--nav-ink)}
+.timer{font:700 19px var(--f-mono);font-variant-numeric:tabular-nums;padding:5px 12px;border-radius:8px;background:#ffffff1a;color:var(--nav-ink)}
+.timer.low{background:#e5484d;color:#fff}
+.timer.sw{font-size:15px;opacity:.85}
+.btn{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:10px;padding:10px 18px;font-weight:700;font-size:16px;transition:border-color .15s,background .15s}
+.btn:hover:not(:disabled){border-color:var(--accent)}
+.btn:disabled{opacity:.45}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.btn.primary:hover:not(:disabled){filter:brightness(1.07)}
+.btn.ghost{background:transparent}
+.btn.small{padding:6px 12px;font-size:14px}
+.btn.onnav{background:transparent;border-color:#ffffff40;color:var(--nav-ink)}
+main{padding-block:32px 80px}
+.panel{background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:28px;min-width:0;box-shadow:var(--sh)}
+.note{font-size:14.5px;color:var(--muted)}
+.row{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
+
+/* accueil */
+.hero{display:grid;gap:26px;max-width:900px;margin:0 auto}
+.hero h1{font-size:clamp(28px,4vw,38px)}
+.hero .lead{margin:8px 0 0;color:var(--muted);font-size:17.5px}
+.dplist{display:grid;gap:4px;margin:0;padding:0;list-style:none}
+.dplist li{display:flex;gap:14px;align-items:baseline;padding:10px 12px;border-radius:9px;cursor:pointer}
+.dplist li:hover{background:var(--soft)}
+.dplist .id{font:700 12.5px var(--f-mono);color:var(--accent);min-width:44px}
+.dplist .n{color:var(--muted);font-size:14px;margin-left:auto;white-space:nowrap}
+.modes{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:16px}
+.mode{border:2px solid var(--line);border-radius:var(--r);padding:20px 22px;background:var(--paper);text-align:left;display:grid;gap:8px;color:var(--ink)}
+.mode:hover{border-color:var(--accent)}
+.mode h3{font-size:20px;display:flex;align-items:center;gap:10px}
+.mode h3 .ic{font-size:22px}
+.mode p{margin:0;color:var(--muted);font-size:15.5px}
+.mode ul{margin:2px 0 0;padding-left:18px;font-size:15px;color:var(--ink)}
+.mode .go{margin-top:6px;font-weight:700;color:var(--accent)}
+.rules{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px}
+.rule{background:var(--soft);border-radius:10px;padding:14px 16px;font-size:15px}
+.rule b{display:block;font-size:15.5px;margin-bottom:3px}
+details.more summary{cursor:pointer;font-weight:700;color:var(--accent)}
+
+/* épreuve */
+.exam{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);gap:26px;align-items:start}
+.panel h2{font-size:21px}
+.panel .meta{font-size:14px;color:var(--muted);margin-top:4px}
+.enonce{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);max-height:calc(100vh - 110px);overflow:auto}
+.enonce p{margin:.7em 0}
+.enonce .add{border-left:3px solid var(--accent);padding-left:14px;margin-top:18px}
+.imgs{display:flex;gap:12px;flex-wrap:wrap;margin:12px 0}
+.imgs img{max-height:340px;width:auto;max-width:100%;border-radius:10px;border:1px solid var(--line);cursor:zoom-in;background:#000}
+.qnav{display:flex;flex-wrap:wrap;gap:10px 18px;margin:-4px 0 20px;padding-bottom:16px;border-bottom:1px solid var(--line)}
+.qnav-dp{display:flex;align-items:center;gap:4px;flex-wrap:wrap}
+.qnav-id{font:700 11.5px var(--f-mono);color:var(--muted);margin-right:4px}
+.qn{min-width:30px;height:30px;border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:7px;font:700 12px var(--f-mono);padding:0 5px}
+.qn.done{background:var(--accent-soft);color:var(--accent);border-color:transparent}
+.qn.g1{background:var(--ok-soft);color:var(--ok);border-color:transparent}
+.qn.g0{background:var(--ko-soft);color:var(--ko);border-color:transparent}
+.qn.gp{background:var(--mid-soft);color:var(--mid);border-color:transparent}
+.qn.cur{outline:2px solid var(--accent);outline-offset:1px}
+.qn:disabled{opacity:.35}
+.qhead{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin-bottom:14px}
+.qnum{font:700 13.5px var(--f-mono);color:var(--accent)}
+.tag{font:700 11.5px var(--f-mono);padding:3px 8px;border-radius:6px;background:var(--soft);color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+.rk{display:inline-grid;place-items:center;width:22px;height:22px;border:2px solid;border-radius:5px;font:700 11px var(--f-mono);vertical-align:middle}
+.rk.a{color:var(--rkA)} .rk.b{color:var(--rkB)}
+.ctx{background:var(--soft);border-radius:10px;padding:4px 16px;margin-bottom:16px}
+.ctx p{margin:.7em 0}
+.qtext{font-size:19px;font-weight:700;margin:8px 0 18px;line-height:1.45}
+.opts{display:grid;gap:10px;margin:0;padding:0;list-style:none}
+.opt label{display:flex;gap:14px;align-items:flex-start;padding:14px 16px;border:1px solid var(--line);border-radius:11px;cursor:pointer;background:var(--paper);transition:border-color .12s,background .12s}
+.opt label:hover{border-color:var(--accent)}
+.opt input{position:absolute;opacity:0;pointer-events:none}
+.opt .L{display:inline-grid;place-items:center;flex:none;width:28px;height:28px;border-radius:50%;border:2px solid var(--line);font:700 13px var(--f-mono);color:var(--muted)}
+.opt input[type=checkbox] ~ .L{border-radius:7px}
+.opt label:has(input:checked){background:var(--accent-soft);border-color:var(--accent)}
+.opt input:checked ~ .L{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.opt input:focus-visible ~ .L{outline:3px solid var(--accent);outline-offset:2px}
+.opt label:has(input:disabled){cursor:default}
+.opt .ot{padding-top:2px}
+.qroc input{width:100%;padding:14px 16px;border:1px solid var(--line);border-radius:11px;background:var(--paper);color:var(--ink);font:inherit}
+.actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:24px}
+.confirm{display:flex;gap:12px;align-items:center;flex-wrap:wrap;background:var(--mid-soft);border-radius:11px;padding:12px 14px;font-size:15px;margin-top:14px}
+.lockmsg{background:var(--soft);border-radius:9px;padding:10px 14px;font-size:15px;margin:16px 0 0}
+.savedmsg{color:var(--ok);font-size:15px;margin:16px 0 0}
+.inline-corr{margin-top:22px;border-top:2px dashed var(--line);padding-top:20px}
+.inline-corr .verdict{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-weight:700;font-size:17px}
+
+/* résultats */
+.score{display:grid;grid-template-columns:auto 1fr;gap:32px;align-items:center}
+.big{font:700 68px/1 var(--f-body);font-variant-numeric:tabular-nums}
+.big small{font-size:26px;color:var(--muted)}
+.bars{display:grid;gap:12px}
+.barrow{display:grid;grid-template-columns:52px 1fr 76px;gap:12px;align-items:center;font-size:15px}
+.barrow .track{height:11px;border-radius:6px;background:var(--soft);overflow:hidden}
+.barrow .fill{height:100%;background:var(--accent)}
+.barrow .v{font:700 13px var(--f-mono);text-align:right;font-variant-numeric:tabular-nums}
+.grid-q{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.grid-q button{font:700 12.5px var(--f-mono);border:0;border-radius:7px;padding:7px 9px;min-width:66px}
+.s1{background:var(--ok-soft);color:var(--ok)} .s0{background:var(--ko-soft);color:var(--ko)} .sp{background:var(--mid-soft);color:var(--mid)}
+
+/* correction */
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:20px}
+.tabs button{border:1px solid var(--line);background:var(--paper);color:var(--ink);border-radius:9px;padding:8px 14px;font-weight:700;font-size:15px}
+.tabs button[aria-selected="true"]{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.corr{display:grid;grid-template-columns:minmax(0,1.55fr) minmax(0,1fr);gap:26px;align-items:start}
+.corr.solo{grid-template-columns:minmax(0,1fr);max-width:900px}
+.course{position:sticky;top:calc(env(safe-area-inset-top,0px) + 84px);max-height:calc(100vh - 110px);overflow:auto;font-size:15.5px}
+.course h3{font-size:19px;margin-bottom:6px}
+.course h4{font-size:16px;margin:18px 0 6px;display:flex;gap:8px;align-items:center}
+.course ul{padding-left:20px;margin:6px 0}
+.course li{margin:4px 0}
+.course .small,.small{font-size:14px;color:var(--muted)}
+table.mini{border-collapse:collapse;width:100%;font-size:14px;margin:8px 0}
+table.mini th,table.mini td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+table.mini th{background:var(--soft)}
+.figs{display:grid;grid-template-columns:repeat(auto-fill,minmax(120px,1fr));gap:10px;margin-top:14px}
+.figs figure{margin:0}
+.figs img{width:100%;height:100px;object-fit:cover;border-radius:7px;cursor:zoom-in}
+.figs figcaption{font-size:12px;color:var(--muted)}
+.cq{border-top:1px solid var(--line);padding-top:26px;margin-top:26px}
+.cq:first-of-type{border-top:0;margin-top:0;padding-top:0}
+.pts{margin-left:auto;font:700 13.5px var(--f-mono);padding:4px 10px;border-radius:7px}
+.copt{border:1px solid var(--line);border-radius:11px;padding:12px 14px;display:grid;grid-template-columns:22px 24px 1fr;gap:6px 12px;align-items:start}
+.copt + .copt{margin-top:8px}
+.copt .mk{font:700 14px var(--f-mono)}
+.copt .tx{font-weight:700}
+.copt .ex{grid-column:3;font-size:15.5px;color:var(--ink)}
+.copt.good{border-color:var(--ok);background:var(--ok-soft)}
+.copt.miss{border-color:var(--mid);background:var(--mid-soft)}
+.copt.bad{border-color:var(--ko);background:var(--ko-soft)}
+.mine{font:700 11.5px var(--f-mono);color:var(--muted)}
+.retenir{margin-top:16px;border:1px solid var(--accent);background:var(--accent-soft);border-radius:11px;padding:12px 16px;font-size:15.5px}
+.retenir b.h{display:block;color:var(--accent);font-size:12.5px;letter-spacing:.07em;text-transform:uppercase;margin-bottom:3px}
+.free{border-radius:11px;padding:12px 16px;font-size:15.5px}
+.offi{background:var(--soft);border-left:3px solid var(--accent);border-radius:0;padding:10px 14px;margin:8px 0 12px}.offi p{margin:4px 0}
+.coursebtn{display:none}
+details.enon{background:var(--soft);border-radius:11px;padding:10px 16px;margin:14px 0 22px}
+details.enon summary{cursor:pointer;font-weight:700}
+.zoom{position:fixed;inset:0;background:rgba(0,0,0,.86);display:grid;place-items:center;z-index:20;padding:max(16px,env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) max(16px,env(safe-area-inset-bottom,0px)) max(16px,env(safe-area-inset-left,0px));cursor:zoom-out}
+.zoom img{max-width:100%;max-height:100%;border-radius:8px}
+.tblwrap{overflow-x:auto}
+table.abg{border-collapse:collapse;font:13px var(--f-mono);margin:8px 0}
+table.abg td{padding:3px 10px;border-bottom:1px dotted var(--line)}
+table.abg td:last-child{font-weight:700;text-align:center}
+table.abg .R{color:var(--ko)} table.abg .S{color:var(--ok)}
+.zonebox{position:relative;display:inline-block;max-width:100%;cursor:crosshair}
+.zonebox img{display:block;max-width:100%;border-radius:8px}
+.zonebox .pin{position:absolute;width:22px;height:22px;margin:-11px 0 0 -11px;border-radius:50%;border:3px solid #fff;background:#e5484d;box-shadow:0 0 0 2px #e5484d;pointer-events:none}
+.zonebox svg{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+@media (max-width:900px){
+  body{font-size:16.5px}
+  .panel{padding:20px}
+  .exam,.corr{grid-template-columns:1fr}
+  .enonce,.course{position:static;max-height:none}
+  .corr .course{order:-1}
+  .course.collapsed .cbody{display:none}
+  .coursebtn{display:inline-block}
+  .score{grid-template-columns:1fr;gap:20px}
+  .brand small{display:none}
+  .steps{order:5;width:100%}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style></head><body>
+
+<header class="bar"><div class="wrap">
+  <a class="home" href="index.html">← Annales</a>
+  <div class="brand">Annale neuro · UE4.1 · février 2026<small>DFA1 · Bobigny · corrigé officiel + explications d'après les Collèges</small></div>
+  <div class="spacer"></div>
+  <div class="steps" id="steps"></div>
+  <span class="modepill" id="modePill" hidden></span>
+  <div class="timer" id="timer" hidden>00:00</div>
+  <button class="btn small onnav" id="btnPause" hidden>Pause</button>
+</div></header>
+
+<main class="wrap">
+  <section id="vStart">
+    <div class="hero">
+      <div class="panel">
+        <h1>5 épreuves, 37 questions</h1>
+        <p class="lead">Sujet de l'UE4.1 Neurologie de février 2026, tel quel : 15 questions isolées, 1 TCS, 1 KFP et 2 DP. (QRP : bonnes réponses ÷ réponses attendues ; TCS : 1 point si ta réponse fait partie de celles validées par le panel). Les erreurs probables du corrigé officiel sont signalées par ⚠️.</p>
+        <ul class="dplist" id="dpList" style="margin-top:20px"></ul>
+        <p class="note" style="margin:10px 0 0">Clique sur un dossier pour commencer par lui. Pendant l'épreuve, la grille de numéros permet de changer de dossier à tout moment.</p>
+      </div>
+      <div class="modes">
+        <button class="mode" id="btnExam">
+          <h3><span class="ic">⏱</span>Mode examen</h3>
+          <p>Conditions réelles, comme sur LUNESS.</p>
+          <ul><li>Chrono de <b>60 minutes</b>, copie rendue à zéro</li><li>Aucune correction pendant l'épreuve</li><li>Note sur 20 et correction détaillée à la fin</li></ul>
+          <span class="go">Commencer l'examen →</span>
+        </button>
+        <button class="mode" id="btnTrain">
+          <h3><span class="ic">📖</span>Mode entraînement</h3>
+          <p>Pour apprendre en avançant.</p>
+          <ul><li>Pas de compte à rebours (simple chrono indicatif)</li><li>Correction et « À retenir » juste après chaque question</li><li>Note sur 20 à la fin quand même</li></ul>
+          <span class="go">Commencer l'entraînement →</span>
+        </button>
+      </div>
+      <div class="row">
+        <button class="btn primary" id="btnResume" hidden>Reprendre</button>
+        <button class="btn ghost" id="btnDirect">Voir directement la correction</button>
+      </div>
+      <details class="more panel" style="padding:18px 22px"><summary>Règles de navigation et de notation</summary>
+        <div class="rules" style="margin-top:14px">
+          <div class="rule"><b>Navigation type LUNESS</b>Questions isolées et TCS : navigation libre, réponses modifiables jusqu'à la fin (en examen). DP et KFP (🔒) : on peut revenir relire, mais une réponse validée est verrouillée, et la question suivante s'ouvre une fois la précédente validée.</div>
+          <div class="rule"><b>Notation EDN</b>QCM ≤ 5 propositions : 1 / 0,5 / 0,2 / 0 selon 0, 1, 2 ou ≥ 3 discordances ; indispensable oubliée ou inacceptable cochée : 0. QRP (&gt; 5 propositions) : bonnes réponses cochées ÷ réponses attendues. QRU : 1 ou 0.</div>
+          <div class="rule"><b>Sauvegarde</b>Ta progression est gardée sur cet appareil : tu peux fermer la page et reprendre plus tard.</div>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <section id="vExam" hidden>
+    <div class="exam">
+      <div class="panel enonce" id="enonce"></div>
+      <div class="panel" id="qpanel"></div>
+    </div>
+  </section>
+
+  <section id="vRes" hidden>
+    <div class="panel" style="max-width:1000px;margin:0 auto">
+      <div class="score">
+        <div><div class="big" id="sBig">0</div><div class="note" id="sSub" style="margin-top:6px"></div></div>
+        <div class="bars" id="sBars"></div>
+      </div>
+      <div class="grid-q" id="sGrid"></div>
+      <div class="actions"><button class="btn primary" id="btnCorr">Voir la correction détaillée</button><button class="btn" id="btnAgain">Repasser l'épreuve</button><button class="btn ghost" id="btnHome2">Accueil</button></div>
+    </div>
+  </section>
+
+  <section id="vCorr" hidden>
+    <div class="row" style="margin-bottom:16px"><h2 style="font-size:24px">Correction</h2><div class="spacer"></div><button class="btn small" id="btnBackRes">Résultats</button><button class="btn small" id="btnHome">Accueil</button></div>
+    <div class="tabs" id="tabs" role="tablist"></div>
+    <div class="corr" id="corrGrid">
+      <div class="panel" id="corrMain"></div>
+      <aside class="panel course" id="course"></aside>
+    </div>
+  </section>
+</main>
+<div class="zoom" id="zoom" hidden><img alt="Image agrandie" id="zoomImg"></div>
+
+<script>
+
+const IMGS={"irm": "data:image/jpeg;base64,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"};
+var img=function(k,alt){return `<img src="${IMGS[k]}" alt="${alt||""}" data-zoom>`};
+const EXAM = {
+"title": "Annale neuro · UE4.1 · février 2026",
+"dps": [
+{
+"id": "SQI1",
+"titre": "15 questions isolées de neuro",
+"items": "Items 89, 99, 104, 105, 109, 118, 132",
+"free": true,
+"intro": "<p>15 questions isolées, sans lien entre elles.</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Parmi les propositions suivantes, lesquelles sont des complications neurologiques de l’intoxication alcoolique aigue ? (2 réponses attendues)</p>",
+"opts": [
+"Hépatite aigue",
+"Syndrome de Korsakoff",
+"Polyneuropathie alcoolo-carentielle",
+"Coma éthylique",
+"Ivresse convulsivante"
+],
+"ok": [
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>A.</b> il s’agit d’une complication hépatologique et non neurologique</li><li><b>B.</b> c'est une complication neurologique de l’intoxication alcoolique chronique</li><li><b>C.</b> c'est une complication neurologique de l’intoxication alcoolique chronique</li></ul></div>",
+"retenir": "Alcool <b>aigu</b> : ivresse (dont convulsivante), coma éthylique. Korsakoff et polyneuropathie = alcoolisme <b>chronique</b>."
+},
+{
+"type": "qrm",
+"q": "<p>Quels sont les éléments en faveur d’une myasthénie auto-immune ?(3 réponses attendues)</p>",
+"opts": [
+"Ptosis à bascule",
+"Paresthésies des extrémités",
+"Dysphonie en fin de journée",
+"Réflexes ostéotendineux vifs et diffusés",
+"Tête tombante (chute de la tête en avant)"
+],
+"ok": [
+0,
+2,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>B et D. Faux : il n’y a pas de troubles sensitifs ni de syndrome pyramidal dans la myasthénie</p></div>",
+"retenir": "Myasthénie = fatigabilité <b>motrice pure</b> (ptosis à bascule, dysphonie du soir, tête tombante) : ni trouble sensitif ni syndrome pyramidal."
+},
+{
+"type": "qrm",
+"q": "<p>Quels sont les étiologies à évoquer en cas de trouble visuel binoculaire transitoire et récidivant ?(3 réponses attendues)</p>",
+"opts": [
+"Aura migraineuse",
+"Accident ischémique transitoire",
+"Epilepsie focale",
+"Occlusion de l’artère centrale de la rétine",
+"Neuropathie optique ischémique antérieure"
+],
+"ok": [
+0,
+1,
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>D et E. Faux : il s’agit d’un trouble visuel monoculaire aigu, fixé</p></div>",
+"retenir": "Trouble visuel <b>binoculaire</b> transitoire : aura migraineuse, AIT (vertébro-basilaire), épilepsie occipitale. OACR et NOIAA = <b>monoculaires</b>."
+},
+{
+"type": "qrm",
+"q": "<p>En cas d’AVC ischémique du territoire sylvien superficiel gauche, que peut-on observer cliniquement ?(2 réponses attendues)</p>",
+"opts": [
+"Aphasie",
+"Paraparésie",
+"Hémiparésie droite à prédominance crurale",
+"Hémiparésie droite à prédominance brachiofaciale",
+"Hémiparésie droite proportionnelle aux 3 étages"
+],
+"ok": [
+0,
+3
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>C.</b> Faux : elle est observée en cas d’AVC du territoire de l’artère cérébrale antérieure gauche</li><li><b>E.</b> Faux : elle est observée en cas d’AVC du territoire sylvien profond gauche</li></ul></div>",
+"retenir": "Sylvien superficiel G : aphasie + hémiparésie D <b>brachio-faciale</b>. Crurale = cérébrale antérieure ; proportionnelle = sylvien profond."
+},
+{
+"type": "qru",
+"q": "<p>Quel est la diagnostic à évoquer en priorité en cas de céphalées en coup de tonnerre ?</p>",
+"opts": [
+"Méningite",
+"Hémorragie méningée",
+"Glaucome",
+"AVC ischémique",
+"Maladie de Horton"
+],
+"ok": [
+1
+],
+"expl": "<p>Céphalée en <b>coup de tonnerre</b> (intensité maximale en moins d'une minute) = <b>hémorragie méningée</b> jusqu'à preuve du contraire → scanner sans injection en urgence, puis PL si scanner normal. Les autres causes (SVCR, dissection, apoplexie hypophysaire, thrombose veineuse) viennent ensuite.</p>",
+"retenir": "Coup de tonnerre = hémorragie méningée jusqu'à preuve du contraire → scanner en urgence."
+},
+{
+"type": "qrm",
+"q": "<p>Vous réalisez une ponction lombaire à un patient présentant des céphalées inhabituelles. Il y a 41 éléments/mm3, 1 GR/mm3, protéinorachie à 0.75 g/L, glycorachie à 0.3 mmol/L, glycémie à 0.8 mmol/L, une pression d’ouverture à 19 cm H2O. Comment l’interprétez vous ?(2 réponses attendues)</p>",
+"opts": [
+"Normalité de l’examen",
+"Méningite",
+"Normoglycorachie",
+"Hyperprotéinorachie",
+"Pression d’ouverture augmentée"
+],
+"ok": [
+1,
+3
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>B.</b> Vrai : on parle de méningite si &gt; 5-10 éléments/mm3</li><li><b>C.</b> Faux : la glycorachie normale est &gt; 2/3 glycémie ; ici, elle est abaissée</li><li><b>D.</b> Vrai : la protéinorachie normale est &lt; 0,40–0,45 g/L</li><li><b>E.</b> Faux : la pression d’ouverture est ici normale =&gt; 10 à 25 cm (adulte) 10 à 28 cm (enfant)</li></ul></div>",
+"retenir": "LCR normal : &lt; 5 éléments/mm³, protéines &lt; 0,40-0,45 g/L, glycorachie &gt; 2/3 de la glycémie, pression d'ouverture 10-25 cmH₂O. ⚠️ L'énoncé écrit « glycémie 0,8 mmol/L », sûrement une coquille (le rapport 0,3/0,8 &lt; 2/3 reste le message)."
+},
+{
+"type": "qrm",
+"q": "<p>Quelle(s) est(sont) les contre-indications à la ponction lombaire ?(4 réponses attendues)</p>",
+"opts": [
+"Plaquettes < 50 000/mm3",
+"Traitement par Aspirine",
+"Instabilité hémodynamique ou respiratoire",
+"Traitement par anticoagulation curative",
+"Infection cutanée étendue du site de ponction"
+],
+"ok": [
+0,
+2,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>La ponction lombaire est contre-indiquée si : infection cutanée étendue du site de ponction, instabilité hémodynamique ou respiratoire, troubles de l’hémostase connus (coagulopathie dont hémophilie, plaquettes &lt; 50 000/mm3), traitement anticoagulant à dose efficace (héparine, anticoagulants oraux), saignements spontanés évoquant une coagulation intravasculaire disséminée</p></div>",
+"retenir": "CI à la PL : HTIC avec signe de localisation (imagerie avant), troubles de l'hémostase (plaquettes &lt; 50 G/L, anticoagulants curatifs), instabilité, infection cutanée du point de ponction. L'aspirine seule n'est <b>pas</b> une CI."
+},
+{
+"type": "qrm",
+"q": "<p>Quelles sont les causes d’un état confusionnel ?</p>",
+"opts": [
+"Hypoglycémie",
+"Intoxication au CO",
+"Carence vitaminique en thiamine",
+"Hématome extradural",
+"Insuffisance rénale aigue"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Un très grand nombre de situations peuvent produire un état confusionnel (cf encadré 22.5 du chapitre 22 du Collège des enseignants de neurologie)</p></div>",
+"retenir": "Confusion : toujours chercher d'abord hypoglycémie, causes toxiques (CO, alcool, médicaments), carences (thiamine), causes neurochirurgicales et métaboliques."
+},
+{
+"type": "qrm",
+"q": "<p>Quels sont les éléments en faveur du syndrome de Guillain-Barré ?(3 réponses attendues)</p>",
+"opts": [
+"Des réflexes ostéotendineux vifs",
+"Des troubles vésicosphinctériens fréquents",
+"Une parésie débutant à la partie proximale des membres inférieurs",
+"Une ataxie proprioceptive",
+"Des paresthésies distales des quatre membres"
+],
+"ok": [
+2,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>A.</b> Faux : Il existe une aréflexie ostéotendineuse</li><li><b>B.</b> Faux : Ils sont rares et doivent faire évoquer une atteinte médullaire</li><li><b>C.</b> Vrai : l’atteinte motrice est une parésie relativement symétrique, étendue et sévère, qui prédomine en proximal puis touche les extrémités</li><li><b>D.</b> Vrai : le déficit sensitif prédomine sur la proprioception et est responsable d’ataxie</li><li><b>E.</b> Vrai : il existe à la phase initiale des manifestations sensitives fréquentes et plutôt subjectives (paresthésies, picotements distaux des quatre membres) à évolution ascendante</li></ul></div>",
+"retenir": "Guillain-Barré : paresthésies distales puis déficit moteur ascendant, symétrique, <b>aréflexie</b>, ataxie proprioceptive. Troubles sphinctériens marqués → penser moelle."
+},
+{
+"type": "qrm",
+"q": "<p>Quelle(s) est(sont) les causes de neuronopathie sensitives ?</p>",
+"opts": [
+"Cancer du poumon à petites cellules dans le cadre d’un syndrome paranéoplasique",
+"Hypothyroïdie",
+"Syndrome de Gougerot-Sjögren",
+"Sels de platine des chimiothérapies",
+"Déficit en vitamine C"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Les neuronopathies ont pour causes principales : le cancer du poumon à petites cellules dans le cadre d’un syndrome paranéoplasique (syndrome anti-Hu), le syndrome de Gougerot-Sjögren, une origine dysimmunitaire sans cause, une origine toxique (sels de platine des chimiothérapies), causes génétiques rares comme CANVAS, maladie de Friedreich, mutation POLG</p></div>",
+"retenir": "Neuronopathie sensitive (ganglionopathie) : anti-Hu (CBPC), Gougerot-Sjögren, sels de platine, causes génétiques."
+},
+{
+"type": "qrm",
+"q": "<p>Quel(s) est(sont) les effets indésirables des anticholinestérasiques utilisés dans la myasthénie ?</p>",
+"opts": [
+"Diarrhée",
+"Sécheresse buccale",
+"Hypersécrétion bronchique",
+"Fasciculations",
+"Crampes"
+],
+"ok": [
+0,
+2,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Effets indésirables en rapport avec les effets muscariniques (diarrhées, douleurs abdominales, hypersalivation, hypersécrétion bronchique, sueurs, bradycardie) ou nicotiniques (fasciculations, crampes)</p></div>",
+"retenir": "Anticholinestérasiques : effets <b>muscariniques</b> (diarrhée, hypersalivation, hypersécrétion bronchique, sueurs, bradycardie) + <b>nicotiniques</b> (fasciculations, crampes). Pas de sécheresse buccale (c'est l'inverse)."
+},
+{
+"type": "qru",
+"q": "<p>Quelle est la localisation de la lésion sur les voies visuelles en cas d’hémianopsie bitemporale ?</p>",
+"opts": [
+"Lésion des radiations optiques",
+"Lésion du nerf optique",
+"Lésion chiasmatique",
+"Lésion de la bandelette optique",
+"Lésion de la rétine"
+],
+"ok": [
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>A.</b> Faux : Quadranopsie latérale homonyme supérieure par atteinte des radiations optiques inférieures controlatérales</li><li><b>B.</b> Faux : Cécité unilatérale totale par lésion complète du nerf optique homolatéral</li><li><b>D.</b> Faux : Hémianopsie latérale homonyme par atteinte de la bandelette optique controlatérale</li></ul></div>",
+"retenir": "Chiasma = hémianopsie <b>bitemporale</b> (adénome hypophysaire) · bandelette ou radiations = HLH controlatérale · nerf optique = cécité monoculaire."
+},
+{
+"type": "qrm",
+"q": "<p>Quel(s) est(sont) les éléments en faveur d’une maladie à corps de Lewy plutôt qu’une maladie de Parkinson ?</p>",
+"opts": [
+"Troubles cognitifs précoces",
+"Hallucinations visuelles",
+"Fluctuations de la vigilance",
+"Hyposmie",
+"Marche à petits pas"
+],
+"ok": [
+0,
+1,
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>D et E. Faux : ils sont présents dans les deux maladies</p></div>",
+"retenir": "Corps de Lewy : troubles cognitifs <b>précoces</b>, hallucinations visuelles, fluctuations de la vigilance (+ troubles du sommeil paradoxal, sensibilité aux neuroleptiques)."
+},
+{
+"type": "qrm",
+"q": "<p>Quel(s) est(sont) les médicaments qui peuvent être utilisés dans la maladie de Parkinson ?</p>",
+"opts": [
+"Amantadine",
+"Anticholinestérasiques",
+"L-dopa",
+"Inhibiteurs de la catéchol-O-méthyl- transférase (ICOMT)",
+"Corticoïdes"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>B.</b> Faux : ils sont utilisés dans la maladie d’Alzheimer (et maladie à corps de Lewy), ainsi que dans la myasthénie</li><li><b>E.</b> Faux : ils sont utilisés dans les maladies inflammatoires et auto- immunes</li></ul></div>",
+"retenir": "Parkinson : L-dopa, agonistes dopaminergiques, IMAO-B, ICOMT, amantadine. Anticholinestérasiques = Alzheimer, Lewy, myasthénie."
+},
+{
+"type": "qrm",
+"q": "<p>Le syndrome de Brown-Séquard se compose :</p>",
+"opts": [
+"D’un syndrome pyramidal homolatéral à la lésion",
+"D’une atteinte de la sensibilité proprioceptive controlatérale à la lésion",
+"D’une atteinte de la sensibilité épicritique homolatérale à la lésion",
+"D’une atteinte de la sensibilité thermoalgique controlatérale à la lésion",
+"D’une abolition diffuse des réflexes ostéotendineux"
+],
+"ok": [
+0,
+2,
+3
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Le syndrome de Brown-Séquard correspond à une souffrance d’une hémi-moelle, dissociation de sensibilité avec un syndrome cordonal postérieur (atteinte de la sensibilité épicritique et proprioceptive) et un syndrome pyramidal homolatéraux à la lésion (notamment avec réflexes ostéotendineux vifs), et déficit spinothalamique du côté opposé (atteinte de la sensibilité thermoalgique)</p></div>",
+"retenir": "Brown-Séquard (hémi-moelle) : pyramidal + cordonal postérieur <b>du côté de la lésion</b>, thermoalgique <b>du côté opposé</b>."
+}
+],
+"cours": "<ul><li>Myasthénie : fatigabilité motrice pure ; anticholinestérasiques = effets muscariniques + nicotiniques.</li><li>Voies visuelles : nerf optique = monoculaire ; chiasma = bitemporale ; en arrière = HLH controlatérale.</li><li>PL : normes du LCR et contre-indications.</li><li>Guillain-Barré : aréflexie, déficit ascendant symétrique, peu de troubles sphinctériens.</li><li>Brown-Séquard : pyramidal + proprioception homolatéraux, thermoalgique controlatéral.</li></ul>"
+},
+{
+"id": "TCS1",
+"titre": "TCS · tremblement chez une patiente bipolaire",
+"items": "Item 107",
+"free": true,
+"intro": "<p>Une femme de 63 ans ayant un trouble bipolaire consulte pour des tremblements des membres supérieurs.</p>",
+"qs": [
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensiez à un tremblement essentiel</p><p><b>Nouvelle information :</b> et que sa grand-mère tremblait aussi</p></div><p>Cette hypothèse devient :</p>",
+"opts": [
+"−2 (très improbable)",
+"−1",
+"0 (inchangée)",
+"+1",
+"+2 (quasi certaine)"
+],
+"ok": [
+3,
+4
+],
+"w": [
+0,
+0,
+0.33,
+1,
+1
+],
+"expl": "<p>Le tremblement essentiel est <b>familial dans environ la moitié des cas</b> (transmission autosomique dominante). Un antécédent familial de tremblement <b>renforce</b> donc l'hypothèse : la majorité du panel répond +1 ou +2. Répondre 0 rapporte une fraction de point.</p><p class=\"small\">Barème du panel non publié dans le corrigé : les réponses « valides » rapportent des points, le 0 rapporte 0,33.</p>",
+"retenir": "Tremblement essentiel : postural et d'action, bilatéral, souvent familial, amélioré par l'alcool."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensiez à une maladie de Parkinson</p><p><b>Nouvelle information :</b> et qu'il existe une akinésie segmentaire avec rigidité plastique bilatérale</p></div><p>Cette hypothèse devient :</p>",
+"opts": [
+"−2 (très improbable)",
+"−1",
+"0 (inchangée)",
+"+1",
+"+2 (quasi certaine)"
+],
+"ok": [
+1,
+2,
+3
+],
+"w": [
+0,
+1,
+1,
+1,
+0
+],
+"expl": "<p>Akinésie + rigidité plastique = <b>syndrome parkinsonien</b>, qui va avec un Parkinson. Mais il est <b>bilatéral et symétrique</b> chez une patiente <b>bipolaire</b> (lithium, antipsychotiques) : c'est l'aspect typique d'un parkinsonisme <b>iatrogène</b>. La maladie de Parkinson est asymétrique au début. Le panel a donc réparti ses réponses entre −1, 0 et +1 ; +2 (« quasi certain ») est faux.</p>",
+"retenir": "Parkinson idiopathique = asymétrique au début. Syndrome parkinsonien symétrique sous neuroleptiques ou lithium → penser iatrogène."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensiez à un trouble neurologique fonctionnel</p><p><b>Nouvelle information :</b> et qu'il n’existe pas caractère distractible évident des tremblements</p></div><p>Cette hypothèse devient :</p>",
+"opts": [
+"−2 (très improbable)",
+"−1",
+"0 (inchangée)",
+"+1",
+"+2 (quasi certaine)"
+],
+"ok": [
+0,
+1
+],
+"w": [
+1,
+1,
+0.25,
+0,
+0
+],
+"expl": "<p>La <b>distractibilité</b> est un signe positif du trouble fonctionnel. Son absence ne l'élimine pas mais ne le soutient pas : le panel répond −2, −1 ou 0 ; répondre 0 rapporte 0,25.</p>",
+"retenir": "Trouble neurologique fonctionnel : on le diagnostique sur des signes positifs (distractibilité, entraînement), pas par élimination."
+},
+{
+"type": "tcs",
+"label": "TCS",
+"q": "<div class=\"tcs\"><p><b>Hypothèse :</b> Si vous pensiez à une cause iatrogène</p><p><b>Nouvelle information :</b> et que le Datscan retrouve une dénervation dopaminergique</p></div><p>Cette hypothèse devient :</p>",
+"opts": [
+"−2 (très improbable)",
+"−1",
+"0 (inchangée)",
+"+1",
+"+2 (quasi certaine)"
+],
+"ok": [
+0
+],
+"w": [
+1,
+0.5,
+0,
+0,
+0
+],
+"expl": "<p>Le <b>DaTscan</b> est <b>normal</b> dans le parkinsonisme iatrogène (les neurones dopaminergiques sont intacts, seuls les récepteurs sont bloqués). Une dénervation dopaminergique oriente vers une maladie neurodégénérative (Parkinson) et rend la cause iatrogène <b>très improbable</b> : −2.</p>",
+"retenir": "DaTscan anormal = dénervation présynaptique (Parkinson, Lewy, AMS, PSP). Normal dans le iatrogène et le tremblement essentiel."
+}
+],
+"cours": "<ul><li>Tremblement essentiel : familial, postural et d'action.</li><li>Parkinson : asymétrique ; parkinsonisme iatrogène : symétrique, DaTscan normal.</li><li>Trouble fonctionnel : signes positifs (distractibilité).</li></ul>"
+},
+{
+"id": "KFP1",
+"titre": "Céphalées en coup de tonnerre récidivantes : SVCR",
+"items": "Items 100, 118",
+"free": false,
+"intro": "<p>Un patient de 29 ans se rend au service d’accueil des urgences pour des céphalées d’apparition brutale. Il n’a pas d’antécédent particulier et ne prend pas de traitement oraux. Vous l’interrogez. Ses céphalées se sont installées subitement avec une intensité très élevée il y a quelques heures alors qu’il était en train d’effectuer sa séance de musculation. Elles sont actuellement en train de régresser. Il y a une dizaine de jour, il a présenté 2 épisodes similaires de une à deux heures chacun alors qu’il était en congés en province. Il avait réalisé un scanner cérébral non injecté qui s’était avéré normal.Il n’y a pas d’autre symptôme neurologique. Vous notez qu’il est enrhumé, et le patient vous dit qu’effectivement depuis environ 2 semaines, il doit fréquemment se « déboucher le nez » avec un décongestionnant nasal car il se sent encombré.L’examen neurologique est normal.</p>",
+"qs": [
+{
+"type": "qroc",
+"q": "<p>Quel diagnostic paraît être le plus probable ?</p>",
+"kw": [
+[
+"svcr",
+1.0
+],
+[
+"syndrome de vasoconstriction cérébrale réversible",
+1.0
+]
+],
+"attendu": "Syndrome de vasoconstriction cérébrale réversible ; syndrome de vasoconstriction cérébrale réversible",
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>La céphalée est typiquement explosive, en coup de tonnerre, généralement plus courte que celle de l’HSA anévrismale. Chaque épisode dure 5 minutes à plusieurs heures et se répète sur 1 à 3 semaines, volontiers provoqué par l’effort, l’émotion, la manœuvre de Valsalva ou l’activité sexuelle. Le contexte de décongestionnant nasal (vasoconstricteur) est ici évocateur. Le scanner est généralement normal en l’absence de complication (contrairement à l’hémorragie méningée où le scanner est très fréquemment anormal).</p></div>",
+"retenir": "Coups de tonnerre <b>répétés</b> sur quelques jours, déclenchés par l'effort, avec un vasoconstricteur nasal = <b>SVCR</b>."
+},
+{
+"type": "qrm",
+"q": "<p>Vous suspectez un syndrome de vasoconstriction cérébrale réversible. Que faites-vous ?</p>",
+"opts": [
+"Vous lui prescrivez une angiographie cérébrale (angioscanner ou ARM)",
+"Vous lui prescrivez des bêtabloquants, en l’absence de contre-indication",
+"Vous lui prescrivez des anticalciques, en l’absence de contre-indication",
+"Vous lui dites qu’il peut continuer de réaliser du sport prochainement",
+"Vous lui contre-indiquez les décongestionnants nasaux"
+],
+"ok": [
+0,
+2,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>L’angiographie montre des sténoses artérielles segmentaires et diffuses qui sont maximales 2 semaines après le début des céphalées. L’angiographie peut être normale dans les 7 premiers jours. D’où la recommandation de refaire une angiographie après quelques jours chez des patients ayant eu une ou plusieurs céphalées en coup de tonnerre et une imagerie initiale n’apportant pas de diagnostic. Le traitement repose sur le repos, l’arrêt des substances vasoactives et un anticalcique (nimodipine).</p></div>",
+"retenir": "SVCR : angiographie (à refaire si normale au début), arrêt des vasoactifs, repos, <b>nimodipine</b>."
+},
+{
+"type": "qrm",
+"q": "<p>Quelles sont les contextes évocateurs ou facteurs favorisant le syndrome de vasoconstriction cérébrale réversible ?</p>",
+"opts": [
+"intoxication au cannabis",
+"contexte de post-partum",
+"intoxication à la cocaïne",
+"consommation d’alcool",
+"traitement par vasodilatateur",
+"traitement par antidépresseur sérotoninergique",
+"traitement par triptan",
+"traitement par paracétamol",
+"stress",
+"immersion dans un bain chaud"
+],
+"ok": [
+0,
+1,
+2,
+5,
+6,
+8
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Un contexte de post-partum, d’exposition à des substances vasoactives (cannabis, cocaïne, antidépresseur sérotoninergique, décongestionnant nasal ou triptan) ou de stress est évocateur.</p></div>",
+"retenir": "SVCR : post-partum, substances vasoactives (cannabis, cocaïne, ISRS, triptans, décongestionnants), stress, effort."
+}
+],
+"cours": "<ul><li>SVCR : coups de tonnerre répétés sur 1-3 semaines, déclenchés par l'effort, l'émotion, Valsalva ou le sexe.</li><li>Facteurs : post-partum, vasoactifs (cannabis, cocaïne, ISRS, triptans, décongestionnants).</li><li>Angiographie : sténoses segmentaires maximales vers 2 semaines (peut être normale au début).</li><li>Traitement : arrêt des vasoactifs, repos, nimodipine.</li></ul>"
+},
+{
+"id": "DP1",
+"titre": "Céphalées, hématome sous-dural puis épilepsie",
+"items": "Items 100, 103, 330",
+"free": false,
+"intro": "<p>Un homme de 59 ans se rend aux urgences en raison de céphalées.Il a pour antécédent une hypertension artérielle sous Valsartan (antagoniste des récepteurs de l’angiotensine II), un canal lombaire étroit ainsi qu'une fibrillation atriale sous Apixaban (anticoagulant oral direct)</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Que recherchez-vous à l'interrogatoire et à l'examen clinique ?</p>",
+"opts": [
+"Le caractère habituel ou non des céphalées",
+"Le mode d'apparition des céphalées",
+"Des facteurs positionnels déclenchant ou aggravant les céphalées",
+"La présence d'une vision floue ou d'une diplopie",
+"Un signe de localisation neurologique"
+],
+"ok": [
+0,
+1,
+2,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Toutes ces informations sont importantes afin de préciser les caractéristiques des céphalées pour pouvoir prescrire des examens complémentaires adaptés.</p></div>",
+"retenir": "Céphalée : habituelle ou non, mode d'installation, facteurs positionnels, signes visuels, signes de localisation."
+},
+{
+"type": "qru",
+"q": "<p>Vous menez votre interrogatoire. Il s'agit de céphalées inhabituelles d'installation rapidement progressive sur quelques jours. Elles sont intenses et sont accompagnées de nausées et vomissements. Elles prédominent lorsque le patient est installée en posistion allongée. Il a effectivement l'impression d'avoir des difficultés visuelles par moments. Votre examen neurologique est normal en dehors d'une discrète hémiparésie droite.Quel est le syndrome que vous suspectez ?</p>",
+"opts": [
+"Syndrome d'hypotension intracrânienne",
+"Syndrome d'hypertension intracrânienne",
+"Syndrome méningé",
+"Syndrome céphalo-oculaire",
+"Syndrome de vasoconstriction cérébrale réversible"
+],
+"ok": [
+1
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>A.</b> Faux : il s'agit par exemple d'une complication de la ponction lombaire, les céphalées sont aggravées par la position debout et soulagées par la position allongée</li><li><b>B.</b> Vrai : le syndrome d'HTIC est caractérisé par : des céphalées (en casque, diffuse, intense, matinale, exagérée par toux/effort/décubitus, résistante aux antalgiques, de début souvent progressif), des vomissements (inconstants, sans effort, en jets et soulageant temporairement la céphalée), des trouble de la vigilance (obnubilation, confusion, coma, une diplopie horizontale (atteinte du VI uni- ou bilatérale), des éclipses visuelles (pertes bilatérales transitoires de la vision, tardives par œdème papillaire important), un oedème papillaire bilatéral au fond d’œil</li><li><b>C.</b> Faux : il n'est pas fait mention ici de raideur de nuque ou de photophobie</li><li><b>D.</b> Faux : ce syndrome n'existe pas</li><li><b>E.</b> Faux : dans le SVCR, les céphalées sont brutales et répétées, sans caractère positionnel</li></ul></div>",
+"retenir": "HTIC : céphalées matinales, aggravées en décubitus et à l'effort, vomissements en jet, éclipses visuelles, diplopie (VI), œdème papillaire."
+},
+{
+"type": "qrm",
+"q": "<p>Que réalisez-vous en urgence ?</p>",
+"opts": [
+"Une imagerie cérébrale",
+"Une ponction lombaire à visée diagnostique",
+"Une ponction lombaire évacuatrice à visée thérapeutique",
+"Un électro-encéphalogramme",
+"Aucun examen complémentaire"
+],
+"ok": [
+0
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>A.</b> Vrai, INDISPENSABLE : une imagerie cérébrale est indispensable devant toute céphalée inhabituelle</li><li><b>B.</b> Faux, INACCEPTABLE : une HTIC avec des signes de localisations (hémiparésie droite) est une contre-indication à la ponction lombaire du fait du risque d'engagement si la ponction est réalisée ; de plus, le patient est sous anticoagulant curatif, ce qui est également une contre- indication</li><li><b>C.</b> Faux, INACCEPTABLE : cf réponse B</li><li><b>D.</b> Faux : le tableau n'est pas ici celui d'une suspicion de crise d'épilepsie</li></ul></div><p>⚠️ Dans le corrigé, les étiquettes de C et D semblent inversées : le commentaire de C dit « inacceptable » mais la case est notée « Faux », et l'inverse pour D. La notation ici suit les étiquettes officielles (B et D inacceptables).</p>",
+"retenir": "Céphalée inhabituelle = imagerie cérébrale. HTIC avec signe de localisation ou anticoagulant = <b>pas de PL</b> (risque d'engagement, hématome).",
+"indisp": [
+0
+],
+"inacc": [
+1,
+3
+]
+},
+{
+"type": "qrm",
+"q": "<p>Un scanner cérébral sans injection est réalisé. Il montre une hématome sous-dural hémisphérique gauche de taille modérée. En réinterrogeant le patient, il vous rapporte avoir chuté et s'être cogné la tête la veille du début de ses symptômes.Que faites-vous ?</p>",
+"opts": [
+"Vous demandez un avis neurochirurgical pour discuter l'évacuation de l'hématome sous-dural",
+"Vous arrêtez les anticoagulants curatifs",
+"Vous administrez des antalgiques",
+"Vous administrez un anti-agrégant plaquettaire pour prévenir la survenue d'un AVC ischémique",
+"Vous ne faites rien de particulier"
+],
+"ok": [
+0,
+1,
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>A.</b> Vrai : la prise en charge de l'hématome sous-dural peut nécessiter une évacuation neurochirurgicale selon la situation</li><li><b>B.</b> Vrai : l'urgence est ici d'éviter tout facteur pouvant augmenter le saignement intracrânien ; de plus, vous pouvez faire doser l'Apixaban afin de voir s'il existe un surdosage en médicament</li><li><b>C.</b> Vrai : ne pas oublier le traitements symptomatiques (antalgiques, anti- émétiques...)</li><li><b>D.</b> Faux, INACCEPTABLE : vous risqueriez d'augmenter la taille de l'hématome sous-dural</li></ul></div>",
+"retenir": "HSD sous anticoagulant : arrêt (± antagonisation) de l'anticoagulant, avis neurochirurgical, traitement symptomatique. Jamais d'antiagrégant.",
+"inacc": [
+3
+]
+},
+{
+"type": "qrm",
+"q": "<p>Quelques jours plus tard, après votre prise en charge appropriée, les symptômes s'améliorent et l'hématome sous- dural régresse partiellement. Le patient rentre à domicile. Le soir-même de son retour, il présente brutalement devant son épouse une perte de connaissance avec chute au sol. Il se met à convulser.Quel(s) élément(s) suivant(s) est(sont) en faveur d'une crise d'épilepsie généralisée tonico-clonique ?</p>",
+"opts": [
+"Morsure latérale de la langue",
+"Des secousses bilatérales, synchrones, s’espaçant progressivement",
+"Une pâleur",
+"Absence de perte de la conscience",
+"Résistance à l'ouverture des yeux"
+],
+"ok": [
+0,
+1
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>A.</b> Vrai : elle est fréquente durant la phase tonique</li><li><b>B.</b> Vrai : elles sont présentes durant la phase clonique</li><li><b>C.</b> Faux : il y a plutôt une apnée avec cyanose (la pâleur oriente plutôt vers une syncope)</li><li><b>D.</b> Faux : la crise généralisée tonico-clonique s'accompagnent d'une abolition de la conscience</li><li><b>E.</b> Faux : cet élément oriente vers une crise fonctionnelle dissociative</li></ul></div>",
+"retenir": "Crise tonico-clonique : morsure <b>latérale</b> de langue, secousses synchrones qui s'espacent, cyanose, confusion après la crise. Yeux fermés en résistant = crise fonctionnelle."
+},
+{
+"type": "qru",
+"q": "<p>Les clonies se prolongent depuis plus de cinq minutes. Une équipe du SMUR est dépêchée rapidement sur place.Quel est le traitement recommandée à ce stade ?</p>",
+"opts": [
+"Administration de morphine",
+"Injection de Lévétiracétam",
+"Intubation oro-trachéale d'emblée",
+"Administration de Phénobarbital",
+"Injection de benzodiazepine en IV rapide (clonazepam 1 mg)"
+],
+"ok": [
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Il s'agit d'un état de mal épileptique. En cas d’intervention avant 30 minutes :1. Première ligne de traitement : benzodiazepine en IV rapide (clonazepam 1 mg) répété une fois si échec au bout de 5 minutes.2. Deuxième ligne de traitement : en cas d’échec 5 minutes après la deuxième injection de benzodiazépine, antiépileptique d’action prolongée en IV à la seringue électrique : fosphénytoïne (Prodilantin®) 20 mg/kg d’équivalent phénytoïne ou phénobarbital (Gardénal®) 15 mg/kg ou lévétiracétam 30–60 mg/kg &lt; 4 g; acide valproïque 40 mg/kg et &lt; 3 g en IV; lacosamide 200 mg de dose de charge.3. Troisième ligne de traitement : si persistance de l’état de mal 30 minutes après l’administration de la deuxième ligne, sédation (propofol ou midazolam ou thiopental) avec intubation orotrachéale. Cette situation correspond à l’état de mal épileptique réfractaire.</p></div>",
+"retenir": "État de mal (&gt; 5 min) : benzodiazépine IV (clonazépam 1 mg), à répéter une fois ; puis 2e ligne (fosphénytoïne, phénobarbital, lévétiracétam, valproate)."
+},
+{
+"type": "qrm",
+"q": "<p>La crise d'épilepsie cède après l'injection de benzodiazépines. Le patient est réhospitalisé. Son épouse vous questionne concernant son rôle en cas de récidive de crise d'épilepsie de son mari à domicile.Que lui conseillez- vous ?</p>",
+"opts": [
+"Libérer les voies aériennes supérieures",
+"Laisser le patient sur le dos",
+"Noter l'heure de début de la crise",
+"Introduire les doigts dans la bouche du patient pour éviter qu'il se morde la langue",
+"Mettre le patient en position latérale de sécurité"
+],
+"ok": [
+0,
+2,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Voici les conseils à donner à l'épouse du patient :- noter l’heure de début (afin de pouvoir en déterminer la durée qui conditionne le diagnostic de gravité de l’état de mal épileptique)- libérer les voies aériennes supérieures (ne pas introduire les doigts ou tout objet)- position latérale de sécurité (participe à libérer les voies aériennes supérieures, prévient une pneumopathie d’inhalation en cas de vomissements)- s’il s’agit d’une crise habituelle chez un patient épileptique connu et traité, pas d’hospitalisation systématique- s'il s’agit d’une première crise, ou d’une crise inhabituelle, ou si la durée est supérieure à 5 minutes, appel du 15 pour prise en charge au service d’accueil des urgences</p></div>",
+"retenir": "Crise à domicile : noter l'heure, PLS, libérer les voies aériennes, rien dans la bouche ; appeler le 15 si 1re crise, crise inhabituelle ou &gt; 5 min."
+},
+{
+"type": "qru",
+"q": "<p>L'épilepsie est désormais stabilisée depuis de nombreux mois. Quelques jours après le décès de son père, le patient présente de nouveau des crises, mais qui sont assez différentes des anciennes. Il chute, a les yeux fermés mais n'est pas proprement dit inconscient. Il entend tout ce qui se passe autour de lui sans réussir à pouvoir parler ou bouger. Ses membres peuvent bouger de manière anarchique. Chaque crise dure environ une dizaine de minutes, et le retour à la conscience se fait brutalement sans confusion post-critique.Quel diagostic suspectez-vous ?</p>",
+"opts": [
+"Crise d'épilepsie généralisée tonico-clonique",
+"Syncope à l'emporte-pièce",
+"Attaque de panique",
+"Crise fonctionnelle dissociative",
+"Absence"
+],
+"ok": [
+3
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Certains éléments décrits dans l'observation sont évocateurs d'une crise fonctionnelle dissociative plutôt qu'une crise d'épilepsie : durée de plus de 2 minutes (ici environ 10 minutes), fermeture des yeux (et à fortiori s'il y a une résistance à l'ouverture des yeux, ici non testée), mouvements anrachiques des membres (et non mouvements cloniques synchrones s'espaçant progressivement), un rapide retour à la conscience post-critique, le fait qu'il soit dissocié (entend ce qui se passe autour de lui sans pouvoir interagir avec son environnement). Un contexte émotionnel fort (ici le dècès de son père) peut être un facteur précipitant mais n'est pas systématiquement retrouvé.</p></div>",
+"retenir": "Crise fonctionnelle dissociative : longue, yeux fermés, mouvements anarchiques, conscience en partie conservée, retour rapide sans confusion, contexte émotionnel."
+}
+],
+"cours": "<ul><li>HTIC → imagerie, jamais de PL s'il y a un signe de localisation.</li><li>HSD sous AOD : arrêt de l'anticoagulant, avis neurochirurgical.</li><li>État de mal : benzodiazépine IV à 5 min, 2e ligne 5 min plus tard, sédation à 30 min.</li><li>Crise fonctionnelle : longue, yeux fermés, mouvements anarchiques, pas de confusion post-critique.</li></ul>"
+},
+{
+"id": "DP2",
+"titre": "Névrite optique rétrobulbaire : sclérose en plaques",
+"items": "Items 81, 82, 101",
+"free": false,
+"intro": "<p>Mme S, 29 ans, est adressée aux urgences par son médecin traitant pour une baisse d'acuité visuelle de l'oeil droit.Elle n'a pas d'antécédent hormis une appendicectomie réalisée 3 ans plus tôt. Elle prend uniquement une contraception oestroprogestative orale.</p>",
+"qs": [
+{
+"type": "qrm",
+"q": "<p>Quel(s) élément(s) sont en faveur d'une névrite optique rétrobulbaire ?</p>",
+"opts": [
+"Installation des symptômes en quelques secondes ou minutes",
+"Caractère douloureux",
+"Déficit pupillaire afférent relatif",
+"Fond d'oeil fréquemment anormal",
+"Dyschromatopsie"
+],
+"ok": [
+1,
+2,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>A.</b> Faux : l'installation des symptômes est en quelques heures ou jours</li><li><b>B.</b> Vrai : il existe une douleur à la mobilisation du globe oculaire</li><li><b>C.</b> Vrai : un déficit pupillaire afférent relatif est quasiment constant si la NORB est unilatérale (souvent seul signe d’examen objectif au stade initial)</li><li><b>D.</b> Faux : le fond d’œil est normal au début, mais, dans 10 % des cas, il est le siège d’un œdème papillaire</li><li><b>E.</b> Vrai : une dyschromatopsie rouge-vert est souvent retrouvée</li></ul></div>",
+"retenir": "NORB : installation en heures ou jours, <b>douleur</b> à la mobilisation de l'œil, dyschromatopsie rouge-vert, DPAR, fond d'œil souvent normal."
+},
+{
+"type": "qrm",
+"q": "<p>Vous suspectez une névrite optique rétrobulbaire.Quel bilan réalisez-vous ?</p>",
+"opts": [
+"Examen ophtalmologique avec mesure de l'acuité visuel, champ visuel et fond d'oeil",
+"IRM cérébrale avec coupes centrées sur les nerfs optiques",
+"Electromyogramme",
+"Electroencéphalogramme",
+"Aucun examen complémentaire"
+],
+"ok": [
+0,
+1
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Le bilan à réaliser en urgence comprend un examen ophtalmologique avec mesure de l’acuité visuelle (on évalue la sévérité de l’atteinte visuelle), du champ visuel (on recherche un scotome et son étendue), et fond d’œil (on recherche un œdème papillaire). Les potentiels évoqués visuels (PEV) confirmeront dans un second temps la démyélinisation du nerf optique (allongement de la latence du P100). L’IRM des nerfs optiques peut également permettre de visualiser la lésion inflammatoire responsable de la baisse d’acuité visuelle</p></div>",
+"retenir": "NORB : examen ophtalmo (acuité, champ visuel, fond d'œil) + IRM (nerfs optiques et encéphale) ; PEV ensuite."
+},
+{
+"type": "qrm",
+"q": "<p>Voici son IRM cérébrale. A quel(s) niveau(x) topographique(s) les hypersignaux sont-ils situés sur ces coupes ?</p>",
+"opts": [
+"Juxtacortical",
+"Sous-cortical",
+"Périventriculaire",
+"Sous-tentoriel",
+"Médullaire"
+],
+"ok": [
+0,
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>A.</b> A et C. Vrai : les lésions sont ovoïdes, de plus de 3 mm habituellement, localisées majoritairement dans la substance blanche périventriculaire, avec un grand axe perpendiculaire à l’axe des ventricules. Elles peuvent également être juxtacorticales (au contact du cortex, ne respectant pas les fibres en U)</li><li><b>B.</b> il n'y a pas d'hypersignaux qui ne touchent ni le ventricule, ni le corte</li><li><b>D.</b> Faux : il n’y a pas d’hypersignal dans le cervelet</li><li><b>E.</b> Faux : il s'agit d’IRM cérébrale et non médullaire</li></ul></div>",
+"retenir": "Lésions de SEP : périventriculaires (perpendiculaires aux ventricules, « doigts de Dawson »), juxtacorticales, sous-tentorielles, médullaires.",
+"img": [
+"irm"
+]
+},
+{
+"type": "qroc",
+"q": "<p>Vous l'interrogez. Elle vous rapporte qu'il y a environ 6 mois, elle a présenté durant une dizaine de jours des troubles de l'équilibre importants avec une faiblesse dans les jambes et une impériosité mictionnelle.A l'examen clinique, vous constatez que les réflexes sont vifs, polycynétiques avec extension de la zone réflexogène. Le reste de l'examen neurologique est sans particularité.Quel diagnostic suspectez-vous ?</p>",
+"kw": [
+[
+"sclérose en plaque",
+1.0
+],
+[
+"sclérose en plaques",
+1.0
+],
+[
+"sep",
+1.0
+]
+],
+"attendu": "sclérose en plaques ; Sclérose en plaques",
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Il y a ici le critère de dissémination temporelle (un épisode passé de probable myélite et un épisode actuel de NORB) ainsi que le critère de dissémination spatiale (présence de lésions juxtacorticales et périventriculaires qui sont évocatrices de lésion inflammatoires du système nerveux central). De même, l'âge jeune de la patiente peut être un élément évocateur.</p></div>",
+"retenir": "SEP = dissémination dans le <b>temps</b> (2 épisodes) et dans l'<b>espace</b> (plusieurs zones du SNC)."
+},
+{
+"type": "qru",
+"q": "<p>La patiente se dit très gênée sur le plan visuel.Quelle est votre prise en charge thérapeutique ?</p>",
+"opts": [
+"Abstention thérapeutique et surveillance",
+"Corticothérapie IV forte dose pendant 3 jours",
+"Corticothérapie orale type prednisone 1mg/kg/j au long cours",
+"Mise en place d’un traitement de fond par immunosuppresseur",
+"Cure d'immunoglobulines par voie intraveineuse"
+],
+"ok": [
+1
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><p>Les corticoïdes à fortes doses permettent d’accélérer la récupération de la poussée. Ils sont prescrits en perfusion intraveineuse ou par voie orale à la dose de 1 g par jour pendant 3 jours (méthylprednisolone). Ils n’ont pas d’effet sur la prévention de nouvelles poussées. Leur utilisation n’est pas systématique si les symptômes ne sont pas gênants.</p></div>",
+"retenir": "Poussée gênante : méthylprednisolone <b>1 g/j pendant 3 jours</b> (IV ou per os). Accélère la récupération, ne prévient pas les poussées."
+},
+{
+"type": "qrm",
+"q": "<p>La patiente s'améliore cliniquement au bout de quelques jours. Elle revient vous voir en consultation et vous pose des questions sur la sclérose en plaques, notamment sur les poussées.Quelle(s) est(sont) la(les) réponse(s) vraie(s) concernant les poussées de la sclérose en plaques ?</p>",
+"opts": [
+"Les symptômes d'une poussée s’installent de manière subaiguë en quelques heures à quelques jours",
+"La durée des symptômes de la poussée est au minimum de 7 jours",
+"L'asthénie isolée peut être considérée comme une poussée de la maladie",
+"Deux poussées doivent être séparées d’au moins 1 mois",
+"Un syndrome cérébelleux nouvellement apparu peut être considéré comme une poussée de la maladie"
+],
+"ok": [
+0,
+3,
+4
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>A.</b> Vrai : une poussée se définit comme l’apparition de nouveaux symptômes, la réapparition d’anciens symptômes ou l’aggravation de symptômes préexistants, s’installant de manière subaiguë en quelques heures à quelques jours, et récupérant de manière plus ou moins complète</li><li><b>B.</b> Faux : sa durée est au minimum de 24 heures</li><li><b>C.</b> Faux : une fatigue seule ou des symptômes survenant dans un contexte de fièvre ne sont pas considérés comme une poussée</li><li><b>D.</b> Vrai : par définition, deux poussées doivent être séparées d’au moins 1 mois</li><li><b>E.</b> Vrai : les lésions de la sclérose en plaques peuvent toucher le cervelet</li></ul></div>",
+"retenir": "Poussée : symptômes nouveaux ou aggravés, ≥ <b>24 h</b>, à &gt; 1 mois de la précédente, hors fièvre. La fatigue seule n'en est pas une."
+},
+{
+"type": "qru",
+"q": "<p>Quelle est la forme clinique de sclérose en plaques que présente la patiente ?</p>",
+"opts": [
+"Primaire progressive",
+"Secondairement progressive",
+"Rémittente-récurrente",
+"Neuromyélite optique",
+"Idiopathique"
+],
+"ok": [
+2
+],
+"expl": "<div class=\"offi\"><b>Correction officielle</b><ul><li><b>A.</b> Faux : la forme primaire progressive ou progressive d’emblée, où la progression est présente dès le début, sans poussée, affecte 15% des patients et débute en moyenne un peu plus tardivement, vers 40 ans. Elle se caractérise habituellement par une atteinte médullaire (limitation progressive du périmètre de marche par paraparésie spastique).</li><li><b>B.</b> Faux : la forme secondairement progressive est l’évolution naturelle tardive de la forme rémittente-récurrente, une phase de progression succédant à la phase rémittente. Elle peut toucher tous les patients initialement rémittents, après une période plus ou moins longue, de 15 à 20 ans en moyenne.</li><li><b>C.</b> Vrai : la forme rémittente-récurrente est composée exclusivement de poussées qui peuvent laisser des séquelles, ces séquelles restant stables entre deux épisodes. Elle débute vers 30 ans en moyenne et représente 85% des formes de début.</li><li><b>D.</b> Faux : il s'agit d'un diagnostic différentiel de la sclérose en plaques</li><li><b>E.</b> Faux : cette forme n'existe pas</li></ul></div>",
+"retenir": "SEP rémittente-récurrente = 85 % des débuts, vers 30 ans ; secondairement progressive après 15-20 ans ; primaire progressive = 15 %, vers 40 ans."
+}
+],
+"cours": "<ul><li>NORB : douleur oculaire, baisse d'acuité en heures ou jours, dyschromatopsie, DPAR, fond d'œil normal.</li><li>SEP : dissémination temporelle et spatiale ; lésions périventriculaires et juxtacorticales.</li><li>Poussée : ≥ 24 h, à &gt; 1 mois de la précédente, hors fièvre → bolus de corticoïdes 3 jours si gênante.</li><li>Forme rémittente-récurrente = 85 % des débuts.</li></ul>"
+}
+]
+};
+
+</script>
+<script>
+(function(){
+const $=s=>document.querySelector(s);
+const L="ABCDEFGHIJKLMNOPQRST";
+const KEY="annale-neuro-fev26-v1";
+const TOTAL=60*60;
+const SOURCES="corrigé officiel de l'épreuve (DFA1 UE4.1, février 2026) ; explications et points à retenir d'après le Collège des enseignants de neurologie";
+const store={get(){try{return JSON.parse(localStorage.getItem(KEY)||"null")}catch(e){return null}},set(v){try{localStorage.setItem(KEY,JSON.stringify(v))}catch(e){}},clear(){try{localStorage.removeItem(KEY)}catch(e){}}};
+const Q=[];EXAM.dps.forEach((dp,d)=>dp.qs.forEach((q,i)=>Q.push({d,i,q,dp})));
+let S=null,tick=null,paused=false;
+function fresh(mode){return{pos:0,ans:{},left:TOTAL,el:0,done:false,override:{},mode:mode||"exam"}}
+const TRAIN=()=>S&&S.mode==="train";
+function img(k,alt){return IMGS[k]?`<img src="${IMGS[k]}" alt="${alt||''}" data-zoom>`:""}
+function esc(s){return String(s).replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function fmt(t){t=Math.max(0,t|0);return String(Math.floor(t/60)).padStart(2,"0")+":"+String(t%60).padStart(2,"0")}
+function show(id){["vStart","vExam","vRes","vCorr"].forEach(v=>$("#"+v).hidden=v!==id);window.scrollTo(0,0);if(id!=="vExam"){$("#timer").hidden=true;$("#btnPause").hidden=true;$("#modePill").hidden=true}}
+function antibio(){const r=[["Amoxicilline","S"],["Imipénème","S"],["Gentamicine","S"],["Vancomycine","S"],["Cotrimoxazole","R"],["Teicoplanine","S"],["Linézolide","S"],["Lévofloxacine","R"],["Nitrofurantoïne","R"]];
+ return `<div class="tblwrap"><table class="abg"><tr><td colspan="2"><b>ECBU</b> · urines 2e jet</td></tr><tr><td>Hématies</td><td>50/mm³</td></tr><tr><td>Cellules épithéliales</td><td>absence</td></tr><tr><td>Leucocytes</td><td>150/mm³</td></tr><tr><td>CGP en courtes chaînettes</td><td>quelques</td></tr><tr><td>Culture : <i>Enterococcus faecalis</i></td><td>10⁵/mL</td></tr><tr><td colspan="2"><b>Antibiogramme</b></td></tr>${r.map(([a,b])=>`<tr><td>${a}</td><td class="${b}">${b}</td></tr>`).join("")}</table></div>`}
+const TYPE=q=>q.label||{qrm:"QRM",qru:"QRU",qroc:"QROC",qzone:"QZONE",info:"Neutralisée",tcs:"TCS",self:"Image"}[q.type]||q.type;
+
+/* accueil */
+$("#dpList").innerHTML=EXAM.dps.map((dp,d)=>`<li data-jd="${d}" title="Commencer par ce dossier"><span class="id">${dp.id}</span><span>${dp.titre}</span><span class="n">${dp.qs.length} Q</span></li>`).join("");
+const saved=store.get();
+if(saved&&!saved.done&&Object.keys(saved.ans).length){$("#btnResume").hidden=false;$("#btnResume").textContent="Reprendre ("+(saved.mode==="train"?"entraînement":"examen")+", "+Object.keys(saved.ans).length+"/"+Q.length+")"}
+if(saved&&saved.done){$("#btnResume").hidden=false;$("#btnResume").textContent="Voir mes derniers résultats"}
+$("#btnExam").onclick=()=>{S=fresh("exam");store.set(S);startExam()};
+$("#btnTrain").onclick=()=>{S=fresh("train");store.set(S);startExam()};
+$("#btnResume").onclick=()=>{S=saved;S.mode=S.mode||"exam";if(S.el==null)S.el=0;if(S.done)results();else startExam()};
+$("#btnDirect").onclick=()=>{S=S||saved||fresh();openCorr(0)};
+
+/* épreuve */
+function steps(){const el=$("#steps");if(!S||$("#vExam").hidden){el.innerHTML="";return}
+ const cur=Q[S.pos]?Q[S.pos].d:-1;
+ el.innerHTML=EXAM.dps.map((dp,d)=>{const qs=Q.filter(x=>x.d===d);const done=qs.every(x=>S.ans[x.d+"-"+x.i]!==undefined);return `<span data-jd="${d}" style="cursor:pointer" title="Aller à ${esc(dp.titre)}" class="${d===cur?'on':done?'done':''}">${dp.id}</span>`}).join("")}
+function startExam(){show("vExam");$("#timer").hidden=false;$("#btnPause").hidden=false;$("#modePill").hidden=false;$("#modePill").textContent=TRAIN()?"Entraînement":"Examen";$("#timer").classList.toggle("sw",TRAIN());paused=false;$("#btnPause").textContent="Pause";setBlur(false);renderQ();runTimer()}
+function runTimer(){clearInterval(tick);tick=setInterval(()=>{if(paused||!S||S.done||$("#vExam").hidden)return;if(TRAIN()){S.el++}else{S.left--}drawTimer();if((S.el+S.left)%5===0)store.set(S);if(!TRAIN()&&S.left<=0)finish()},1000);drawTimer()}
+function drawTimer(){const t=$("#timer");if(TRAIN()){t.textContent="⏱ "+fmt(S.el);t.classList.remove("low");t.title="Temps passé (indicatif)"}else{t.textContent=fmt(S.left);t.classList.toggle("low",S.left<=300);t.title="Temps restant"}}
+function setBlur(b){$("#qpanel").style.filter=b?"blur(7px)":"";$("#enonce").style.filter=b?"blur(7px)":""}
+$("#btnPause").onclick=()=>{paused=!paused;$("#btnPause").textContent=paused?"Reprendre":"Pause";setBlur(paused)};
+
+function enonceHTML(d,upto){const dp=EXAM.dps[d];let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items||""}</div>${dp.intro||""}`;
+ if(dp.introImg)h+=`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`;
+ dp.qs.forEach((q,i)=>{if(i<upto&&q.ctx){h+=`<div class="add"><div class="note">Ajouté en Q${i+1}</div>${q.ctx}${q.img?`<div class="imgs">${q.img.map(k=>img(k)).join("")}</div>`:""}${q.table==="antibio"?antibio():""}</div>`}});return h}
+function isFree(dp){return dp.free||/^(QI|SQI|TCS)/.test(dp.id)}
+function opened(n){if(n>=Q.length)return false;const {d,i,dp}=Q[n];if(isFree(dp))return true;for(let k=0;k<i;k++){if(S.ans[d+"-"+k]===undefined)return false}return true}
+function gcls(g){return g===1?"g1":g===0?"g0":"gp"}
+function navHTML(){return `<div class="qnav">`+EXAM.dps.map((dp,d)=>`<div class="qnav-dp"><span class="qnav-id">${dp.id}${isFree(dp)?"":" 🔒"}</span>`+Q.map((x,n)=>({x,n})).filter(o=>o.x.d===d).map(({x,n})=>{const k=x.d+"-"+x.i;const done=S.ans[k]!==undefined;const ok=opened(n);const c=done?(TRAIN()?" "+gcls(grade(x.d,x.i)):" done"):"";return `<button class="qn${n===S.pos?" cur":""}${c}" data-n="${n}" ${ok?"":"disabled"} title="${ok?"Question "+(x.i+1):"Valide d'abord les questions précédentes du dossier"}">${x.i+1}</button>`}).join("")+`</div>`).join("")+`</div>`}
+function renderQ(){
+ if(S.pos>=Q.length)S.pos=Q.length-1;
+ const {d,i,q,dp}=Q[S.pos];steps();
+ const k=d+"-"+i,prev=S.ans[k],answered=prev!==undefined,free=isFree(dp),locked=answered&&(!free||TRAIN());
+ $("#enonce").innerHTML=enonceHTML(d,i);
+ let h=navHTML();
+ h+=`<div class="qhead"><span class="qnum">${dp.id} · Q${i+1}/${dp.qs.length}</span><span class="tag">${TYPE(q)}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}<span class="spacer"></span><span class="note">${S.pos+1} / ${Q.length}</span></div>`;
+ if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+ if(q.img&&q.type!=="qzone"&&q.type!=="self")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+ if(q.table==="antibio")h+=antibio();
+ h+=`<div class="qtext">${q.q}</div>`;
+ const pa=Array.isArray(prev)?prev:[];
+ if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const t=q.type==="qrm"?"checkbox":"radio";
+  h+=`<ul class="opts">${q.opts.map((o,j)=>`<li class="opt"><label for="o${j}"><input type="${t}" name="opt" id="o${j}" value="${j}" ${pa.includes(j)?"checked":""} ${locked?"disabled":""}><span class="L">${L[j]}</span><span class="ot">${o}</span></label></li>`).join("")}</ul>`}
+ else if(q.type==="qroc"){h+=`<div class="qroc"><label class="note" for="qroc">Réponse courte (quelques mots)</label><input id="qroc" autocomplete="off" placeholder="Ta réponse" value="${answered&&prev?esc(prev):""}" ${locked?"disabled":""}></div>`}
+ else if(q.type==="self"){h+=`<p class="note">Question d'image : l'image est donnée en correction. Réfléchis à ta réponse, puis valide ; tu t'auto-noteras en correction.</p>`}
+ else if(q.type==="info"){h+=`<p class="note">Question neutralisée à l'épreuve : valide pour continuer (1 point pour tous).</p>`}
+ if(TRAIN()&&answered){h+=`<div class="inline-corr">${verdict(d,i)}${cqBody(d,i,true)}</div>`}
+ else if(locked)h+=`<p class="lockmsg">🔒 Réponse validée : dans un dossier progressif, elle n'est plus modifiable. Tu peux la relire.</p>`;
+ else if(answered&&free)h+=`<p class="savedmsg">✓ Réponse enregistrée. Tu peux la modifier jusqu'à la fin de l'épreuve.</p>`;
+ else if(!free&&!TRAIN())h+=`<p class="note" style="margin:16px 0 0">Dossier progressif : une fois validée, la réponse ne pourra plus être modifiée.</p>`;
+ const nAns=Object.keys(S.ans).length;
+ const nextOk=S.pos<Q.length-1&&opened(S.pos+1);
+ const valLabel=TRAIN()?"Valider et voir la correction":answered?"Enregistrer la modification":"Valider";
+ h+=`<div class="actions"><button class="btn" id="bPrev" ${S.pos===0?"disabled":""}>◀ Précédente</button>${locked?"":`<button class="btn primary" id="btnVal">${valLabel}</button>`}<button class="btn${locked&&TRAIN()?" primary":""}" id="bNext" ${nextOk?"":"disabled"}>Suivante ▶</button><span class="spacer"></span><button class="btn ghost" id="bEnd">Terminer (${nAns}/${Q.length})</button></div>`;
+ h+=`<div class="confirm" id="conf" hidden><span id="confTxt"></span><button class="btn primary small" id="ok">Confirmer</button><button class="btn small" id="no">Annuler</button></div>`;
+ $("#qpanel").innerHTML=h;
+ $("#qpanel").querySelectorAll(".qn").forEach(b=>b.onclick=()=>go(+b.dataset.n));
+ $("#bPrev").onclick=()=>go(S.pos-1);
+ $("#bNext").onclick=()=>go(S.pos+1);
+ $("#bEnd").onclick=()=>{const left=Q.length-Object.keys(S.ans).length;ask((left?left+" question(s) sans réponse. ":"")+"Rendre la copie et voir la note ?",finish)};
+ $("#qpanel").querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{S.override=S.override||{};S.override[b.dataset.ov]=+b.dataset.v;store.set(S);renderQ()});
+ if(locked)return;
+ let a=null,empty=true;
+ const read=()=>{if(q.type==="qrm")a=[...document.querySelectorAll("input[name=opt]:checked")].map(x=>+x.value);
+  else if(q.type==="qru"||q.type==="tcs"){const c=document.querySelector("input[name=opt]:checked");a=c?[+c.value]:[]}
+  else if(q.type==="qroc")a=$("#qroc").value.trim();
+  else a=true;
+  empty=(Array.isArray(a)&&!a.length)||a===""||a==null};
+ const save=()=>{S.ans[k]=empty?null:a;if(!TRAIN()&&S.pos<Q.length-1&&opened(S.pos+1))S.pos++;store.set(S);renderQ();if(!TRAIN())window.scrollTo(0,0);else{const c=document.querySelector(".inline-corr");if(c)c.scrollIntoView({behavior:"smooth",block:"start"})}};
+ $("#btnVal").onclick=()=>{read();
+  if(TRAIN()){if(empty){ask("Aucune réponse cochée : la question vaudra 0. Voir quand même la correction ?",save)}else save();return}
+  if(free){save();return}
+  ask((empty?"Aucune réponse : la question vaudra 0. ":"")+"Réponse définitive (non modifiable ensuite) ?",save)};
+ const qr=$("#qroc");if(qr)qr.addEventListener("keydown",e=>{if(e.key==="Enter"){e.preventDefault();$("#btnVal").click()}});
+}
+function ask(txt,fn){const box=$("#conf"),v=$("#btnVal");$("#confTxt").textContent=txt;box.hidden=false;if(v)v.hidden=true;$("#ok").onclick=()=>{box.hidden=true;fn()};$("#no").onclick=()=>{box.hidden=true;if(v)v.hidden=false};$("#ok").focus()}
+function go(n){if(n<0||n>=Q.length||!opened(n))return;S.pos=n;store.set(S);renderQ();window.scrollTo(0,0)}
+function jumpDp(d){const n=Q.findIndex(x=>x.d===d);if(n<0)return;let m=n;while(m+1<Q.length&&Q[m+1].d===d&&S.ans[Q[m].d+"-"+Q[m].i]!==undefined)m++;S.pos=m;store.set(S);if($("#vExam").hidden)startExam();else{renderQ();window.scrollTo(0,0)}}
+document.addEventListener("click",e=>{const t=e.target.closest&&e.target.closest("[data-jd]");if(!t)return;if(!S||S.done){S=fresh("exam");store.set(S)}jumpDp(+t.dataset.jd)});
+
+/* notation */
+function inPoly(x,y,pts){let c=false;for(let i=0,j=pts.length-1;i<pts.length;j=i++){const[xi,yi]=pts[i],[xj,yj]=pts[j];if(((yi>y)!==(yj>y))&&(x<(xj-xi)*(y-yi)/(yj-yi)+xi))c=!c}return c}
+function norm(s){return String(s||"").toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,"").replace(/[^a-z0-9 ]/g," ").replace(/\s+/g," ").trim()}
+function grade(d,i){const q=EXAM.dps[d].qs[i];let a=S.ans[d+"-"+i];const k=d+"-"+i;
+ if(S.override&&S.override[k]!==undefined)return S.override[k];
+ if(q.type==="info")return 1;
+ if(a==null)return 0;
+ if(q.type==="qru")return a.length===1&&a[0]===q.ok[0]?1:0;
+ if(q.type==="tcs")return a.length===1?(q.w[a[0]]||0):0;
+ if(q.type==="qrm"){if(q.neut)a=a.filter(x=>!q.neut.includes(x));if(!a.length)return 0;
+  if((q.inacc||[]).some(x=>a.includes(x)))return 0;
+  if((q.indisp||[]).some(x=>!a.includes(x)))return 0;
+  if(/QRP/i.test((q.label||'')+' '+(q.tag||''))||q.qrp||q.opts.length>5){const g=a.filter(x=>q.ok.includes(x)).length;return Math.max(0,g/q.ok.length)}
+  let n=0;for(let k2=0;k2<q.opts.length;k2++){if(a.includes(k2)!==q.ok.includes(k2))n++}
+  return n===0?1:n===1?.5:n===2?.2:0}
+ if(q.type==="self")return 0;
+ if(q.type==="qroc"){const s=norm(a);if(q.kw){let m=0;q.kw.forEach(([kk,v])=>{if(s.includes(norm(kk)))m=Math.max(m,v)});return m}return (q.keys||[]).some(kk=>s.includes(norm(kk)))?1:0}
+ if(q.type==="qzone"){return a&&inPoly(a.x*q.zoneW,a.y*q.zoneH,q.zone)?1:0}
+ return 0}
+function f1(x){return (Math.round(x*100)/100).toString().replace(".",",")}
+function verdict(d,i){const g=grade(d,i);const t=g===1?"✓ Bonne réponse":g===0?"✗ Réponse fausse":"≈ Réponse partielle";return `<div class="verdict"><span class="pts ${g===1?'s1':g===0?'s0':'sp'}" style="margin:0">${f1(g)} pt</span>${t}</div>`}
+
+function finish(){clearInterval(tick);S.done=true;store.set(S);results()}
+function results(){show("vRes");let tot=0,max=Q.length;const byDp=EXAM.dps.map(()=>[0,0]),byR={A:[0,0],B:[0,0]};
+ Q.forEach(({d,i,q})=>{const g=grade(d,i);tot+=g;byDp[d][0]+=g;byDp[d][1]++;if(q.rang&&byR[q.rang]){byR[q.rang][0]+=g;byR[q.rang][1]++}});
+ $("#sBig").innerHTML=`${f1(tot/max*20)}<small> / 20</small>`;
+ try{localStorage.setItem("annD2score:"+KEY,JSON.stringify({s:Math.round(tot/max*200)/10,m:S.mode,d:Date.now()}))}catch(e){}
+ const used=S.mode==="train"?S.el:TOTAL-S.left;
+ $("#sSub").textContent=`${f1(tot)} points sur ${max} · ${S.mode==="train"?"mode entraînement":"mode examen"} · temps ${fmt(used)}`;
+ $("#sBars").innerHTML=EXAM.dps.map((dp,d)=>`<div class="barrow"><span class="mono">${dp.id}</span><div class="track"><div class="fill" style="width:${byDp[d][0]/byDp[d][1]*100}%"></div></div><span class="v">${f1(byDp[d][0])}/${byDp[d][1]}</span></div>`).join("")+
+  ["A","B"].filter(r=>byR[r][1]).map(r=>`<div class="barrow"><span><span class="rk ${r.toLowerCase()}">${r}</span></span><div class="track"><div class="fill" style="width:${byR[r][0]/byR[r][1]*100}%;background:var(--rk${r})"></div></div><span class="v">${f1(byR[r][0])}/${byR[r][1]}</span></div>`).join("");
+ $("#sGrid").innerHTML=Q.map(({d,i,dp})=>{const g=grade(d,i);return `<button class="${g===1?'s1':g===0?'s0':'sp'}" data-go="${d}-${i}">${dp.id}.${i+1} · ${f1(g)}</button>`}).join("");
+ $("#sGrid").querySelectorAll("button").forEach(b=>b.onclick=()=>{const[d,i]=b.dataset.go.split("-").map(Number);openCorr(d,i)});
+}
+$("#btnCorr").onclick=()=>openCorr(0);
+$("#btnAgain").onclick=()=>{store.clear();show("vStart");$("#btnResume").hidden=true};
+$("#btnBackRes").onclick=()=>{if(S&&S.done)results();else show("vStart")};
+$("#btnHome").onclick=()=>show("vStart");$("#btnHome2").onclick=()=>show("vStart");
+
+/* correction */
+function cqBody(d,i,inline){const q=EXAM.dps[d].qs[i];const k=d+"-"+i;const a=S?S.ans[k]:undefined;const has=a!==undefined;const g=has?grade(d,i):null;let h="";
+ if(q.type==="qrm"||q.type==="qru"||q.type==="tcs"){const mine=Array.isArray(a)?a:[];
+  q.opts.forEach((o,j)=>{const ok=q.type==="tcs"?(q.w&&q.w[j]===Math.max(...q.w)):q.ok.includes(j),me=mine.includes(j);
+   const cls=has?(ok&&me?"good":ok&&!me?"miss":!ok&&me?"bad":""):(ok?"good":"");
+   const tagx=(q.indisp||[]).includes(j)?" · indispensable":(q.inacc||[]).includes(j)?" · inacceptable":q.type==="tcs"&&q.w?" · "+f1(q.w[j])+" pt":"";
+   const ex=Array.isArray(q.expl)?q.expl[j]:"";
+   h+=`<div class="copt ${cls}"><span class="mk">${ok?"✓":"✗"}</span><span class="mk">${L[j]}</span><span class="tx">${o}${has&&me?` <span class="mine">· coché${tagx}</span>`:tagx?` <span class="mine">${tagx}</span>`:""}</span>${ex?`<div class="ex">${ex}</div>`:""}</div>`});
+  if(q.expl&&!Array.isArray(q.expl))h+=`<div style="margin-top:12px">${q.expl}</div>`;
+ } else if(q.type==="qroc"){
+  h+=`<div class="free ${has?(g===1?'s1':g?'sp':'s0'):''}" style="${has?'':'background:var(--soft)'}"><b>Ta réponse :</b> ${has&&a?esc(a):"<i>aucune</i>"}<br><b>Attendu :</b> ${q.attendu||""}</div>`;
+  if(has)h+=`<div class="row" style="margin-top:10px"><span class="note">Correction automatique par mots-clés.</span><button class="btn small" data-ov="${k}" data-v="${g?0:1}">${g?"Compter faux":"Ma réponse est juste"}</button></div>`;
+  if(q.expl)h+=`<div style="margin-top:12px">${q.expl}</div>`;
+ } else if(q.type==="self"){
+  h+=`${q.cimg?`<div class="imgs">${img(q.cimg)}</div>`:(q.img?`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`:"")}<p><b>Attendu :</b> ${q.attendu||""}</p>${q.expl||""}`;if(has)h+=`<div class="row" style="margin-top:10px"><span class="note">Auto-évaluation :</span><button class="btn small" data-ov="${k}" data-v="1">J'avais juste</button><button class="btn small" data-ov="${k}" data-v="0.5">À moitié</button><button class="btn small" data-ov="${k}" data-v="0">J'avais faux</button></div>`;
+ } else if(q.type==="info"){
+  h+=`<p><b>Attendu :</b> ${q.attendu||""}</p>${q.expl||""}`;
+ } else if(q.type==="qzone"){
+  const pts=q.zone.map(p=>`${p[0]/q.zoneW*100},${p[1]/q.zoneH*100}`).join(" ");
+  h+=`<div class="zonebox" style="cursor:default"><img src="${IMGS[q.img[0]]}" alt="Image de la question"><svg viewBox="0 0 100 100" preserveAspectRatio="none"><polygon points="${pts}" fill="rgba(46,160,90,.35)" stroke="#2ea05a" stroke-width=".6"/></svg>${has&&a?`<div class="pin" style="left:${a.x*100}%;top:${a.y*100}%"></div>`:""}</div><p><b>Attendu :</b> ${q.attendu||""}</p>${q.expl||""}`;
+ }
+ if(q.fig)h+=`<div class="imgs" style="align-items:flex-end">${img(q.fig[0],q.fig[1])}<span class="note" style="max-width:260px">${q.fig[1]}</span></div>`;
+ if(q.retenir)h+=`<div class="retenir"><b class="h">À retenir</b>${q.retenir}</div>`;
+ return h}
+let curD=0;
+function openCorr(d,i){show("vCorr");curD=d;
+ $("#tabs").innerHTML=EXAM.dps.map((dp,k)=>`<button role="tab" aria-selected="${k===d}" data-d="${k}">${dp.id}</button>`).join("");
+ $("#tabs").querySelectorAll("button").forEach(b=>b.onclick=()=>openCorr(+b.dataset.d));
+ drawCorr(d);
+ if(i!==undefined){const el=document.getElementById("cq-"+d+"-"+i);if(el)setTimeout(()=>el.scrollIntoView({block:"start"}),30)}
+}
+function drawCorr(d){const dp=EXAM.dps[d];const answered=S&&Object.keys(S.ans).length>0;
+ let h=`<h2>${dp.id} · ${dp.titre}</h2><div class="meta">${dp.items||""}</div><details class="enon"><summary>Énoncé initial</summary>${dp.intro||""}${dp.introImg?`<div class="imgs">${dp.introImg.map(k=>img(k)).join("")}</div>`:""}</details>`;
+ if(!answered)h+=`<p class="note" style="margin-top:0">Mode correction seule : les bonnes réponses sont en vert.</p>`;
+ dp.qs.forEach((q,i)=>{const k=d+"-"+i;const has=S&&S.ans[k]!==undefined;const g=has?grade(d,i):null;
+  h+=`<div class="cq" id="cq-${k}"><div class="qhead"><span class="qnum">Q${i+1}</span><span class="tag">${TYPE(q)}</span>${q.rang?`<span class="rk ${q.rang.toLowerCase()}">${q.rang}</span>`:""}${has?`<span class="pts ${g===1?'s1':g===0?'s0':'sp'}">${f1(g)} pt</span>`:""}</div>`;
+  if(q.ctx)h+=`<div class="ctx">${q.ctx}</div>`;
+  if(q.img&&q.type!=="qzone"&&q.type!=="self")h+=`<div class="imgs">${q.img.map(x=>img(x)).join("")}</div>`;
+  if(q.table==="antibio")h+=antibio();
+  h+=`<div class="qtext">${q.q}</div>`+cqBody(d,i)+`</div>`;
+ });
+ $("#corrMain").innerHTML=h;
+ $("#corrMain").querySelectorAll("[data-ov]").forEach(b=>b.onclick=()=>{S.override=S.override||{};S.override[b.dataset.ov]=+b.dataset.v;store.set(S);drawCorr(d)});
+ const c=$("#course"),grid=$("#corrGrid");
+ if(dp.cours){grid.classList.remove("solo");c.hidden=false;
+  c.innerHTML=`<div class="row"><h3>Cours résumé · ${dp.id}</h3><span class="spacer"></span><button class="btn small coursebtn" id="cToggle">Afficher</button></div><div class="cbody">${dp.cours.replace(/data-img="(\w+)"/g,(m,k)=>`src="${IMGS[k]}" data-zoom`)}</div>${SOURCES?`<p class="small" style="margin-top:16px">Sources : ${SOURCES}</p>`:""}`;
+  if(matchMedia("(max-width:900px)").matches){c.classList.add("collapsed");const t=$("#cToggle");t.onclick=()=>{c.classList.toggle("collapsed");t.textContent=c.classList.contains("collapsed")?"Afficher":"Masquer"}}
+ }else{c.hidden=true;grid.classList.add("solo");if(SOURCES)$("#corrMain").insertAdjacentHTML("beforeend",`<p class="small" style="margin-top:26px">Sources : ${SOURCES}</p>`)}
+}
+
+/* zoom */
+document.addEventListener("click",e=>{const t=e.target;if(t.matches&&t.matches("img[data-zoom]")){$("#zoomImg").src=t.src;$("#zoom").hidden=false}});
+$("#zoom").onclick=()=>{$("#zoom").hidden=true};
+document.addEventListener("keydown",e=>{if(e.key==="Escape")$("#zoom").hidden=true});
+})();
+</script>
+</body></html>
