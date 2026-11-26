@@ -31,4 +31,5 @@ function save(){try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}}
 function upd(){const c=[...document.querySelectorAll('.card')];let d=0;c.forEach(a=>{const on=!!S[a.dataset.k];a.classList.toggle('done',on);if(on)d++});document.getElementById('pc').textContent=d+'/'+c.length;document.getElementById('pb').style.width=(100*d/c.length)+'%'}
 function tg(k){S[k]=!S[k];save();upd()}upd();
 document.querySelectorAll('.card').forEach(a=>{const f=(a.getAttribute('href')||'').replace('.html','');let r=null;try{r=JSON.parse(localStorage.getItem('annD2score:annale-'+f+'-v1')||'null')}catch(e){}const el=document.createElement('span');el.className='sc';if(r)el.textContent=String(r.s).replace('.',',')+'/20 · '+(r.m==='train'?'entraînement':'examen');a.insertBefore(el,a.querySelector('.ck'))});
-</script></body></html>
+</script><script data-goatcounter="https://annalesddeux.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body></html>
